@@ -1,0 +1,291 @@
+% ============================================================
+%  第三部分：乘子的经济含义与一个必须纠正的说法
+% ============================================================
+
+\section{乘子的经济含义：影子值与比较静态}
+\label{sec:shadow}
+
+\subsection{把技术水平写成参数}
+
+要解释 $\lambda$，必须让技术约束可以"放松一点点"。把 \eqref{eq:tech} 改写为
+\begin{equation}
+F(y_1,y_2;c)=y_1+\frac{y_2^{2}}{4}-c=0,
+\label{eq:tech-param}
+\end{equation}
+其中 $c>0$ 是技术水平的标量指标：$c$ 越大，同样的 $y_2$ 能挤出越多的 $y_1$，
+前沿整体向东北方向扩张。本案例 $c=10$。对应的最大收益记为
+\begin{equation}
+R(p_1,p_2;c)\equiv \max_{y}\ \{p_1y_1+p_2y_2:\ F(y;c)=0\},
+\label{eq:revenue-function}
+\end{equation}
+即生产者的\textbf{收益函数}：给定价格与技术，企业所能达到的最大收入。
+
+\subsection{一般解：把 $p$ 也留着}
+
+现在把价格也留成符号，一次性解出全部结果。一阶条件仍是
+$p_1=\lambda F_1=\lambda$、$p_2=\lambda F_2=\lambda y_2/2$，故
+\begin{equation}
+\lambda=p_1,
+\qquad
+\frac{y_2}{2}=\frac{p_2}{\lambda}=\frac{p_2}{p_1}
+\ \Longrightarrow\
+y_2^{*}(p;c)=\frac{2p_2}{p_1}.
+\label{eq:gen-y2}
+\end{equation}
+回代前沿 $y_1=c-y_2^{2}/4$：
+\begin{equation}
+y_1^{*}(p;c)=c-\frac{1}{4}\Bigl(\frac{2p_2}{p_1}\Bigr)^{2}
+=c-\Bigl(\frac{p_2}{p_1}\Bigr)^{2}.
+\label{eq:gen-y1}
+\end{equation}
+代入目标：
+\begin{align}
+R(p_1,p_2;c)
+&=p_1\Bigl[c-\Bigl(\frac{p_2}{p_1}\Bigr)^{2}\Bigr]
++p_2\cdot\frac{2p_2}{p_1}
+=p_1c-\frac{p_2^{2}}{p_1}+\frac{2p_2^{2}}{p_1} \notag\\
+&=p_1c+\frac{p_2^{2}}{p_1}.
+\label{eq:gen-R}
+\end{align}
+代入本案例 $p_1=2,p_2=4,c=10$：
+\begin{equation}
+\lambda=p_1=2,\qquad
+y_2^{*}=\frac{2\times 4}{2}=4,\qquad
+y_1^{*}=10-\Bigl(\frac{4}{2}\Bigr)^{2}=10-4=6,\qquad
+R=2\times 10+\frac{16}{2}=28,
+\label{eq:gen-check}
+\end{equation}
+与逐步求解的 \eqref{eq:solution} 完全一致。
+注意 \eqref{eq:gen-R} 只在 $y_1^{*}\ge 0$ 即 $p_2/p_1\le \sqrt{c}$ 时有效，
+越界后要换成角点解，见 \S\ref{sec:corner}。
+
+\subsection{三条偏导数与两条经典定理}
+
+对 \eqref{eq:gen-R} 直接求偏导：
+\begin{equation}
+\frac{\partial R}{\partial c}=p_1,
+\qquad
+\frac{\partial R}{\partial p_1}=c-\Bigl(\frac{p_2}{p_1}\Bigr)^{2}=y_1^{*},
+\qquad
+\frac{\partial R}{\partial p_2}=\frac{2p_2}{p_1}=y_2^{*}.
+\label{eq:R-partials}
+\end{equation}
+三条式子各自对应一条一般原理：
+
+\begin{enumerate}
+  \item \textbf{乘子即影子值}。由包络定理，
+        在最优解处对参数求导只需对拉格朗日函数求偏导：
+        \begin{equation}
+        \frac{\partial R}{\partial c}
+        =\frac{\partial \mathcal{L}}{\partial c}\bigg|_{y=y^{*},\lambda=\lambda^{*}}
+        =-\lambda\,\frac{\partial F}{\partial c}
+        =-\lambda(-1)=\lambda.
+        \label{eq:envelope}
+        \end{equation}
+        而由 \eqref{eq:gen-R}，$\partial R/\partial c=p_1$，两者一致：
+        $\lambda=p_1=2$。这里 $-\partial F/\partial c=1$ 是"参数放松一单位的净额"。
+  \item \textbf{Hotelling 型引理}。收益函数对产出价格的偏导等于该产品的最优产量：
+        $\partial R/\partial p_i=y_i^{*}$。本例 $\partial R/\partial p_1=10-4=6=y_1^{*}$，
+        $\partial R/\partial p_2=4=y_2^{*}$，与之一一对应。
+  \item \textbf{齐次性与凸性}。$R$ 对 $(p_1,p_2)$ 一次齐次：
+        $R(tp_1,tp_2;c)=tp_1c+\frac{t^{2}p_2^{2}}{tp_1}=tR(p;c)$，
+        与"所有价格同比例变动不改变最优产出组合"互为表里。
+        对 $p$ 凸：由 \eqref{eq:gen-R}，
+        \begin{equation}
+        D^{2}_{p}R=
+        \begin{pmatrix}
+        \dfrac{2p_2^{2}}{p_1^{3}} & -\dfrac{2p_2}{p_1^{2}}\\[6pt]
+        -\dfrac{2p_2}{p_1^{2}} & \dfrac{2}{p_1}
+        \end{pmatrix},
+        \qquad
+        \det D^{2}_{p}R=\frac{4p_2^{2}}{p_1^{4}}-\frac{4p_2^{2}}{p_1^{4}}=0,
+        \label{eq:hessian-R}
+        \end{equation}
+        主子式非负，故半正定；此处退化为秩 $1$，
+        原因是本例技术只有一条一维前沿（没有任何"平段"），
+        供给对价格的反应被限制在这条曲线上。
+\end{enumerate}
+
+\subsection{把 \texorpdfstring{$\lambda=2$}{lambda=2} 翻译成一句话}
+
+由 \eqref{eq:envelope}，$\lambda=\partial R/\partial c=2$ 的含义是：
+\textbf{技术水平放松一单位，最大收益上升 $2$ 元。}
+具体到本案例还有一个更直观的解释：在这条技术上，
+$c$ 每增加 $1$，前沿是沿着 $y_1$ 轴方向向外平移 $1$ 个单位
+（因为 $c$ 只出现在 $y_1=c-y_2^{2}/4$ 的截距里），
+而 $y_1$ 的边际收益就是它的价格 $p_1=2$，故收益增量恰为 $2$ 元。
+数值检验：把 $c$ 由 $10$ 调到 $10.01$，由 \eqref{eq:gen-R}
+\begin{equation}
+R(2,4;10.01)=2\times 10.01+\frac{16}{2}=20.02+8=28.02,
+\qquad
+\Delta R=0.02=\lambda\times 0.01.
+\label{eq:lambda-numeric}
+\end{equation}
+注意这是\textbf{一阶近似恰好精确}的例子：$R$ 关于 $c$ 是线性的，
+所以不只是"近似增加 $0.02$"，而是精确增加 $0.02$。
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[x=1.10cm,y=0.55cm,line cap=round,line join=round]
+  % ---- 坐标轴 ----
+  \draw[axisline] (7.6,0) -- (12.5,0) node[below,axislabel] {技术参数 $c$};
+  \draw[axisline] (8,23.2) -- (8,32.5) node[left,axislabel] {最大收益 $R(p;c)$};
+  % ---- R(c) 直线 ----
+  \draw[curveA] (8,24) -- (12,32);
+  % ---- 点 (10,28) ----
+  \fill (10,28) circle (2.6pt);
+  \node[figlabel,anchor=south east] at (9.95,28.1) {$(10,\,28)$};
+  % ---- 斜率三角形 ----
+  \draw[curveC] (10,28) -- (11,28) -- (11,30);
+  \node[figlabel,anchor=north] at (10.5,27.9) {$\Delta c=1$};
+  \node[figlabel,anchor=west] at (11.05,29) {$\Delta R=\lambda=2$};
+  % ---- 直线标签 ----
+  \node[figlabel,anchor=south west,rotate=63] at (11.3,29.4) {$R=2c+8$};
+  \node[figlabel,anchor=north west] at (8.15,31.6) {斜率 $=\dfrac{\partial R}{\partial c}=\lambda$};
+  % ---- 刻度 ----
+  \node[figlabel,anchor=north] at (10,22.9) {$10$};
+  \node[figlabel,anchor=east] at (7.95,28) {$28$};
+\end{tikzpicture}
+\caption{收益函数关于技术参数的比较静态：
+$R(2,4;c)=2c+8$ 是一条斜率为 $\lambda=2$ 的直线。
+技术水平每放松一单位，最大收益增加 $2$ 元。}
+\label{fig:lambda-shadow}
+\end{figure}
+\figexplan{横轴为技术水平参数 $c$，纵轴为给定价格下的最大收益。
+直线在 $c=10$ 处的高度是 $28$，与逐步求解的答案一致；
+由 $(10,28)$ 向右走一单位到 $(11,30)$，高度正好上升 $2$，
+这个比值 $2/1$ 就是 $\partial R/\partial c$，也等于拉格朗日乘子 $\lambda$。
+因为是直线，把 $c$ 调到 $10.01$ 时收益精确增加 $0.02$，没有近似误差。}
+
+\section{一个必须纠正的说法：\texorpdfstring{$-\lambda F$}{-lambda F} 不是"惩罚项"}
+\label{sec:penalty}
+
+在口头讲授中，流行这样一种说法：
+
+\begin{quote}
+\textsl{"拉格朗日里的 $-\lambda F$ 是惩罚项：$F>0$ 不可行时它被压低，
+$F<0$ 无效率时也被压低，只有 $F=0$ 时惩罚消失，所以优化器自动被推到前沿上。"}
+\end{quote}
+
+这段话的\textbf{前半句对、后半句错}，而且在最关键的环节上符号写反了。
+逐条澄清如下。
+
+\begin{enumerate}
+  \item \textbf{$F>0$ 的一侧确实"被压低"，但这不重要}。
+        在 $\lambda>0$ 且 $F>0$ 时，$-\lambda F<0$，拉格朗日值小于目标值。
+        问题是：$F>0$ 的点根本不在可行集里，最大化从不去那里比较，
+        这一侧的"压低"没有参与任何计算。
+  \item \textbf{$F<0$ 的一侧恰恰是"被抬高"，不是"被压低"}。
+        $F<0$ 时 $-\lambda F>0$，拉格朗日值\textbf{大于}目标值。
+        这可以立刻用数字验证：取前沿内部的点 $(y_1,y_2)=(4,4)$，
+        $\mathcal{L}=2\times 4+4\times 4-2\times(-2)=32+4=36>24=\pi(4,4)$，
+        而前沿上的最优收益仅为 $28$，可见拉格朗日在可行域之外的值没有经济意义。
+        若真按"惩罚"理解，一个效率低下的点反倒应当被\textbf{奖励} $4$，这显然说不通。
+  \item \textbf{等式约束问题里根本不存在"惩罚"这一步}。
+        最大化是在满足 $F=0$ 的集合上进行的，
+        第三个一阶条件 $\partial\mathcal{L}/\partial\lambda=0$ 已经把搜索限制在曲面上；
+        在曲面上 $-\lambda F\equiv 0$，所谓的惩罚项恒等于零。
+\end{enumerate}
+
+\begin{table}[H]
+\centering
+\caption{流行说法与正确事实的逐条对照}
+\label{tab:penalty}
+\begin{tabular}{p{4.6cm}p{4.6cm}p{4.6cm}}
+\toprule
+流行说法 & 正确事实 & 依据 \\
+\midrule
+"$F<0$ 时 $-\lambda F$ 把目标压低" & $F<0$ 时 $-\lambda F>0$，目标被\textbf{抬高} &
+代入 $F=-2,\lambda=2$ \\[4pt]
+"惩罚让最优解落到前沿上" & 是第三个一阶条件（约束本身）把解限制在前沿上 &
+$\partial\mathcal{L}/\partial\lambda=-F=0$ \\[4pt]
+"$F>0$ 会被惩罚，所以不会跑到外面" & $F>0$ 不在可行集，与惩罚无关 &
+可行集定义为 $\{y:F(y)\le 0\}$ \\[4pt]
+"$\lambda$ 是惩罚系数" & $\lambda$ 是技术约束的影子值 $\partial R/\partial c$ &
+式 \eqref{eq:envelope} 与本例 $\lambda=2$ 元/件 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{若一定要谈"惩罚"，正确写法是这样的}
+
+真正带惩罚的最优化是\textbf{罚函数法}：把等式约束去掉，改为最大化
+\begin{equation}
+\max_{y}\ \Phi_{\rho}(y)=p\cdot y-\frac{\rho}{2}\bigl[F(y)\bigr]^{2},
+\qquad \rho>0,\ \rho\to\infty.
+\label{eq:penalty-method}
+\end{equation}
+这里被惩罚的是 $F^{2}$，对 $F>0$ 与 $F<0$ \textbf{对称地}惩罚，
+且在 $F=0$ 处惩罚为零、梯度也为零；$\rho$ 越大，解越贴近前沿。
+它与拉格朗日法的区别在于两点：一是 $-\frac{\rho}{2}F^{2}$ 是二次的、对称的，
+而 $-\lambda F$ 是一次、反对称的；二是 $\rho$ 不是变量而是趋于无穷的参数，
+而 $\lambda$ 是与解同时求出来的有限乘子。两者在极限下才相通：
+$\rho F(y_{\rho})\to \lambda$。
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[x=2.60cm,y=1.05cm,line cap=round,line join=round]
+  % ---- 坐标轴 ----
+  \draw[axisline] (-1.35,0) -- (1.45,0) node[below,axislabel] {$F(y)$};
+  \draw[axisline] (0,-2.85) -- (0,2.85) node[left,axislabel] {附加项取值};
+  % ---- 区域底色：F<0 可行，F>0 不可行 ----
+  \fill[black!5] (-1.3,-2.8) rectangle (0,2.8);
+  \node[figlabel] at (-0.72,2.45) {$F<0$：可行（内部）};
+  \node[figlabel] at (0.72,2.45) {$F>0$：不可行};
+  % ---- 直线 -lambda F ----
+  \draw[curveA] (-1.2,2.4) -- (1.2,-2.4);
+  \node[figlabel,anchor=south east] at (-0.62,1.3) {$-\lambda F$（$\lambda=2$）};
+  % ---- 抛物线 -(rho/2) F^2 ----
+  \draw[curveB,domain=-1.3:1.3,samples=80] plot (\x,{-\x*\x});
+  \node[figlabel,anchor=north] at (0.72,-0.72) {$-\dfrac{\rho}{2}F^{2}$（$\rho=2$）};
+  % ---- F=0 处的关键点 ----
+  \fill (0,0) circle (2.4pt);
+  \node[figlabel,anchor=north west] at (0.06,0.06) {$F=0$：两项都归零};
+  % ---- 取值对比标注 ----
+  \node[figlabel,anchor=north west] at (-1.28,2.28) {$+4$（反而抬高）};
+  \node[figlabel,anchor=south west] at (-1.28,-1.66) {$-1.69$（压低）};
+\end{tikzpicture}
+\caption{$-\lambda F$ 与真正的惩罚项 $-\dfrac{\rho}{2}F^{2}$ 的形状对比。
+前者在可行的一侧（$F<0$）取值为正，是"抬高"而非"压低"；
+后者在 $F=0$ 两侧对称下降，才是惩罚。}
+\label{fig:penalty}
+\end{figure}
+\figexplan{横轴为偏离量 $F$，纵轴为附加到目标上的项。
+实直线 $-\lambda F$ 过原点向下倾斜：$F>0$ 时取负值，$F<0$ 时取正值 $+4$
+（对应 $F=-2,\lambda=2$），因此它对"效率低下的内部点"是\textbf{奖励}而非惩罚，
+这与"把解推到前沿"的直觉恰好相反。
+虚线抛物线 $-\frac{\rho}{2}F^{2}$ 以 $F=0$ 为顶点，向两侧对称下降，
+在 $F=\pm1.3$ 处取 $-1.69$，这才是惩罚函数的形状。
+两条曲线在 $F=0$ 处同为零，这也是它们唯一的交点有意义的原因。}
+
+\subsection{把约束写成不等式，才是严格的说法}
+
+还有一种把直觉救回来的办法：干脆把技术约束写成不等式形式
+\begin{equation}
+\max_{y}\ p\cdot y
+\quad\text{s.t.}\quad F(y)\le 0,\quad y\ge 0,
+\label{eq:inequality-form}
+\end{equation}
+即用生产可能集 $\{y:F(y)\le 0\}$ 而不是它的边界来描述技术。
+其 Kuhn--Tucker 条件为：存在 $\mu\ge 0$ 使
+\begin{equation}
+p=\mu\,\nabla F(y^{*}),\qquad
+F(y^{*})\le 0,\qquad
+\mu\,F(y^{*})=0.
+\label{eq:kt}
+\end{equation}
+现在"为什么最优解一定在前沿上"就有了一个干净的论证：
+
+\begin{itemize}
+  \item 若 $y^{*}$ 是\textbf{严格内部点}，$F(y^{*})<0$，
+        由互补松弛 $\mu F=0$ 得 $\mu=0$，代入第一条得 $p=0$，
+        与 $p=(2,4)\gg 0$ 矛盾。故严格内部点不可能是最优。
+  \item 若 $\mu>0$，则由互补松弛必有 $F(y^{*})=0$，即最优解\textbf{恰在边界（前沿）上}。
+  \item 本例解出 $\mu=\lambda=2>0$，落在第二种情形，与前面的计算一致。
+\end{itemize}
+
+结论是：\textbf{把解推到前沿上的机制是互补松弛条件，不是"惩罚"。}
+ $-\lambda F$ 的正确身份是"目标梯度与约束梯度的配平项"，
+它的系数 $\lambda$ 是影子值，而不是罚系数。这段论证也与
+马歇尔需求求解中的库恩--塔克四条件一脉相承：
+可行性、驻点、乘子非负、互补松弛，四条缺一不可。

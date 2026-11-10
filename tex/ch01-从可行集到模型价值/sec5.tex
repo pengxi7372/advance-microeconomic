@@ -1,0 +1,220 @@
+% ==================== 第 5 节：纯选择理论（70–85 分钟）====================
+\section{纯选择理论：不预设目标函数}
+
+\subsection{公理化起点：只规定选择对应}
+
+抽象选择理论从\emph{可观察的选择事实}出发，只规定三样东西：
+\[
+X\ (\text{方案空间}),\qquad \mathcal{B}\ (\text{可行集的族}),\qquad C(B)\subseteq B\ (\text{选择对应}),
+\]
+而\emph{不必先给定}效用函数 $u$。
+
+\subsection{为什么可以不预设 \texorpdfstring{$u$}{u}}
+
+至少有四条理由：
+\begin{enumerate}
+  \item \textbf{目标函数可能不可观察}。我们能记录“选了什么”，但看不到“为什么”。
+  \item \textbf{行为可能由非最优化机制产生}。程序、注意力、社会规范、有限理性都可能生成选择。
+  \item \textbf{选择可能循环}。若 $a$ 胜 $b$、$b$ 胜 $c$、$c$ 又胜 $a$，则不存在传递偏好可以理性化这些选择。
+  \item \textbf{识别不唯一}。即使存在效用表示，数据也未必能唯一识别它（序数效用的单调变换无穷多）。
+\end{enumerate}
+
+因此，“存在某个 $u$ 使 $C(B)=\argmax_{x\in B}u(x)$”是一个\emph{待检验、待证明的理性化命题}，而不是逻辑起点。
+
+\begin{definition}[理性化]
+称偏好关系 $\succeq$ \emph{理性化}（rationalize）选择对应 $C$，若对每个可行集 $B$，
+\[
+C(B)=\{\,x\in B : x\succeq y,\ \forall\, y\in B\,\}.
+\]
+\end{definition}
+
+\subsection{显示偏好与一致性条件}
+
+显示偏好理论的核心思想是：从\emph{不同预算集}中的实际选择，检验是否存在一个统一偏好关系可以解释全部选择。
+
+\begin{definition}[直接显示偏好]
+若 $x$ 在 $y$ 可行时被选择（即 $y\in B$ 而 $x\in C(B)$），称 $x$ \emph{直接显示偏好于} $y$，记 $x\succeq^{R}y$。
+\end{definition}
+
+\begin{condition}[WARP，显示偏好弱公理]
+若 $x\succeq^{R}y$ 且 $x\neq y$，则不可能有 $y\succeq^{R}x$。换言之：若 $x$ 在 $y$ 买得起时被选中，那么当 $y$ 被选中时，$x$ 必定\emph{买不起}。
+\end{condition}
+
+\begin{example}[违反 WARP 的选择]
+设 $B_1=\{a,b\}$，观察得 $C(B_1)=\{a\}$（故 $a\succeq^{R}b$）。又设 $B_2=\{a,b,c\}$，若观察得 $b\in C(B_2)$ 而 $a$ 也可行，则 $b\succeq^{R}a$，与 $a\succeq^{R}b$ 矛盾——这组选择不能被任何理性偏好解释。
+\end{example}
+
+把 WARP 加强为沿“显示偏好链”的一致性，即得 \textbf{SARP}（显示偏好强公理）：若 $x_1\succeq^{R}x_2\succeq^{R}\cdots\succeq^{R}x_n$ 且 $x_1\neq x_n$，则不能有 $x_n\succeq^{R}x_1$。Afriat 定理表明：满足 SARP 的有限选择数据，必可被某个单调、连续、凹的效用函数理性化——\emph{理性化问题从而有了可检验的答案}。
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=1.0]
+  \fill (0,0) circle (2.2pt) node[below] {\small $a$};
+  \fill (3.2,0) circle (2.2pt) node[below] {\small $b$};
+  \fill (1.6,2.6) circle (2.2pt) node[above] {\small $c$};
+  \draw[->,very thick] (0.35,0.15) -- (2.85,0.15);
+  \node at (1.6,-0.5) {\small $a\succ b$};
+  \draw[->,very thick] (3.1,0.4) -- (2.0,2.3);
+  \node at (3.05,1.6) {\small $b\succ c$};
+  \draw[->,very thick] (1.2,2.3) -- (0.15,0.42);
+  \node at (0.1,1.6) {\small $c\succ a$};
+  \node[align=center] at (1.6,-1.4) {\small 循环偏好 $a\succ b\succ c\succ a$：\\ \small 无传递性，无法被效用函数表示};
+\end{tikzpicture}
+\caption{循环选择：理性化失败的典型反例}
+\end{figure}
+\figexplan{三个顶点 $a,b,c$ 与三条箭头构成显示偏好循环：$a\succ b$、$b\succ c$、$c\succ a$。由于传递性不成立，该选择数据无法被任何效用函数表示，也无法通过 SARP 检验——Afriat 定理给出的可检验答案在此失败。这是理性化失败最典型的反例。}
+
+\subsection{理性化如何被检验：Afriat 定理与 GARP}
+
+§1.5 我们只给出“理性化”的定义：存在 $u$ 使选择可由 $u$ 最大化。本小节补上这块拼图的关键一块——\emph{如何用有限观测判断理性化成立}。这是显示偏好理论的核心技术（Afriat 1967），也是把“纯选择理论”从描述性概念变成可操作检验的关键一步。
+
+\begin{definition}[直接显示偏好]
+给定有限观测 $\{(p^{t},x^{t})\}_{t=1}^{T}$。若在 $t$ 期 $x^{s}$ 是可负担的（$p^{t}\cdot x^{s}\le p^{t}\cdot x^{t}$），则记 $x^{s}\succeq^{R}x^{t}$，读作“$x^{s}$ 在 $t$ 期显示优于 $x^{t}$”。
+\end{definition}
+
+\begin{definition}[GARP（广义显示偏好公理）]
+称观测 $\{(p^{t},x^{t})\}_{t=1}^{T}$ 满足 GARP，若对一切 $s\ne t$，
+\[
+p^{t}\cdot x^{s}\le p^{t}\cdot x^{t}\quad\Longrightarrow\quad
+p^{s}\cdot x^{t}\ge p^{s}\cdot x^{s}.
+\]
+\end{definition}
+
+GARP 的读法：若 $x^{s}$ 在 $t$ 期买得起，那么在 $s$ 期 $x^{t}$ 也必须买得起——否则同一个人先选了 $x^{s}$、后又选了在 $s$ 期买不起 $x^{t}$ 的 $x^{t}$，偏好就出现了不可解释的矛盾。
+
+\begin{remark}[预告：完整结论见 \S2.7.5]
+本章只给出这个检验的\emph{思想}：把偏好还原问题变成逐条数据可核验的算术问题。
+其完整形式是 \textbf{Afriat 定理}（Afriat 1967）——有限数据可被单调、连续、凹的效用函数
+理性化\emph{当且仅当}它满足 GARP；而且一旦可理性化，所需效用可以由一组\emph{线性不等式}
+（Afriat 不等式）在有限步内解出，检验的计算量是 $O(n^{3})$（Varian 1982）。
+这套算法与它的实证实现（家庭支出数据检验）是 \S2.7 的主题，此处不重复。
+\end{remark}
+
+\begin{example}[两期数据的 GARP 检验]\label{ex:garp}
+设观测为 $p^{1}=(1,1),\,x^{1}=(1,1)$ 与 $p^{2}=(1,2),\,x^{2}=(1,1)$。
+逐对检查（$T=2$，只需查 $s=1,t=2$ 与 $s=2,t=1$）：
+\[
+p^{2}\cdot x^{1}=1+2=3\le p^{2}\cdot x^{2}=3
+\quad\Longrightarrow\quad x^{1}\in B^{2},
+\]
+故 $x^{1}\succeq^{R}x^{2}$；反向地
+\[
+p^{1}\cdot x^{2}=1+1=2\le p^{1}\cdot x^{1}=2
+\quad\Longrightarrow\quad x^{2}\in B^{1},
+\]
+故 $x^{2}\succeq^{R}x^{1}$。两条推理首尾相衔，得到 $x^{1}\succeq^{R}x^{2}\succeq^{R}x^{1}$，违反传递性，因而违反 GARP。
+由定理~\ref{thm:afriat}，\textbf{不存在任何单调、连续、凹的效用函数能够理性化这两期数据}。
+\end{example}
+
+\begin{example}[同一检验通过的情形]\label{ex:garp-ok}
+把上例的第二个观测改为 $p^{2}=(1,1),\,x^{2}=(1,1)$。此时 $p^{1}\cdot x^{2}=2=p^{1}\cdot x^{1}$ 仍给出 $x^{2}\succeq^{R}x^{1}$，但反向的 $p^{2}\cdot x^{1}=2>p^{2}\cdot x^{2}=2$ 不成立（严格大于），故 $x^{1}\not\succeq^{R}x^{2}$，不存在环，GARP 通过。数据可被理性化。
+\end{example}
+
+例~\ref{ex:garp} 与例~\ref{ex:garp-ok} 的差别仅在价格，但一者被拒、一者被接受——这说明\textbf{价格数据本身就是对偏好的检验}。在没有效用函数、只有价格与数量的观测时，理性化不再是一个不可检验的形而上学命题，而是一个可以逐条数据判真的算术问题。本章到此只给出这个思想的第一次预演；\S2.3--\S2.5 将把它展开为 WARP/SARP/HARP 的完整公理体系，\S2.7 给出 Afriat 定理与可计算的检验算法。
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[font=\scriptsize]
+  % (a) 第 1 期
+  \draw[axisline] (0,0) -- (3.0,0) node[below right] {$x_1$};
+  \draw[axisline] (0,0) -- (0,2.8) node[above left] {$x_2$};
+  \draw[very thick,dashed] (2.0,0) -- (0,2.0);
+  \fill (1.0,1.0) circle (2pt) node[above right=2pt] {$x^{1}$};
+  \node[figlabel,align=center] at (1.45,2.55) {第 1 期：$p^{1}=(1,1)$\\ $m^{1}=2$，选 $x^{1}$};
+  % (b) 第 2 期
+  \begin{scope}[xshift=5.4cm]
+    \draw[axisline] (0,0) -- (3.0,0) node[below right] {$x_1$};
+    \draw[axisline] (0,0) -- (0,2.8) node[above left] {$x_2$};
+    \draw[very thick,dashed] (3.0,0) -- (0,1.5);
+    \fill (1.0,1.0) circle (2pt) node[above right=2pt] {$x^{2}$};
+    \node[figlabel,align=center] at (1.45,2.55) {第 2 期：$p^{2}=(1,2)$\\ $m^{2}=3$，选 $x^{2}$};
+  \end{scope}
+  \node[figlabel,align=center] at (3.0,-0.50) {$x^{2}\in B^{1}\Rightarrow x^{1}\succeq^{R}x^{2}$};
+  \node[figlabel,align=center] at (3.0,-0.95) {$x^{1}\in B^{2}\Rightarrow x^{2}\succeq^{R}x^{1}$};
+  \node[align=center,text width=8.6cm,font=\scriptsize] at (3.9,-1.95) {两期所选束相同（都是 $(1,1)$），但两期价格不同：$p^{1}=(1,1)$ 与 $p^{2}=(1,2)$ 都恰好使它用尽预算，\\于是它在对方预算集中都“可负担”，显示偏好双向成立，构成 $2$-环而违反 GARP。};
+\end{tikzpicture}
+\caption{两期数据构成的 $2$-环：GARP 检验失败的最小实例}
+\end{figure}
+\figexplan{两幅图分别是两期的预算线（虚线三角）与被选中的束（黑点）。左图第 1 期价格 $(1,1)$、收入 $2$，右图第 2 期价格 $(1,2)$、收入 $3$。两期都恰好选中同一个束 $(1,1)$，且该束在对方的预算集内都“可负担”（支出都正好等于对方收入）。因此两个方向的显示偏好推理都成立，拼成一个 $2$-环，违反 GARP 与传递性，图~\ref{fig:garp-cycle} 给出该组数据不可理性化的结论。}
+\label{fig:garp-cycle}
+
+\subsection{把 Afriat 不等式算到底：一个三期数据的完整演算}
+
+上一节把 Afriat 定理的结论预告给了 \S2.7。这里我们把它最核心的计算步骤在三个观测上完整走一遍，使读者看到“检验”究竟是怎样变成算术的。
+
+\begin{definition}[Afriat 不等式（凹效用情形）]\label{def:afriat-ineq}
+称效用水平 $(U^{1},\dots,U^{T})\in\R^{T}$ 与斜率 $(\lambda^{1},\dots,\lambda^{T})\in\R_{++}^{T}$ 为观测 $\{(\boldsymbol{p}^{i},x^{i})\}$ 的一组 \textbf{可行解}，若对一切 $i,j$ 都有
+\begin{equation}\label{eq:afriat-ineq}
+U^{j}\ \le\ U^{i}+\lambda^{i}\,\boldsymbol{p}^{i}\cdot\bigl(x^{j}-x^{i}\bigr).
+\end{equation}
+\end{definition}
+
+条件~\eqref{eq:afriat-ineq} 的含义是：$u(x)=\min_{i}\bigl\{U^{i}+\lambda^{i}\boldsymbol{p}^{i}\cdot(x-x^{i})\bigr\}$ 是凹的、逐段线性的，而每个 $x^{i}$ 都在 $B^{i}$ 上取到它的上确界。定理~\ref{thm:afriat}（$\S2.7.5$）说：这样的可行解存在\emph{当且仅当} GARP 成立。
+
+\begin{example}[三期数据的手算]\label{ex:afriat3}
+设三期观测为
+\[
+\boldsymbol{p}^{1}=(1,2),\ x^{1}=(2,1);\qquad
+\boldsymbol{p}^{2}=(2,1),\ x^{2}=(1,2);\qquad
+\boldsymbol{p}^{3}=(1,1),\ x^{3}=(1,1).
+\]
+\textbf{第一步，逐对检查 GARP。}支出为 $\boldsymbol{p}^{1}\!\cdot x^{1}=\boldsymbol{p}^{2}\!\cdot x^{2}=4$、$\boldsymbol{p}^{3}\!\cdot x^{3}=2$。
+可达性：$x^{3}\in B^{1}$（$1\cdot1+2\cdot1=3\le 4$）、$x^{3}\in B^{2}$（$2\cdot1+1\cdot1=3\le 4$）；
+而 $x^{2}\notin B^{1}$（$1\cdot1+2\cdot2=5>4$）、$x^{1}\notin B^{2}$（$5>4$）、$x^{1},x^{2}\notin B^{3}$（$3>2$）。
+故仅有两条显示偏好：$x^{1}\succeq^{R}x^{3}$ 与 $x^{2}\succeq^{R}x^{3}$，无环，GARP 通过。
+
+\textbf{第二步，解不等式组。}我们试 $U=(U^{1},U^{2},U^{3})=(2,2,0)$。逐对代入条件~\eqref{eq:afriat-ineq}（$p^{i}\cdot(x^{j}-x^{i})$ 的值先算好）：
+
+\begin{center}
+\small
+\begin{tabular}{ccl}
+$(i,j)$ & $\boldsymbol{p}^{i}\cdot(x^{j}-x^{i})$ & 由~\eqref{eq:afriat-ineq} 得到的限制 \\ \midrule
+$(1,2)$ & $(1,2)\cdot(-1,\,1)=1$ & $U^{2}\le U^{1}+\lambda^{1}$，即 $2\le 2+\lambda^{1}$，对任意 $\lambda^{1}>0$ 成立 \\
+$(1,3)$ & $(1,2)\cdot(-1,\,0)=-1$ & $0\le 2-\lambda^{1}$，即 $\lambda^{1}\le 2$ \\
+$(2,1)$ & $(2,1)\cdot(1,\,-1)=1$ & $2\le 2+\lambda^{2}$，对任意 $\lambda^{2}>0$ 成立 \\
+$(2,3)$ & $(2,1)\cdot(0,\,-1)=-1$ & $0\le 2-\lambda^{2}$，即 $\lambda^{2}\le 2$ \\
+$(3,1)$ & $(1,1)\cdot(1,\,0)=1$ & $2\le 0+\lambda^{3}$，即 $\lambda^{3}\ge 2$ \\
+$(3,2)$ & $(1,1)\cdot(0,\,1)=1$ & $2\le 0+\lambda^{3}$，即 $\lambda^{3}\ge 2$ \\
+\end{tabular}
+\end{center}
+
+取 $\lambda^{1}=\lambda^{2}=1$、$\lambda^{3}=2$，六条限制全部满足（$\lambda^{1},\lambda^{2}\le 2$ 且 $>0$；$\lambda^{3}=2\ge 2$）。因此 $U=(2,2,0)$、$\lambda=(1,1,2)$ 是一组可行解。
+
+\textbf{第三步，写出效用并验证。}$u(x)=\min_{i}\{U^{i}+\lambda^{i}\boldsymbol{p}^{i}\cdot(x-x^{i})\}$ 展开为
+\[
+u(x_{1},x_{2})=\min\bigl\{\,x_{1}+2x_{2}-2,\ \ 2x_{1}+x_{2}-2,\ \ 2x_{1}+2x_{2}-2\,\bigr\}.
+\]
+在 $B^{3}$（即 $x_{1}+x_{2}\le 2$）上令 $x_{2}=2-x_{1}$，得 $u=\min\{2-x_{1},\,x_{1},\,2\}$，其最大值为 $1$，恰在 $x_{1}=1$ 处取到，即 $x^{3}=(1,1)$ 被理性化。在 $B^{1}$（$x_{1}+2x_{2}\le 4$）上 $u$ 的最大值为 $2$，在从 $x^{1}=(2,1)$ 到 $(4,0)$ 的整段线段上都取到，故 $x^{1}$ 是理性化选择；$x^{2}$ 同理。
+\end{example}
+
+例~\ref{ex:afriat3} 显示了三件事。其一，检验是\emph{有限}的：$T=3$ 只涉及 $9$ 个不等式与 $6$ 个变量，人手可算。其二，效用函数由可行解\emph{构造}出来，不是猜出来的。其三，理性化允许最优解\emph{不唯一}——$B^{1}$ 上整段线段都取到最大值 $2$，而 $x^{1}$ 只是其中一个点。这正是“$C(\theta)$ 必须是集合而非点”的第一个具体证据。
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[font=\scriptsize]
+  % 三期预算线与被选束
+  \draw[axisline] (0,0) -- (5.4,0) node[below right] {$x_1$};
+  \draw[axisline] (0,0) -- (0,4.0) node[above left] {$x_2$};
+  \draw[thick,dashed] (4.0,0) -- (0,2.0) node[above right,font=\scriptsize] {$B^{1}$};
+  \draw[thick,dashed] (0,4.0) -- (4.0,0) node[below right,font=\scriptsize] {$B^{2}$};
+  \draw[thick,dashed] (2.0,0) -- (0,2.0) node[above left,font=\scriptsize] {$B^{3}$};
+  \fill (2.0,1.0) circle (2pt) node[above right=1pt] {$x^{1}$};
+  \fill (1.0,2.0) circle (2pt) node[above left=1pt] {$x^{2}$};
+  \fill (1.0,1.0) circle (2pt) node[below left=1pt] {$x^{3}$};
+  \node[align=center,text width=7.2cm,font=\scriptsize] at (2.7,-1.45) {三期预算线与被选中的束（黑点）。显示偏好只有两条：$B^{1}$ 与 $B^{2}$ 都装得下 $x^{3}$，而 $x^{1}$ 与 $x^{2}$ 互相装不下。\\构造出的 $u$ 在 $B^{1}$ 上于 $(2,1)$ 到 $(4,0)$ 的整段线段取到最大值，故最优解不唯一。};
+\end{tikzpicture}
+\caption{三期数据的 GARP 检验与 Afriat 不等式的解}
+\end{figure}
+\figexplan{三根虚线分别是三期预算线 $B^{1}$（斜率 $-1/2$）、$B^{2}$（斜率 $-2$）、$B^{3}$（斜率 $-1$），黑点是被选中的束。$x^{3}=(1,1)$ 落在 $B^{1}$ 与 $B^{2}$ 内却不落在 $B^{3}$ 内，$x^{1}$ 与 $x^{2}$ 互不在对方的预算集内——这解释了为什么只有两条显示偏好且无环。图形要点：Afriat 不等式给出的 $u$ 在 $B^{1}$ 上有一段“高原”，最优解因此不唯一；这正是选择对应必须是集合的技术理由。}
+
+\subsection{不预设目标函数 ≠ 否认行为规律}
+
+不预设 $u$，只是\emph{把解释任务后移}：先让数据说话，再问何种偏好（如果存在）能解释它。这是理论经济学的方法论自觉——模型应当对“可观察的不一致”保持敏感，而不是用数学形式掩盖它。
+
+\notehead{本节要点}
+\begin{itemize}
+  \item 纯选择理论只给 $C(B)\subseteq B$，不预设 $u$；
+  \item “$C$ 可被效用理性化”是定理/检验的结论，不是公理；
+  \item 直接显示偏好 $\succeq^{R}$、WARP、SARP 构成可检验的一致性阶梯；
+  \item 循环偏好 $a\succ b\succ c\succ a$ 是理性化失败的最小反例。
+\end{itemize}

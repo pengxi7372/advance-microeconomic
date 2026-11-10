@@ -1,0 +1,31 @@
+\subsection{更多例子：连续性、凸性与拟线性}
+
+\begin{example}[线性效用的表示不唯一]
+若 $u(x)=x_1+x_2$，则 $v(x)=\exp(x_1+x_2)$ 表示同一偏好，但 $v$ 的边际效用随消费水平同时增长。由此可见，边际效用大小不是序数表示的内在属性；只有无差异集合和选择集合在严格递增变换下保持不变。
+\end{example}
+
+\begin{proposition}[严格单调变换保持拟凹性]
+若 $u$ 拟凹且 $f$ 严格递增，则 $f\circ u$ 拟凹。
+\end{proposition}
+\begin{proof}
+对任意 $a$，有
+$\{x:f(u(x))\ge a\}=\{x:u(x)\ge f^{-1}(a)\}$，其中只需在 $f$ 的值域内理解逆函数。右侧是 $u$ 的上水平集，为凸集，故左侧也凸。
+\end{proof}
+
+\begin{example}[凸偏好与非凸偏好]
+$u(x)=\sqrt{x_1}+\sqrt{x_2}$ 的上水平集为凸集，体现多样化偏好；$u(x)=\max\{x_1,x_2\}$ 的上水平集为两个半空间的并，一般不凸，体现专业化偏好。两者都可表示，但表示存在不意味着偏好具有凸性。
+\end{example}
+
+\begin{example}[拟线性效用]
+令 $u(m,z)=m+v(z)$，其中 $m$ 是计价物。若 $v$ 可微，则对 $z$ 的边际支付意愿为 $v'(z)$，不依赖 $m$。这正是拟线性结构的政策含义：收入变化不改变非货币品的边际评价，直到角点或收入效应重新进入模型。
+\end{example}
+
+\begin{proposition}[对角线编号的唯一性]
+若偏好连续且强单调，则每个无差异类与对角线 $\{t\mathbf 1:t\ge0\}$ 至多交一次。
+\end{proposition}
+\begin{proof}
+若 $t_2>t_1$ 且 $x\sim t_1\mathbf1\sim t_2\mathbf1$，则传递性给出 $t_1\mathbf1\sim t_2\mathbf1$。但强单调性给出 $t_2\mathbf1\succ t_1\mathbf1$，矛盾。因此交点至多一个。连续性与边界符号变化共同保证交点存在。
+\end{proof}
+
+\subsection{例题：从效用函数反推偏好性质}
+给定 $u=x_1^\alpha x_2^{1-\alpha}$，$0<\alpha<1$。一阶偏导均为正，故严格单调；对数变换后 $\ln u=\alpha\ln x_1+(1-\alpha)\ln x_2$，其 Hessian 在正象限上负半定意义下给出拟凹性。于是无差异曲线向右下倾斜且向原点凸。若把指数改为负权重，则单调性和凸性均需重新检查，不能从“乘法形式”直接套结论。

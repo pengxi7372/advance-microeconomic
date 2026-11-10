@@ -1,0 +1,83 @@
+% ==================== 第 8 节：总结、测验与作业（115–120 分钟）====================
+\section{总结、课堂测验与作业}
+
+\subsection{一条逻辑链}
+
+本章的核心不是“把一切行为都写成最大化”，而是理解一连串\emph{逻辑转换的条件}：
+\[
+\underbrace{X\supseteq B(\theta)}_{\text{从方案到可行集}}
+\;\longrightarrow\;
+\underbrace{C(\theta)\subseteq B(\theta)}_{\text{从可行集到选择}}
+\;\longrightarrow\;
+\underbrace{\succeq^{R}}_{\text{从选择到偏好}}
+\;\longrightarrow\;
+\underbrace{u:X\to\R}_{\text{从偏好到效用}}
+\;\longrightarrow\;
+\underbrace{C(\theta)=\argmax_{x\in B(\theta)}u(x)}_{\text{从效用表达到优化}},
+\]
+压缩成一句话：
+\[
+\text{choice data}\;\Rightarrow\;\text{preference representation}\;\Rightarrow\;\text{optimization}\;\Rightarrow\;\text{testable implications}.
+\]
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[font=\small,
+  box/.style={draw,thick,rounded corners=2pt,align=center,inner sep=4pt,fill=gray!12,minimum width=2.0cm,minimum height=1.0cm},
+  arr/.style={-{Stealth[length=2.4mm]},thick}]
+  \node[box] (b1) at (0,0) {$X\supseteq B(\theta)$};
+  \node[box] (b2) at (2.5,0) {$C(\theta)\subseteq B(\theta)$};
+  \node[box] (b3) at (5.0,0) {$\succeq^{R}$};
+  \node[box] (b4) at (7.5,0) {$u:X\to\R$};
+  \node[box] (b5) at (10.0,0) {$C(\theta)=\argmax u$};
+  \draw[arr] (1.05,0) -- (1.45,0);
+  \draw[arr] (3.55,0) -- (3.95,0);
+  \draw[arr] (6.05,0) -- (6.45,0);
+  \draw[arr] (8.55,0) -- (8.95,0);
+  \node[font=\scriptsize,above=3pt] at (1.25,0) {给出偏好};
+  \node[font=\scriptsize,above=3pt] at (3.75,0) {需要理性};
+  \node[font=\scriptsize,above=3pt] at (6.25,0) {需效用存在};
+  \node[font=\scriptsize,above=3pt] at (8.75,0) {需单调};
+  \node[align=center,font=\scriptsize] at (0,-1.05) {集合包含\\（无需偏好）};
+  \node[align=center,font=\scriptsize] at (2.5,-1.05) {单值化假设\\（几何直觉）};
+  \node[align=center,font=\scriptsize] at (5.0,-1.05) {传递性\\（Varian 修正）};
+  \node[align=center,font=\scriptsize] at (7.5,-1.05) {完备性与连续性\\（可数序稠密）};
+  \node[align=center,font=\scriptsize] at (10.0,-1.05) {单调性\\（强单调）};
+  \node[font=\scriptsize] at (5.0,-2.05) {四个箭头各自要求一个额外条件；任一环失效，整条链即在相应处断裂。};
+\end{tikzpicture}
+\caption{一条逻辑链：从方案空间到优化表述，及其每一步的前提}
+\end{figure}
+\figexplan{五个方框自左至右是本章的形式化主线：方案空间含可行集、可行集映到选择、选择反推偏好、偏好由效用表示、效用写成最大化表述。箭头上方标出该步所需的前提，方框下方标出该步真正用到的结构条件。图形要点：链条不是自动成立的，每推进一格都要额外付出一个假设。}
+
+\subsection{三个必须记住的反例}
+\begin{enumerate}
+  \item \textbf{非唯一最优}：$u(x_1,x_2)=x_1+x_2$，$p=(1,1)$，$m=1$ 时 $C(p,m)$ 是整条预算线——故选择对应\emph{必须}是集值对象；
+  \item \textbf{最大值不存在}：$B=(0,1)$、$u(x)=x$ 时 $\argmax=\varnothing$——存在性依赖紧致性；
+  \item \textbf{循环偏好}：$a\succ b\succ c\succ a$——传递性缺失时无法被效用理性化。
+\end{enumerate}
+
+\subsection{课堂测验（5 分钟）}
+\begin{enumerate}
+  \item 若两个消费束都达到最大效用，为什么不能把选择对应写成函数？\\
+        \emph{要点：}函数要求唯一输出；并列最优意味着输出含两个元素，写成函数等于偷偷加入任意决胜规则，丢失无差异信息。
+  \item $v(\theta)$ 与 $C(\theta)$ 的输出类型分别是什么？\\
+        \emph{要点：}$v(\theta)=\max u\in\R$ 是数；$C(\theta)=\argmax u\subseteq X$ 是集合。
+  \item 预算线移动时，变化的是偏好还是可行集？\\
+        \emph{要点：}可行集 $B(\theta)$。偏好 $\succeq$ 是行为原语，不随参数变化；这是比较静态的前提。
+  \item “税收提高效率”为什么还不足以推出“税收应当提高”？\\
+        \emph{要点：}前者是实证命题（事实层），后者是规范判断（价值层），需要额外福利标准才能连接。
+  \item 一个模型越现实是否一定越有价值？\\
+        \emph{要点：}否。Broad 与 Compact 存在张力；价值取决于六维综合表现与所回答的问题。
+\end{enumerate}
+
+\subsection{课后作业}
+\begin{enumerate}
+  \item 构造一个最小例子，使 $\argmax$ 恰好含有\emph{两个}元素，并画出图形；
+  \item 给出一个没有最大值的可行集与连续目标函数（不得照抄课堂反例），并说明缺少的是哪一条性质；
+  \item 用预算集解释收入效应与替代效应的逻辑区别（提示：先分解“哪个参数变了”）；
+  \item 选择一个你关心的政策模型，分别写出它的：正向命题、规范标准、识别风险与可证伪条件。
+\end{enumerate}
+
+\subsection{结语}
+
+最终评价一个模型时，应同时追问：它是否\emph{有用}、是否\emph{准确}、是否足够\emph{广泛}、是否保持\emph{简洁}、是否\emph{可识别}、是否\emph{可证伪}，以及它的规范结论究竟依赖了哪些价值前提。把这六问变成肌肉记忆，是本课最重要的产出。

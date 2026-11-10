@@ -1,0 +1,145 @@
+% ============================================================
+\section{有限集上效用函数的存在性}
+% ============================================================
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[font=\scriptsize,scale=1.12,transform shape]
+  \draw[thick,fill=gray!15] (0,0) rectangle (1.9,2.6);
+  \node[font=\small\bfseries] at (0.95,2.28) {$n=1$};
+  \fill (0.95,1.45) circle (1.5pt) node[right=3pt] {$a$};
+  \node[align=center] at (0.95,0.78) {$u(a)=1$};
+  \node[align=center] at (0.95,0.25) {起点：单元素};
+  \draw[->,thick] (1.98,1.3) -- (2.42,1.3);
+  \draw[thick,fill=gray!15] (2.5,0) rectangle (4.4,2.6);
+  \node[font=\small\bfseries] at (3.45,2.28) {$n=2$};
+  \fill (3.10,1.45) circle (1.5pt) node[left=3pt] {$a$};
+  \fill (3.80,1.45) circle (1.5pt) node[right=3pt] {$b$};
+  \node[align=center,text width=1.55cm,fill=white,inner sep=1pt] at (3.45,0.78) {$u(a)=1$；\\$b\succ a$\\$\Rightarrow u(b)=2$};
+  \node[align=center] at (3.45,0.25) {插入新元素};
+  \draw[->,thick] (4.48,1.3) -- (4.92,1.3);
+  \begin{scope}[xshift=8.0cm]
+    \draw[thick,fill=gray!15] (0,0) rectangle (2.3,2.6);
+    \node[font=\small\bfseries] at (1.15,2.28) {$n=3$};
+    \fill (0.80,1.45) circle (1.5pt) node[left=3pt] {$a$};
+    \fill (1.50,1.45) circle (1.5pt) node[below=3pt] {$c$};
+    \fill (2.20,1.45) circle (1.5pt) node[right=3pt] {$b$};
+    \node[align=center] at (1.15,0.75) {$c\succ a$，$c\sim b$\\$\Rightarrow u=(1,2,2)$};
+    \node[align=center] at (1.15,0.25) {重新标号，保持保序};
+  \end{scope}
+\end{tikzpicture}
+\caption{有限集效用表示定理：归纳构造的三个阶段}
+\end{figure}
+\figexplan{三个面板展示归纳构造的递推：$n=1$ 时取 $u(a)=1$；$n=2$ 时把新元素 $b$ 与已有元素比较，若 $b\succ a$ 则赋 $u(b)=2$；$n=3$ 时新元素 $c$ 满足 $c\succ a$ 且 $c\sim b$，于是得到 $u=(1,2,2)$。关键在于每一步只对“新元素与已编号元素”作比较，再重标号使保序成立——这正是有限集上表示定理的构造性证明。}
+
+\subsection{存在性定理与两种构造证明}
+
+\begin{theorem}[有限集表示定理]\label{thm:finite}
+设 $X$ 为有限集，$\succeq$ 为 $X$ 上的弱序（完备 + 传递）。
+则存在 $u:X\to\R$ 表示 $\succeq$。
+\end{theorem}
+
+给出两个证明：\textbf{归纳插入法}（揭示无差异类的层结构）与
+\textbf{排名计数法}（给出显式公式）。两者都产出具整数取值的效用函数。
+
+\begin{proof}[证明一：归纳插入法]
+对 $|X|=n$ 作数学归纳。
+
+\textbf{基例} $n=1$：$X=\{x_1\}$，取 $u(x_1)=0$ 即可。
+
+\textbf{归纳步}：设定理对 $n-1$ 元集成立。任取 $X$ 中一个“最差”元：
+有限弱序必有最小元（否则任取 $x^{(1)}$，若它非最小，存在 $x^{(2)}$ 使 $x^{(1)}\succ x^{(2)}$，
+如此递降，有限性迫使过程终止），记为 $x_{\min}$。
+令 $X'=X\setminus\{x_{\min}\}$，$\succeq$ 限制在 $X'$ 上仍是弱序。
+由归纳假设，存在 $u':X'\to\R$ 表示 $\succeq|_{X'}$。延拓：
+\[
+u(x)=
+\begin{cases}
+u'(x), & x\in X',\\[2pt]
+\min_{z\in X'} u'(z)-1, & x=x_{\min}.
+\end{cases}
+\]
+验证：在 $X'$ 内部比较不变；对 $z\in X'$，$z\succeq x_{\min}$ 且
+$u(z)=u'(z)\ge \min u' > u'(x_{\min})$ 方向的数值比较成立；
+若 $z\sim x_{\min}$ 则把 $x_{\min}$ 改赋 $\min u'$ 即可（同值对应无差异）。
+严格情形 $z\succ x_{\min}\iff u(z)>u(x_{\min})$ 由构造直接成立。故 $u$ 表示 $\succeq$。
+\end{proof}
+
+\begin{proof}[证明二：排名计数法]
+定义\textbf{下截面计数函数}
+\[
+u(x)\ \coloneqq\ \#\{y\in X:\ x\succeq y\},
+\]
+即“被 $x$ 击败（含打平）的方案数”。验证它表示 $\succeq$。
+
+\textbf{(i) $x\sim y\Rightarrow u(x)=u(y)$}：
+$x\succeq z\iff y\succeq z$（$x\sim y$ 时 $x\succeq z\Rightarrow y\succeq x\succeq z\Rightarrow y\succeq z$，反向对称），
+故两计数集相同，计数相等。
+
+\textbf{(ii) $x\succ y\Rightarrow u(x)>u(y)$}：
+记 $A\coloneqq\{z:y\succeq z\}$、$B\coloneqq\{z:x\succeq z\}$。
+由传递性，$y\succeq z\Rightarrow x\succeq y\succeq z\Rightarrow x\succeq z$，故 $A\subseteq B$。
+又 $x\in B$（自反性 $x\succeq x$）但 $x\notin A$（若 $y\succeq x$，与 $x\succ y$ 矛盾），
+故 $A\subsetneq B$，两个有限集计数满足 $u(x)=|B|>|A|=u(y)$。
+
+\textbf{(iii) $u(x)\ge u(y)\Rightarrow x\succeq y$}：
+由完备性，若不然则 $y\succ x$，由 (ii) 得 $u(y)>u(x)$，矛盾。
+
+三步合起来：$x\succeq y\iff u(x)\ge u(y)$。
+\end{proof}
+
+\begin{remark}
+证明一给出的效用值是\textbf{逐层插入}的整数（同一无差异类同层同值）；
+证明二的计数函数在同一无差异类上自动同值（步骤 (i)），
+在严格偏好对之间拉开\textbf{整数间隔}（步骤 (ii) 的严格包含）。
+两者都表明：有限集上不仅存在性成立，而且表示可以取为
+$u:X\to\{0,1,\dots,n-1\}$ 的“名次函数”。
+\end{remark}
+
+\subsection{数值例：四种饮料的偏好}
+
+\begin{example}\label{ex:finite}
+设 $X=\{a,b,c,d\}$，偏好为 $a\succ b\sim c\succ d$（$a$ 严格最优，$b,c$ 无差异，$d$ 最差）。
+\begin{itemize}
+  \item \textbf{归纳构造}：最差元 $d$ 赋 $0$；$b\sim c$ 次之，同赋 $1$；$a$ 最优，赋 $2$：
+        \[
+        u(a)=2,\quad u(b)=u(c)=1,\quad u(d)=0.
+        \]
+  \item \textbf{排名计数}：$u(a)=\#\{a,b,c,d\}=4$，$u(b)=u(c)=\#\{b,c,d\}=3$，$u(d)=\#\{d\}=1$。
+\end{itemize}
+两者都满足表示定义；它们之间由严格递增映射 $f(0)=1,f(1)=3,f(2)=4$ 联系（命题~\ref{prop:ordinal}）。
+\end{example}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.16,transform shape]
+  \draw[axisline] (0,0) -- (0,3.4) node[above, axislabel] {效用值};
+  \foreach \y/\lab in {0.5/0, 1.5/1, 2.5/2}{
+    \draw[AxisBlue] (0.08,\y) -- (-0.08,\y) node[left, axislabel] {\lab};
+  }
+  \foreach \x/\name/\val in {1.2/a/2.5, 2.6/b/1.5, 4.0/c/1.5, 5.4/d/0.5}{
+    \node[nodeblue, label=above:{\name}] at (\x,\val) {};
+  }
+  \draw[dashed, MidBlue] (1.2,2.5) -- (0,2.5);
+  \draw[dashed, MidBlue] (2.6,1.5) -- (0,1.5);
+  \draw[dashed, MidBlue] (4.0,1.5) -- (0,1.5);
+  \draw[dashed, MidBlue] (5.4,0.5) -- (0,0.5);
+  \node at (3.2,-0.7) {$b$ 与 $c$ 同层（无差异类 $\Rightarrow$ 同效用）；层间间隔任意，只需保持顺序};
+\end{tikzpicture}
+\end{center}
+\figexplan{纵轴为效用值。四个备选 $a,b,c,d$ 按偏好高低落在不同层上：$a$ 最高，$b$ 与 $c$ 同层（同一无差异类对应同一效用值），$d$ 最低。虚线把每个点投影到纵轴读数。层内点的具体数值与层间间隔均任意，只需保持偏好顺序——这正是序数性的含义。}
+
+\subsection{有限集结论的边界}
+
+\begin{remark}[三个容易误推的扩展]\label{rem:finite-boundary}
+\textbf{(i) 无限集上归纳法失效}：证明一的“取最差元”在无限集上可能失败——
+如 $\R_+$ 上的通常大小关系没有最小元；可数集 $(0,1]$ 上也没有最小元。
+无限情形需要全新的构造（§3.3）。
+
+\textbf{(ii) 不传递时结论崩溃}：设 $X=\{a,b,c\}$，$a\succ b\succ c\succ a$（循环）。
+任何表示都要求 $u(a)>u(b)>u(c)>u(a)$，不可能。
+这从构造层面复核了命题~\ref{prop:rep-rational}：传递性不可缺。
+
+\textbf{(iii) 不完备时排名计数失真}：若 $a$ 与 $b$ 不可比，
+计数法无法区分“无差异”与“不可比”——而效用函数强制把一切编码为实数比较，
+不可比对 $(a,b)$ 必然被错误地归类为 $u(a)\ge u(b)$ 或反之。完备性同样不可缺。
+\end{remark}

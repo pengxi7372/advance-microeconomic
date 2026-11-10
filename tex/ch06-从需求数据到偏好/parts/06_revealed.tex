@@ -1,0 +1,210 @@
+\section{非参数路径：显示偏好与 Afriat 定理}
+% ============================================================
+% 第六讲 6.6：WARP/SARP/GARP、三个公理的关系、Afriat 定理与效率指数
+% ============================================================
+
+\subsection{数据与两个基本关系}
+
+上一节假定知道整个需求函数。实证中更常见的情形是：只有有限个价格—数量对。
+
+\begin{definition}[观测数据]\label{def:data}
+一组观测为 $\mathcal D=\{(p^t,x^t)\}_{t=1}^{T}$，其中 $p^t\in\R^n_{++}$、$x^t\in\R^n_+\setminus\{0\}$。
+记第 $t$ 期的支出 $r^t:=p^t\cdot x^t$。
+\end{definition}
+
+注意这里\emph{没有}假定预算被花光：$r^t$ 只是实际支出，可能小于财富 $w^t$。
+这使非参数方法能容纳储蓄与角点，代价是"财富"从数据中消失，只剩支出。
+
+\begin{definition}[直接显示偏好]\label{def:direct-rp}
+称 $x^s$ 在 $t$ 期\textbf{直接显示为可负担}（记 $x^t\ R^0\ x^s$），若
+\[
+ p^t\cdot x^s\le p^t\cdot x^t=r^t .
+\]
+若不等号严格（$p^t\cdot x^s<r^t$），称 $x^t$ \textbf{直接严格显示偏好于} $x^s$，记 $x^t\ P^0\ x^s$。
+\end{definition}
+
+也就是说：$x^s$ 花得起而消费者却选了 $x^t$，那么 $x^t$ 至少和 $x^s$ 一样好。
+这是显示偏好纲领的全部内容——它把"偏好"从不可观测的心理对象，替换成可观测的比较关系。
+
+把 $R^0$ 取传递闭包，得到\emph{显示偏好关系} $R$（含若干步的链）；链上只要有一步严格，
+就记作 $P$。三个公理分别对 $R^0$ 与 $R$ 施加不同强度的约束。
+
+\subsection{三个公理}
+
+\begin{definition}[WARP、SARP、GARP]\label{def:axioms}
+\begin{enumerate}
+\item[\textbf{WARP}]（弱公理）若 $x^t\ R^0\ x^s$ 且 $x^t\ne x^s$，则 \emph{不可能} $x^s\ R^0\ x^t$。
+\item[\textbf{SARP}]（强公理）若 $x^t\ R\ x^s$ 且 $x^t\ne x^s$，则 \emph{不可能} $x^s\ R^0\ x^t$。
+\item[\textbf{GARP}]（广义公理）若 $x^t\ R\ x^s$，则 \emph{不可能} $x^s\ P^0\ x^t$。
+\end{enumerate}
+\end{definition}
+
+三者的差别全在"用哪个关系做前提、用哪个关系做结论"：
+WARP 前提与结论都用 $R^0$（只看两期成对比较）；
+SARP 前提用传递闭包 $R$、结论仍用 $R^0$；
+GARP 前提用 $R$、结论用严格关系 $P^0$——比 SARP 弱，因为结论只禁止\emph{严格}的逆偏好。
+
+\subsection{三个公理之间的关系}
+
+\begin{proposition}[SARP $\Rightarrow$ GARP]\label{prop:sarp-garp}
+若数据满足 SARP，则必满足 GARP。
+\end{proposition}
+
+\begin{proof}
+反设 GARP 失败：存在 $t,s$ 使 $x^t\ R\ x^s$ 且 $x^s\ P^0\ x^t$。
+由 $P^0\subseteq R^0\subseteq R$，有 $x^s\ R\ x^t$。
+于是对 $t\ne s$ 同时有 $x^t\ R\ x^s$ 与 $x^s\ R^0\ x^t$（后者由 $P^0$ 蕴含），
+这正是 SARP 所禁止的。故 SARP 成立时 GARP 必成立。
+\end{proof}
+
+反向不成立，且 GARP 与 WARP 之间\emph{互不包含}。两个方向各有一个反例。
+
+\begin{example}[GARP 成立但 WARP 失败]\label{ex:garp-not-warp}
+两期、两商品，价格相同：$p^1=p^2=(1,1)$，$x^1=(1,0)$，$x^2=(0,1)$。
+则 $r^1=r^2=1$，且
+\[
+ p^1\cdot x^2=1\le r^1,\qquad p^2\cdot x^1=1\le r^2,
+\]
+故 $x^1\ R^0\ x^2$ 与 $x^2\ R^0\ x^1$ 同时成立而 $x^1\ne x^2$——\textbf{WARP 失败}。
+但 $P^0$ 在两个方向上都不成立（两个束的支出都恰好等于 1，没有严格不等式），
+GARP 的结论要求 $x^s\ P^0\ x^t$ 才能构成违背，故 \textbf{GARP 成立}。
+\end{example}
+
+\begin{example}[WARP 成立但 GARP 失败]\label{ex:warp-not-garp}
+三期、三商品：
+\[
+\begin{array}{c|ccc|c}
+t & p^t & x^t & r^t\\
+\hline
+1 & (2,1,1) & (1,1,2) & 5\\
+2 & (1,1,2) & (1,2,1) & 5\\
+3 & (2,3,1) & (2,1,1) & 8
+\end{array}
+\]
+逐对检验：$p^1\cdot x^2=2+1+2=5\le r^1$（可负担），而 $p^2\cdot x^1=1+1+4=6>r^2$（不可负担），
+故 $1\to2$ 是单向的；同理 $p^2\cdot x^3=2+1+2=5\le r^2$ 而 $p^3\cdot x^2=2+6+1=9>r^3$，
+$2\to3$ 也是单向的；$p^3\cdot x^1=2+3+2=7<r^3$，故 $x^3\ P^0\ x^1$，而
+$p^1\cdot x^3=4+1+1=6>r^1$，$1\to3$ 反向不成立。
+三对观测逐一检查都不违反 \textbf{WARP}。
+
+但由 $1\to2\to3$ 的传递链，$x^1\ R\ x^3$；又 $x^3\ P^0\ x^1$。
+这正是 GARP 所禁止的"循环严格偏好"，故 \textbf{GARP 失败}。
+又因 SARP $\Rightarrow$ GARP（命题~\ref{prop:sarp-garp}），该数据\textbf{同时违反 SARP}：
+三个束互不相同，$x^1\ R\ x^2\ R\ x^3$ 且 $x^3\ R^0\ x^1$，构成一个完整的循环。
+于是这一个例子同时充当"WARP $\not\Rightarrow$ SARP"与"WARP $\not\Rightarrow$ GARP"的反例。
+\end{example}
+
+\begin{remark}[两商品是例外]
+\S 6.3 已看到一个现象：维数越低，理论约束越容易被自动满足。显示偏好这边有完全平行的事实：
+\textbf{在两商品情形下，WARP 与 SARP 等价}（Rose, 1958, \emph{Review of Economic Studies} 25(2), 124--125），
+从而也与 GARP 等价。原因不难直观理解：两商品时预算线把正象限切成两块，
+"可负担"关系受到严格的几何约束，成对比较已经足以排除任意长的循环。
+因此例~\ref{ex:warp-not-garp} 必须用三种商品才成立。
+这一事实有一个直接的实证含义：\textbf{若研究只涉及两类商品（如"食品"与"其他"），
+用 WARP 还是 GARP 做检验没有区别}；理论的可检验内容被维数压缩了。
+\end{remark}
+
+\begin{remark}[一个实操细节：同一束重复出现]
+三个公理的定义都要求 $x^t\ne x^s$，这条看似技术性的限定在数据清洗阶段很重要：
+同一消费束在不同价格下重复出现时，$R^0$ 在两个方向上都成立，但三者的判定会分岔——
+WARP 与 GARP 都因 $x^t=x^s$ 而豁免（不构成违背），而若把"束相同"误当作"偏好严格循环"则会误报违规。
+反过来，若两期观测到同一束而价格不同，这本身就是对"需求函数"概念的一个提醒：
+同一个人在两组不同价格下选了同一束，说明预算约束并未绑定，或偏好在两期间发生了变化。
+合并这类重复观测应当在检验之前完成，否则检验结果取决于公理的措辞而非数据。
+\end{remark}
+
+\subsection{Afriat 定理：GARP 是可理性化的充要条件}
+
+\begin{theorem}[Afriat, 1967；Varian, 1982]\label{thm:afriat}
+对有限数据 $\mathcal D=\{(p^t,x^t)\}_{t=1}^{T}$，下列命题等价：
+\begin{enumerate}
+\item $\mathcal D$ 满足 GARP；
+\item 存在一个连续、局部非饱和的效用函数 $u:\R^n_+\to\R$，使得对一切 $t$，
+      $x^t$ 是 $u$ 在预算集 $\{x:p^t\cdot x\le p^t\cdot x^t\}$ 上的最优解；
+\item 存在实数 $\{u^t\}_{t=1}^{T}$ 与 $\{\lambda^t\}_{t=1}^{T}$（$\lambda^t>0$），使 Afriat 不等式成立：
+      \[
+       u^s\le u^t+\lambda^t\,p^t\cdot(x^s-x^t),\qquad \forall s,t=1,\ldots,T .
+      \]
+\end{enumerate}
+\end{theorem}
+
+\begin{remark}[定理的三层含义]
+第一，\textbf{GARP 是充要的}：它不仅是可理性化的必要条件（由显示偏好的定义直接可得），
+还是充分条件。这一点远非显然——GARP 只约束成对与链式比较，却足以保证存在一个\emph{全局}的效用函数。
+第二，\textbf{不需要任何函数形式}：结论是"存在某个 $u$"，而不是"存在某个 CD 或 CES"。
+第三，\textbf{可计算}：Afriat 不等式是一组线性不等式，可行性可用线性规划判定，
+因此检验的复杂度是多项式时间的，$T$ 上千也能算。
+\end{remark}
+
+\begin{remark}[Afriat 不等式的读法]
+$\lambda^t$ 可解释为第 $t$ 期"一元钱的边际效用"：把 $u^s$ 与 $u^t$ 的差用支出差
+$p^t\cdot(x^s-x^t)$ 线性化，$\lambda^t$ 就是斜率。若 $x^s$ 在 $t$ 期可负担
+（$p^t\cdot(x^s-x^t)\le0$），不等式给出 $u^s\le u^t$——正是显示偏好的要求。
+不等式组存在解，等价于存在一条与全部观测相容的"分片线性"效用函数；
+Afriat 的构造正是用这些 $(\lambda^t,u^t)$ 拼出一个分段线性的 $u$。
+\end{remark}
+
+\begin{definition}[Afriat 效率指数]
+若 GARP 被违反，可定义效率指数
+\[
+ e^*:=\max\bigl\{\,e\in(0,1]:\ \text{把每个}\ x^t\ \text{按比例缩减为}\ e\,x^t\ \text{后数据满足 GARP}\,\bigr\}.
+\]
+$e^*=1$ 当且仅当原数据满足 GARP；$e^*$ 越接近 1，数据"越接近"可理性化。
+\end{definition}
+
+\begin{remark}[指数不能当拟合优度用]
+$e^*$ 常被误读为"理性程度"。它度量的是\emph{为恢复可理性化所需的最小统一缩减比例}，
+是一个几何量，没有行为含义：它同时吸收了测量误差、偏好异质与真实的非理性，
+三者无法从数据中分离。把它报告为"消费者有 $e^*$ 比例的理性"是范畴错误。
+合理的用法只有两个：作为设定诊断（$e^*$ 明显低于 1 说明静态理性模型不适合这批数据），
+以及作为稳健性比较（不同子样本、不同商品划分下的 $e^*$ 相对大小）。
+\end{remark}
+
+\subsection{两条路径的对照}
+
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+维度 & 微分路径（\S 6.2--6.5） & 非参数路径（\S 6.6）\\
+\midrule
+输入 & 需求函数的解析式 & 有限观测点\\
+核心条件 & $S$ 对称 $+$ 负半定 & GARP\\
+输出 & 闭式的 $e(p,\bar u)$、$h$ & 一个存在性结论，无闭式\\
+函数形式 & 需事先指定（CD/CES/LES/AIDS） & 不需要\\
+可检验内容 & 对称性、曲率（参数约束） & 整个显示偏好结构\\
+能否算福利 & 能（$e$ 已知） & 不能直接算\\
+\bottomrule
+\end{tabular}
+\end{center}
+\figexplan{两条恢复路径的对照。二者并不冲突：若数据来自一个满足可积性条件的光滑需求系统，则它必满足 GARP（取足够密的观测即可验证）；反过来，GARP 成立只保证存在\emph{某个}效用函数，不保证它光滑、可微、能生成可积的需求函数。因此非参数检验更稳健（假设更少），参数方法更有力（结论更强）。实证中的常见做法是先用非参数方法做设定筛查，再选参数系统做估计与福利计算。}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.95]
+  \draw[axisline] (0,0)--(6.4,0) node[below]{$x_1$};
+  \draw[axisline] (0,0)--(0,5.0) node[left]{$x_2$};
+  % 第 1 期预算集
+  \fill[black!8] (0,0)--(4.6,0)--(0,4.6)--cycle;
+  % 预算线 1：x1+x2=4.6
+  \draw[curveA] (0,4.6)--(4.6,0);
+  % 预算线 2：0.5x1+x2=2.2
+  \draw[curveB] (0,2.2)--(4.4,0);
+  % 两个观测束
+  \node[nodewhite] at (2.4,2.2) {};
+  \node[figlabel,above right] at (2.48,2.28) {$x^1$};
+  \node[nodewhite] at (1.0,1.7) {};
+  \node[figlabel,below left] at (0.92,1.60) {$x^2$};
+  % 显示偏好标注（置于预算集外的空白区）
+  \node[figlabel] at (3.45,3.95) {$x^1\ P^0\ x^2$};
+  % 图例
+  \draw[curveA] (0.1,-0.95)--(0.85,-0.95);
+  \node[right,font=\scriptsize] at (0.95,-0.95)
+      {第 1 期预算线 $p^1\cdot x=r^1$（浅灰为预算集）};
+  \draw[curveB] (0.1,-1.42)--(0.85,-1.42);
+  \node[right,font=\scriptsize] at (0.95,-1.42)
+      {第 2 期预算线 $p^2\cdot x=r^2$};
+\end{tikzpicture}
+\caption{直接显示偏好的几何}
+\figexplan{实线为第 1 期预算线，浅灰区域为其预算集；虚线为第 2 期预算线。$x^2$ 落在第 1 期预算集内部（$p^1\cdot x^2<r^1$），而消费者在第 1 期选了 $x^1$，故 $x^1$ 严格显示偏好于 $x^2$。反过来 $x^1$ 落在第 2 期预算集之外（$p^2\cdot x^1>r^2$），故反向的显示偏好不成立——这对观测不违反 WARP。所有公理的内容都可以在这样的图中读出：违背发生在"两条预算线互相穿过对方所选的束"之时。}
+\label{fig:garp}
+\end{figure}

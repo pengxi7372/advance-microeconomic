@@ -1,0 +1,227 @@
+% ============================================================
+\section{连续编号：从可数稠密集到效用函数}\label{sec:numbering}
+% ============================================================
+
+本节完成定理~\ref{thm:dense-necessary} 的逆命题（充分性）与
+定理~\ref{thm:continuous-rep} 的核心步骤。构造分两段：
+先把可数序稠密集 $D$ \textbf{保序地}嵌入 $(0,1)$（连续编号），
+再沿偏好序把编号\textbf{延拓}到全空间 $X$。
+
+\subsection{连续编号的构造}
+
+\begin{lemma}[插值引理]\label{lem:interp}
+设 $\succeq$ 为弱序，$D$ 为 $X$ 的可数序稠密子集。
+若 $x\succ y$ 且 $x,y$ 之间\textbf{不是}“相邻跳跃对”（即不存在 $x\succ y$ 使
+$\{z:x\succ z\succ y\}=\varnothing$），则存在 $d\in D$ 使 $x\succ d\succ y$。
+\end{lemma}
+
+\begin{proof}
+$x\succ y$ 且非相邻跳跃，故存在 $w$ 使 $x\succ w\succ y$。
+由序稠密定义，存在 $d_1\in D$ 使 $x\succeq d_1\succeq w$；再对 $w\succ y$ 用序稠密，
+存在 $d_2\in D$ 使 $w\succeq d_2\succeq y$。若 $d_1\succ w$ 或 $w\succ d_2$ 之一成立，
+则 $d_1$ 或 $d_2$ 已满足严格夹逼；若 $d_1\sim w\sim d_2$，则 $d_1\sim d_2\sim w$，
+$x\succ d_1\succ y$ 直接成立（$d_1\sim w$ 且 $x\succ w\succ y$ 加传递性）。
+\end{proof}
+
+\begin{definition}[连续编号]\label{def:cont-num}
+设 $D=\{d_1,d_2,\dots\}$ 为 $X$ 的可数序稠密子集的枚举。
+\textbf{连续编号}是如下归纳构造的映射 $g:D\to(0,1)$：
+
+\textbf{第 1 步}：令 $g(d_1)=1/2$。
+
+\textbf{第 $n$ 步}：设 $g$ 已在 $\{d_1,\dots,d_{n-1}\}$ 上定义且保序。
+$d_n$ 与已编号元素的关系必属三种情形之一：
+\begin{enumerate}
+  \item \textbf{新最大}：$d_n\succ d_i$ 对所有 $i<n$。令
+        $g(d_n)=\dfrac{1+\max_{i<n}g(d_i)}{2}$（取当前最大值与 $1$ 的中点）；
+  \item \textbf{新最小}：$d_i\succ d_n$ 对所有 $i<n$。令
+        $g(d_n)=\dfrac{0+\min_{i<n}g(d_i)}{2}$（取 $0$ 与当前最小值的中点）；
+  \item \textbf{中间}：存在已编号元夹逼 $d_n$。取序相邻的一对
+        $d_L\prec d_n\prec d_R$（$d_L,d_R\in\{d_1,\dots,d_{n-1}\}$ 且二者之间无其他已编号元），令
+        \[
+        g(d_n)=\frac{g(d_L)+g(d_R)}{2};
+        \]
+        若 $d_n$ 与某已编号元无差异（$d_n\sim d_i$），则令 $g(d_n)=g(d_i)$。
+\end{enumerate}
+\end{definition}
+
+\begin{proposition}[连续编号保序]\label{prop:num-order}
+定义~\ref{def:cont-num} 的 $g$ 满足：对任意 $d,d'\in D$，
+\[
+d\succeq d'\ \Longleftrightarrow\ g(d)\ge g(d'),\qquad
+d\succ d'\ \Longleftrightarrow\ g(d)>g(d').
+\]
+且 $g(D)$ 在 $(0,1)$ 中稠密：$g(D)$ 与 $D$ 同序型地铺满——
+任意 $g(d)<g(d')$ 之间存在其他编号值（不断二分产生）。
+\end{proposition}
+
+\begin{proof}
+归纳：第 $n$ 步放入 $g(d_n)$ 时，三种情形的取值都严格落在由偏好序决定的
+目标开区间内（新最大取 $(\max g,1)$ 中点、新最小取 $(0,\min g)$ 中点、
+中间取 $(g(d_L),g(d_R))$ 中点），故插入后序关系保持。
+无差异情形赋同值，故 $d\sim d'\iff g(d)=g(d')$。
+稠密性：若 $d\succ d'$ 非相邻跳跃，由引理~\ref{lem:interp} 存在 $d''\in D$ 使
+$d\succ d''\succ d'$，保序性给出 $g(d)>g(d'')>g(d')$。
+\end{proof}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+  \draw[axisline] (0,0) -- (10.6,0) node[below left, axislabel] {$(0,1)$};
+  \draw[AxisBlue] (0.3,0.08) -- (0.3,-0.08) node[below, axislabel] {$0$};
+  \draw[AxisBlue] (10.3,0.08) -- (10.3,-0.08) node[below, axislabel] {$1$};
+  % 下层标签
+  \foreach \x/\lab in {5.3/{$g(d_1)=\frac12$}, 2.8/{$g(d_3)=\frac14$}}{
+    \node[nodeblue, label=above:{\lab}] at (\x,0) {};
+  }
+  % 错层避免标签碰撞
+  \node[nodeblue, label=above=14pt:{$g(d_4)=\frac58$}] at (6.55,0) {};
+  % 上层标签（与下层错开）
+  \foreach \x/\lab in {7.8/{$g(d_2)=\frac34$}, 4.05/{$g(d_5)=\frac38$}}{
+    \node[nodeblue] at (\x,0) {};
+    \node[above=15pt] at (\x,0) {\lab};
+    \draw[thin, MidBlue] (\x,0.12) -- (\x,0.62);
+  }
+  \node[align=center] at (5.3,-1.1) {编号顺序：$d_1\to d_2\to d_3\to d_4\to d_5$；每一步把新元素放入\\ 偏好序指定的区间\textbf{中点}，编号值自动保序且越来越密};
+\end{tikzpicture}
+\end{center}
+\figexplan{横轴为 $(0,1)$ 区间。可数稠密集的元素按偏好指定的顺序被逐个插入相应区间的中点，得到编号值 $g(d_i)$（如 $g(d_1)=\frac12$、$g(d_2)=\frac34$）。所有点都画在同一条轴上，标签上下错层仅为避免文字碰撞，并不表示不同含义；随着插入进行，编号自动保序且越来越密。}
+
+\subsection{延拓：从 $D$ 到 $X$}
+
+\begin{theorem}[延拓表示定理]\label{thm:extension}
+设 $\succeq$ 为弱序且 $X$ 含可数序稠密子集。则 $\succeq$ 可效用表示。
+\end{theorem}
+
+\begin{proof}
+分三步：补足稠密集、连续编号、上确界延拓。
+
+\textbf{第 1 步（把缺口端点并入稠密集）。}
+先证：对任意可数序稠密集 $D$，$\succeq$ 的相邻跳跃对（定义~\ref{def:gap}）至多可数。
+事实上，每个相邻跳跃对 $x\succ y$ 由序稠密性给出 $d\in D$ 使 $x\succeq d\succeq y$；
+相邻性迫使 $d\sim x$ 或 $d\sim y$，即 $d$ 落在跳跃的某一端。
+而同一 $d$ 至多充当两个跳跃的端点（上方一个、下方一个），
+不同跳跃对必须占用不同的 $d$，故跳跃对数 $\le 2|D|$，至多可数。
+从每个跳跃对的\textbf{两端}无差异类各取一个代表元，并入 $D$，得到新的可数集 $D'$。
+$D'$ 仍序稠密，且\textbf{每个跳跃对的两端都有 $D'$ 点}。
+
+\textbf{第 2 步（连续编号）。}
+对 $D'$ 作定义~\ref{def:cont-num} 的连续编号 $g:D'\to(0,1)$，
+由命题~\ref{prop:num-order}，$g$ 严格保序：$d\succ d'\iff g(d)>g(d')$。
+
+\textbf{第 3 步（上确界延拓）。}
+定义
+\[
+u(x)\ \coloneqq\ \sup\,\{g(d):\ d\in D',\ x\succeq d\},
+\qquad \sup\varnothing\coloneqq 0.
+\]
+验证表示性：
+
+\textbf{(i) $x\succeq y\Rightarrow u(x)\ge u(y)$}：
+传递性给出 $\{d:y\succeq d\}\subseteq\{d:x\succeq d\}$，上确界对包含单调。
+
+\textbf{(ii) $x\succ y\Rightarrow u(x)>u(y)$}：分两种情形。
+
+\textit{情形 1：存在 $z$ 使 $x\succ z\succ y$（非相邻）。}
+由序稠密性取 $d_1\in D'$ 使 $x\succeq d_1\succeq z$，则 $d_1\succeq z\succ y$。
+再对 $d_1\succ y$ 用一次：若 $d_1\succ y$ 之间有 $z'$，取 $d_2\in D'$ 使
+$d_1\succeq z'\succeq d_2\succ y$ 的夹逼形式 $d_1\succ d_2\succeq y$ 或 $d_1\succeq d_2\succ y$；
+无论哪种，都有 $D'$ 中的两点 $d_1\succ d_2$ 且 $x\succeq d_1$、$d_2\succ y$。
+若 $d_1\succ y$ 是相邻跳跃，第 1 步已保证两端都有 $D'$ 点，
+取 $d_2\in D'$、$d_2\sim y$，同样有 $d_1\succ d_2$。
+统一地：存在 $d_1,d_2\in D'$，$x\succeq d_1\succ d_2\succeq y$。于是
+\[
+u(x)\ \ge\ g(d_1)\ >\ g(d_2)\ \ge\ u(y),
+\]
+末步因任何 $y\succeq d$ 都有 $d_2\succeq y\succeq d$ 即 $g(d_2)\ge g(d)$，
+故 $g(d_2)$ 是 $\{g(d):y\succeq d\}$ 的上界。
+
+\textit{情形 2：$x\succ y$ 为相邻跳跃对。}
+第 1 步保证存在 $d_x,d_y\in D'$ 使 $d_x\sim x$、$d_y\sim y$。则
+\[
+u(x)\ \ge\ g(d_x)\ >\ g(d_y)\ =\ u(y),
+\]
+其中等号 $u(y)=g(d_y)$：任何 $y\succeq d$ 都有 $d\preceq y$
+（否则 $d\succ y$ 且相邻性迫使 $d\succeq x$，即 $d\succeq x\succ y$，与 $y\succeq d$ 矛盾），
+故 $g(d)\le g(d_y)$，上确界为 $g(d_y)$。
+
+\textbf{(iii) $u(x)\ge u(y)\Rightarrow x\succeq y$}：
+若不然，完备性给出 $y\succ x$，由 (ii) 得 $u(y)>u(x)$，矛盾。
+\end{proof}
+
+\subsection{缺口分析：效用函数的跳跃从何而来}
+
+连续编号产出的 $u$ 一般是\textbf{有跳跃的}阶梯型函数。跳跃不是构造的缺陷，
+而是偏好序本身的“缺口”的忠实影像。
+
+\begin{definition}[序缺口]\label{def:gap}
+弱序 $\succeq$ 的一个\textbf{缺口}是一对无差异类 $([y],[x])$ 满足
+$x\succ y$ 且 $\{z:x\succ z\succ y\}=\varnothing$（相邻跳跃对），
+或 $(-\infty,[x])$、$([y],+\infty)$ 型的首、尾端点。
+\end{definition}
+
+\begin{proposition}[缺口至多可数]\label{prop:gap-countable}
+若 $\succeq$ 可表示，则其缺口族至多可数。
+\end{proposition}
+
+\begin{proof}
+每个缺口 $([y],[x])$ 对应实数轴上的非空开区间 $\bigl(u(y),u(x)\bigr)$
+（$u$ 为任一表示），不同缺口对应的开区间两两不交
+（缺口之间由序的相邻性决定端点，端点不重叠）。
+实数轴上两两不交的非空开区间族至多可数（每区间取一有理数即得单射入 $\Q$）。
+\end{proof}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+  \draw[axisline] (0,0) -- (0,3.6) node[above, axislabel] {$u(x)$};
+  \draw[axisline] (0,0) -- (8.8,0) node[below left, axislabel] {$X$（按 $\succeq$ 排序）};
+  % steps with jumps
+  \draw[thick, AxisBlue] (0.6,0.5) -- (2.2,0.5);
+  \draw[thick, dashed, AxisBlue] (2.2,0.5) -- (2.2,1.4);
+  \draw[thick, AxisBlue] (2.2,1.4) -- (4.0,1.4);
+  \draw[thick, dashed, AxisBlue] (4.0,1.4) -- (4.0,2.6);
+  \draw[thick, AxisBlue] (4.0,2.6) -- (6.2,2.6);
+  \draw[thick, dashed, AxisBlue] (6.2,2.6) -- (6.2,3.1);
+  \draw[thick, AxisBlue] (6.2,3.1) -- (8.2,3.1);
+  \node[nodeblue] at (2.2,0.5) {}; \draw[DeepBlue, fill=white, thick] (2.2,1.4) circle (1.8pt);
+  \node[nodeblue] at (4.0,1.4) {}; \draw[DeepBlue, fill=white, thick] (4.0,2.6) circle (1.8pt);
+  \node[nodeblue] at (6.2,2.6) {}; \draw[DeepBlue, fill=white, thick] (6.2,3.1) circle (1.8pt);
+  % jump intervals on y-axis
+  \draw[decorate, decoration={brace, amplitude=4pt, mirror}] (-0.15,0.5) -- (-0.15,1.4) node[midway, left=6pt, align=center] {缺口 1\\ $(0.5,1.4)$};
+  \draw[decorate, decoration={brace, amplitude=4pt, mirror}] (-0.15,1.4) -- (-0.15,2.6) node[midway, left=6pt, align=center] {缺口 2};
+  \node[align=center] at (4.4,-0.9) {每个跳跃对应值域轴上一个非空开区间；区间两两不交 $\Rightarrow$ 至多可数个跳跃};
+\end{tikzpicture}
+\end{center}
+\figexplan{阶梯折线是效用函数沿偏好序的图象：水平平台段表示同一无差异类（同一效用值），竖直虚线段表示跳跃——相邻层级之间没有中间元素，对应值域轴上一个非空开区间（左侧花括号标出的“缺口”）。实心点取到该平台值、空心点表示跳跃另一端未被取到；两两不交的开区间至多可数，故跳跃至多可数个。}
+
+\begin{theorem}[连续性恢复]\label{thm:u-cont}
+设 $X\subseteq\R^n$ 连通，$\succeq$ 为连续弱序。则 $\succeq$ 没有缺口，
+且上确界延拓给出的表示是\textbf{连续}函数。
+\end{theorem}
+
+\begin{proof}[证明要点]
+\textbf{无缺口}：设 $x\succ y$。连续性使 $V=\{z:x\succ z\succ y\}$ 为
+两个开集之交，从而是开集；它非空——连通集上的连续弱序不存在相邻跳跃对
+（否则 $X=\{z:z\succeq x\}\cup\{z:y\succeq z\}$ 把 $X$ 分成两个非空闭集且
+$\{z:z\succeq x\}\cap\{z:y\succeq z\}=\{z:z\sim x\ \text{或}\ z\sim y\}$ 的边界行为与连通性矛盾；
+标准论证：开集 $\{z:x\succ z\}$ 与 $\{z:z\succ y\}$ 的真包含链给出中间点）。
+故任意 $x\succ y$ 之间都有 $z$，无缺口。
+
+\textbf{延拓连续}：无缺口时，对任意实数 $r\in(0,1)$，
+$\{x:u(x)\ge r\}=\{x:x\succeq z\ \text{对所有}\ u(z)<r\ \text{的}\ z\}$
+是闭集（连续偏好的上轮廓集之交）；
+$\{x:u(x)\le r\}$ 对偶地为闭集。$u$ 的上、下水平集皆闭，故 $u$ 连续。
+\end{proof}
+
+\begin{remark}[连续编号法的全貌]
+\[
+\underbrace{\text{弱序}+\text{可数序稠密集}}_{\text{纯序条件}}
+\xrightarrow[\text{中点插入}]{\text{连续编号 }g}
+\underbrace{g(D)\subset(0,1)\ \text{稠密}}_{\text{保序}}
+\xrightarrow[\sup\text{ 延拓}]{}
+\underbrace{u:X\to[0,1]\ \text{表示}}_{\text{存在性}}
+\xrightarrow[\text{无缺口}]{\text{偏好连续}}
+\underbrace{u\ \text{连续}}_{\text{可分析性}}.
+\]
+整条链条只用到序结构与“不交开区间至多可数”这一个实数性质，
+是效用理论中\textbf{假设最省}的构造路线。
+\end{remark}

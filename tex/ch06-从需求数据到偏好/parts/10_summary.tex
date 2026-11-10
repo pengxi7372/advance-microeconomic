@@ -1,0 +1,65 @@
+\section{本章小结}
+% ============================================================
+% 第六讲章末小结：逻辑链、一页检查清单与常见陷阱
+% ============================================================
+
+本章把前五章的单向推导倒过来走了一遍：从可观测的需求出发，经可积性条件恢复支出函数，
+经显示偏好处理有限数据，最后回到货币度量。把十个小节串成一条逻辑链：
+
+\begin{enumerate}
+\item \textbf{问题}（\S 6.1）：反问题有三层——函数层面的可积性、数据层面的可理性化、福利层面的货币度量。
+      层次不同，所需信息与结论强度不同。
+\item \textbf{信息含量}（\S 6.1）：从偏好到需求是多对一的，因此最多恢复到序数结构；
+      可识别的是曲率（$S$），不可识别的是水平（$u$ 的标度）。
+\item \textbf{会计约束}（\S 6.2）：齐次性与 Walras 律给出 Engel 加总、Cournot 加总，
+      并自动蕴含 $Sp=0$、$p^{\top}S=0$、$\operatorname{rank}S\le n-1$。
+      这些是恒等式，不是理论检验的对象。
+\item \textbf{对称性的内容}（\S 6.3）：$n=2$ 时对称性自动成立（命题~\ref{prop:n2-auto}），
+      实质内容退化为单条曲率条件 $\alpha\le0$；$n\ge3$ 时对称性才成为可拒绝的约束（命题~\ref{prop:n3-substantive}）。
+      负半定与对称是两条独立条件。
+\item \textbf{可积性}（\S 6.4）：Shephard 引理把问题写成 Pfaff 系统 $\partial e/\partial p_i=x_i(p,e)$；
+      其 Frobenius 条件恰为 $S$ 对称（命题~\ref{prop:frobenius}）；
+      加上 $S$ 负半定即得 Hurwicz--Uzawa 定理（定理~\ref{thm:integrability}），
+      与必要性合起来构成"可由偏好生成 $\iff$ 对称 $+$ 负半定"的充要刻画。
+\item \textbf{显式恢复}（\S 6.5）：CD、CES、LES 的 $S$ 都可以显式写出；
+      LES 与 CD 同构（$S^{\mathrm{LES}}=A\cdot S^{\mathrm{CD}}(a,1)$）；
+      任何显式效用函数推出的系统都自动可积，理论检验的机会随之消失。
+\item \textbf{非参数}（\S 6.6）：有限数据下 GARP 是可理性化的充要条件（Afriat）；
+      SARP $\Rightarrow$ GARP，但 GARP 与 WARP 互不包含；
+      两商品时 WARP、SARP、GARP 三者等价（Rose, 1958）。
+\item \textbf{加总}（\S 6.7）：总量需求一般依赖财富分配，不构成代表性消费者；
+      加总 Slutsky 矩阵等于个体之和加一个分配项（命题~\ref{prop:S-agg}）；
+      Gorman 极化形式 $e_i=c_i(p)+d(p)u_i$ 是精确加总的充分条件，代价是效用必须可作基数比较。
+\item \textbf{福利}（\S 6.8）：$\mathrm{CV}=e(p^1,u^0)-w$、$\mathrm{EV}=w-e(p^0,u^1)$；
+      单一价格变动时 $\mathrm{EV}\le|\Delta\mathrm{CS}|\le\mathrm{CV}$（命题~\ref{prop:sandwich}）；
+      多价格变动时 CV/EV 无路径依赖而 $\Delta\mathrm{CS}$ 有（命题~\ref{prop:no-path}）。
+\item \textbf{执行}（\S 6.9）：六步流水线；三种拒绝（异质、动态、测量误差）无法由数据区分；
+      写 CV/EV 之前必须回答对象、路径、分配效应三个问题。
+\end{enumerate}
+
+\noindent 从需求数据到福利的完整逻辑链，按顺序自检：
+
+\begin{enumerate}
+\item \textbf{信息边界}：需求只给边际信息，效用只到序数；能恢复的是支出函数，不是效用函数。
+\item \textbf{可观测构造}：$S_{ij}=\partial x_i/\partial p_j+x_j\partial x_i/\partial w$，全部由可观测导数组成。
+\item \textbf{自动性质}：$Sp=0$、$p^{\top}S=0$、$\operatorname{rank}S\le n-1$——由齐次与 Walras 律直接给出，不能当检验。
+\item \textbf{维数效应}：$n=2$ 时 $S$ 必对称，实质约束只剩曲率；$n\ge3$ 时对称性才有内容。
+\item \textbf{可积条件}：Pfaff 系统的 Frobenius 条件 $\iff S$ 对称；$S$ 负半定 $\iff e$ 对 $p$ 凹。
+\item \textbf{充分性}：$S$ 对称 $+$ 负半定 $\Rightarrow$ 存在 $e$ 与偏好（Hurwicz--Uzawa）；与必要性合成充要刻画。
+\item \textbf{序数残差}：$e$ 只在选定效用标度后唯一；换标度不改变 $S$、需求与福利变化的货币值。
+\item \textbf{参数系统}：显式效用函数推出的 $S$ 自动可积；CD 份额恒定、CES 弹性恒定、LES 分两阶段。
+\item \textbf{非参数}：GARP $\iff$ 存在局部非饱和效用函数；$e^*=1$ 当且仅当 GARP；两商品时三公理等价。
+\item \textbf{加总}：$S^{\mathrm{agg}}=\sum_iS^i+$ 分配项；Gorman 极化形式保证精确加总。
+\item \textbf{福利}：$\mathrm{CV}$ 与 $\mathrm{EV}$ 由 $e$ 定义，故无路径依赖；$\Delta\mathrm{CS}$ 只在单一价格变动时良定义。
+\item \textbf{解释边界}：拒绝可能来自异质、动态或测量误差；CV/EV 不可跨人相加；代表性与分配效应须交代。
+\end{enumerate}
+
+\medskip
+\noindent\textbf{三个常见陷阱。}
+其一，把"行和为零"当作 Slutsky 理论的验证——它是齐次性与 Walras 律的推论，
+在任何估计中都会被自动满足，拒绝它只说明数据或代码有问题，不说明理论有问题。
+其二，在两商品情形下做对称性检验并报告"通过"——对称性在那里是恒等式（命题~\ref{prop:n2-auto}），
+检验的功效为零；真正的检验必须至少三种商品。
+其三，用总量数据算 CV 并直接称为"社会福利变化"——这句话同时跨过了加总、
+效用可比与代表性三层未验证的门槛；规范的写法是把结论限定在"代表性消费者的补偿变差"，
+并报告分组的稳健性。

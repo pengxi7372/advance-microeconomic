@@ -1,0 +1,259 @@
+\section{路径积分与可积性定理}
+% ============================================================
+% 第六讲 6.4：Pfaff 系统、Frobenius 条件、Hurwicz–Uzawa 定理
+% ============================================================
+
+\subsection{恢复的对象应是支出函数，而不是效用函数}
+
+先解决一个方向性问题。若试图直接恢复效用函数 $u$，会遇到两个不可逾越的障碍：
+其一，$u$ 的取值本身不可识别（观察一的单调变换）；其二，需求只提供\emph{边际}信息，
+而 $u$ 的恢复需要把边际信息积分成水平——积分的常数无法由数据确定。
+
+正确的恢复对象是支出函数，理由有三：
+\begin{enumerate}
+\item 需求与支出函数之间是\emph{梯度关系} $\nabla_pe=h$（Shephard 引理），这是一个可以直接积分的方程；
+\item 需求与效用之间没有这样的梯度关系：$x$ 只通过一阶条件与 $\nabla u$ 的\emph{比值}相连，
+      比例因子 $\lambda$ 随 $(p,w)$ 变化，无法直接积分；
+\item 一旦得到 $e$，效用函数可由对偶重新构造（\S 6.4.5），且这一构造只到单调变换为止，
+      正好匹配数据的信息含量。
+\end{enumerate}
+
+\subsection{把问题写成偏微分方程组}
+
+设待求的支出函数为 $e(p,\bar u)$，其中 $\bar u$ 作为参数固定。Shephard 引理要求
+\[
+ \frac{\partial e(p,\bar u)}{\partial p_i}=h_i(p,\bar u),\qquad i=1,\ldots,n.
+\]
+右端的 Hicksian 需求不可观测，但由对偶恒等式 $h\bigl(p,\bar u\bigr)=x\bigl(p,e(p,\bar u)\bigr)$，
+可以把它换成可观测的 Marshallian 需求在\emph{未知支出水平}处的取值：
+\begin{equation}\label{eq:pfaff}
+ \boxed{\;\frac{\partial e(p,\bar u)}{\partial p_i}
+ =x_i\bigl(p,\,e(p,\bar u)\bigr),\qquad i=1,\ldots,n.\;}
+\end{equation}
+这是一个关于 $e$ 的一阶非线性偏微分方程组（Pfaff 系统）；$\bar u$ 只以参数身份出现，
+因此每固定一个 $\bar u$ 就得到一组方程。初始条件取在某个基准价格 $p^0$ 上：
+$e(p^0,\bar u)=e^0$，其中 $e^0$ 的选取等价于选定效用的计量单位（见 \S 6.4.5）。
+
+\subsection{可积条件就是对称性}
+
+方程组 \eqref{eq:pfaff} 有解的必要条件是混合偏导可交换。把右端记为 $f_i(p,e)=x_i(p,e)$，
+则 $\partial e/\partial p_i=f_i$ 要求
+\[
+ \frac{\partial f_i}{\partial p_j}+\frac{\partial f_i}{\partial e}\,f_j
+ =\frac{\partial f_j}{\partial p_i}+\frac{\partial f_j}{\partial e}\,f_i
+ \qquad\text{（Frobenius 条件）}.
+\]
+逐项计算左端：
+\[
+ \frac{\partial f_i}{\partial p_j}+\frac{\partial f_i}{\partial e}f_j
+ =\frac{\partial x_i}{\partial p_j}+\frac{\partial x_i}{\partial w}\,x_j
+ =S_{ij}(p,e).
+\]
+右端同理为 $S_{ji}(p,e)$。于是得到本节的核心结论：
+
+\begin{proposition}[可积条件 $=$ 对称性]\label{prop:frobenius}
+Pfaff 系统 \eqref{eq:pfaff} 在 $(p,\bar u)$ 的邻域内可解（存在 $C^2$ 解 $e$）的必要条件是
+$S(p,e(p,\bar u))$ 对称；在 $S$ 连续可微且定义域单连通时，该条件也是充分的。
+\end{proposition}
+
+\begin{proof}[证明要点]
+必要性即上面的混合偏导计算。充分性用 Frobenius 定理：若系数矩阵对称且光滑，
+则方程组的解族存在且依赖一个常数（初值）。单连通性保证任意两条连接 $p^0$ 与 $p$ 的路径给出同一解，
+即积分与路径无关；这正是 Poincaré 引理在"系数含未知函数"情形下的推广。
+\end{proof}
+
+\begin{remark}[几何读法：路径无关]
+图~\ref{fig:path} 给出二维价格空间中的图像。从 $p^0$ 到 $p^1$ 有无数条路径，
+沿每条路径把"需求 $\times$ 价格增量"累加，得到若干个数值。若 $S$ 对称，这些数值全部相等，
+线积分因此定义了一个函数 $e$；若 $S$ 不对称，沿不同路径累加会得到不同结果，
+"支出函数"就不存在——同一组价格与效用会对应多个"最小支出"，这在逻辑上不可能。
+所以对称性不是一条外加的公理，而是"支出函数存在"这一句话的微分形式。
+\end{remark}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=1.0]
+  \draw[axisline] (0,0)--(6.4,0) node[below]{$p_1$};
+  \draw[axisline] (0,0)--(0,4.9) node[left]{$p_2$};
+  \coordinate (P0) at (1.1,1.0);
+  \coordinate (P1) at (5.2,3.9);
+  \draw[fillsoft] (1.1,1.0)--(5.2,1.0)--(5.2,3.9)--(1.1,3.9)--cycle;
+  % 路径 A：先横后竖
+  \draw[curveA] (P0)--(5.2,1.0)--(P1);
+  % 路径 B：先竖后横
+  \draw[curveB] (P0)--(1.1,3.9)--(P1);
+  % 路径 C：直线
+  \draw[curveC] (P0)--(P1);
+  \node[nodewhite] at (P0) {};
+  \node[figlabel,below left] at (P0) {$p^0$};
+  \node[nodewhite] at (P1) {};
+  \node[figlabel,above right] at (P1) {$p^1$};
+  \node[figlabel] at (3.35,0.70) {路径 A};
+  \node[figlabel,rotate=90] at (0.72,2.55) {路径 B};
+  \node[figlabel] at (3.55,2.02) {路径 C};
+\end{tikzpicture}
+\caption{线积分的路径无关性}
+\figexplan{价格空间中的三条路径：A（实线，先调 $p_1$ 再调 $p_2$）、B（虚线，顺序相反）、C（点线，沿直线同时调整）。支出函数的变化量定义为沿路径对 $\sum_i h_i\,\mathrm dp_i$ 的线积分。对称性 $S_{ij}=S_{ji}$ 保证 A、B、C 三条路径给出同一数值，等价于矩形回路上的环路积分为零（图中阴影区域即该回路）；若 $S$ 不对称，绕回路一周的积分不为零，支出函数无法定义。}
+\label{fig:path}
+\end{figure}
+
+\subsection{Hurwicz--Uzawa 可积性定理}
+
+\begin{theorem}[可积性定理]\label{thm:integrability}
+设 $x$ 满足 (A1)--(A3)，且在价格空间的单连通开集 $\mathcal P$ 上
+\begin{enumerate}
+\item[(i)] $S(p,w)$ 对称；
+\item[(ii)] $S(p,w)$ 负半定。
+\end{enumerate}
+则存在函数 $e:\mathcal P\times(u(0),\infty)\to\R_{++}$ 与一个连续、严格凸、局部非饱和的偏好 $\succsim$，使得：
+\begin{enumerate}
+\item $e(\cdot,\bar u)$ 对 $p$ 一次齐次、凹、非减，且 $\nabla_pe=h$；
+\item $x(p,w)$ 恰为 $\succsim$ 在预算集 $\{x:p\cdot x\le w\}$ 上的需求；
+\item $e$ 由 $(x,\bar u)$ 唯一确定（在选定效用标度之后）。
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}[证明纲要]
+分三步。技术细节（可微性阶数、边界行为、解曲线的整体存在性）从略，只保留构造的逻辑骨架。
+
+\textbf{第一步：构造 $e$。}固定 $\bar u$，在 $\mathcal P$ 上取定基准点 $p^0$ 与初值 $e^0>0$，
+沿任一条从 $p^0$ 到 $p$ 的路径 $\Gamma$ 求解 \eqref{eq:pfaff}（等价于沿 $\Gamma$ 积分）。
+由命题~\ref{prop:frobenius}，条件 (i) 保证解与路径无关，故得到良定义的 $C^2$ 函数 $e(p,\bar u)$。
+
+\textbf{第二步：验证 $e$ 是支出函数。}
+\emph{一次齐次}：$x$ 零次齐次意味着 \eqref{eq:pfaff} 在 $p\mapsto tp$ 下保持形式，
+解的唯一性给出 $e(tp,\bar u)=t\,e(p,\bar u)$。
+\emph{对 $p$ 非减}：$\partial e/\partial p_i=x_i\ge0$。
+\emph{凹性}：对方程 \eqref{eq:pfaff} 再求一次偏导，
+\[
+ \frac{\partial^2e}{\partial p_i\partial p_j}
+ =\frac{\partial x_i}{\partial p_j}+\frac{\partial x_i}{\partial w}\frac{\partial e}{\partial p_j}
+ =S_{ij},
+\]
+即 $D_p^2e=S$。条件 (ii) 因此恰好等价于 $e$ 对 $p$ 凹。
+\emph{对 $\bar u$ 单调}：由构造中 $\bar u$ 的排序保证（技术细节见 Hurwicz--Uzawa 原文）。
+
+\textbf{第三步：由 $e$ 反造偏好。}定义间接效用为 $e$ 对 $\bar u$ 的广义逆：
+\[
+ V(p,w):=\max\{\bar u:\;e(p,\bar u)\le w\}.
+\]
+由 $e$ 对 $\bar u$ 严格递增且连续，$V$ 良定义，且对 $(p,w)$ 零次齐次、拟凸。
+再由标准的对偶构造定义直接效用
+\[
+ u(x):=\min_{p\gg0}\bigl\{V(p,\,p\cdot x)\bigr\},
+\]
+即在所有可能价格下"最不利"的间接效用。可以验证 $u$ 连续、拟凹，且其生成的 Marshallian 需求恰为 $x$：
+由 $V$ 的定义，$x(p,w)$ 满足 $e\bigl(p,V(p,w)\bigr)=w$，再由 $\nabla_pe=x(p,e)$ 与 Shephard 引理，
+$x(p,w)=h\bigl(p,V(p,w)\bigr)$；即 $x$ 是支出最小化在效用水平 $V(p,w)$ 处的解，
+由对偶恒等式它同时是效用最大化的解。
+\end{proof}
+
+\begin{remark}[定理的地位]
+定理~\ref{thm:integrability} 与定理~\ref{thm:slutsky-necessity} 合起来构成一个\emph{充分必要}刻画：
+\[
+ x\ \text{可由偏好生成}
+ \iff
+ \begin{cases}
+ \text{(A1)--(A3)},\\
+ S\ \text{对称},\\
+ S\ \text{负半定}.
+ \end{cases}
+\]
+这是消费者理论中最重要的"元定理"：它把"理性"这一不可直接观测的假设，
+转换成一组可以施加在估计结果上的、有限维的、可拒绝的约束。
+没有它，需求估计就只是曲线拟合；有了它，实证才有检验理论的资格。
+\end{remark}
+
+\begin{remark}[局部与全局的分界]
+定理的陈述限定在单连通开集 $\mathcal P$ 上，这是 Frobenius 定理的自然适用范围。
+若要 $e$ 定义在整个 $\R^n_{++}$ 上，需附加条件：解曲线不逃出定义域、$S$ 在整个域上负半定、
+以及边界行为（$p_i\to0$ 时 $x_i$ 的极限）不破坏连续性。
+实证中这些条件极少被检验，原因很实际：样本只覆盖价格空间的一小块，全局可积性无法从局部数据识别。
+因此\textbf{"可积"在实证中始终是局部命题}，这一点在解读检验结果时必须交代。
+\end{remark}
+
+\subsection{序数不可识别与效用标度的锚定}
+
+定理~\ref{thm:integrability} 说 $e$ 由 $(x,\bar u)$ 唯一确定，但这句话里藏着一个循环：
+$\bar u$ 本身是效用的标度，而效用标度正是不可识别的。澄清如下。
+
+设 $e(p,\bar u)$ 是一个解，$\varphi$ 为任意严格递增函数，则
+\[
+ \tilde e(p,\tilde u):=e\bigl(p,\varphi^{-1}(\tilde u)\bigr)
+\]
+同样是解（它对应效用标度 $\tilde u=\varphi(\bar u)$），且生成同一需求。因此
+\textbf{解集是 $e$ 在效用方向上的一整条重参数化轨道}。要挑出唯一代表，必须锚定标度，
+最常用的三种锚定是：
+\begin{enumerate}
+\item \textbf{货币锚}：规定 $e(p^0,\bar u)=\bar u$，即"在基准价格下，一单位效用值一元钱"；
+\item \textbf{效用锚}：规定 $u(x^0)=1$ 对某个基准束成立；
+\item \textbf{指数锚}：规定 $e(p^0,\bar u)=1$，即以基准价格的生活成本为 1（生活成本指数的常用规范）。
+\end{enumerate}
+三种锚定给出不同的 $e$，但\emph{由 $e$ 导出的需求、Slutsky 矩阵、以及福利变化的货币度量全部相同}（\S 6.8）。
+这正是"序数"的确切含义：水平不可识别，差值与曲率可识别。
+
+\begin{remark}[一个常见误解]
+"效用不可观测，所以效用函数没有意义"——这句话混淆了两个层次。
+效用\emph{水平}确实不可观测也不可识别；但效用\emph{函数的曲率}（通过 $S$）完全由需求数据决定。
+正因为曲率可识别，才能谈"补偿需求向下倾斜"这类可检验命题，
+也才能用 $e$ 计算有经济含义的货币度量。序数性削弱的是标度，不是内容。
+\end{remark}
+
+\subsection{算例：把定理完整走一遍}
+
+定理~\ref{thm:integrability} 的证明是纲要式的，容易让人停留在"存在性"的层面。
+下面用 CD 需求把一个完整的反解过程走一遍：给定 $x$，解 Pfaff 系统，定出 $e$，
+再验证 $D_p^2e$ 恰为 \S 6.5 将要算出的 Slutsky 矩阵。这条链路打通了，
+可积性就不再是一个抽象定理，而是一个可执行的计算程序。
+
+\begin{example}[从 CD 需求积分出支出函数]\label{ex:cd-invert}
+设 $x_i(p,w)=\alpha_iw/p_i$，$\alpha_i>0$、$\sum_i\alpha_i=1$。Pfaff 系统 \eqref{eq:pfaff} 为
+\[
+ \frac{\partial e}{\partial p_i}=\frac{\alpha_i\,e}{p_i},\qquad i=1,\ldots,n .
+\]
+第 $i$ 个方程只含 $p_i$ 与 $e$，可分离变量：
+\[
+ \frac{\mathrm de}{e}=\alpha_i\,\frac{\mathrm dp_i}{p_i}
+ \;\Longrightarrow\;
+ e=\psi_i\bigl(p_{-i},\bar u\bigr)\,p_i^{\alpha_i},
+\]
+其中 $\psi_i$ 不依赖 $p_i$。对 $i=1$ 得 $e=\psi_1(p_{-1})p_1^{\alpha_1}$；
+代入 $i=2$ 的方程，$\psi_1$ 中与 $p_2$ 有关的部分必须给出 $\alpha_2\ln p_2$，如此逐项进行，
+最后得到
+\[
+ e(p,\bar u)=\varphi(\bar u)\prod_{i=1}^{n}p_i^{\alpha_i}.
+\]
+\textbf{齐次性自动满足}：右端对 $p$ 是 $\sum_i\alpha_i=1$ 次齐次。
+这一步顺带说明 $\sum_i\alpha_i=1$ 不是参数化的人为约定：
+若 $\sum_i\alpha_i\ne1$，上式对 $p$ 就不是一次齐次，因而不可能是支出函数，
+需求 $x_i=\alpha_iw/p_i$ 也不是齐次性所允许的需求——两条路给出同一个结论。
+
+\textbf{定锚}：$\varphi$ 由初值决定。取基准价格 $p^0=(\alpha_1,\ldots,\alpha_n)$ 并要求
+$e(p^0,\bar u)=\bar u$，得 $\varphi(\bar u)=\bar u\big/\prod_i\alpha_i^{\alpha_i}$，故
+\[
+ \boxed{\;e(p,\bar u)=\bar u\prod_{i=1}^{n}\Bigl(\frac{p_i}{\alpha_i}\Bigr)^{\alpha_i}\;}
+\]
+与 \S 6.5 由效用最大化直接推出的结果一致。（在 $p=\alpha$ 处，消费者对每种商品各消费 $\bar u$ 单位，
+总支出恰好为 $\bar u$——这就是"货币锚"在这个例子里的具体含义。）
+
+\textbf{回代验证}：由 Shephard 引理，
+\[
+ \frac{\partial e}{\partial p_1}=\frac{\alpha_1}{p_1}\,e
+ =\frac{\alpha_1}{p_1}\cdot w=h_1(p,\bar u),
+\]
+与 $x_1(p,w)=\alpha_1w/p_1$ 在对偶点 $w=e(p,\bar u)$ 处吻合，对偶恒等式得到验证。
+再求二阶导：
+\[
+ \frac{\partial^2e}{\partial p_i\partial p_j}
+ =\frac{\alpha_i\alpha_j\,e}{p_ip_j}-\delta_{ij}\frac{\alpha_i\,e}{p_i^{2}},
+\]
+正是 \S 6.5 命题~\ref{prop:S-cd} 给出的 $S$（在 $e=w$ 处取值）。三个环节——积分、定锚、回代——
+首尾闭合，说明定理的构造不是形式上的存在性论证，而是真的可以算出东西。
+\end{example}
+
+\begin{remark}[这个算例暴露的两件事]
+第一，\textbf{可积性是一个算法}：解一阶偏微分方程组 $\to$ 用一个初值定常数 $\to$ 用 Shephard 引理回代检验。
+对 CD 这类可分形式，逐次积分即可；对一般的 $x$，需要沿路径数值积分（这正是 \S 6.4.3 中"路径无关"的技术内容）。
+第二，\textbf{锚点不是任意的}：换成别的 $p^0$ 会得到不同形式的 $e$（相差一个只依赖 $\bar u$ 的因子），
+但 $S=D_p^2e$、需求、以及福利变化的货币值都不变——这与 \S 6.4.5 关于序数标度的讨论完全一致。
+\end{remark}

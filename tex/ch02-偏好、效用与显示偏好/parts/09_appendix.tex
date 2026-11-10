@@ -1,0 +1,70 @@
+\clearpage
+\section{拓展：偏好公理的局部检验与理性化算法}
+
+\subsection{从二元比较到有限数据矩阵}
+对有限观测集 $X=\{x^1,\ldots,x^n\}$，可把弱偏好写成矩阵 $A$，其中
+$A_{ij}=1$ 当且仅当 $x^i\succeq x^j$。完备性要求每个非对角位置至少有一个方向为 1；传递性要求
+$A_{ij}=A_{jk}=1\Rightarrow A_{ik}=1$。矩阵表示使理论公理转化为可编程的逻辑检验。
+
+\begin{figure}[H]\centering
+\begin{tikzpicture}[x=1.1cm,y=1.1cm,font=\scriptsize]
+\draw[thick] (0,0) rectangle (3.3,3.3);
+\foreach \x in {1.1,2.2}{\draw (\x,0)--(\x,3.3);}\foreach \y in {1.1,2.2}{\draw (0,\y)--(3.3,\y);}
+\node at (.55,2.75) {$1$};\node at (1.65,2.75) {$1$};\node at (2.75,2.75) {$0$};
+\node at (.55,1.65) {$0$};\node at (1.65,1.65) {$1$};\node at (2.75,1.65) {$1$};
+\node at (.55,.55) {$1$};\node at (1.65,.55) {$0$};\node at (2.75,.55) {$1$};
+\node[above] at (.55,3.3) {$x^1$};\node[above] at (1.65,3.3) {$x^2$};\node[above] at (2.75,3.3) {$x^3$};
+\node[left] at (0,2.75) {$x^1$};\node[left] at (0,1.65) {$x^2$};\node[left] at (0,.55) {$x^3$};
+\node[align=center] at (1.65,-.55) {列：被比较对象\\行：比较对象};
+\end{tikzpicture}
+\caption{有限偏好的邻接矩阵}
+\end{figure}
+\figexplan{矩阵的行列分别对应两个备选方案。对角线上的 1 表示自反性；互为 1 的对称位置表示无差异；单向 1 表示严格偏好。矩阵闭包可用于检验传递性。}
+
+\subsection{传递闭包与算法化检验}
+给定直接比较矩阵 $A$，定义其传递闭包 $A^+$：若存在一条从 $i$ 到 $j$ 的有向路径，则 $(A^+)_{ij}=1$。
+若 $A^+$ 产生新的反向边而原矩阵没有对应边，则数据包含隐含的严格环或不一致。
+Floyd--Warshall 算法可在 $O(n^3)$ 时间内计算闭包：
+\[
+D^{(k)}_{ij}=D^{(k-1)}_{ij}\lor
+(D^{(k-1)}_{ik}\land D^{(k-1)}_{kj}).
+\]
+这说明“传递性”不仅是抽象公理，也是可执行的有限检验程序。
+
+\begin{proposition}[有限集上的理性化]
+若有限选择数据满足无严格偏好环，则存在一个完备且传递的偏好关系理性化该数据；进一步存在一个序数效用函数表示该关系。
+\end{proposition}
+\begin{proof}
+将严格关系视为有向无环图，拓扑排序得到线性序。对线性序赋予整数等级 $1,2,\ldots,n$，即得效用表示。若存在无差异对，则赋予同一等级即可。
+\end{proof}
+
+\subsection{WARP、SARP与HARP的层级}
+WARP 只排除两期直接反向显示偏好；SARP 进一步排除多期有向环；HARP 将价格—支出不等式纳入检验。
+三者不是三个互不相关的定义，而是从局部到全局、从方案关系到预算几何的递进：
+\[
+\text{WARP}\ \subsetneq\ \text{SARP}\ \subsetneq\ \text{HARP的几何约束}.
+\]
+
+\begin{figure}[H]\centering
+\begin{tikzpicture}[font=\scriptsize]
+\node[draw,rectangle,rounded corners,fill=gray!10,minimum width=2.4cm,minimum height=0.8cm] (w) at (0,0) {WARP：两期};
+\node[draw,rectangle,rounded corners,fill=gray!20,minimum width=2.4cm,minimum height=0.8cm] (s) at (4,0) {SARP：多期};
+\node[draw,rectangle,rounded corners,fill=gray!30,minimum width=2.8cm,minimum height=0.8cm] (h) at (8,0) {HARP：价格几何};
+\draw[->,thick] (w)--(s) node[midway,above] {排除环};\draw[->,thick] (s)--(h) node[midway,above] {加入支出};
+\node[align=center] at (4,-1.25) {约束越来越强\\但需要的数据也越来越结构化};
+\end{tikzpicture}
+\caption{显示偏好公理的递进关系}
+\end{figure}
+\figexplan{箭头表示检验对象从直接反向选择扩展到多期路径，再扩展到价格与支出构成的几何约束；每一步都增加可证伪内容，但也增加数据要求。}
+
+\subsection{严格偏好环与福利解释}
+若 $x\succ y\succ z\succ x$，则不存在任何传递效用函数 $u$ 满足三条严格不等式，因为它们相加后得到 $u(x)>u(x)$。
+这类反例说明，效用表示并非对任意排序的机械编码，而是把一致性要求写进数字结构。
+
+\subsection{练习与小结}
+\begin{enumerate}
+\item 给定四个方案的比较矩阵，计算传递闭包并找出所有严格环。
+\item 构造满足 WARP 但不满足 SARP 的三期数据。
+\item 说明完备性被放松后，为何单一实值效用函数可能不再是适当表示工具。
+\end{enumerate}
+本节的核心结论是：偏好理论既可用公理语言表达，也可用矩阵、图和算法检验；二者之间的桥梁正是传递闭包与无环性。

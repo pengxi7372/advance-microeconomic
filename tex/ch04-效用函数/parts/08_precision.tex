@@ -1,0 +1,28 @@
+\subsection{社会福利函数的精细校对}
+
+\begin{proposition}[CES 社会福利的两个极限]
+令
+\[
+W_\varepsilon(x)=\left(\frac1N\sum_{i=1}^Nx_i^{1-\varepsilon}\right)^{1/(1-\varepsilon)}.
+\]
+当 $\varepsilon\to0$ 时，$W_\varepsilon$ 收敛于算术平均；当 $\varepsilon\to1$ 时，收敛于几何平均；当 $\varepsilon\to\infty$ 时，收敛于 $\min_i x_i$。
+\end{proposition}
+\begin{proof}
+第一极限直接代入 $1-\varepsilon=1$。令 $r=1-\varepsilon$，则 $\ln W_r=\frac1r\ln(\frac1N\sum_i x_i^r)$。在 $r\to0$ 时，$x_i^r=e^{r\ln x_i}=1+r\ln x_i+o(r)$，故
+$\ln W_r\to N^{-1}\sum_i\ln x_i$，得到几何平均。最后，幂均值的最大项控制 $r\to-\infty$ 的极限，取对数后最大项对应原变量中的最小值，故极限为最小值。
+\end{proof}
+
+\begin{example}[同一可能性前沿上的切点]
+在图形中，可能性前沿必须保持不变，变化的只能是社会福利等值线。功利主义等值线斜率为 $-1$；最大最小准则的有效等值线是水平线或垂直线的分段；CES 等值线在两者之间平滑变化。若分别为三种准则画出不同的前沿，会把“技术约束变化”误读为“评价准则变化”。
+\end{example}
+
+\begin{remark}[图 4.3 的读图规则]
+图 4.3 中三幅面板共享坐标轴、共享可能性前沿和共享效用单位。左图的切点由 $W=u_1+u_2$ 的等值线决定，中图由最差者水平线决定，右图由 CES 等值线决定。图内标签统一放在白底节点中，避免压住前沿；箭头只标示福利改善方向，不承担曲线定义。
+\end{remark}
+
+\subsection{福利变化的计算核对}
+对收入向量 $(10,2)$，算术平均为 $6$，几何平均为 $\sqrt{20}$。当 $\varepsilon=2$ 时，CES 福利为
+\[
+\left[\frac12(10^{-1}+2^{-1})\right]^{-1}=\frac1{0.3}=3.3333.
+\]
+因此不平等指数 $A=1-W/6=0.4444$。这里的 $A$ 是相对于同一算术平均的归一化指标，不能与使用不同收入单位或不同基准均值的指数直接比较。

@@ -1,0 +1,183 @@
+\section{对称性：什么时候是实质约束}
+% ============================================================
+% 第六讲 6.3：n=2 自动对称、n≥3 实质约束、曲率成为唯一内容
+% ============================================================
+
+\subsection{必要性：从偏好到对称}
+
+先把第 5 章已证的一半结论固定下来，作为本章的出发点。
+
+\begin{theorem}[Slutsky 条件的必要性]\label{thm:slutsky-necessity}
+设偏好 $\succsim$ 连续、严格凸、局部非饱和，$u$ 为其连续表示，需求 $x(p,w)$ 在 (A1) 下可微。
+则对一切 $(p,w)$，$S(p,w)$ 对称且负半定。
+\end{theorem}
+
+\begin{proof}
+由第 5 章 \S 5.7 的对偶恒等式，$x(p,w)=h\bigl(p,v(p,w)\bigr)$。在 Hicksian 需求上取导数：
+\[
+ \frac{\partial x_i}{\partial p_j}
+ =\frac{\partial h_i}{\partial p_j}
+ +\frac{\partial h_i}{\partial \bar u}\,\frac{\partial v}{\partial p_j}
+ =\frac{\partial h_i}{\partial p_j}
+ -\frac{\partial h_i}{\partial \bar u}\,\lambda\,x_j,
+\]
+末一步用了 Roy identity $\partial v/\partial p_j=-\lambda x_j$（$\lambda=\partial v/\partial w$）。
+再由 EMP 的包络结果 $\partial e/\partial\bar u=\mu$ 与 Hicksian 需求对效用的导数关系
+$\partial h_i/\partial\bar u=\partial^2e/(\partial p_i\partial\bar u)$，有
+$\partial h_i/\partial\bar u=\mu\,\partial x_i/\partial w$（在 $\bar u=v(p,w)$ 处取值；这可由对偶恒等式
+$h(p,v(p,w))=x(p,w)$ 对 $w$ 求导、并用 $\partial v/\partial w=\lambda$ 得到）。
+代入上式并用 $\lambda\mu=1$（第 5 章 \S 5.7 的乘子互逆关系）：
+\[
+ \frac{\partial x_i}{\partial p_j}=\frac{\partial h_i}{\partial p_j}-x_j\frac{\partial x_i}{\partial w},
+ \qquad\text{即}\qquad
+ S_{ij}=\frac{\partial h_i}{\partial p_j}.
+\]
+于是 $S=D_ph=\nabla^2_{pp}e$。由 Young 定理，Hessian 对称；由 $e$ 对 $p$ 凹，Hessian 负半定。
+\end{proof}
+
+\begin{remark}[这一步的意义]
+定理~\ref{thm:slutsky-necessity} 把"可观测的 $S$"与"理论上的 $\nabla^2_{pp}e$"直接等同。
+这是全章的技术枢纽：对称性与负半定性之所以能作为检验，正因为它们恰好是支出函数 Hessian 的两条性质。
+换言之，$S$ 就是 $e$ 的曲率在需求一侧的影子。
+\end{remark}
+
+\subsection{两商品情形：对称性自动成立}
+
+初学者常把"$S$ 对称"当作一条需要单独验证的独立条件。在两商品世界里，这条条件\emph{没有任何内容}——
+它被齐次性与 Walras 律自动蕴含。
+
+\begin{proposition}[$n=2$ 时对称性自动成立]\label{prop:n2-auto}
+设 $n=2$，$x=(x_1,x_2)$ 满足 (A1)--(A3)，$p\gg0$，$x_1>0$。则 $S_{12}=S_{21}$，即 $S$ 必对称。
+\end{proposition}
+
+\begin{proof}
+定义\emph{预算份额函数}
+\[
+ g(r):=\frac{p_1x_1(p,w)}{w},\qquad r:=\frac{p_2}{p_1}.
+\]
+由零次齐次性 (A2)，$x_1(tp,tw)=x_1(p,w)$，故 $p_1x_1/w$ 只依赖比值 $r$：$g$ 确实是单变量函数。
+由此 $x_1=wg(r)/p_1$，再由 Walras 律 (A3) 解出
+\[
+ x_2=\frac{w-p_1x_1}{p_2}=\frac{w\bigl(1-g(r)\bigr)}{p_2}.
+\]
+于是整个需求系统被\emph{一个}单变量函数 $g$ 完全刻画——这正是"$n=2$ 时自由度只剩一个"的含义。
+逐项求导（$r=p_2/p_1$，故 $\partial r/\partial p_1=-p_2/p_1^2$，$\partial r/\partial p_2=1/p_1$）：
+\begin{align*}
+\frac{\partial x_1}{\partial p_1}&=-\frac{wg}{p_1^2}-\frac{wg'p_2}{p_1^3},&
+\frac{\partial x_1}{\partial p_2}&=\frac{wg'}{p_1^2},&
+\frac{\partial x_1}{\partial w}&=\frac{g}{p_1},\\
+\frac{\partial x_2}{\partial p_1}&=\frac{wg'}{p_1^2},&
+\frac{\partial x_2}{\partial p_2}&=-\frac{wg'}{p_1p_2}-\frac{w(1-g)}{p_2^2},&
+\frac{\partial x_2}{\partial w}&=\frac{1-g}{p_2}.
+\end{align*}
+代入定义~\ref{def:slutsky}：
+\begin{align*}
+S_{12}&=\frac{\partial x_1}{\partial p_2}+\frac{\partial x_1}{\partial w}x_2
+ =\frac{wg'}{p_1^2}+\frac{g\,(1-g)w}{p_1p_2},\\
+S_{21}&=\frac{\partial x_2}{\partial p_1}+\frac{\partial x_2}{\partial w}x_1
+ =\frac{wg'}{p_1^2}+\frac{(1-g)\,g\,w}{p_1p_2}.
+\end{align*}
+两式右端逐项相同，故 $S_{12}=S_{21}$。
+\end{proof}
+
+\begin{remark}[$n=2$ 时的显式结构]
+在命题~\ref{prop:n2-auto} 的记号下还可算出 $S_{11}$，于是整个矩阵可写成秩一形式
+\[
+ S=\alpha\begin{pmatrix}1\\[1pt] -p_1/p_2\end{pmatrix}
+   \begin{pmatrix}1 & -p_1/p_2\end{pmatrix},
+ \qquad
+ \alpha=S_{11}=-\frac{wg}{p_1^2}-\frac{wg'p_2}{p_1^3}+\frac{wg^2}{p_1^2}.
+\]
+$\operatorname{rank}S=1=n-1$，与命题~\ref{prop:S-auto} 的上界吻合。更重要的是：
+\textbf{负半定性等价于单个标量条件 $\alpha\le0$}，而这个 $\alpha$ 恰是补偿需求曲线的斜率
+$\partial h_1/\partial p_1$。所以在两商品世界里，可积性的全部实质内容就是"补偿需求曲线向下倾斜"。
+\end{remark}
+
+\subsection{曲率并不自动：一个两商品反例}
+
+既然对称性在两商品时是免费的，是否意味着两商品的任何"看起来合理"的需求系统都能由偏好生成？
+不是。命题~\ref{prop:n2-auto} 只给出对称，负半定性仍可失败。
+
+\begin{example}[对称但不可积的两商品系统]\label{ex:n2-curvature}
+取
+\[
+ x_1(p,w)=\frac{w}{p_1}\cdot\frac{1}{1+(p_2/p_1)^2},\qquad
+ x_2(p,w)=\frac{w-p_1x_1(p,w)}{p_2}.
+\]
+（即命题~\ref{prop:n2-auto} 中取 $g(r)=1/(1+r^2)$。）
+在 $p=(2,3)$、$w=50$ 处：$g(1.5)=1/3.25\approx0.3077$，
+\[
+ x=(7.6923,\;11.5385),\qquad p\cdot x=50,
+\]
+Slutsky 矩阵为
+\[
+ S=\begin{pmatrix}
+ \phantom{-}2.6627 & -1.7751\\
+ -1.7751 & \phantom{-}1.1834
+ \end{pmatrix}.
+\]
+它对称（命题~\ref{prop:n2-auto} 已保证），行和为零（$2.6627\times2-1.7751\times3\approx0$），
+但 $S_{11}=2.6627>0$。
+\end{example}
+
+\begin{remark}[这个反例说明了什么]
+$S_{11}>0$ 意味着：\emph{补偿}（即保持效用不变）地提高商品 1 的价格，商品 1 的需求反而上升。
+这与"替代效应必为负"直接冲突，因而违反补偿需求定律，不可能来自任何凸偏好。
+值得注意的是这个系统\textbf{处处满足}齐次性、Walras 律乃至对称性——它在会计上完美无缺，
+在经济学上却不可能。结论：\textbf{在两商品情形下，可积性的实质内容是曲率，而不是对称}。
+\end{remark}
+
+\subsection{三商品及以上：对称性成为真正的限制}
+
+\begin{proposition}[$n\ge3$ 时对称性是实质约束]\label{prop:n3-substantive}
+存在满足 (A1)--(A3)、且对称部分负半定的需求系统，其 $S$ 不对称，因而不存在生成它的偏好。
+\end{proposition}
+
+\begin{proof}[构造性证明]
+取 $n=3$、$\varepsilon>0$，定义
+\[
+ x_1(p,w)=\frac{w}{3p_1}\Bigl(1+\varepsilon\frac{p_2}{p_1}\Bigr),\qquad
+ x_2(p,w)=\frac{w}{3p_2},\qquad
+ x_3(p,w)=\frac{w-p_1x_1-p_2x_2}{p_3}.
+\]
+(A2) 显然（每项对 $(p,w)$ 零次齐次）；(A3) 由 $x_3$ 的定义直接成立；(A1) 成立。
+取 $\varepsilon=0.35$、$p=(2,3,5)$、$w=60$，得
+\[
+ x=(15.25,\;6.6667,\;1.9),\qquad p\cdot x=60,
+\]
+\[
+ S=\begin{pmatrix}
+ -6.3740 & \phantom{-}3.4444 & \phantom{-}0.4829\\
+ \phantom{-}1.6944 & -1.4815 & \phantom{-}0.2111\\
+ \phantom{-}1.5329 & -0.4889 & -0.3198
+ \end{pmatrix},
+\qquad
+ S_{12}=3.4444\ne1.6944=S_{21}.
+\]
+故 $S$ 不对称，由定理~\ref{thm:slutsky-necessity} 的必要性，不存在生成 $x$ 的偏好。
+\end{proof}
+
+\begin{remark}[两个条件互相独立]
+上例还揭示了一个容易被忽略的事实：该 $S$ 的\emph{对称部分} $(S+S^{\top})/2$ 的特征值为
+$(-7.6077,\,-0.5676,\,0)$，全部非正，因此二次型 $v^{\top}Sv\le0$ 成立。
+也就是说，这个系统\emph{满足}补偿需求定律，却\emph{违反}对称性。
+可见"负半定"与"对称"是两条逻辑上独立的条件：
+前者约束二次型的符号（可观测为补偿需求的自价格效应），后者约束矩阵的型（可观测为交叉价格效应的可积性）。
+一个需求系统可以同时满足会计恒等式、满足曲率，却仍然不可积——这正是对称性检验不可替代的原因。
+\end{remark}
+
+\begin{remark}[维数与约束数]
+把三节的结论并排放，可以看到一个颇有意味的模式：
+\begin{center}
+\begin{tabular}{llll}
+\toprule
+维数 & $S$ 的自由元 & 对称性约束数 & 实质约束的载体\\
+\midrule
+$n=2$ & 1（行和为零后） & 0 & 仅曲率 $\alpha\le0$\\
+$n=3$ & 3 & 1 & 对称（1 条）$+$ 曲率\\
+$n$ & $n(n-1)/2$ & $n(n-1)/2-(n-1)$ & 对称 $+$ 曲率\\
+\bottomrule
+\end{tabular}
+\end{center}
+\figexplan{$S$ 满足 $Sp=0$ 后自由元为 $(n-1)^2$，其中对称性留下 $n(n-1)/2$ 个独立元、反对称部分有 $n(n-1)/2-(n-1)$ 个独立元（后者必须为零才是可积的）。$n=2$ 时反对称部分的维数为 $1-1=0$，故对称性自动成立；$n\ge3$ 时反对称部分非空，对称性才成为可拒绝的约束。这张表也是实证中选择商品数目的一个隐性约束：商品划得越细，理论的可检验内容越多，但估计所需的样本与价格变异也越大。}
+\end{remark}

@@ -1,0 +1,107 @@
+\subsection{本节证明补充：序列、收敛与需求的局部结构}
+
+\subsection{序列语言与经济学中的极限}
+设 $x^n\in X\subseteq\mathbb R^L$ 是一列消费束。若对任意 $\varepsilon>0$，存在 $N$ 使得 $n\ge N$ 时
+$\|x^n-x^*\|<\varepsilon$，则称 $x^n\to x^*$。这一表述把“足够接近”变成可检验的量化命题。
+在经济学中，序列不仅是分析工具，也代表逐步调整的市场过程：价格、收入、禀赋或政策参数都可沿序列变化。
+
+\begin{definition}[上极限与下极限]
+对有界实数列 $(a_n)$，定义
+\[
+\limsup a_n=\lim_{N\to\infty}\sup_{n\ge N}a_n,\qquad
+\liminf a_n=\lim_{N\to\infty}\inf_{n\ge N}a_n.
+\]
+当且仅当二者相等时，序列收敛。
+\end{definition}
+
+\begin{proposition}[连续函数保持序列收敛]
+若 $f:X\to\mathbb R$ 在 $x^*$ 连续且 $x^n\to x^*$，则 $f(x^n)\to f(x^*)$。
+\end{proposition}
+\begin{proof}
+给定 $\varepsilon>0$，由连续性存在 $\delta>0$，使 $\|x-x^*\|<\delta$ 时
+$|f(x)-f(x^*)|<\varepsilon$。由收敛性存在 $N$，使 $n\ge N$ 时 $\|x^n-x^*\|<\delta$，代入即得。
+\end{proof}
+
+\begin{figure}[H]\centering
+\begin{tikzpicture}[x=1.0cm,y=0.8cm,font=\scriptsize]
+\draw[->] (0,0)--(8,0) node[right] {$n$};\draw[->] (0,0)--(0,4) node[above] {$x^n$};
+\draw[dashed] (0,1.5)--(8,1.5) node[right] {$x^*$};
+\foreach \n/\y in {0.6/3.2,1.2/2.6,1.8/2.0,2.4/2.8,3.0/1.8,3.6/2.2,4.2/1.7,4.8/1.65,5.4/1.55,6.0/1.52,6.6/1.5,7.2/1.5}{\fill (\n,\y) circle (1.4pt);}
+\node[align=center,fill=white] at (4.8,3.25) {震荡幅度逐步缩小\\但未必单调};
+\end{tikzpicture}
+\caption{序列收敛：调整过程可以非单调}
+\end{figure}
+\figexplan{横轴是调整次数 $n$，纵轴是某个标量状态变量。点列可上下震荡，但只要最终落入任意给定的窄带，就收敛于虚线所示的 $x^*$。}
+
+\subsection{预算集的边界、内点与切锥}
+对价格 $p\gg0$ 和财富 $w>0$，预算集为 $B(p,w)=\{x\ge0:p\cdot x\le w\}$。其边界
+$\partial B=\{x:p\cdot x=w\}$ 是预算耗尽集合；内点 $\{x:p\cdot x<w\}$ 则保留小幅调整空间。
+若 $x^*$ 位于边界，允许方向 $d$ 必须满足 $p\cdot d\le0$（局部一阶近似），这给出可行方向锥。
+
+\begin{figure}[H]\centering
+\begin{tikzpicture}[x=0.9cm,y=0.9cm,font=\scriptsize]
+\fill[gray!12] (0,0)--(0,4)--(4,0)--cycle;
+\draw[->] (0,0)--(4.7,0) node[right] {$x_1$};\draw[->] (0,0)--(0,4.7) node[above] {$x_2$};
+\draw[thick] (0,4)--(4,0) node[pos=.2,above left] {$p\cdot x=w$};
+\fill (2.2,1.8) circle (2pt) node[below right] {$x^*$};
+\draw[->,dashed] (2.2,1.8)--(3.0,1.4) node[right] {$d_1$};
+\draw[->,dashed] (2.2,1.8)--(1.7,2.7) node[left] {$d_2$};
+\node[align=center,fill=white] at (1.0,3.6) {可行集\\$p\cdot x\le w$};
+\end{tikzpicture}
+\caption{预算边界与局部可行方向}
+\end{figure}
+\figexplan{灰色三角形是预算集，粗线是边界。点 $x^*$ 处的虚线箭头表示局部可行方向；若方向指向灰色区域外，则不能作为一阶可行变动。}
+
+\begin{theorem}[两商品内点需求的一阶条件]
+若 $u$ 可微、严格拟凹，且最优束 $x^*\gg0$，则存在 $\lambda>0$ 使
+\[
+\nabla u(x^*)=\lambda p,\qquad p\cdot x^*=w.
+\]
+因而 $u_1(x^*)/u_2(x^*)=p_1/p_2$。
+\end{theorem}
+\begin{proof}
+构造拉格朗日函数 $\mathcal L=u(x)+\lambda(w-p\cdot x)$。内点意味着非负约束不绑定，故一阶条件为
+$u_i-\lambda p_i=0$。严格拟凹性保证满足条件的束为唯一全局最优解。
+\end{proof}
+
+\subsection{包络定理、Roy 恒等式与 Shephard 引理}
+间接效用 $v(p,w)=u(x(p,w))$。在可微且唯一最优的情形，包络定理给出
+\[
+\frac{\partial v}{\partial w}=\lambda,\qquad
+\frac{\partial v}{\partial p_i}=-\lambda x_i(p,w).
+\]
+消去 $\lambda$ 得 Roy 恒等式：
+\[
+x_i(p,w)=-\frac{\partial v(p,w)/\partial p_i}{\partial v(p,w)/\partial w}.
+\]
+对支出函数 $e(p,\bar u)=\min\{p\cdot x:u(x)\ge\bar u\}$，包络定理给出 Shephard 引理
+\[
+\frac{\partial e(p,\bar u)}{\partial p_i}=h_i(p,\bar u),
+\]
+其中 $h$ 是补偿需求。Roy 恒等式从最大化问题恢复马歇尔需求，Shephard 引理从最小化问题恢复希克斯需求；两者通过对偶关系相互校验。
+
+\begin{example}[Cobb--Douglas 的双重校验]
+令 $u(x_1,x_2)=x_1^\alpha x_2^{1-\alpha}$，$0<\alpha<1$。马歇尔需求为
+$x_1=\alpha w/p_1$、$x_2=(1-\alpha)w/p_2$，间接效用为
+\[
+v(p,w)=\left(\frac{\alpha w}{p_1}\right)^\alpha
+\left(\frac{(1-\alpha)w}{p_2}\right)^{1-\alpha}.
+\]
+对 $p_1$ 求偏导并代入 Roy 恒等式，恰好恢复 $x_1=\alpha w/p_1$。对偶问题的支出函数为
+\[
+e(p,\bar u)=\frac{\bar u}{\alpha^\alpha(1-\alpha)^{1-\alpha}}p_1^\alpha p_2^{1-\alpha},
+\]
+对 $p_1$ 求导则恢复 Hicks 需求。
+\end{example}
+
+\subsection{反例库：存在性条件为何不可省略}
+\begin{itemize}
+\item 若可行集不闭，连续效用的上确界可能无法达到，例如 $X=(0,1)$、$u(x)=x$。
+\item 若效用不连续，最优选择可能随价格发生跳跃，比较静态不能直接使用导数。
+\item 若偏好不拟凹，局部一阶条件可能只找到局部极值，不能保证全局最优。
+\item 若价格向量含零分量，预算集可能无界，紧性证明必须另行处理。
+\end{itemize}
+
+\begin{remark}
+书稿中的“存在性”与“计算性”必须区分：Weierstrass 定理保证最优解存在，但不告诉我们怎样算；一阶条件提供计算方程，但需要凹性或拟凹性把局部条件提升为全局结论。
+\end{remark}

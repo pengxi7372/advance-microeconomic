@@ -1,0 +1,286 @@
+% ============================================================
+%  第四部分：角点解、对偶、课堂讲授版与小结
+% ============================================================
+
+\section{拓展一：什么时候出现角点解}
+\label{sec:corner}
+
+\subsection{内点解的有效区间}
+
+一般解 \eqref{eq:gen-y1} 给出的 $y_1^{*}=c-(p_2/p_1)^{2}$ 必须非负，否则它描述的
+"内点"落在第一象限之外、根本不在前沿上。于是内点解的有效条件是
+\begin{equation}
+\Bigl(\frac{p_2}{p_1}\Bigr)^{2}\le c
+\quad\Longleftrightarrow\quad
+\frac{p_2}{p_1}\le \sqrt{c}=\sqrt{10}\approx 3.1623.
+\label{eq:interior-condition}
+\end{equation}
+一旦价格比越过这个门槛，最优点就撞到端点 $y_1=0$，产生\textbf{角点解}
+（完全专业化于蛋糕）。完整的解可以写成一个统一的表达式：
+\begin{equation}
+y_2^{*}(p;c)=\min\Bigl\{\frac{2p_2}{p_1},\ 2\sqrt{c}\Bigr\},
+\qquad
+y_1^{*}(p;c)=c-\frac{\bigl(y_2^{*}\bigr)^{2}}{4}.
+\label{eq:corner-solution}
+\end{equation}
+由于本案例的前沿只在第一象限的一小段上有定义
+（$0\le y_2\le 2\sqrt{c}$），
+$2\sqrt{c}=\sqrt{40}\approx 6.3246$ 正好是端点。
+
+几何上，门槛 \eqref{eq:interior-condition} 的来源一目了然。
+前沿斜率 $dy_1/dy_2=-y_2/2$ 在 $0\le y_2\le 2\sqrt{c}$ 上的取值范围是
+$[-\sqrt{c},\,0]$；等收益线的斜率是 $-p_2/p_1$。
+只要 $-p_2/p_1$ 落在这个区间之外，直线就只能在端点处"靠住"前沿，
+切点不复存在。$-p_2/p_1<-\sqrt{c}$ 即 $p_2/p_1>\sqrt{c}$，与 \eqref{eq:interior-condition} 一致。
+
+\subsection{价格比变动的比较静态}
+
+固定 $p_1=2$、$c=10$，让 $p_2$ 变化，用 \eqref{eq:corner-solution} 逐项计算，
+结果见表 \ref{tab:corner}。
+
+\begin{table}[H]
+\centering
+\caption{价格比与最优产出组合（固定 $p_1=2$、$c=10$，门槛 $p_2/p_1=\sqrt{10}\approx 3.162$）}
+\label{tab:corner}
+\begin{tabular}{ccccccc}
+\toprule
+$p_2$ & $p_2/p_1$ & 判定 & $y_2^{*}$ & $y_1^{*}$ & $\pi^{*}$ & 位置 \\
+\midrule
+$1$      & $0.50$  & 内点 & $1.00$   & $9.75$   & $20.50$  & 以面包为主 \\
+$2$      & $1.00$  & 内点 & $2.00$   & $9.00$   & $22.00$  & 以面包为主 \\
+$4$      & $2.00$  & 内点 & $\mathbf{4.00}$ & $\mathbf{6.00}$ & $\mathbf{28.00}$ & \textbf{本案例}\\
+$6$      & $3.00$  & 内点 & $6.00$   & $1.00$   & $38.00$  & 以蛋糕为主 \\
+$2\sqrt{10}\approx 6.325$ & $3.162$ & 临界 & $6.325$  & $0$      & $40.00$  & 恰好专业化 \\
+$8$      & $4.00$  & 角点 & $6.325$  & $0$      & $50.60$  & 完全专业化于蛋糕 \\
+$16$     & $8.00$  & 角点 & $6.325$  & $0$      & $101.19$ & 完全专业化于蛋糕 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+表 \ref{tab:corner} 读出三条规律。其一，$y_2^{*}$ 对价格比的反应在内点区间内是线性的
+（$y_2^{*}=2p_2/p_1$），超过门槛后完全"冻结"在 $2\sqrt{c}$，再也动不了：
+这就是\textbf{供给曲线在角点处的弯折}。其二，$y_1^{*}$ 随价格比上升而单调下降，
+到达门槛后归零并保持为零。其三，收益随价格单调上升，且在门槛处仍是连续的
+（$p_2=2\sqrt{10}$ 时，内点公式给 $p_1c+p_2^{2}/p_1=20+40/2=40$，
+角点公式给 $p_2\cdot 2\sqrt{c}=2\sqrt{10}\cdot 2\sqrt{10}=40$，两者相同），
+但\textbf{导数发生了跳跃}：产出的调不动了，收入还能继续涨。
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[x=0.72cm,y=0.38cm,line cap=round,line join=round]
+  % ================= 左图：p2/p1=8，角点（专业化于蛋糕） =================
+  \begin{scope}
+    \fill[black!6] (0,0) -- (0,10)
+      -- plot[domain=0:6.3246,samples=60] (\x,{10-\x*\x/4})
+      -- (6.3246,0) -- cycle;
+    \draw[axisline] (0,0) -- (7.4,0) node[below,axislabel] {$y_2$};
+    \draw[axisline] (0,0) -- (0,13.6) node[left,axislabel] {$y_1$};
+    \draw[curveA,domain=0:6.3246,samples=80] plot (\x,{10-\x*\x/4});
+    % 等收益线：斜率 -8，过点 (6.3246,0)
+    \draw[curveB] (4.825,12) -- (6.3246,0);
+    \node[figlabel,anchor=south west] at (4.55,11.2) {斜率 $-8$};
+    \fill (6.3246,0) circle (2.6pt);
+    \node[figlabel,anchor=north west] at (5.4,1.2) {角点 $(y_1,y_2)=(0,\sqrt{40})$};
+    \node[figlabel,anchor=south west] at (0.35,12.6) {(a) $p_2/p_1=8>\sqrt{10}$};
+    \node[figlabel,anchor=east] at (0.05,10) {$10$};
+  \end{scope}
+  % ================= 右图：p2/p1=0.25，靠近另一端 =================
+  \begin{scope}[xshift=8.2cm]
+    \fill[black!6] (0,0) -- (0,10)
+      -- plot[domain=0:6.3246,samples=60] (\x,{10-\x*\x/4})
+      -- (6.3246,0) -- cycle;
+    \draw[axisline] (0,0) -- (7.4,0) node[below,axislabel] {$y_2$};
+    \draw[axisline] (0,0) -- (0,13.6) node[left,axislabel] {$y_1$};
+    \draw[curveA,domain=0:6.3246,samples=80] plot (\x,{10-\x*\x/4});
+    % 等收益线：斜率 -0.25，过点 (0.5, 9.9375)
+    \draw[curveB] (0,10.0625) -- (6.3246,8.4813);
+    \node[figlabel,anchor=south west] at (2.4,9.4) {斜率 $-0.25$};
+    \fill (0.5,9.9375) circle (2.6pt);
+    \node[figlabel,anchor=south west] at (0.75,10.6) {$(y_1,y_2)=(9.94,\,0.5)$};
+    \node[figlabel,anchor=south west] at (0.35,12.6) {(b) $p_2/p_1=0.25<\sqrt{10}$};
+    \node[figlabel,anchor=east] at (0.05,10) {$10$};
+  \end{scope}
+\end{tikzpicture}
+\caption{价格比的两个极端：左图蛋糕相对价格极高，直线比前沿最陡处还陡，
+  最优只能停在 $y_1=0$ 的端点（角点解）；右图蛋糕相对价格极低，
+  直线近乎水平，最优靠近 $y_2=0$ 一端，但仍是真正的切点（内点解）。}
+\label{fig:corner}
+\end{figure}
+\figexplan{左图虚线的斜率为 $-8$，绝对值大于前沿端点处的斜率 $-3.162$，
+它无法在前沿内部找到斜率相同的位置，只能"顶"在右下端点，角点由此产生。
+右图虚线斜率为 $-0.25$，落在前沿斜率取值范围之内，与前沿在
+$(y_2,y_1)=(0.5,9.94)$ 处真正相切，属于内点解。
+两图合起来说明：本例的两个边界，$y_1=0$ 一侧会被价格逼出角点解，
+而 $y_2=0$ 一侧只在 $p_2=0$ 的极限下才到达，正常运行中都是内点。}
+
+\section{拓展二：收益函数与教科书对偶体系的位置}
+\label{sec:duality}
+
+\subsection{收益函数的四条性质}
+
+把 §\S\ref{sec:shadow} 中得到的收益函数一般化。对任意技术 $F$，
+定义 $R(p)=\max\{p\cdot y:F(y)=0\}$，则在适当的光滑性与约束规格下：
+
+\begin{enumerate}
+  \item \textbf{对价格一次齐次}：$R(tp)=tR(p)$，$t>0$；
+  \item \textbf{对价格单调非减}：$p'\ge p\Rightarrow R(p')\ge R(p)$；
+  \item \textbf{对价格凸}：$R$ 是线性函数的上确界，故必凸；
+  \item \textbf{Hotelling 引理}：$\nabla_p R(p)=y^{*}(p)$（若最优点唯一），
+        本案例已由 \eqref{eq:R-partials} 直接验证。
+\end{enumerate}
+本案例的显式表达式为（内点区间内）
+\begin{equation}
+R(p_1,p_2;c)=p_1c+\frac{p_2^{2}}{p_1},
+\qquad
+R(p;c)=\max\Bigl\{p_1c+\frac{p_2^{2}}{p_1},\ 2p_2\sqrt{c}\Bigr\}\ \text{（含角点情形）}.
+\label{eq:R-full}
+\end{equation}
+
+\subsection{与消费者理论的对偶映射}
+
+第五讲建立的消费者理论对偶框架，在生产侧有一一对应的版本，
+表 \ref{tab:duality} 是二者的对照，便于把两个板块串起来复习。
+
+\begin{table}[H]
+\centering
+\caption{消费者理论与生产者理论的对象对照}
+\label{tab:duality}
+\begin{tabular}{p{4.4cm}p{4.4cm}p{4.6cm}}
+\toprule
+消费者侧 & 生产者侧 & 备注 \\
+\midrule
+效用函数 $u(x)$ & 转换函数 $F(y)$（或生产可能集 $Y$） & 描述"什么是可行的/如何排序" \\[4pt]
+间接效用 $v(p,w)=\max u\ \text{s.t.}\ p\cdot x\le w$ & 收益函数 $R(p)=\max p\cdot y\ \text{s.t.}\ F(y)=0$ & 都是给定价格下的最优值 \\[4pt]
+$v$ 对 $(p,w)$ \textbf{零次齐次} & $R$ 对 $p$ \textbf{一次齐次} & 差别源于预算约束与技术约束的不同位置 \\[4pt]
+$v$ 对 $p$ 非增 & $R$ 对 $p$ 非减 & 价格对消费者是成本，对生产者是收入 \\[4pt]
+Roy 恒等式 $x_i=-\dfrac{\partial v/\partial p_i}{\partial v/\partial w}$ &
+Hotelling 引理 $y_i=\dfrac{\partial R}{\partial p_i}$ & 都是包络定理的应用 \\[4pt]
+支出函数 $e(p,\bar u)$ & 成本函数 $c(w,\bar y)$ & 互为另一侧的"最小支出/最小成本"值 \\[4pt]
+希克斯需求 $h(p,\bar u)$ & 条件要素需求 $x(w,\bar y)$ & Shephard 引理：$\partial e/\partial p_i=h_i$，$\partial c/\partial w_j=x_j$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{与距离函数的接口（选读）}
+
+Shephard 还给出过一种不依赖 $F=0$ 写法的技术描述：\textbf{产出距离函数}
+\begin{equation}
+D_O(y)=\min\bigl\{\theta>0:\ y/\theta\in Y\bigr\},
+\label{eq:distance}
+\end{equation}
+其中 $Y=\{y:F(y)\le 0\}$ 为生产可能集。它满足：
+$y\in Y$ 当且仅当 $D_O(y)\le 1$；$y$ 在前沿上当且仅当 $D_O(y)=1$；
+$D_O$ 对 $y$ 一次齐次、非减、且在前沿附近与 $F$ 有相同的法向量方向
+（相差一个正的比例因子）。因此，本案例中用 $\nabla F$ 给出的全部几何结论
+（法向量、相切、$p=\lambda\nabla F$）都可以用 $\nabla D_O$ 原样复述一遍，
+只是 $\lambda$ 的数值会随规范化方式改变，价格比等式
+$MRT_{12}=p_1/p_2$ 则\textbf{完全不受影响}——它是不依赖任何规范化的经济内容。
+
+\section{课堂讲授精简版}
+\label{sec:lecture}
+
+下面是一份可以直接照讲的口述稿（约 $2$ 分钟），随后是板书结构与两个提问。
+
+\begin{quote}
+\small
+\textsl{我们举一个两产品的例子来理解收益最大化。
+面包房一天的技术由转换函数 $F=y_1+\frac14 y_2^{2}-10=0$ 刻画：
+等号成立时它在生产前沿上，小于零说明要素没用够，大于零则是做不到的组合。
+市场价格是面包 $2$ 元、蛋糕 $4$ 元。
+写下拉格朗日 $2y_1+4y_2-\lambda F$，一阶条件给出 $2=\lambda\cdot 1$、
+$4=\lambda\cdot \frac{y_2}{2}$，于是 $\lambda=2$、$y_2=4$，回代前沿得 $y_1=6$，
+最大收益 $28$ 元。
+看它的经济含义：在最优点，价格比 $\frac{p_1}{p_2}=\frac12$ 恰好等于边际转换率
+$F_1/F_2=\frac12$。$MRT_{12}$ 说的是"多做一个面包要放弃半个蛋糕"，
+$p_1/p_2$ 说的是"市场上一个面包能换半个蛋糕"，
+技术上的代价与市场上的所得正好打平，就没有再调整的余地了。
+如果还没打平呢？请记住 $MRT_{12}$ 是成本、$p_1/p_2$ 是所得：
+成本高于所得就要收缩这项产品，成本低于所得才去扩张。
+几何上，$p=\lambda\nabla F$ 告诉我们价格向量与前沿的法向量共线，
+$\lambda=2$ 是它们的比例；$-\lambda F$ 不是惩罚项，$\lambda$ 是影子值——
+技术水平放松一单位，收益增加 $2$ 元，这也正是收益函数 $R=2c+8$ 的斜率。}
+\end{quote}
+
+\noindent\textbf{板书三行。}
+\begin{enumerate}
+  \item 约定：$F=0$（前沿）、$F<0$（可行）、$F>0$（不可行）；拉格朗日 $\mathcal{L}=p\cdot y-\lambda F$。
+  \item 一阶条件与答案：$p_i=\lambda F_i\Rightarrow p_1/p_2=F_1/F_2=MRT_{12}$；
+        $(y_1^{*},y_2^{*})=(6,4)$，$\lambda=2$，$\pi^{*}=28$。
+  \item 三条含义：$MRT_{12}=\frac12$（技术代价$=$市场所得）、$p=2\nabla F$（法向量共线）、
+        $\lambda=\partial R/\partial c=2$（影子值）。
+\end{enumerate}
+
+\noindent\textbf{两个课堂提问。}
+\begin{enumerate}
+  \item 保持技术不变，把两个价格同时翻倍，最优产出组合与最大收益如何变化？
+        （答案：组合不变，仍为 $(6,4)$；收益翻倍为 $56$，因为 $R$ 对 $p$ 一次齐次。）
+  \item 若当前产量为 $y_2=2$（前沿上的点），此时应当往哪个方向调整？为什么？
+        （答案：$MRT_{12}=2/y_2=1>\frac12=p_1/p_2$，多做一个面包要放弃一个蛋糕、
+        值 $4$ 元，而多卖一个面包只多得 $2$ 元，故应减少面包、增加蛋糕，
+        即向 $y_2=4$ 的方向移动。）
+\end{enumerate}
+
+\section{本案例小结}
+\label{sec:summary}
+
+本案例从一条二阶多项式前沿出发，把生产者理论的收益侧完整走了一遍。
+
+\begin{enumerate}
+  \item \textbf{符号约定先行}。$F=0$ 为前沿、$F<0$ 为可行、$F>0$ 为不可行
+        （\S\ref{sec:convention}）；约定必须与 $\partial F/\partial y_i>0$ 配对使用，
+        中途不得更换，否则乘子符号与所有解释都会翻车。
+  \item \textbf{一阶条件}。$\mathcal{L}=p\cdot y-\lambda F$，$p_i=\lambda F_i$，
+        核心等式 $p_1/p_2=F_1/F_2=MRT_{12}$（\S\ref{sec:foc}）。
+  \item \textbf{数值答案}。$(y_1^{*},y_2^{*})=(6,4)$，$\lambda=2$，$\pi^{*}=28$；
+        消元法与沿前沿的收益对照给出两份交叉验证（\S\ref{sec:solve}）。
+  \item \textbf{调整方向}。$MRT_{12}$ 是成本、$p_1/p_2$ 是所得：
+        $MRT_{12}>p_1/p_2$ 时应\textbf{减少} $y_1$（\S\ref{sec:mrt}，
+        附三份独立验证）。
+  \item \textbf{几何}。$\nabla F$ 是前沿法向量，$p=\lambda\nabla F$ 表明二者共线同向，
+        $\lambda$ 完成从"技术方向"到"市场价格"的缩放（\S\ref{sec:grad}）；
+        切线斜率 $dy_1/dy_2=-F_2/F_1=-2$，与 $MRT$ 互为倒数或相反数，
+        五种写法见表 \ref{tab:geometry}。
+  \item \textbf{乘子的含义}。把技术水平写成参数 $c$ 后，$R=p_1c+p_2^{2}/p_1$，
+        $\lambda=\partial R/\partial c=p_1=2$，既是影子值也是收益曲线的斜率
+        （\S\ref{sec:shadow}）；$\partial R/\partial p_i=y_i^{*}$ 是 Hotelling 引理。
+  \item \textbf{一个纠正}。$-\lambda F$ 不是惩罚项：$F<0$ 时它取值为正，
+        真正的惩罚是二次对称的 $-\frac{\rho}{2}F^{2}$；
+        把解推向前沿的机制是互补松弛条件（\S\ref{sec:penalty}）。
+  \item \textbf{角点}。仅当 $p_2/p_1\le\sqrt{c}$ 时为内点，
+        否则完全专业化：$y_2^{*}=\min\{2p_2/p_1,\,2\sqrt{c}\}$（\S\ref{sec:corner}）。
+  \item \textbf{位置}。本案例的所有结论都能翻译到对偶体系中的标准位置：
+        转换函数对偶于效用函数，收益函数对偶于间接效用函数，
+        Hotelling 引理对偶于 Roy 恒等式（\S\ref{sec:duality}）。
+\end{enumerate}
+
+\subsection{检查清单}
+
+解答同类题目时，逐项核对以下十条：
+
+\begin{enumerate}
+  \item 转换函数的三项约定写清楚了吗？（尤其可行的一侧）
+  \item 拉格朗日中的符号与约定配套吗？（$-\lambda F$ 对应 $F\le 0$ 可行）
+  \item 求出 $F_1,F_2$ 了吗？它们在最优点是否为正？
+  \item 一阶条件写全了吗？（两个 $(y_i)$ 加一个乘子条件，共三个方程）
+  \item $\lambda$ 是否为正？它与哪个价格、哪个梯度分量对应？
+  \item 是否有不止一个解？（本例目标严格凹，唯一）
+  \item 是否落在第一象限、是否在前沿上？（代回 $F=0$ 检验）
+  \item $MRT$ 的方向核对了吗？（谁是分子、谁是分母、谁是负号）
+  \item 是否需要与端点比较？（非凸技术、线性技术、极端价格）
+  \item 经济解释齐了吗？（技术代价 $=$ 市场所得；法向量共线；乘子是影子值）
+\end{enumerate}
+
+\subsection{三个最常见的错误}
+
+\begin{enumerate}
+  \item \textbf{约定中途更换}。前半段用 $F\le 0$ 定义可行集，
+        后半段却按 $-F\le 0$ 去解释，导致 $\lambda$ 变号、
+        $MRT$ 差一个负号。防御办法：开篇写死约定，全篇不再讨论它的合理性。
+  \item \textbf{$MRT$ 判据用反}。见 \S\ref{sec:mrt} 的注：
+        $MRT_{12}>p_1/p_2$ 的正确应对是收缩 $y_1$，不是扩张它。
+        判据的正确形式永远是 $d\pi=p_1\,dy_1+p_2\,dy_2$，
+        把 $MRT$ 代入后再看符号，而不是凭"值钱"的直觉。
+  \item \textbf{把 $-\lambda F$ 当惩罚}。等式约束问题没有惩罚环节；
+        若需要"惩罚"，请明确 $\rho\to\infty$ 的罚函数，并注意它惩罚的是 $F^{2}$，
+        且是对称的。
+\end{enumerate}

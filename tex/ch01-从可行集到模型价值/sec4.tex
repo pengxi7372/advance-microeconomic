@@ -1,0 +1,240 @@
+% ==================== 第 4 节：参数与选择（50–70 分钟）====================
+\section{参数、可行集与最优选择}
+
+\subsection{参数如何决定可行集}
+
+参数不是模型外的装饰，而是决定机会集合形状的\emph{输入}。一般写作
+\[
+B:\Theta\rightrightarrows X,\qquad \theta=(p,m,\tau,\omega,\dots),
+\]
+其中 $\tau$ 可代表税率或补贴，$\omega$ 可代表禀赋。价格与收入决定预算约束；税收可能改变斜率、截距或可行域的分段结构；配额会直接“切掉”一部分集合。
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.72,transform shape]
+  % 平移
+  \draw[->,thick] (0,0) -- (7.6,0) node[below right] {\small $x_1$};
+  \draw[->,thick] (0,0) -- (0,6.2) node[above left] {\small $x_2$};
+  \fill[gray!12] (0,0) -- (6.4,0) -- (0,4.8) -- cycle;
+  \draw[very thick] (6.4,0) -- (0,4.8);
+  \draw[thick,dashed] (4.2,0) -- (0,3.15);
+  \node[below] at (6.4,0) {\small $m'/p_1$};
+  \node[below] at (4.2,0) {\small $m/p_1$};
+  \node[left] at (0,4.8) {\small $m'/p_2$};
+  \node[left] at (0,3.15) {\small $m/p_2$};
+  \draw[->,thick] (1.7,2.35) -- (2.6,2.95);
+  \node at (3.4,-1.4) {\small （a）收入 $m\to m'$：预算线\emph{平移}扩大};
+  % 旋转
+  \begin{scope}[xshift=9.6cm]
+    \draw[->,thick] (0,0) -- (7.6,0) node[below right] {\small $x_1$};
+    \draw[->,thick] (0,0) -- (0,6.2) node[above left] {\small $x_2$};
+    \fill[gray!12] (0,0) -- (3.4,0) -- (0,4.8) -- cycle;
+    \draw[very thick] (6.4,0) -- (0,4.8);
+    \draw[thick,dashed] (3.4,0) -- (0,4.8);
+    \node[below] at (6.4,0) {\small $m/p_1$};
+    \node[below] at (3.4,0) {\small $m/p_1'$};
+    \node[left] at (0,4.8) {\small $m/p_2$};
+    \draw[->,thick] (4.2,1.5) arc (20:45:2.6);
+    \node at (3.4,-1.4) {\small （b）$p_1$ 上升：预算线绕截距\emph{旋转}};
+  \end{scope}
+\end{tikzpicture}
+\caption{参数变化如何改变可行集：平移与旋转}
+\end{figure}
+\figexplan{（a）收入由 $m$ 增至 $m'$：预算线平行外移（虚线到实线），斜率 $-p_1/p_2$ 不变，两个截距同比例扩大，可行集整体放大。（b）商品 1 价格上升：预算线绕纵轴截距 $m/p_2$ 向内旋转，斜率变陡，横轴截距由 $m/p_1$ 缩至 $m/p_1'$。区分“哪个参数变了、它如何改变可行集”是比较静态的第一步。}
+
+\begin{remark}
+收入变化与价格变化对 $B(p,m)$ 的作用在几何上完全不同：$m$ 只改截距不改斜率（机会成本不变）；$p_1/p_2$ 改变斜率（相对价格即机会成本），同时改变一个截距。比较静态的第一步永远是：\emph{哪个参数变了？它怎么改变可行集？}
+\end{remark}
+
+\subsection{最优选择的两种输出：\texorpdfstring{$C(\theta)$}{C(θ)} 与 \texorpdfstring{$v(\theta)$}{v(θ)}}
+
+若偏好可由效用函数 $u:X\to\R$ 表示，则选择对应为
+\[
+\boxed{\,C(\theta)=\argmax\{\,u(x):x\in B(\theta)\,\}\,}
+\]
+
+逐字解释：
+\begin{itemize}
+  \item $C(\theta)$：参数为 $\theta$ 时的\emph{所有}最优方案（一个集合）；
+  \item $\argmax$：取的是“使目标达到最大值的\emph{自变量}集合”，而不是最大值本身；
+  \item $u(x)$：目标函数；
+  \item $x\in B(\theta)$：只能在参数决定的可行集中选择。
+\end{itemize}
+
+必须严格区别：
+\[
+v(\theta)=\max_{x\in B(\theta)}u(x)\in\R
+\qquad\text{与}\qquad
+C(\theta)=\{\,x\in B(\theta):u(x)=v(\theta)\,\}\subseteq X .
+\]
+$v(\theta)$ 是\emph{最大值函数}（indirect utility，间接效用），输出一个\emph{数}；$C(\theta)$ 输出达到该数的\emph{所有方案}。最大值回答“最高能达到多少”，argmax 回答“哪些方案达到最高”。
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=1.0]
+  \draw[->,thick] (0,0) -- (7.6,0) node[below right] {\small $x$};
+  \draw[->,thick] (0,0) -- (0,4.4) node[above left] {\small $u(x)$};
+  % 可行区间
+  \draw[very thick] (1.0,0) -- (6.6,0);
+  \node[below] at (1.0,0) {\small $a$};
+  \node[below] at (6.6,0) {\small $b$};
+  \node[below] at (3.8,-0.35) {\small $B=[a,b]$};
+  % u 曲线：两个极大，全局峰在左、局部峰在右
+  \draw[very thick,domain=1.0:6.6,samples=220,smooth,variable=\t]
+    plot ({\t},{3.6*exp(-((\t-2.5)/0.85)^2)+2.7*exp(-((\t-4.9)/0.70)^2)+0.55});
+  % 全局最大值 v
+  \draw[dashed] (0,4.15) -- (2.5,4.15);
+  \node[left] at (0,4.15) {\small $v=\max u$};
+  \fill (2.5,4.15) circle (2pt) node[above right=2pt] {\small $x^{*}_1$};
+  \draw[dashed] (2.5,4.15) -- (2.5,0);
+  \node[below] at (2.5,0) {\small $2.5$};
+  % 较低的局部极大：不是 argmax 的成员
+  \draw[dashed] (4.9,3.25) -- (4.9,0);
+  \fill (4.9,3.25) circle (2pt) node[above right=2pt] {\small $x^{*}_2$};
+  \node[below] at (4.9,0) {\small $4.9$};
+  \node[align=left] at (5.9,3.7) {\small $\argmax u=\{x^{*}_1\}$（本图唯一）};
+\end{tikzpicture}
+\caption{最大值 $v$ 是一个数；$\argmax$ 是达到它的自变量集合}
+\end{figure}
+\figexplan{横轴为方案 $x$，纵轴为效用 $u(x)$，底部的粗线段标出可行区间 $B=[a,b]$。曲线在可行区间内达到的最高高度即 $v=\max u$（一个数，由水平虚线读出）；达到该高度的自变量构成集合 $\argmax u$。图中 $x^{*}_1$ 处达到全局最高，$x^{*}_2$ 只是较低的局部峰值，故 $\argmax u$ 只含 $x^{*}_1$。}
+
+\begin{example}[数值对照]
+设 $B=[0,4]$，$u(x)=-(x-2)^2+5$。则 $v=\max u=5$（一个数），$C=\argmax u=\{2\}$（一个集合，本例为单点集）。若改为 $u(x)=\min\{x,2\}$，则 $v=2$ 而 $C=[2,4]$——\emph{整段}都是最优解。
+\end{example}
+
+\subsection{为什么 \texorpdfstring{$C(\theta)$}{C(θ)} 必须允许是集合}
+
+第 3 节已给出理由（无差异）。第二个经典来源是\emph{线性效用}：设 $u(x_1,x_2)=x_1+x_2$，$p=(1,1)$，$m=1$。预算线为 $x_1+x_2=1$，效用线与其斜率相同，故预算线上\emph{每一点}都是最优：
+\[
+C(p,m)=\{\,(x_1,x_2)\in\R_+^2:x_1+x_2=1\,\},
+\]
+一条线段，而不是一个点。
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.78,transform shape]
+  \draw[->,thick] (0,0) -- (7.2,0) node[below right] {\small $x_1$};
+  \draw[->,thick] (0,0) -- (0,5.8) node[above left] {\small $x_2$};
+  \fill[gray!15] (0,0) -- (5.6,0) -- (0,4.4) -- cycle;
+  \draw[very thick] (5.6,0) -- (0,4.4);
+  % 线性无差异线（与预算线平行）
+  \draw[thick,dashed] (4.0,0) -- (0,3.14);
+  \draw[thick,dashed] (2.6,0) -- (0,2.05);
+  \node[below] at (5.6,0) {\small $m/p_1$};
+  \node[left] at (0,4.4) {\small $m/p_2$};
+  \draw[very thick,black] (5.6,0) -- (0,4.4);
+  \node[align=left,black] at (5.6,3.6) {\small $C(p,m)$：\\ \small 整条预算线};
+\end{tikzpicture}
+\caption{线性效用与预算线斜率相同：最优解是\emph{一整段}集合}
+\end{figure}
+\figexplan{浅灰三角为预算集，其实线斜边为预算线；两条虚线是与预算线平行的线性无差异曲线。由于线性效用 $u=x_1+x_2$ 的边际替代率恒定且恰等于价格比，无差异曲线与预算线斜率相同，预算线上每一点都是最优——选择对应 $C(p,m)$ 是整条预算线（一整段集合），而非单点。}
+
+\subsection{一阶条件、隐函数定理与勒让对偶}
+
+前三小节回答了“最优解存在、唯一、随参数变化”。本小节补上比较静态的数学装置：内点解的一阶条件、隐函数定理保证可微性，以及勒让对偶把“最大化效用”换成“最小化支出”。
+
+\begin{lemma}[内点解的一阶条件]\label{lem:foc}
+设 $x^{*}\in\operatorname{int}B(p,m)$ 是 $u$ 的最大点，且 $u$ 可微。则对每一 $i$，
+\[
+\frac{\partial u}{\partial x_{i}}(x^{*})\ =\ \lambda\,p_{i}\qquad\text{对某个 }\lambda>0,
+\]
+等价地 $\mathrm{MRS}_{i}=p_{i}/p_{1}$（以商品 1 为计价物）。
+\end{lemma}
+
+\begin{proof}
+在预算集内部，约束 $\boldsymbol{p}\cdot x=m$ 不起作用，故 $x^{*}$ 是 $u$ 在开集上的局部最大点，由一阶必要条件 $\nabla u(x^{*})=\lambda\nabla(\boldsymbol{p}\cdot x)$，其中拉格朗日乘子 $\lambda$ 由 $x^{*}$ 处于 $m>0$ 且偏好非退化保证为正。等式 $\partial u/\partial x_{i}=\lambda p_{i}$ 两边同除 $\partial u/\partial x_{1}=\lambda p_{1}$ 即得 MRS 表述。
+\end{proof}
+
+\begin{theorem}[隐函数定理（经济形式）]
+设 $F:\R^{L}\times\R^{2}\to\R$ 连续可微。若 $F(\cdot,\theta^{0})=0$ 在某点 $x^{0}$ 处关于 $x$ 的雅可比可逆，则存在 $\theta^{0}$ 的邻域 $U$ 与 $x^{0}$ 的邻域 $V$，使 $F(x,\theta)=0$ 在 $V\times U$ 内唯一确定一个连续可微函数 $x(\theta)=\bigl(x_{1}(\theta),\dots,x_{L}(\theta)\bigr)$；且
+\[
+\frac{\partial x}{\partial\theta_{k}}
+=\Bigl(\frac{\partial F}{\partial x}\Bigr)^{-1}\frac{\partial F}{\partial\theta_{k}} .
+\]
+\end{theorem}
+
+把定理用在 $F(x,\theta)=\boldsymbol{p}(\theta)\cdot x-m(\theta)=0$ 上，就得到\emph{需求函数在可行域内连续可微}，从而比较静态可由 $\mathrm{d}x^{*}=\bigl(\partial F/\partial x\bigr)^{-1}\mathrm{d}\theta$ 读出。这是消费者理论中一切“弹性”结论的技术依据。
+
+\begin{theorem}[勒让对偶（支出函数）]\label{thm:leontief}
+设 $p\gg 0$、$u$ 连续且\emph{局部非饱和}。定义支出函数
+\[
+e(p,u)=\min\bigl\{\boldsymbol{p}\cdot x\ :\ x\in\R^{L}_{+},\ u(x)\ge u\bigr\}.
+\]
+则：$e$ 关于 $p$ 凸、关于 $u$ 递增；$e$ 是唯一支出函数；且当最优解存在唯一时，由包络定理
+\[
+\frac{\partial e(p,u)}{\partial p_{i}}=x^{*}_{i}\bigl(p,u\bigr),
+\qquad
+\frac{\partial e(p,u)}{\partial u}=-\lambda\bigl(p,u\bigr)<0 ,
+\]
+其中 $\lambda$ 是拉格朗日乘子。
+\end{theorem}
+
+\begin{remark}[对偶的语言]
+原问题问“要达到效用 $u$ 至少要花多少钱”，对偶问题问“要达到支出 $m$ 最多能得多少效用”，即间接效用 $v(p,m)=u\bigl(x^{*}(p,m)\bigr)$。二者的桥梁就是包络定理：\emph{支出对价格的导数恰好是需求，间接效用对价格的导数恰好是 Marshall 需求}。这把“行为”翻译成了“函数”，正是从第一章走向效用理论（第三章）与福利分析（第四章）的接口。
+\end{remark}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[font=\scriptsize,scale=1.08,transform shape]
+  \draw[axisline] (0,0) -- (5.6,0) node[below right] {$m$};
+  \draw[axisline] (0,0) -- (0,4.2) node[above left] {$v(p,m)$};
+  % 支出函数
+  \draw[very thick] (0.5,0.85) .. controls (1.6,1.35) and (2.6,1.75) .. (3.4,2.25)
+    node[above right,font=\scriptsize] {$e(p,u)$：凸、递增};
+  \fill (2.0,1.15) circle (1.8pt);
+  \draw[very thin,dashed] (2.0,0) -- (2.0,1.15) node[below=2pt,font=\scriptsize] {$m$};
+  \draw[very thin,dashed] (0,1.15) -- (2.0,1.15) node[left=2pt,font=\scriptsize] {$u$};
+  \node[align=left,text width=3.5cm,font=\scriptsize] at (5.0,3.15) {支出函数 $e(p,u)$：\\ 横轴为支出 $m$，纵轴为目标效用 $u$。\\ 它是凸的、单调递增的，\\ 斜率即 $-\partial m/\partial u$（即 $1/\lambda$）};
+  \node[align=center,text width=6.4cm,font=\scriptsize] at (2.7,-1.15) {勒让对偶把“最大化 $u(x)$，约束 $\boldsymbol{p}\cdot x\le m$”换成“最小化 $\boldsymbol{p}\cdot x$，约束 $u(x)\ge u$”。\\
+    包络定理说：$\partial e/\partial p_{i}=x^{*}_{i}$——最优点积的对价格导数就是需求本身。};
+\end{tikzpicture}
+\caption{勒让对偶：支出函数及其与最优解的对应}
+\end{figure}
+\figexplan{支出函数 $e(p,u)$ 以支出 $m$ 为横轴、目标效用 $u$ 为纵轴。图形由左下向右上倾斜且是凸的：要多得一份效用必须多花一笔钱，而且越往上越贵（凸性）。虚线标出任意一点 $(m,u)$ 及其对应的最优束。包络定理的含义是：沿水平方向移动（提高目标效用）所增加的支出，等于原问题中最优消费束的变动量；这正是“需求 = 支出对价格的导数”这条恒等式的几何来源。}
+
+\subsection{比较静态}
+
+\begin{definition}[比较静态]
+比较静态（comparative statics）研究参数 $\theta$ 变化如何引起 $B(\theta)$、$C(\theta)$ 或 $v(\theta)$ 的变化。形式上，若 $v$ 可微，则
+\[
+\mathrm{d}v=\sum_{k}\frac{\partial v}{\partial\theta_k}\,\mathrm{d}\theta_k .
+\]
+\end{definition}
+
+\begin{example}[收入效应的符号]
+在正规品假设下，$\partial x_l^{*}/\partial m>0$：收入上升，需求上升。这是一条\emph{可检验}的比较静态命题——第 6 节会看到，这类命题正是实证研究的典型产出。
+\end{example}
+
+\begin{remark}[比较静态 $\neq$ 因果识别]
+比较静态给出的是\emph{模型内}结论：“保持其他结构不变，$\theta$ 变，则 $C$ 变”。若现实中价格变化同时携带信息、预期或制度变化，结构解释还需额外假设。博士生应始终追问三问：改变的是哪个原语（primitive）？保持了哪些条件？结论对替代参数化是否稳健？
+\end{remark}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.78,transform shape]
+  \draw[->,thick] (0,0) -- (7.4,0) node[below right] {\small $x_1$};
+  \draw[->,thick] (0,0) -- (0,5.9) node[above left] {\small $x_2$};
+  \fill[gray!12] (0,0) -- (6.2,0) -- (0,4.6) -- cycle;
+  \draw[very thick] (6.2,0) -- (0,4.6);
+  % 无差异曲线
+  \draw[thick,domain=0.35:6.4,samples=100] plot (\x,{1.9/\x});
+  \draw[thick,domain=0.6:6.9,samples=100] plot (\x,{3.6/\x});
+  \draw[thick,domain=1.0:7.1,samples=100] plot (\x,{6.0/\x});
+  % 切点
+  \fill (2.35,1.55) circle (2pt);
+  \node[fill=white,inner sep=2pt,anchor=west,align=left] at (2.58,1.82) {\small 最优点\\[-1pt]\small $x^{*}=C(p,m)$};
+  \draw[dashed] (2.35,1.55) -- (2.35,0) node[below=3pt,fill=white,inner sep=1pt] {\small $x_1^{*}$};
+  \draw[dashed] (2.35,1.55) -- (0,1.55) node[left=3pt,fill=white,inner sep=1pt] {\small $x_2^{*}$};
+  \node[fill=white,inner sep=2pt,anchor=west] at (5.05,4.35) {\small 无差异曲线};
+\end{tikzpicture}
+\caption{内点最优：无差异曲线与预算线相切于 $x^{*}$}
+\end{figure}
+\figexplan{浅灰三角为预算集，其斜边为预算线；三条双曲型无差异曲线由内向外效用递增。内点最优 $x^{*}$ 出现在无差异曲线与预算线相切处（黑点）：切点条件即边际替代率等于价格比。两条虚线给出最优束的两个分量读数 $x_1^{*}$ 与 $x_2^{*}$。}
+
+\notehead{本节要点}
+\begin{itemize}
+  \item $v(\theta)\in\R$ 是数，$C(\theta)\subseteq X$ 是集合——输出类型不同，不可混写；
+  \item $\argmax$ 取“使目标最大的自变量集合”；
+  \item 线性效用、平坦偏好 $\Rightarrow$ $C(\theta)$ 可以是一整段；
+  \item 比较静态三问：改什么、保什么、是否稳健。
+\end{itemize}

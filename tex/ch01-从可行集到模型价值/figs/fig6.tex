@@ -1,0 +1,26 @@
+\documentclass[border=6pt]{standalone}
+\usepackage[fontset=none]{ctex}
+\usepackage{fontspec}
+\setCJKmainfont{Songti SC}[BoldFont={Songti SC}]
+\usepackage{amsmath,amssymb}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric,calc,patterns}
+\begin{document}
+\begin{tikzpicture}[scale=0.62]
+  \draw[->,thick] (0,0) -- (7.2,0) node[below right] {\small $x_1$};
+  \draw[->,thick] (0,0) -- (0,5.8) node[above left] {\small $x_2$};
+  \fill[gray!15] (0,0) -- (5.6,0) -- (0,4.4) -- cycle;
+  \draw[very thick] (5.6,0) -- (0,4.4);
+  % 线性无差异线（与预算线平行）
+  \draw[thick,dashed] (4.0,0) -- (0,3.14);
+  \draw[thick,dashed] (2.6,0) -- (0,2.05);
+  \node[below] at (5.6,0) {\small $m/p_1$};
+  \node[left] at (0,4.4) {\small $m/p_2$};
+  \draw[very thick,red!60!black] (5.6,0) -- (0,4.4);
+  \node[align=left,red!60!black] at (5.6,3.6) {\small $C(p,m)$：\\ \small 整条预算线};
+\end{tikzpicture}
+\end{document}

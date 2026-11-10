@@ -1,0 +1,492 @@
+% ============================================================
+% 第五讲 · Part 02：需求概念与最优值的存在性
+% ============================================================
+
+\section{需求概念与上确界：Marshallian 需求、概念家族与存在性}
+\label{sec:demand-concepts}
+
+效用最大化问题的解——\textbf{需求}——是消费者理论的核心输出。
+本节首先厘清\textbf{需求对应}与\textbf{需求函数}的区别，
+然后系统梳理围绕 UMP 构建的整个\textbf{需求概念家族}。
+
+\subsection{Marshallian 需求：对应与函数}
+\label{subsec:correspondence-vs-function}
+
+\begin{definition}[Marshallian（Walrasian）需求对应]\label{def:marshallian-demand}
+设 $u:\R^L_+\to\R$ 为效用函数，$p\gg 0$ 为价格向量，$w\ge 0$ 为财富。
+\textbf{Marshallian 需求对应}定义为 UMP 的最优解集：
+\[
+  X(p,w)=\arg\max\bigl\{\,u(x)\;:\;x\in\R^L_+,\;p\cdot x\le w\,\bigr\}.
+\]
+当 $X(p,w)$ 对给定的 $(p,w)$ 恰好只含一个元素时，
+记 $x(p,w)$ 为其中唯一的消费束，称为\textbf{Marshallian 需求函数}。
+\end{definition}
+
+$X(p,w)$ 之所以称为\textbf{对应}（correspondence）而非\textbf{函数}（function），
+是因为从 $(p,w)$ 到消费束的映射可能是\emph{多值}的：
+同一个价格—财富组合下，可能存在多个互不相同的最优消费束。
+何时出现多值？何时退化为单值？
+答案是：取决于偏好的\textbf{凸性}。
+
+\begin{itemize}
+\item \textbf{偏好凸但非严格凸}（如完全替代偏好）：
+  无差异曲线可能含有\emph{线性段}。
+  当预算线的斜率恰好等于线性段的斜率时，
+  线性段上\emph{每一点}都与预算线"相切"，
+  整个线段上的消费束同时达到最大效用，
+  此时 $X(p,w)$ 是一段线段（多值）。
+\item \textbf{偏好严格凸}（如 Cobb--Douglas 偏好）：
+  无差异曲线处处严格弯曲，不含线性段。
+  每条无差异曲线与预算线至多只有一个接触点，
+  因而 $X(p,w)$ 退化为单点集 $\{x(p,w)\}$，
+  需求成为\emph{函数}。
+\end{itemize}
+
+图~\ref{fig:convex-vs-strict} 直观展示两种情形的差异。
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.78, line cap=round, line join=round]
+  % ===== 左图：凸偏好（非严格凸），需求对应为一段线段 =====
+  \begin{scope}
+    % 坐标轴
+    \draw[axisline] (0,0) -- (6.2,0) node[below, axislabel] {$x_1$};
+    \draw[axisline] (0,0) -- (0,5.8) node[left, axislabel] {$x_2$};
+    % 预算线：从 (0,4.5) 到 (5.5,0)，斜率 -4.5/5.5 ≈ -0.818
+    \draw[thick] (0,4.5) -- (5.5,0);
+    \node[figlabel, anchor=south west] at (0.1,4.55) {$w/p_2$};
+    \node[figlabel, anchor=north east] at (5.45,-0.05) {$w/p_1$};
+    % 无差异曲线：上弯部分 + 线性段（与预算线重合）+ 下弯部分
+    \draw[curveA] (0.4, 5.3) .. controls (0.6, 4.2) and (1.0, 3.1) .. (1.6, 2.55);
+    \draw[curveA, line width=1.8pt] (1.6, 2.55) -- (3.8, 0.75);
+    \draw[curveA] (3.8, 0.75) .. controls (4.3, 0.44) and (4.8, 0.32) .. (5.6, 0.22);
+    % 最优线段端点标记
+    \fill (1.6, 2.55) circle (2.2pt);
+    \fill (3.8, 0.75) circle (2.2pt);
+    \node[figlabel, anchor=south east] at (1.5, 2.7) {$x^a$};
+    \node[figlabel, anchor=north west] at (3.9, 0.6) {$x^b$};
+    % 标注：整段最优
+    \node[align=center, font=\footnotesize] at (2.7, 3.6)
+      {凸（非严格凸）偏好：\\ $X(p,w)=[x^a,x^b]$ 为线段};
+    % 一条更低的无差异曲线（虚线）
+    \draw[curveB] (0.5, 3.6) .. controls (1.0, 2.2) and (2.0, 1.3) .. (3.2, 0.85);
+    \draw[curveB] (3.2, 0.85) -- (4.6, 0.30);
+    \draw[curveB] (4.6, 0.30) .. controls (4.9, 0.20) and (5.2, 0.15) .. (5.7, 0.10);
+    \node[curveB] at (5.2, 0.75) {};
+  \end{scope}
+  % ===== 右图：严格凸偏好，唯一最优点 =====
+  \begin{scope}[xshift=7.4cm]
+    % 坐标轴
+    \draw[axisline] (0,0) -- (6.2,0) node[below, axislabel] {$x_1$};
+    \draw[axisline] (0,0) -- (0,5.8) node[left, axislabel] {$x_2$};
+    % 预算线：从 (0,4.5) 到 (5.5,0)
+    \draw[thick] (0,4.5) -- (5.5,0);
+    \node[figlabel, anchor=south west] at (0.1,4.55) {$w/p_2$};
+    \node[figlabel, anchor=north east] at (5.45,-0.05) {$w/p_1$};
+    % 严格凸无差异曲线：x₂ = k/x₁ 型，与预算线相切
+    % 切点在 (2.5, 2.45)（预算线上），k = 2.5×2.45 = 6.125
+    \draw[curveA] plot [smooth, tension=0.8]
+      coordinates {(1.2, 5.1) (1.5, 4.08) (2.0, 3.06) (2.5, 2.45) (3.0, 2.04) (3.5, 1.75) (4.2, 1.46) (5.2, 1.18)};
+    % 最优点标记
+    \fill (2.5, 2.45) circle (2.2pt);
+    \node[figlabel, anchor=north west] at (2.65, 2.30) {$x^* = x(p,w)$};
+    % 标注
+    \node[align=center, font=\footnotesize] at (2.7, 3.9)
+      {严格凸偏好：\\ $X(p,w)=\{x^*\}$ 单点};
+    % 一条更低的无差异曲线（虚线）：k = 3.5
+    \draw[curveB] plot [smooth, tension=0.8]
+      coordinates {(1.0, 3.5) (1.4, 2.5) (2.0, 1.75) (2.8, 1.25) (3.5, 1.0) (4.5, 0.78) (5.5, 0.64)};
+  \end{scope}
+\end{tikzpicture}
+\caption{偏好凸性与需求对应的单值性：左图为凸但非严格凸偏好，
+  需求对应为一段线段；右图为严格凸偏好，需求退化为唯一的切点。}
+\label{fig:convex-vs-strict}
+\end{figure}
+
+\figexplan{
+左图：无差异曲线（实线）在中间段为直线（线性段），且线性段恰好落在预算线上。
+此时线性段两端点 $x^a$ 与 $x^b$ 之间（含端点）的每个消费束，
+其所在的无差异曲线都"同时"与预算线重合，效用值相同且均达到最优，
+因此 Marshallian 需求对应 $X(p,w)$ 是整个线段 $[x^a,x^b]$。
+虚线为一条更低的无差异曲线，其上的消费束同样可负担但未达最优。
+右图：无差异曲线处处严格弯曲（不含线性段），
+与预算线只在唯一切点 $x^*$ 处接触。
+该无差异曲线是预算集内所能达到的最高无差异曲线，
+切点 $x^*$ 是唯一的最优消费束，故需求对应退化为需求函数 $x(p,w)$。
+虚线为一条更低的无差异曲线，不与预算线相切。}
+
+\subsection{需求概念家族一览}
+\label{subsec:demand-family}
+
+围绕 UMP，微观经济学构建了一族紧密关联的概念。
+表~\ref{tab:demand-family} 给出完整的概览。
+
+\begin{definition}[间接效用函数、Hicksian 需求与支出函数]\label{def:indirect-hicksian}
+设 $u:\R^L_+\to\R$ 连续，$p\gg 0$，$w\ge 0$，目标效用 $\bar u$ 满足可达性。
+\begin{enumerate}
+\item \textbf{间接效用函数}（indirect utility function）：
+  Marshallian 需求所对应的效用水平
+  \[
+    v(p,w)=\max\bigl\{\,u(x)\;:\;x\in\R^L_+,\;p\cdot x\le w\,\bigr\}
+      = u\bigl(x(p,w)\bigr).
+  \]
+\item \textbf{Hicksian（补偿）需求}（compensated demand）：
+  在\emph{达到目标效用}的前提下，最小化支出
+  \[
+    h(p,\bar u)=\arg\min\bigl\{\,p\cdot x\;:\;x\in\R^L_+,\;u(x)\ge\bar u\,\bigr\}.
+  \]
+\item \textbf{支出函数}（expenditure function）：
+  上述最小化问题的最优值
+  \[
+    e(p,\bar u)=\min\bigl\{\,p\cdot x\;:\;x\in\R^L_+,\;u(x)\ge\bar u\,\bigr\}
+      = p\cdot h(p,\bar u).
+  \]
+\end{enumerate}
+\end{definition}
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabular}{@{}llll@{}}
+\toprule
+\textbf{概念} & \textbf{数学定义} & \textbf{固定什么} & \textbf{回答什么问题} \\
+\midrule
+Marshallian 需求 & $\max u(x)$ s.t.\ $p\cdot x\le w$ & 价格 $p$、财富 $w$ & 给定预算，买什么？ \\
+$x(p,w)$ & 的最优解 & & \\
+\addlinespace[3pt]
+间接效用 $v(p,w)$ & 同上问题的最优值 & 价格 $p$、财富 $w$ & 给定预算，最高效用是多少？ \\
+\addlinespace[3pt]
+Hicksian 需求 $h(p,\bar u)$ & \multicolumn{1}{l}{$\min p\cdot x$ s.t.\ $u(x)\ge\bar u$} & 价格 $p$、目标效用 $\bar u$ & 达到目标效用，买什么？ \\
+ & 的最优解 & & \\
+\addlinespace[3pt]
+支出函数 $e(p,\bar u)$ & 同上问题的最优值 & 价格 $p$、目标效用 $\bar u$ & 达到目标效用，最少花多少钱？ \\
+\bottomrule
+\end{tabular}
+\caption{需求概念家族一览}
+\label{tab:demand-family}
+\end{table}
+
+这一家族的核心联系由如下\textbf{对偶关系}给出：
+\begin{equation}\label{eq:duality-relations}
+  h(p,\bar u) = x\bigl(p,\,e(p,\bar u)\bigr),
+  \qquad
+  e\bigl(p,\,v(p,w)\bigr) = w.
+\end{equation}
+第一式含义：最小化支出得到的最优消费束，
+恰好等于"给消费者恰好够用的财富 $e(p,\bar u)$ 让其自己最大化效用"的结果；
+第二式含义：最大化效用之后再问"达到 $v(p,w)$ 至少要花多少钱"，
+答案就是 $w$。
+这两条对偶关系将在后续章节（支出最小化问题）中系统展开，
+并构成 Slutsky 分解的理论基础：
+\textbf{价格变化的总效应}可以拆分为
+\emph{替代效应}（Hicksian 需求的变化，效用不变）与
+\emph{财富效应}（由实际购买力变化引起）。
+没有 Hicksian 需求与支出函数这对工具，
+Slutsky 分解便无从谈起。
+
+\begin{remark}[为什么需要两套概念？]
+Marshallian 需求回答"给定预算怎么花"；
+Hicksian 需求回答"给定效用怎么最省"。
+前者是消费者真实面对的问题，与数据直接对应；
+后者是理论分析的理想化问题，结构更简洁。
+两者通过 \eqref{eq:duality-relations} 的对偶关系紧密联结：
+$v$ 是 $e$ 的"反函数"（在适当的意义下），
+$h$ 可由 $e$ 经 Shephard 引理直接恢复，
+正如 $x$ 可由 $v$ 经 Roy 恒等式恢复。
+对偶结构的完整刻画留待后续章节。
+\end{remark}
+\label{sec:sup-max}
+
+\subsection{sup 与 max 的严格辨析}
+\label{subsec:sup-vs-max}
+
+设 $S\subseteq\R$ 为一实数集，$f$ 为定义在某集合 $D$ 上的实值函数。
+
+\begin{definition}[上确界与最大值]\label{def:sup-max}
+\begin{enumerate}
+\item $M\in\R$ 是 $S$ 的\textbf{最大值}，若 (i) $M\in S$ 且 (ii) $s\le M$ 对一切 $s\in S$ 成立。
+\item $\bar s\in\R$ 是 $S$ 的\textbf{上确界}（supremum），若 (i) $s\le\bar s$ 对一切 $s\in S$（上界），
+  且 (ii) 对任意 $\bar s'<\bar s$，存在 $s\in S$ 使 $s>\bar s'$（最小上界）。
+\end{enumerate}
+最大值必定是上确界；但上确界可能不属于 $S$，此时最大值不存在。
+\end{definition}
+
+\begin{example}[sup 存在而 max 不存在]\label{ex:sup-not-max}
+\leavevmode
+\begin{enumerate}
+\item 开区间 $S=(0,1)$：$\sup S=1\notin S$，最大值不存在。
+\item 定义在开集 $D=(0,1)$ 上的函数 $f(x)=x$：
+  $\sup_{x\in D} f(x)=1$，但 $f$ 在 $D$ 上没有最大值
+  （因为 $x=1\notin D$，而 $f(x)$ 可以无限接近但永远不等于 $1$）。
+\end{enumerate}
+在 UMP 中，预算集 $B(p,w)$ 是\emph{闭}的
+（它包含边界 $\{x:p\cdot x=w\}$），
+这保证了"最优解不会被遗漏在可行集之外"。
+\end{example}
+
+上确界与最大值何时一致？
+这正是 \textbf{Weierstrass 定理}回答的问题：
+在紧集上，连续函数的最大值必然达到。
+
+\subsection{Weierstrass 定理：完整证明}
+\label{subsec:weierstrass}
+
+\begin{theorem}[Weierstrass 最大值定理]\label{thm:weierstrass}
+设 $K\subseteq\R^L$ 为非空紧集，$f:K\to\R$ 为连续函数。
+则 $f$ 在 $K$ 上达到最大值与最小值：
+存在 $x^*,x_*\in K$ 使 $f(x^*)\ge f(x)\ge f(x_*)$ 对一切 $x\in K$ 成立。
+\end{theorem}
+
+\begin{proof}
+只证明最大值的情形（最小值通过对 $-f$ 取最大值得到）。
+
+\textbf{第一步：$f$ 在 $K$ 上有界。}
+反设 $f$ 在 $K$ 上无上界。
+则对每个 $n\in\N$，存在 $x^n\in K$ 使 $f(x^n)>n$。
+由于 $K$ 是紧集（$\R^L$ 中紧 $\Leftrightarrow$ 闭且有界 $\Leftrightarrow$ 序列紧），
+序列 $\{x^n\}$ 存在收敛子列 $\{x^{n_k}\}$，其极限 $x^*=\lim_k x^{n_k}\in K$。
+由 $f$ 连续，$f(x^{n_k})\to f(x^*)$。
+但 $f(x^{n_k})>n_k\to\infty$，与 $f(x^*)<\infty$ 矛盾。
+故 $f$ 在 $K$ 上有上界，从而 $M=\sup_{x\in K}f(x)<\infty$ 存在。
+
+\textbf{第二步：上确界可以达到。}
+由上确界的定义（最小上界性质），
+对每个 $n\in\N$ 存在 $x^n\in K$ 使 $f(x^n)>M-\frac{1}{n}$。
+再次由 $K$ 的序列紧性，
+存在收敛子列 $\{x^{n_k}\}$，其极限 $x^*\in K$。
+由 $f$ 连续，
+\[
+  f(x^*)=\lim_{k\to\infty}f(x^{n_k}).
+\]
+另一方面，$M-\frac{1}{n_k}<f(x^{n_k})\le M$ 对一切 $k$ 成立，
+令 $k\to\infty$，由夹逼定理得
+\[
+  f(x^*)=M=\sup_{x\in K}f(x).
+\]
+又 $x^*\in K$，故 $M\in f(K)$，
+即上确界作为函数值被 $x^*$ 达到，$x^*$ 即为最大点。
+\end{proof}
+
+\begin{remark}[证明结构解读]
+证明的核心是\textbf{序列紧性}（sequential compactness）：
+紧集中的任意序列必有收敛于该集合内的子列。
+第一步排除了目标值发散到无穷的可能（保证 sup 有限），
+第二步将"无限逼近"转化为"确实达到"。
+两步共同的关键前提是：$K$ 是\textbf{闭}的（子列极限不会跑出可行集）
+且\textbf{有界}（序列不会跑向无穷远）。
+这解释了为何在 UMP 中，
+预算集 $B(p,w)$ 的闭性与有界性缺一不可：
+闭性要求预算约束包含等号（$\le w$ 而非 $<w$），
+有界性要求所有价格为正（$p\gg 0$）。
+\end{remark}
+
+\subsection{需求对应的三条基本定理}
+\label{subsec:demand-three-theorems}
+
+将 Weierstrass 定理应用于预算集，
+我们立即得到需求理论的三条基本定理。
+
+\begin{theorem}[需求对应非空]\label{thm:demand-nonempty}
+设 $u:\R^L_+\to\R$ 连续，$p\gg 0$，$w\ge 0$。
+则 Marshallian 需求对应 $X(p,w)$ 非空（且为紧集）。
+\end{theorem}
+
+\begin{proof}
+预算集
+\[
+  B(p,w)=\bigl\{x\in\R^L_+:p\cdot x\le w\bigr\}
+\]
+是紧集：
+\emph{闭}，因为它是不等式 $p\cdot x-w\le 0$ 的零点下方集
+（连续函数的闭集的原像）与非负象限之交；
+\emph{有界}，因为 $p_i>0$ 且 $x_i\ge 0$ 对每个 $i$ 成立，
+故 $x_i\le w/p_i$。
+又 $0\in B(p,w)$，故 $B(p,w)$ 非空。
+由 Weierstrass 定理（定理~\ref{thm:weierstrass}），
+连续函数 $u$ 在非空紧集 $B(p,w)$ 上达到最大值，
+即 $X(p,w)=\arg\max_{B(p,w)}u\neq\varnothing$。
+
+$X(p,w)$ 的紧性：$X(p,w)$ 是闭集
+（它是 $\{x\in B(p,w):u(x)=v(p,w)\}$，
+即连续函数 $u$ 的水平集与闭集 $B(p,w)$ 之交，故为闭集）
+且含于有界集 $B(p,w)$，故 $X(p,w)$ 为紧集。
+\end{proof}
+
+\begin{theorem}[凸偏好下需求对应为凸集]\label{thm:demand-convex}
+设 $u:\R^L_+\to\R$ 连续且拟凹（代表凸偏好），
+$p\gg 0$，$w\ge 0$。
+则 $X(p,w)$ 是凸集。
+\end{theorem}
+
+\begin{proof}
+设 $x^a, x^b\in X(p,w)$，$t\in[0,1]$。
+记 $x^t=tx^a+(1-t)x^b$。
+
+\textbf{$x^t$ 可行}：由 $p\cdot x^a\le w$、$p\cdot x^b\le w$ 与 $p$ 的线性性，
+\[
+  p\cdot x^t = t\,p\cdot x^a + (1-t)\,p\cdot x^b \le t\,w+(1-t)\,w = w,
+\]
+且 $x^t\in\R^L_+$（非负象限是凸集），故 $x^t\in B(p,w)$。
+
+\textbf{$x^t$ 最优}：由 $u$ 的拟凹性，
+\[
+  u(x^t) \ge \min\bigl\{u(x^a),\,u(x^b)\bigr\}.
+\]
+而 $x^a, x^b$ 均为最优解，故 $u(x^a)=u(x^b)=v(p,w)$，其中
+\[
+  v(p,w)=\max_{x\in B(p,w)}u(x)
+\]
+为间接效用函数。
+于是 $u(x^t)\ge v(p,w)$。
+但 $v(p,w)$ 是 $u$ 在 $B(p,w)$ 上的最大值，
+故 $u(x^t)\le v(p,w)$。
+综合得 $u(x^t)=v(p,w)$，即 $x^t\in X(p,w)$。
+\end{proof}
+
+\begin{theorem}[严格凸偏好下需求唯一]\label{thm:demand-unique}
+设 $u:\R^L_+\to\R$ 连续且严格拟凹（代表严格凸偏好），
+$p\gg 0$，$w\ge 0$。
+则 $X(p,w)$ 至多含有一个元素，
+即 Marshallian 需求退化为单值的需求函数 $x(p,w)$。
+\end{theorem}
+
+\begin{proof}
+反设 $X(p,w)$ 含有两个不同元素 $x^a\neq x^b$。
+由定理~\ref{thm:demand-nonempty}，$X(p,w)\neq\varnothing$，
+故 $v(p,w)$ 有限且 $u(x^a)=u(x^b)=v(p,w)$。
+
+取 $t\in(0,1)$，记 $x^t=tx^a+(1-t)x^b$。
+由定理~\ref{thm:demand-convex} 的证明（第一步），
+$x^t\in B(p,w)$。
+由 $u$ 的\emph{严格}拟凹性，
+\[
+  u(x^t) > \min\bigl\{u(x^a),\,u(x^b)\bigr\} = v(p,w).
+\]
+但 $v(p,w)$ 是 $u$ 在 $B(p,w)$ 上的最大值，
+$u(x^t)>v(p,w)$ 与此矛盾。
+故 $X(p,w)$ 不可能含有两个不同元素。
+\end{proof}
+
+\subsection{Walras 定律：预算约束取等}
+\label{subsec:walras-law}
+
+在局部非饱和偏好下，消费者永远不会"留钱不花"：
+最优消费束必定恰好花完财富。
+这一性质称为 Walras 定律，
+它是需求理论中最基础的可检验含义之一。
+
+\begin{theorem}[Walras 定律]\label{thm:walras}
+设偏好局部非饱和（对任意 $x$ 及任意 $\varepsilon>0$，
+存在 $y\in\R^L_+$ 使 $\|y-x\|<\varepsilon$ 且 $y\succ x$），
+$u$ 为其连续表示，$p\gg 0$，$w>0$。
+则对任意 $x^*\in X(p,w)$，有
+\[
+  p\cdot x^* = w.
+\]
+\end{theorem}
+
+\begin{proof}
+由 $x^*\in X(p,w)$，显然 $p\cdot x^*\le w$。
+反设 $p\cdot x^*<w$，即 $x^*$ 位于预算集的\emph{内部}
+（严格满足不等式）。
+令
+\[
+  \varepsilon = \frac{w - p\cdot x^*}{2\|p\|} > 0.
+\]
+由局部非饱和，存在 $y\in\R^L_+$ 使 $\|y-x^*\|<\varepsilon$ 且 $u(y)>u(x^*)$。
+
+考察 $y$ 的可负担性。由 Cauchy--Schwarz 不等式，
+\[
+  p\cdot y = p\cdot x^* + p\cdot(y-x^*)
+  \le p\cdot x^* + \|p\|\,\|y-x^*\|
+  < p\cdot x^* + \|p\|\,\varepsilon
+  = p\cdot x^* + \frac{w-p\cdot x^*}{2}
+  < w.
+\]
+故 $y\in B(p,w)$ 且 $u(y)>u(x^*)$。
+这与 $x^*$ 是 $B(p,w)$ 上的最大点矛盾。
+故必有 $p\cdot x^*=w$。
+\end{proof}
+
+图~\ref{fig:walras-interior} 给出几何直观：
+若消费束位于预算集内部（$p\cdot x<w$），
+则存在包含它的一个小邻域仍然在预算集内；
+由局部非饱和，邻域内总存在严格更好的消费束；
+因此内部点不可能是最优的——最优点必须落在预算集的边界上，
+即恰好花完财富。
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.82, line cap=round, line join=round]
+  % 坐标轴
+  \draw[axisline] (0,0) -- (7.2,0) node[below, axislabel] {$x_1$};
+  \draw[axisline] (0,0) -- (0,6.2) node[left, axislabel] {$x_2$};
+  % 预算线
+  \draw[thick] (0,5) -- (6,0);
+  \node[figlabel, anchor=south west] at (0.1,5.05) {$w/p_2$};
+  \node[figlabel, anchor=north east] at (5.95,-0.05) {$w/p_1$};
+  % 内点 x（非最优候选）
+  \fill (2.5, 2.0) circle (2.2pt);
+  \node[figlabel, anchor=south east] at (2.3, 2.2) {$x$};
+  % 邻域（小圆）
+  \draw[dashed] (2.5, 2.0) circle (1.2);
+  \node[figlabel, anchor=north west] at (3.7, 3.1) {\small $\varepsilon$-邻域仍在 $B(p,w)$ 内};
+  % 邻域内的更优点 y
+  \fill (3.0, 2.5) circle (2.2pt);
+  \node[figlabel, anchor=south west] at (3.2, 2.7) {$y\succ x$};
+  % 箭头指向更优点
+  \draw[arrblue, thick] (2.65, 2.15) -- (2.85, 2.35);
+  % 预算边界上的最优解
+  \fill (4.0, 1.67) circle (2.2pt);
+  \node[figlabel, anchor=west] at (4.2, 1.67) {$x^*\in X(p,w)$：必须在边界上};
+  % 过 x 的无差异曲线（示意，虚线）
+  \draw[curveB] (1.2, 4.2) .. controls (2.0, 3.0) and (3.0, 2.6) .. (4.2, 2.4);
+  \draw[curveB] (4.2, 2.4) .. controls (5.0, 2.2) and (5.8, 2.1) .. (6.8, 2.0);
+\end{tikzpicture}
+\caption{Walras 定律的几何直观：内部点不可能是最优解。
+  若 $p\cdot x<w$，则 $x$ 的一个小邻域整体落在预算集内，
+  局部非饱和保证邻域内存在严格更好的消费束 $y$，
+  因而 $x$ 不可能最优。最优解必须落在预算线上，
+  即 $p\cdot x^*=w$。}
+\label{fig:walras-interior}
+\end{figure}
+
+\figexplan{
+预算线（实线）将可行区域（左下方）与不可行区域分开。
+候选消费束 $x$（左点）严格位于预算集内部，即 $p\cdot x<w$。
+以 $x$ 为中心、适当小的半径画一个小圆（虚线），
+由 $p\cdot x<w$ 且不等式是严格的，可将半径选得足够小使整个圆仍在预算集内。
+由局部非饱和假设，圆内必存在严格优于 $x$ 的消费束 $y$（右点），
+且 $y$ 同样可负担。
+因此 $x$ 被支配，不可能是最优解。
+反观位于预算线上的点 $x^*$（右侧圆点），
+预算线之外不存在任何可负担的消费束，
+故它可能成为最优解。
+这从几何上解释了 Walras 定律：
+在局部非饱和偏好下，消费者将财富恰好用尽。
+}
+
+\begin{remark}[Walras 定律的含义与应用]
+Walras 定律 $p\cdot x^*=w$ 有两个重要推论。
+其一，\textbf{需求的零次齐次性}：
+当价格与财富同比例变化 $(p,w)\to(\lambda p,\lambda w)$（$\lambda>0$）时，
+预算集 $B(p,w)$ 不变，因此 $X(p,w)=X(\lambda p,\lambda w)$。
+消费者不受"货币幻觉"影响，只关心相对价格与实际购买力。
+其二，\textbf{加总与市场层面}：
+将所有消费者的 Walras 定律加总，
+可得市场总超额需求的价值恒为零。
+这一性质在一般均衡理论中用于证明：
+若 $L-1$ 个市场出清，则第 $L$ 个市场自动出清
+（Walras 定律在一般均衡中的版本）。
+\end{remark}
+
+\begin{remark}[对偶预告]
+本节建立的三条基本定理（非空性、凸值性、单值性）与 Walras 定律
+构成了需求理论的公理化骨架。
+后续章节将在此骨架上叠加微积分结构：
+对偶关系 \eqref{eq:duality-relations} 将给出
+Hicksian 与 Marshallian 需求之间的精确换算（Slutsky 方程），
+间接效用函数 $v$ 的可微性将产生 Roy 恒等式，
+支出函数 $e$ 的可微性将产生 Shephard 引理。
+这些结果共同构成现代需求理论的完整体系。
+\end{remark}

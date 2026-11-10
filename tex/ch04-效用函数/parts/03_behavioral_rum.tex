@@ -1,0 +1,146 @@
+% ============================================================
+\section{行为效用、社会偏好与离散选择}
+% ============================================================
+
+\subsection{参照依赖价值函数（前景理论型）}
+
+\notehead{形式与性质}
+\[
+v(z)=
+\begin{cases}
+z^{\alpha}, & z\ge0,\\[2pt]
+-\lambda(-z)^{\beta}, & z<0,
+\end{cases}
+\qquad \alpha,\beta\in(0,1),\ \lambda>1.
+\]
+三个结构性特征，各对应一类实验事实：
+\begin{enumerate}
+  \item \textbf{参照依赖}：自变量是\textbf{相对参照点的损益} $z$，不是财富水平；
+  \item \textbf{损失厌恶}：$\lambda>1$，损失的效用权重是等额收益的 $\lambda$ 倍
+        （估计值常落在 $2$ 附近）；
+  \item \textbf{敏感度递减}：$\alpha,\beta<1$，损益越大边际感受越小——
+        价值函数在收益域凹、损失域凸（S 形）。
+\end{enumerate}
+直接推论：\textbf{反射效应}——收益域风险规避、损失域风险偏好
+（“$+100$ 确定”对“$+200$ 半概率”，多数人选前者；
+“$-100$ 确定”对“$-200$ 半概率”，多数人选后者）。
+期望效用无法在一个 $u$ 下同时产生这两个选择。
+
+\begin{center}
+\begin{tikzpicture}[scale=0.95]
+  \draw[axisline] (-3.4,0) -- (3.6,0) node[below left, axislabel] {$z$（相对参照点）};
+  \draw[axisline] (0,-3.0) -- (0,2.6) node[below left, axislabel] {$v(z)$};
+  \draw[thick, MidBlue, domain=0:3.2, smooth, variable=\x] plot ({\x},{sqrt(\x)*1.15});
+  \draw[thick, MidBlue, domain=0:3.2, smooth, variable=\x] plot ({-\x},{-(\x)^0.6*1.55});
+  \node[nodeblue] at (0,0) {};
+  \draw[dashed, MidBlue] (0,0) -- (2.9,2.35) node[right, align=left] {损失域切线更陡：\\ 斜率比 $\approx\lambda$};
+  \node[align=left] at (2.3,-1.5) {原点折点（损失厌恶）\\ 收益凹、损失凸\\ （敏感度递减）};
+\end{tikzpicture}
+\end{center}
+\figexplan{横轴为相对参照点的损益 $z$，纵轴为价值 $v(z)$。曲线在原点出现折点：收益域为凹（风险厌恶）、损失域为凸（风险寻求），且损失域切线更陡（虚线），斜率之比约为损失厌恶系数 $\lambda$。原点处的折点即参照依赖，两侧曲率递减对应敏感度递减。}
+
+\notehead{适用情形}
+资产配置（处置效应：卖盈持亏）、劳动供给（日收入目标）、
+定价与营销（免费试用后的退订损失）、保单设计。
+与概率权重函数配合即为完整前景理论；仅价值函数已能解释大多数参照点现象。
+
+\subsection{不平等厌恶（收益分配型社会偏好）}\label{subsec:fs}
+
+\notehead{形式一：差异厌恶}
+\[
+u_i=x_i-\alpha_i\frac{1}{n-1}\sum_{j\ne i}\max\{x_j-x_i,\,0\}
+-\beta_i\frac{1}{n-1}\sum_{j\ne i}\max\{x_i-x_j,\,0\},
+\qquad 0\le\beta_i\le\alpha_i.
+\]
+$\alpha_i$：对\textbf{不如人}的厌恶（劣势不平等）；
+$\beta_i$：对\textbf{优于人}的不安（优势不平等），且设定 $\beta_i\le\alpha_i$
+——不如人的痛苦强于优于人的不安，这是实验数据的稳健结论。
+两人情形简化为
+\[
+u_i=
+\begin{cases}
+x_i-\beta_i(x_i-x_j), & x_i\ge x_j,\\[2pt]
+x_i-\alpha_i(x_j-x_i), & x_i<x_j.
+\end{cases}
+\]
+无差异曲线在 $x_i=x_j$ 处成折线，折点两侧斜率不同（$\alpha$ 侧更陡）。
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+  \draw[axisline] (0,0) -- (5.6,0) node[below left, axislabel] {$x_i$};
+  \draw[axisline] (0,0) -- (0,4.4) node[below left, axislabel] {$x_j$};
+  \draw[dashed, MidBlue] (0,0) -- (4.2,4.2) node[above right] {$x_i=x_j$};
+  % kinked ICs: lines with kink on diagonal
+  \draw[thick, MidBlue] (0.5,3.8) -- (2.2,2.2) -- (4.9,1.5);
+  \draw[thick, MidBlue] (0.5,2.6) -- (1.4,1.4) -- (4.9,0.35);
+  \node[align=left] at (4.85,3.05) {折线无差异曲线：\\ 对角线左侧（不如人）\\ 斜率更陡（$\alpha$ 侧）};
+\end{tikzpicture}
+\end{center}
+\figexplan{虚线为 $x_i=x_j$ 的平等线。无差异曲线在该线上折曲：对角线左侧（自己不如他人）斜率更陡，对应不利不平等厌恶参数 $\alpha$；右侧斜率较缓，对应有利不平等厌恶 $\beta$。折点两侧斜率不等，正是分配偏好无法用光滑效用表示的表现。}
+
+\notehead{形式二：社会最优与最小者关心}
+\[
+u_i=(1-\rho-\sigma)x_i+\rho\min(x_i,x_j)+\sigma\max(x_i,x_j).
+\]
+$\rho>0$ 时在意\textbf{最差者}（慈善/效率兼顾取决于 $\sigma$ 符号与大小）；
+$\sigma<0$ 时甚至\textbf{嫉妒}（宁损己以损人）。
+与差异厌恶形式的区别：本形式关心极端值而非逐对差距，
+对分配中的“最底层”更敏感。
+
+\notehead{适用情形}
+最后通牒/独裁者/公共品博弈的结构估计、
+组织内薪酬压缩的福利分析、再分配偏好的调查实验。
+估计要点：$\alpha$ 由拒绝行为识别，$\beta$ 由分配行为识别。
+
+\subsection{离散选择：随机效用模型}\label{subsec:rum}
+
+\notehead{形式与 Logit 推导}
+个体 $i$ 对方案 $j$ 的效用
+\[
+u_{ij}=v_j(\boldsymbol{x}_j;\theta)+\varepsilon_{ij},
+\]
+$v_j$ 为系统部分（可观测属性的函数），$\varepsilon_{ij}$ 为研究者不可观测的口味扰动。
+设 $\{\varepsilon_{ij}\}$ 独立同分布于 I 型极值分布 $F(\varepsilon)=\exp(-e^{-\varepsilon})$，则
+\[
+\begin{aligned}
+P_i(j)&=\Pr\bigl(v_j+\varepsilon_{ij}\ge v_k+\varepsilon_{ik},\ \forall k\bigr)\\
+&=\int\prod_{k\ne j}F\bigl(v_j-v_k+\varepsilon\bigr)\,f(\varepsilon)\,\mathrm{d}\varepsilon
+=\boxed{\ \frac{e^{v_j}}{\sum_{k}e^{v_k}}\ }.
+\end{aligned}
+\]
+关键一步：I 型极值分布的稳定性——独立极值变量之差服从 Logistic 分布，
+多重积分闭式可解。选择概率只依赖\textbf{效用差}，与绝对水平无关。
+
+\notehead{性质与扩展}
+\begin{itemize}
+  \item \textbf{IIA 性质}：两方案的选择概率比 $P(j)/P(k)=e^{v_j-v_k}$ 与第三方无关——
+        既是计算优点也是经验缺陷（红蓝巴士悖论）；
+  \item \textbf{嵌套 Logit}：方案分组（巢内相关），放松 IIA——
+        与 §\ref{subsec:flexible} 分支树型效用互为表里；
+  \item \textbf{随机系数 Logit}：$\theta$ 在个体间随机分布，
+        允许替代模式任意化，是需求估计的工业标准（§\ref{subsec:jpe-markups}）。
+\end{itemize}
+
+\notehead{适用情形}
+商品选择（品牌、车型）、区位选择、职业与学校选择、
+任何“多选一”且需要\textbf{从选择数据反推偏好}的经验场景。
+福利计算有闭式公式：期望最大效用（消费者剩余）
+$\mathbb{E}\max_j u_{ij}=\ln\sum_j e^{v_j}+$ 常数（对数和公式）。
+
+\subsection{类型学小结：六个选择维度}
+
+\begin{center}
+\small
+\begin{tabular}{llll}
+\toprule
+维度 & 问题 & 形式分支 & 代表 \\
+\midrule
+商品结构 & 替代还是互补？ & 线性 / 乘积型 / CES / 固定比例 & §4.1 \\
+收入效应 & 份额恒定还是变动？ & 位似 / 基本需求型 / 非位似 & §4.1.5--§4.1.7, §4.2 \\
+财富效应 & 是否可忽略？ & 拟线性 vs 一般 & §4.1.6 \\
+时间 & 一致还是不一致？ & 指数贴现 / $\beta$-$\delta$ & §4.3.1, §4.3.4 \\
+风险 & 时间可加还是解绑？ & CRRA / 递归型 / 失望厌恶 & §4.3.3, §4.3.5--§4.3.6 \\
+他人 & 自利的还是社会的？ & 自利 / 差异厌恶 / 攀比 & §4.3.2, §4.5.2 \\
+\bottomrule
+\end{tabular}
+\end{center}

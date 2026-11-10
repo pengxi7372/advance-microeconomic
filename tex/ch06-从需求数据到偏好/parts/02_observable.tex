@@ -1,0 +1,173 @@
+\section{需求系统的可观测结构：三个恒等式与 Slutsky 矩阵}
+% ============================================================
+% 第六讲 6.2：正则性假设、Engel/Cournot/齐次恒等式、S 的弹性形式
+% ============================================================
+
+\subsection{正则性假设}
+
+反问题要能提得清楚，先要给"需求函数"划一个可操作的定义域与光滑性台阶。
+以下四条贯穿全章，除特别声明外不再重复。
+
+\begin{condition}[正则性]\label{cond:regular}
+需求函数 $x:\R^n_{++}\times\R_{++}\to\R^n_+$ 满足：
+\begin{enumerate}
+\item[\textbf{(A1)}] \textbf{光滑性}：$x$ 连续可微，且在各分量上足够多次可微（用到几阶就假设几阶）；
+\item[\textbf{(A2)}] \textbf{零次齐次}：$x(tp,tw)=x(p,w)$，$\forall t>0$；
+\item[\textbf{(A3)}] \textbf{Walras 律}：$p\cdot x(p,w)=w$，$\forall(p,w)$；
+\item[\textbf{(A4)}] \textbf{内点性}：$x(p,w)\gg0$，从而不涉及角点与库恩—塔克乘子的符号讨论。
+\end{enumerate}
+\end{condition}
+
+\begin{remark}[每条假设在做什么]
+(A1) 是为了能写导数、能积分，是纯技术条件。(A2) 是"没有货币幻觉"：价格与财富同比例变动，
+可行集不变，选择也不变。(A3) 说预算被花光，其理论依据是局部非饱和（第 5 章 \S 5.1）；
+注意 (A3) 是\emph{等式}，它把 $n$ 维需求压缩到 $n-1$ 维，这一点将在下文反复用到。
+(A4) 排除了角点，代价是丢掉"某些商品不消费"这一大类现实情形；\S 6.6 的非参数方法不需要 (A4)，
+这也是它在实证中更受欢迎的原因之一。
+\end{remark}
+
+\subsection{三条加总恒等式}
+
+把 (A2)、(A3) 对参数求导，立刻得到三组恒等式。它们在实证中不是"可选的美化"，而是任何需求系统
+都必须逐点满足的会计约束；估计时若不施加，参数估计就与预算约束自相矛盾。
+
+\begin{proposition}[Engel 加总与 Cournot 加总]\label{prop:aggr-identities}
+在 (A1)--(A3) 下，对一切 $(p,w)$：
+\begin{align}
+\text{（Engel 加总）}\qquad & \sum_{i=1}^{n}p_i\,\frac{\partial x_i(p,w)}{\partial w}=1,
+\label{eq:engel}\\[2pt]
+\text{（Cournot 加总）}\qquad & x_j(p,w)+\sum_{i=1}^{n}p_i\,\frac{\partial x_i(p,w)}{\partial p_j}=0,
+\qquad j=1,\ldots,n,
+\label{eq:cournot}\\[2pt]
+\text{（齐次性）}\qquad & \sum_{j=1}^{n}p_j\,\frac{\partial x_i(p,w)}{\partial p_j}
+ +w\,\frac{\partial x_i(p,w)}{\partial w}=0,\qquad i=1,\ldots,n.
+\label{eq:homog}
+\end{align}
+\end{proposition}
+
+\begin{proof}
+\eqref{eq:engel}：把 $p\cdot x(p,w)=w$ 对 $w$ 求导，$p$ 视为常数，得 $\sum_i p_i\partial x_i/\partial w=1$。
+\eqref{eq:cournot}：把同一恒等式对 $p_j$ 求导，注意左端的 $p$ 也依赖 $p_j$：
+$\partial\bigl(\sum_i p_ix_i\bigr)/\partial p_j=x_j+\sum_i p_i\,\partial x_i/\partial p_j=0$，右端 $w$ 与 $p_j$ 无关。
+\eqref{eq:homog}：把 $x_i(tp,tw)=x_i(p,w)$ 对 $t$ 求导后在 $t=1$ 处取值，即得 Euler 恒等式。
+\end{proof}
+
+\begin{remark}[三条恒等式的经济读法]
+Engel 加总说的是"新增一元财富必须全部花掉"：各商品的财富导数按价格加权后恰为 1，
+因此不可能所有商品都是劣等品（否则加权和 $\le0$）。
+Cournot 加总说的是"第 $j$ 种商品涨价，若要保持原来的消费束，支出恰好增加 $x_j$"——
+价格上升的全部直接效应被数量完全吸收。
+齐次性说的是"价格与财富同比例上升时，各商品需求的净变化为零"：价格效应与财富效应精确抵消。
+三条恒等式合起来把 $n\times n$ 的价格导数矩阵与 $n$ 维财富导数绑在一起，
+自由参数的个数因此从 $n^2+n$ 降到 $n^2-n$（这一点在 \S 6.5 的计量约束计数中会再出现）。
+\end{remark}
+
+\subsection{Slutsky 矩阵：定义与自动成立的两条性质}
+
+\begin{definition}[Slutsky 矩阵]\label{def:slutsky}
+在 (A1)--(A3) 下定义
+\[
+ \boxed{\;S(p,w)\;=\;D_px(p,w)+\bigl(D_wx(p,w)\bigr)\,x(p,w)^{\!\top}\;}
+\]
+其第 $(i,j)$ 元为
+\[
+ S_{ij}(p,w)=\frac{\partial x_i(p,w)}{\partial p_j}
+ +x_j(p,w)\,\frac{\partial x_i(p,w)}{\partial w}.
+\]
+\end{definition}
+
+注意这个定义的\textbf{全部右端项都是可观测的}：价格导数、财富导数与需求量本身。
+这正是 \S 6.3 之后所有检验得以进行的前提——Slutsky 矩阵不是从偏好算出来的理论对象，
+而是可以从数据估出来的统计对象。
+
+\begin{proposition}[两条自动成立的性质]\label{prop:S-auto}
+在 (A1)--(A3) 下，对一切 $(p,w)$：
+\begin{enumerate}
+\item $S(p,w)\,p=0$（行和为零，按价格加权）；
+\item $p^{\top}S(p,w)=0$（列和为零，按价格加权），从而 $\operatorname{rank}S\le n-1$。
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+(1) 用 \eqref{eq:homog} 的矩阵形式 $D_px\cdot p+w\,D_wx=0$：
+\[
+ S\,p=D_px\cdot p+\bigl(D_wx\bigr)\bigl(x^{\top}p\bigr)
+ =D_px\cdot p+w\,D_wx=0,
+\]
+其中第二个等号用了 Walras 律 $x^{\top}p=w$。
+
+(2) 用 \eqref{eq:cournot} 的矩阵形式 $p^{\top}D_px=-x^{\top}$，以及 \eqref{eq:engel} 的 $p^{\top}D_wx=1$：
+\[
+ p^{\top}S=p^{\top}D_px+\bigl(p^{\top}D_wx\bigr)x^{\top}
+ =-x^{\top}+1\cdot x^{\top}=0.
+\]
+由于 $p\gg0$ 非零，$S$ 的零空间至少含 $\operatorname{span}\{p\}$，故秩不超过 $n-1$。
+\end{proof}
+
+\begin{remark}[不要把自动性质当成检验]
+命题~\ref{prop:S-auto} 常被误引为"Slutsky 理论的经验验证"。这是误解：
+行和为零、列和为零是齐次性与 Walras 律的直接推论，而这两条在估计时通常被\emph{直接施加}（作为参数约束）。
+真正有内容、可以拒绝理论的是\textbf{对称性}与\textbf{负半定性}——它们不是会计恒等式，
+而是偏好最大化的实质后果。\S 6.3 与 \S 6.5 分别从理论与数值两侧说明这一点。
+\end{remark}
+
+\subsection{弹性形式：实证中的标准写法}
+
+计量工作几乎从不直接报告 $S$ 的原始元，而是报告弹性。把 $S$ 翻译成弹性形式，
+既便于跨商品、跨样本比较，也让约束的形式变得一目了然。
+
+记支出份额 $s_i=p_ix_i/w$，价格弹性 $\varepsilon_{ij}=(\partial x_i/\partial p_j)(p_j/x_i)$，
+财富弹性 $\eta_i=(\partial x_i/\partial w)(w/x_i)$。由定义~\ref{def:slutsky} 直接展开：
+
+\begin{proposition}[Slutsky 矩阵的弹性形式]\label{prop:S-elasticity}
+在 (A1)--(A3) 且 $x_i>0$ 下，定义 Slutsky 弹性 $\sigma_{ij}=\varepsilon_{ij}+s_j\eta_i$，则
+\[
+ S_{ij}=\frac{x_i}{p_j}\,\sigma_{ij},
+ \qquad\text{等价地}\qquad
+ \Sigma_{ij}:=\frac{p_ip_j}{w}S_{ij}=s_i\,\sigma_{ij}.
+\]
+并且：
+\begin{enumerate}
+\item \textbf{对称性} $\iff$ $s_i\sigma_{ij}=s_j\sigma_{ji}$，$\forall i,j$；
+\item \textbf{负半定性} $\iff$ 矩阵 $\Sigma=(\Sigma_{ij})$ 负半定；
+\item \textbf{行和为零} $\iff$ $\sum_j s_j\sigma_{ij}=0$，$\forall i$。
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+由 $S_{ij}=\partial x_i/\partial p_j+x_j\,\partial x_i/\partial w$，在第一项提出 $x_i/p_j$、
+第二项提出 $x_i/w$：
+\[
+ S_{ij}=\frac{x_i}{p_j}\cdot\frac{p_j}{x_i}\frac{\partial x_i}{\partial p_j}
+ +x_j\cdot\frac{x_i}{w}\cdot\frac{w}{x_i}\frac{\partial x_i}{\partial w}
+ =\frac{x_i}{p_j}\,\varepsilon_{ij}+\frac{x_ix_j}{w}\,\eta_i
+ =\frac{x_i}{p_j}\bigl(\varepsilon_{ij}+s_j\eta_i\bigr),
+\]
+末一步用了 $x_j/w=s_j/p_j$。两端乘 $p_ip_j/w$ 得 $\Sigma_{ij}=s_i\sigma_{ij}$。
+(1)(2)(3) 分别是"对称""二次型符号""行和"在变量替换 $S\mapsto\Sigma=\operatorname{diag}(p)S\operatorname{diag}(p)/w$ 下的不变性：
+该变换是同余变换（合同变换），保持对称性与惯性，故负半定性不变。
+\end{proof}
+
+\begin{remark}[为什么用 $\Sigma$ 而不是 $S$ 做检验]
+$\Sigma$ 的元素是无量纲的（份额乘弹性），可以直接跨商品比较，也可以在同一个矩阵里同时读替代与互补。
+更重要的是：$\Sigma$ 的对称性条件 $s_i\sigma_{ij}=s_j\sigma_{ji}$ 让"谁替代谁"的非对称性变得可见——
+原始形式 $S_{ij}=S_{ji}$ 掩盖了份额差异，而份额差异恰恰是实证中拒绝对称性的主要来源之一。
+\end{remark}
+
+把本节的结果整理成一张清单，作为后文的索引：
+
+\begin{center}
+\begin{tabular}{llll}
+\toprule
+条件 & 数学表述 & 来源 & 是否实质约束\\
+\midrule
+齐次性 & $D_px\cdot p+wD_wx=0$ & 无货币幻觉 & 否（可施加）\\
+Walras 律 & $p\cdot x=w$ & 局部非饱和 & 否（可施加）\\
+行和为零 & $Sp=0$ & 上两条的推论 & 否\\
+列和为零 & $p^{\top}S=0$ & 上两条的推论 & 否\\
+\textbf{对称性} & $S=S^{\top}$ & 支出函数二阶导对称 & \textbf{是}（$n\ge3$）\\
+\textbf{负半定性} & $v^{\top}Sv\le0$ & $e$ 对 $p$ 凹 & \textbf{是}（一切 $n\ge2$）\\
+\bottomrule
+\end{tabular}
+\end{center}
+\figexplan{可积性条件的清单。前四行由正则性假设直接给出，估计时作为参数约束施加即可；后两行才是理论对数据的真正限制，也是本章的检验对象。注意对称性在 $n=2$ 时自动成立（\S 6.3 命题~\ref{prop:n2-auto}），因此两商品情形下唯一可检验的内容是曲率。}

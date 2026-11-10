@@ -1,0 +1,178 @@
+\section{加总问题：代表性消费者什么时候存在}
+% ============================================================
+% 第六讲 6.7：加总的负结果、加总 Slutsky 的分解、Gorman 极化形式
+% ============================================================
+
+\subsection{问题的实质}
+
+至此讨论的都是单个消费者。实证研究几乎总是用总量数据：把全国的消费支出当"一个消费者"的支出，
+把总量财富当"他的"财富，然后估计一个需求系统、算一个福利变化。这一步跳跃需要理由。
+
+设经济中有 $I$ 个消费者，第 $i$ 个的需求为 $x^i(p,w_i)$，总量需求为
+\[
+ X(p,w_1,\ldots,w_I)=\sum_{i=1}^{I}x^i(p,w_i).
+\]
+问题有两层，必须分开问：
+\begin{enumerate}
+\item \textbf{统计层面}：$X$ 能否写成 $X(p,W)$ 的形式，其中 $W=\sum_iw_i$？
+      即总量需求是否只依赖总财富、不依赖其分配？
+\item \textbf{规范层面}：若第一层成立，能否进一步把 $X$ 当作\emph{某个}偏好生成的个体需求，
+      从而用 $e$ 计算"社会"的福利变化？
+\end{enumerate}
+第一层不成立时，代表性消费者连定义都没有；第一层成立而第二层不成立时，福利评价仍然没有依据。
+两层的条件都不平凡。
+
+\subsection{一个负结果：即使偏好相同也很难加总}
+
+先看最有利的情形——所有消费者偏好\emph{相同}。此时加总似乎是自动的：同一函数，求和即可。
+但"偏好相同"并不意味着"需求相同"，因为财富不同，而需求对财富的依赖方式可能不同。
+
+\begin{example}[同偏好、不同财富，仍不能加总]\label{ex:agg-fail}
+设两人都有 CD 偏好但份额不同（这是"偏好相同"的最宽松读法；若份额也相同则见下文注）。
+取 $\alpha_1=0.7$、$\alpha_2=0.3$，$n=2$，$p=(1,1)$，总财富 $W=10$ 固定。
+两人的商品 1 需求为 $x^1_1=0.7w_1/p_1$、$x^2_1=0.3w_2/p_1$，故
+\[
+ X_1=\frac{0.7w_1+0.3w_2}{p_1}.
+\]
+在三种分配下：
+\begin{center}
+\begin{tabular}{lccc}
+\toprule
+分配 $(w_1,w_2)$ & $(5,5)$ & $(10,0)$ & $(0,10)$\\
+\midrule
+$X_1$（$p_1=1$） & $5.0$ & $7.0$ & $3.0$\\
+\bottomrule
+\end{tabular}
+\end{center}
+总财富、价格、偏好全部不变，总量需求却在 $[3,7]$ 之间大幅移动。
+故 $X$ \textbf{不是} $(p,W)$ 的函数，代表性消费者不存在。
+\end{example}
+
+\begin{remark}[这个例子为什么值得强调]
+CD 是"最容易加总"的偏好：需求对财富线性、对价格弹性恒为 1、支出份额恒定。
+如果连 CD 在份额不同时都无法加总，一般情形只会更糟。
+关键原因是：加总把 $w_i$ 消掉的同时，也把"谁有多少钱"这一信息消掉了，
+而需求恰恰依赖这一信息。只要个体需求对财富的斜率不同（$\partial x^1_1/\partial w_1\ne\partial x^2_1/\partial w_2$），
+总量就依赖分配。反之，若所有个体的财富斜率相同（$0.7=0.3$），加总自动成立——
+这正是 Gorman 条件的雏形（\S 6.7.4）。
+\end{remark}
+
+\subsection{强行加总的代价：加总 Slutsky 矩阵多出一项}
+
+假设研究者无视上述问题，直接用总量数据构造 Slutsky 矩阵。这样做会得到什么？
+把总量需求对 $p_j$ 与 $W$ 求导，并设每个个体的财富同比例增加（$\partial w_i/\partial W=1$）：
+
+\begin{proposition}[加总 Slutsky 矩阵的分解]\label{prop:S-agg}
+设 $X(p,W)=\sum_ix^i(p,w_i)$（假设存在），则
+\[
+ \boxed{\;S^{\mathrm{agg}}(p,W)
+ =\sum_{i=1}^{I}S^{i}(p,w_i)
+ +\underbrace{\sum_{i=1}^{I}\sum_{k\ne i}\Bigl(\frac{\partial x^{i}}{\partial w_i}\Bigr)x^{k\,\top}}_{\text{分配项}}\;}
+\]
+其中 $S^i$ 为第 $i$ 个个体的 Slutsky 矩阵。
+\end{proposition}
+
+\begin{proof}
+由 $X_j=\sum_ix^i_j$：
+\[
+ \frac{\partial X_j}{\partial p_l}=\sum_i\frac{\partial x^i_j}{\partial p_l},
+ \qquad
+ \frac{\partial X_j}{\partial W}=\sum_i\frac{\partial x^i_j}{\partial w_i}.
+\]
+代入 $S^{\mathrm{agg}}_{jl}=\partial X_j/\partial p_l+(\partial X_j/\partial W)X_l$：
+\[
+ S^{\mathrm{agg}}_{jl}=\sum_i\frac{\partial x^i_j}{\partial p_l}
+ +\Bigl(\sum_i\frac{\partial x^i_j}{\partial w_i}\Bigr)\Bigl(\sum_kx^k_l\Bigr)
+ =\sum_i\underbrace{\Bigl[\frac{\partial x^i_j}{\partial p_l}+\frac{\partial x^i_j}{\partial w_i}x^i_l\Bigr]}_{=S^i_{jl}}
+ +\sum_i\sum_{k\ne i}\frac{\partial x^i_j}{\partial w_i}x^k_l . \qedhere
+\]
+\end{proof}
+
+\begin{remark}[分配项的读法]
+分配项把"$i$ 的财富效应"乘上"$k$ 的消费量"。它的存在意味着：
+\textbf{总量层面的替代效应，混入了跨人的财富再分配效应}。这带来三个后果：
+(1) 即使每个 $S^i$ 都对称，$S^{\mathrm{agg}}$ 一般\textbf{不对称}——分配项本身通常不对称；
+(2) $S^{\mathrm{agg}}$ 的负半定性也没有保证（分配项可正可负）；
+(3) 因此用总量数据做 Slutsky 对称性检验，拒绝的可能不是消费者理论，而是加总假设本身。
+这与 \S 6.5 末尾提到的"加总偏误"是同一件事的代数表达。
+\end{remark}
+
+\subsection{Gorman 极化形式：精确加总的充要条件}
+
+什么条件下加总成立？Gorman（1953）给出了答案，其形式之美值得单独一节。
+
+\begin{definition}[Gorman 极化形式]
+称一组偏好满足\textbf{极化形式}，若其支出函数可写成
+\[
+ e_i(p,u_i)=c_i(p)+d(p)\,u_i,\qquad i=1,\ldots,I,
+\]
+其中 $c_i,d$ 对 $p$ 一次齐次、凹、非减，且 $d(p)>0$ 对\emph{所有} $i$ \textbf{相同}。
+\end{definition}
+
+\begin{proposition}[精确加总]\label{prop:gorman}
+若所有个体的支出函数取 Gorman 极化形式，则总量需求可由一个代表性消费者生成：
+\[
+ E(p,U)=\sum_{i=1}^{I}c_i(p)+d(p)\,U,\qquad U:=\sum_{i=1}^{I}u_i,
+\]
+且 $X(p,W)=\nabla_pE\bigl(p,U(p,W)\bigr)$，其中 $U(p,W)$ 由 $E(p,U)=W$ 反解。
+\end{proposition}
+
+\begin{proof}
+由 $e_i=c_i+du_i$ 与 Shephard 引理，$x^i=\nabla_pe_i=\nabla_pc_i+u_i\nabla_pd$。求和：
+\[
+ X=\sum_i\nabla_pc_i+\Bigl(\sum_iu_i\Bigr)\nabla_pd
+ =\nabla_p\Bigl[\sum_ic_i(p)+d(p)U\Bigr]=\nabla_pE(p,U).
+\]
+所有权函数对 $p$ 一次齐次、凹，故 $E$ 亦然，从而是合法的支出函数；
+$E(p,U)=W$ 对 $U$ 严格递增（因 $d>0$），可反解出 $U(p,W)$。
+\end{proof}
+
+\begin{example}[LES 属于 Gorman 形式]
+LES 的支出函数为
+\[
+ e_i(p,u_i)=p\cdot b_i+e^{u_i}\prod_{k}p_k^{a_k},
+\]
+取 $c_i(p)=p\cdot b_i$、$d(p)=\prod_kp_k^{a_k}$，正是极化形式——注意 $d$ 与 $i$ 无关，
+因为所有消费者的边际份额 $a$ 相同，差异只体现在必需量 $b_i$ 上。
+于是总量支出为
+\[
+ E(p,U)=\sum_ip\cdot b_i+d(p)\,U=p\cdot\Bigl(\sum_ib_i\Bigr)+d(p)\,U,
+\]
+即\textbf{总量也服从一个 LES}，其"必需量"是各家必需量之和。这是 LES 在实证中被长期使用的真正原因：
+它是少数几个既灵活、又\emph{精确可加总}的函数形式之一。
+\end{example}
+
+\begin{remark}[Gorman 条件的实质：共同的财富斜率]
+把 $e_i=c_i+du_i$ 对 $u_i$ 求导：$\partial e_i/\partial u_i=d(p)$，与 $i$ 无关。
+由包络定理，$\partial e_i/\partial u_i=1/\lambda_i$（$\lambda_i$ 为 $i$ 的财富边际效用），
+故 Gorman 条件等价于说：\textbf{所有人的财富边际效用之比与财富分配无关}——
+或者说，$\partial x^i/\partial w_i$ 有一个共同的（按 $d$ 缩放的）结构。
+这正好解释了例~\ref{ex:agg-fail}：那里两人的财富斜率 $0.7/p_1$ 与 $0.3/p_1$ 不同，条件不满足，加总失败。
+\end{remark}
+
+\begin{remark}[Gorman 加总的代价：基数效用]
+命题~\ref{prop:gorman} 中的 $U=\sum_iu_i$ 是效用的\emph{水平}之和。
+这只在效用可作基数比较时才有意义——而 \S 6.1 已经说明，效用水平在个体层面不可识别。
+于是出现一个悖论式的结论：\textbf{代表性消费者的存在性依赖于一个不可识别的量}。
+实践中这意味着：Gorman 条件可以保证"总量需求像一个理性消费者"，但\emph{不能}保证
+"这个代表性消费者的福利变化等于个体福利变化之和"。用总量数据算出的 CV/EV，
+在分配发生大幅变动时可能与人头加总的福利结果符号相反。
+这是 \S 6.8 之后必须交代的一条边界。
+\end{remark}
+
+把本节的结果收成一张表：
+
+\begin{center}
+\small
+\begin{tabular}{lll}
+\toprule
+情形 & 总量需求是否只依赖 $(p,W)$ & 能否作福利评价\\
+\midrule
+偏好同质、财富斜率相同（Gorman 特例） & 是 & 需基数效用\\
+偏好同质、财富斜率不同 & 否（例~\ref{ex:agg-fail}） & 否\\
+Gorman 极化形式、$d(p)$ 相同 & 是（命题~\ref{prop:gorman}） & 需基数效用\\
+一般异质偏好 & 否 & 否\\
+\bottomrule
+\end{tabular}
+\end{center}
+\figexplan{加总的三档结论。第一档是"同质偏好 $+$ 共同财富斜率"，加总自动成立；第二档是 Gorman 极化形式，加总成立但需要$\sum u_i$ 可比；第三档是一般情形，加总不成立。实证中使用总量数据时，实际站在哪一档通常无法从数据中检验——这是总量分析最根本的识别困难，比 Slutsky 检验的通过与否更值得在论文中交代。}

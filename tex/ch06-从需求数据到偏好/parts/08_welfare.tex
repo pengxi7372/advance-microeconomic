@@ -1,0 +1,188 @@
+\section{福利评价：补偿变差、等价变差与消费者剩余}
+% ============================================================
+% 第六讲 6.8：CV/EV 的定义、与 Marshallian 剩余的夹逼、路径依赖
+% ============================================================
+
+\subsection{两个货币度量}
+
+恢复出 $e$ 之后，福利评价就变成一个代入运算。考虑价格从 $p^0$ 变为 $p^1$，财富 $w$ 不变。
+记 $u^0=v(p^0,w)$、$u^1=v(p^1,w)$。两个标准的货币度量是：
+
+\begin{definition}[补偿变差与等价变差]\label{def:cv-ev}
+\begin{align*}
+\textbf{补偿变差（CV）}:\quad & \mathrm{CV}:=e(p^1,u^0)-e(p^1,u^1)=e(p^1,u^0)-w,\\
+\textbf{等价变差（EV）}:\quad & \mathrm{EV}:=e(p^0,u^0)-e(p^0,u^1)=w-e(p^0,u^1).
+\end{align*}
+\end{definition}
+
+两个定义只在"用哪一组价格做尺子"上不同：
+CV 用\emph{新}价格衡量"要补多少钱才能回到原来的效用"，是事后补偿；
+EV 用\emph{旧}价格衡量"多少收入变化与这次价格变化等价"，是事前等价。
+对价格上涨（$u^1<u^0$），两者都为正：
+
+\begin{proposition}[积分表示]\label{prop:cv-ev-integral}
+设价格只变第 1 种商品（$p^0_1<p^1_1$，其余价格不变），则
+\[
+ \mathrm{CV}=\int_{p^0_1}^{p^1_1}h_1(p_1,u^0)\,\mathrm dp_1,
+ \qquad
+ \mathrm{EV}=\int_{p^0_1}^{p^1_1}h_1(p_1,u^1)\,\mathrm dp_1,
+\]
+两者均严格为正。
+\end{proposition}
+
+\begin{proof}
+由 $e$ 对 $p$ 一次齐次且 $\nabla_pe=h$，沿"只改 $p_1$"的路径积分：
+$e(p^1,u^0)-e(p^0,u^0)=\int_{p^0_1}^{p^1_1}h_1(p_1,u^0)\mathrm dp_1$。
+而 $e(p^0,u^0)=w$，故第一式成立。第二式同理由 $e(p^0,u^1)$ 与 $e(p^1,u^1)=w$ 相减得到。
+正性来自 $h_1>0$ 与积分方向。
+\end{proof}
+
+\subsection{与 Marshallian 消费者剩余的关系}
+
+教科书中更常见的是 Marshallian 消费者剩余：
+\[
+ \Delta\mathrm{CS}:=-\int_{p^0_1}^{p^1_1}x_1(p_1,w)\,\mathrm dp_1
+ \qquad\bigl(\text{价格上升时为负，其绝对值记}\ |\Delta\mathrm{CS}|\bigr).
+\]
+它与 CV、EV 的关系可以精确地"夹"出来。
+
+\begin{proposition}[夹逼]\label{prop:sandwich}
+设商品 1 为正常品，$p^0_1<p^1_1$，其余价格不变。则
+\[
+ \boxed{\;\mathrm{EV}\;\le\;|\Delta\mathrm{CS}|\;\le\;\mathrm{CV}.\;}
+\]
+\end{proposition}
+
+\begin{proof}
+对 $p_1\in[p^0_1,p^1_1]$，Marshallian 需求满足
+$x_1(p_1,w)=h_1\bigl(p_1,\,v(p_1,w)\bigr)$（对偶恒等式）。
+因价格上升，$v(p_1,w)$ 从 $u^0$ 单调降到 $u^1$，故 $u^1\le v(p_1,w)\le u^0$。
+商品 1 正常意味着 $h_1$ 对效用水平递增，于是对区间内每个 $p_1$：
+\[
+ h_1(p_1,u^1)\;\le\;x_1(p_1,w)\;\le\;h_1(p_1,u^0).
+\]
+在 $[p^0_1,p^1_1]$ 上积分（积分区间长度为正），并用命题~\ref{prop:cv-ev-integral} 即得结论。
+\end{proof}
+
+\begin{remark}[夹逼的适用范围]
+三个条件缺一不可：(i) 只变一种价格；(ii) 商品为正常品；(iii) 价格变化方向明确。
+若商品为劣等品，$h_1$ 对 $u$ 递减，不等号方向反转，夹逼失效；
+若同时变多种价格，$\Delta\mathrm{CS}$ 变成线积分，见 \S 6.8.4。
+文献中"消费者剩余可以作为 CV/EV 的良好近似"这一说法，依赖的正是命题~\ref{prop:sandwich}——
+它给出的是\emph{有界}而非"近似相等"，界的宽度取决于价格变化幅度与需求曲线的曲率。
+价格变化越大，三条曲线围出的区域越宽，近似越差。
+\end{remark}
+
+\begin{example}[CD 情形：三个数都能算出来]\label{ex:cd-welfare}
+取 $u=x_1^{0.3}x_2^{0.7}$，$p^0=(2,3)$、$p^1=(4,3)$、$w=60$（只变 $p_1$，涨一倍）。
+由 $v(p,w)=w\prod_i(\alpha_i/p_i)^{\alpha_i}$ 与 $e(p,u)=u\prod_i(p_i/\alpha_i)^{\alpha_i}$：
+\[
+ u^0=12.2620,\qquad u^1=9.9599 .
+\]
+三个度量：
+\begin{align*}
+\mathrm{CV}&=w\Bigl[\frac{\prod_i(p_i^1)^{\alpha_i}}{\prod_i(p_i^0)^{\alpha_i}}-1\Bigr]
+ =60\bigl(2^{0.3}-1\bigr)=13.8687,\\
+\mathrm{EV}&=w\Bigl[1-\frac{\prod_i(p_i^0)^{\alpha_i}}{\prod_i(p_i^1)^{\alpha_i}}\Bigr]
+ =60\bigl(1-2^{-0.3}\bigr)=11.2649,\\
+|\Delta\mathrm{CS}|&=\alpha_1w\ln\frac{p^0_1}{p^1_1}=0.3\times60\times\ln2=12.4766 .
+\end{align*}
+于是
+\[
+ 11.2649\;<\;12.4766\;<\;13.8687,
+\]
+即 $\mathrm{EV}<|\Delta\mathrm{CS}|<\mathrm{CV}$，与命题~\ref{prop:sandwich} 一致。
+注意三个数的差异达到 20\% 以上（$13.87$ 对 $11.26$）：在价格翻倍的场合，
+用消费者剩余替代 CV 会低估补偿需求约 10\%，这个量级在政策评估中不可忽略。
+\end{example}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=1.0]
+  % 坐标轴：横轴数量，纵轴价格
+  \draw[axisline] (0,0)--(7.0,0) node[below]{$x_1$};
+  \draw[axisline] (0,0)--(0,5.2) node[left]{$p_1$};
+  % 三个嵌套积分区域：由外到内 CV、|ΔCS|、EV
+  \fill[black!8]  (0,1.2)--(0,4.4)--(1.76,4.4)--(5.28,1.2)--cycle;
+  \fill[black!22] (0,1.2)--(0,4.4)--(1.60,4.4)--(4.80,1.2)--cycle;
+  \fill[black!42] (0,1.2)--(0,4.4)--(1.44,4.4)--(4.32,1.2)--cycle;
+  % 两条价格水平线
+  \draw[dashed,thick] (0,4.4)--(6.1,4.4);
+  \node[figlabel,left] at (0,4.4) {$p^1_1$};
+  \draw[dashed,thick] (0,1.2)--(6.1,1.2);
+  \node[figlabel,left] at (0,1.2) {$p^0_1$};
+  % 三条需求曲线（只在价格区间内绘制）
+  \draw[curveA,domain=1.05:4.5,smooth] plot ({6.6-1.1*\x},{\x});
+  \draw[curveB,domain=1.05:4.5,smooth] plot ({6.0-1.0*\x},{\x});
+  \draw[curveC,domain=1.05:4.5,smooth] plot ({5.4-0.9*\x},{\x});
+  % 图例
+  \draw[curveA] (0.1,-0.95)--(0.85,-0.95);
+  \node[right,font=\scriptsize] at (0.95,-0.95)
+      {$h_1(p_1,u^0)$：$\mathrm{CV}$ 的积分路径（最外）};
+  \draw[curveB] (0.1,-1.42)--(0.85,-1.42);
+  \node[right,font=\scriptsize] at (0.95,-1.42)
+      {$x_1(p_1,w)$：$|\Delta\mathrm{CS}|$ 的积分路径（居中）};
+  \draw[curveC] (0.1,-1.89)--(0.85,-1.89);
+  \node[right,font=\scriptsize] at (0.95,-1.89)
+      {$h_1(p_1,u^1)$：$\mathrm{EV}$ 的积分路径（最内）};
+\end{tikzpicture}
+\caption{补偿变差、等价变差与消费者剩余}
+\figexplan{横轴为商品 1 的数量，纵轴为其价格。三条曲线自上而下分别是 Hicksian 需求 $h_1(p_1,u^0)$（实线）、Marshallian 需求 $x_1(p_1,w)$（虚线）、Hicksian 需求 $h_1(p_1,u^1)$（点线）——正常品前提下它们的顺序固定，这正是命题~\ref{prop:sandwich} 的几何内容。价格由 $p^0_1$ 升至 $p^1_1$，由价格轴量至三条曲线所围出的三个嵌套区域，其面积依次为 $\mathrm{CV}$（最外）、$|\Delta\mathrm{CS}|$（居中）、$\mathrm{EV}$（最内）；三者之差即图中可见的两条窄带。曲线画成直线只是为了便于标注面积，真实情形下它们向下凸，三者的差距随价格变动幅度增大。}
+\label{fig:cv-ev-cs}
+\end{figure}
+
+\subsection{多价格同时变动：路径依赖}
+
+命题~\ref{prop:sandwich} 要求"只变一种价格"。一旦多种价格同时变动，$\Delta\mathrm{CS}$ 必须写成线积分
+\[
+ \Delta\mathrm{CS}=-\int_{\Gamma}\sum_{i=1}^{n}x_i(p,w)\,\mathrm dp_i ,
+\]
+而 Marshallian 需求的交叉价格效应一般\emph{不对称}（$\partial x_i/\partial p_j\ne\partial x_j/\partial p_i$），
+故这个积分的值与路径 $\Gamma$ 有关。
+
+\begin{proposition}[CV/EV 无路径依赖]\label{prop:no-path}
+$\mathrm{CV}$ 与 $\mathrm{EV}$ 与价格调整路径无关；$\Delta\mathrm{CS}$ 一般依赖路径。
+\end{proposition}
+
+\begin{proof}
+$\mathrm{CV}=e(p^1,u^0)-w$ 只是两个支出函数值之差，$e$ 是良定义的函数，与路径无关。
+$\mathrm{EV}$ 同理。而 $\Delta\mathrm{CS}$ 的线积分是 1-形式 $\omega=-\sum_ix_i\,\mathrm dp_i$ 的积分，
+该形式闭（$\mathrm d\omega=0$）当且仅当 $\partial x_i/\partial p_j=\partial x_j/\partial p_i$，
+即 Marshallian 交叉导数对称——这在一般情形下不成立（对称的是 Hicksian 一侧的 $S$）。
+故 $\omega$ 非闭，积分依赖路径。
+\end{proof}
+
+\begin{remark}[这是 CV/EV 最重要的技术优势]
+许多人把 CV/EV 视为"更精细"的度量，理由说成"它考虑了一般均衡"之类，这是误解。
+真正的理由是：\textbf{CV/EV 建立在支出函数这个良定义的势函数上，因此对多价格变动自动路径无关；
+消费者剩余建立在 Marshallian 需求这个非保守场上，只在"单一价格变动"这一特殊情形才恰好良定义。}
+这也解释了为什么可积性（\S 6.4）是福利分析的前提：没有 $e$，就只有一个非保守的向量场，
+任何"面积"都必须先指定路径。
+\end{remark}
+
+\subsection{加总与可加性：两条不可逾越的边界}
+
+即使 $e$ 已恢复，福利度量还有两条边界必须交代。
+
+\notehead{边界一：CV/EV 不可跨人相加。}
+
+$e(p,u)$ 的数值依赖效用标度。甲的 $\mathrm{CV}=100$ 与乙的 $\mathrm{CV}=100$ 之和没有意义，
+除非两人的效用被置于同一基数尺度上——而这正是 \S 6.1 观察一所否定的。
+因此"总补偿变差"不是一个福利概念，只是一个会计加总。要谈社会偏好，必须引入显性的社会福利函数，
+那是规范选择，不能从个体需求数据中推出。
+
+\notehead{边界二：消费者剩余可加，但没有福利含义。}
+
+$\Delta\mathrm{CS}$ 以货币为单位、可以跨人相加，看起来很适合做成本—收益分析。
+但由命题~\ref{prop:sandwich}，它在个体层面只是 CV 与 EV 之间的一个有界近似；
+在加总层面，它既不等于总 CV 也不等于总 EV，且其与"真实"福利变化的偏差随价格变动幅度与异质性放大。
+实践中用 $\Delta\mathrm{CS}$ 做政策评估是可以的，前提是明确它是一个\emph{近似指标}，
+并在论文中给出敏感性分析（例如同时报告 CV/EV 上界）。
+
+\begin{remark}[一个常见的误用]
+用总量数据估出一个需求系统，代入公式算出 CV，然后宣称"该政策使社会福利提高 X 亿元"。
+这句话至少跨过了三道未验证的门槛：加总成立否（\S 6.7）、效用可比否（观察一）、
+以及代表性消费者的 $e$ 是否等于个体 $e$ 的加总（Gorman 条件）。
+规范的写法是把结论限制在"代表性消费者的补偿变差"这一明确对象上，
+并说明它与社会福利的差距取决于分配效应。
+\end{remark}

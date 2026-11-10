@@ -1,0 +1,365 @@
+\section{间接效用函数：定义、结构性质与例题}
+% ============================================================
+% 第五讲 5.3：间接效用函数 v(p,w)
+% 内容：定义与 sup/max 之辨、零次齐次性、对 w 严格递增、
+%       对 p 非增、Berge 连续性、对 (p,w) 拟凸、
+%       偏好性质对照表、Cobb--Douglas 例题逐条验证
+% ============================================================
+
+\subsection{间接效用函数：定义、上确界与最大值}
+
+前两节回答了消费者\emph{选什么}（需求对应 $X(p,w)$）与\emph{何时能选}（存在性与唯一性）；\emph{如何求解}（Kuhn--Tucker 条件）将在 \S 5.4 展开。本节转向一个更紧凑的对象：把效用最大化问题的\emph{最优值本身}当作价格与财富的函数，研究它的结构性质。这个“值函数”就是间接效用函数 $v(p,w)$。它是消费者理论的核心中间产品：Slutsky 分解、Roy 恒等式、补偿变差与等价变差、价格指数理论，都建立在 $v$ 的性质之上。
+
+记号约定：本节统一以 $w\ge 0$ 表示财富，价格 $p\in\R^L_{++}$，消费束 $x\in X=\R^L_+$，预算集
+\[
+B(p,w)=\{x\in X:\ p\cdot x\le w\}.
+\]
+
+\begin{definition}[间接效用函数]
+\label{def:v}
+给定效用函数 $u:X\to\R$，间接效用函数定义为
+\[
+v(p,w)\;=\;\sup_{x\in B(p,w)}u(x),
+\]
+即预算可行集上效用的上确界；Walrasian 需求对应为 $X(p,w)=\arg\max_{x\in B(p,w)}u(x)$。
+\end{definition}
+
+\subsubsection{为什么用 \texorpdfstring{$\sup$}{sup} 而不是 \texorpdfstring{$\max$}{max}}
+
+\begin{remark}[上确界的三重严格性]
+用 $\sup$ 而非 $\max$ 并非记号洁癖，而是有三层理由。
+\textbf{其一（良定性）}：只要 $B(p,w)$ 非空，$\sup$ 在广义实数中恒有定义，\emph{完全不依赖最优解是否存在}；而 $\max$ 要求 $\arg\max$ 非空。换言之，$v$ 的定义把“值”与“选择”分离开：即使消费者暂时选不出最优束，“他最好能好到什么程度”仍有明确数值。若 $B(p,w)=\varnothing$（例如消费集取开集 $\R^L_{++}$ 且 $w$ 过小），我们约定 $v(p,w)=-\infty$。
+\textbf{其二（对极限封闭）}：上确界与单调极限运算交换：若 $B^n\uparrow B$，则 $\sup_{B^n}u\uparrow\sup_Bu$。这使 $v$ 在逼近论证（如本节连续性证明中“近似最优束”的构造）里可以自由取极限，而 $\max$ 无此便利。
+\textbf{其三（诚实的陈述）}：把存在性问题与值函数问题分开陈述，可以准确指出每条性质究竟依赖什么——本节将看到，$v$ 的齐次性、单调性与拟凸性\emph{不需要}解的存在性，而“$\sup$ 化为 $\max$”与连续性才需要 $u$ 连续。
+\end{remark}
+
+\begin{proposition}[$\sup$ 化为 $\max$ 的充分条件]
+\label{prop:max}
+若 $u$ 在 $X$ 上连续，$p\gg0$ 且 $0\le w<\infty$，则 $B(p,w)$ 非空紧，于是 $v(p,w)=\max_{x\in B(p,w)}u(x)$，且 $X(p,w)$ 非空、紧。
+\end{proposition}
+\begin{proof}
+非空性：$0\in B(p,w)$。有界性：对 $x\in B(p,w)$，有 $0\le x_i\le w/p_i$（$p_i>0$），故 $B(p,w)\subseteq\prod_i[0,w/p_i]$。闭性：$B(p,w)$ 是闭半空间 $\{x:p\cdot x\le w\}$ 与闭锥 $\R^L_+$ 之交。由 Heine--Borel 定理，$B(p,w)$ 紧。连续函数在紧集上达到最大值（Weierstrass），故最大值存在；$X(p,w)$ 是紧集的水平集切片，是闭子集，从而紧。
+\end{proof}
+
+\begin{example}[两种失效方式]
+\label{ex:fail}
+$\sup$ 未必是 $\max$，且闭性与连续性缺一不可。
+（i）\emph{可行集不闭}：取 $B=(0,1)$、$u(x)=x$，则 $\sup_Bu=1$，但无最大值点。
+（ii）\emph{效用不连续}：取 $B=[0,1]$，令 $u(x)=x$（$x<1$）而 $u(1)=0$。可行集紧，但 $\sup_Bu=1$ 仍不可达，$\arg\max=\varnothing$。
+在标准环境（$u$ 连续、$p\gg0$、闭消费锥）下，命题~\ref{prop:max} 的条件自动满足；但在应用设定中——整数商品、不可分选择（住址、职业）、带最低生存约束 $\underline x$ 的消费集——必须逐条检查闭性与连续性，$\sup$ 记号正是为这些情形保留的诚实性。
+\end{example}
+
+\subsection{间接效用的结构性质}
+
+本节系统建立 $v$ 的五条代数与拓扑性质：零次齐次、对 $w$ 严格递增、对 $p_i$ 非增、连续、对 $(p,w)$ 拟凸。请特别注意各条性质的\emph{假设账单}：齐次性、对 $p$ 的非增性与拟凸性是预算约束线性结构的直接后果，对\emph{任意}偏好成立；对 $w$ 的严格递增需要局部非饱和；连续性需要 $u$ 连续（通过 Berge 最大值定理）。
+
+\subsubsection{零次齐次性：无货币幻觉}
+
+\begin{theorem}[零次齐次性]
+\label{thm:homog}
+对任意 $t>0$，有 $B(tp,tw)=B(p,w)$，从而
+\[
+v(tp,tw)=v(p,w).
+\]
+\end{theorem}
+\begin{proof}
+设 $x\in X$。因 $t>0$，
+\[
+tp\cdot x\le tw\iff p\cdot x\le w,
+\]
+故 $x\in B(tp,tw)$ 当且仅当 $x\in B(p,w)$，两集合作为 $X$ 的子集完全相同。同一集合上取 $\sup$，值相等。
+\end{proof}
+
+\notehead{经济解释：无货币幻觉}
+零次齐次性即“无货币幻觉”（absence of money illusion）：物价与财富同步放大 $t$ 倍时，\emph{真实选择集} $B$ 一动不动，最优效用自然不变。直觉有三层。
+（i）\emph{计价单位无关}：把货币单位从元改为分，所有数字乘 $100$，可行的消费计划集合不变；币制改革（如欧元转换、删去两个零）不改变任何人的福利。
+（ii）\emph{名义与实际}：纯通胀若伴随收入的完全指数化，则 $(p,w)$ 同比例变动，$v$ 不变——福利只取决于\emph{相对}价格与\emph{实际}财富。这是需求系统最早的可检验含义之一：名义变量的同比例变化不应出现在需求方程中。
+（iii）\emph{理论便利}：齐次性允许规范化（normalize），例如固定 $w=1$ 或把某一价格定为 $1$（计价物），把 $(p,w)$ 的 $L+1$ 个自由度减少一个。后文的对偶图示与比较静态反复使用这一自由度。
+
+\subsubsection{对财富的严格递增性}
+
+\begin{theorem}[对 $w$ 严格递增]
+\label{thm:incw}
+设 $u$ 连续且偏好局部非饱和，$p\gg0$。则对 $0\le w<w'$，有
+\[
+v(p,w)<v(p,w').
+\]
+\end{theorem}
+\begin{proof}
+第一步（非严格单调）。$w\le w'$ 时 $B(p,w)\subseteq B(p,w')$，上确界随集合扩大而不减，故 $v(p,w)\le v(p,w')$。
+
+第二步（严格化）。设 $w<w'$。由命题~\ref{prop:max}，$v(p,w)=u(x^*)$ 在某个 $x^*\in B(p,w)$ 处达到。记松弛量 $\delta=w'-p\cdot x^*\ge w'-w>0$。局部非饱和给出：对任意 $\varepsilon>0$，存在 $y\in X$，$\|y-x^*\|<\varepsilon$ 且 $y\succ x^*$。取 $\varepsilon$ 充分小，使 $\|y-x^*\|<\varepsilon$ 蕴含 $p\cdot y<p\cdot x^*+\delta\le w'$（内积 $y\mapsto p\cdot y$ 连续）。于是该 $y$ 满足 $y\in B(p,w')$ 且
+\[
+v(p,w')\ \ge\ u(y)\ >\ u(x^*)\ =\ v(p,w).\qedhere
+\]
+\end{proof}
+
+\begin{remark}[局部非饱和不可省]
+若无局部非饱和，更多财富可能买不到更好的东西。取 $u(x)=-(x_1-1)^2-(x_2-1)^2$：点 $\bar x=(1,1)$ 是严格优于一切的饱和点（satiation point），在其任意邻域内不存在更优的点，局部非饱和在 $\bar x$ 处失效。当 $w\ge p_1+p_2$ 时 $\bar x$ 可被负担，$v(p,w)=u(\bar x)$ 对一切更大的 $w$ 保持平坦。局部非饱和恰好排除“钱多到花不出去”的角落。另外注意定理证明中“$v(p,w)$ 被达到”来自 $u$ 的连续性；若 $u$ 不连续（例~\ref{ex:fail}（ii）型），$\sup$ 不可达时严格性论证失效——这也是 $\sup$ 与 $\max$ 差异的又一体现。
+\end{remark}
+
+\notehead{经济解释：财富的边际效用}
+$\partial v/\partial w$（存在时）是财富的边际效用。定理~\ref{thm:incw} 说明在局部非饱和下它严格为正：任何财富增量都能换到严格更优的消费计划。这是福利度量政策的基石：补偿变差 $CV=e(p',v(p,w))-w$、等价变差 $EV=w-e(p',v(p,w))$ 之所以有意义，正因为 $v$ 对 $w$ 严格单调，从而 $e(p,\cdot)$ 与 $v(p,\cdot)$ 互为（广义）反函数（见本章对偶一节）。
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=1.0]
+  \draw[axisline] (0,0) -- (6.6,0) node[below,axislabel] {$w$};
+  \draw[axisline] (0,0) -- (0,4.4) node[left,axislabel] {$v(p,w)$};
+  % v at price p (solid, strictly increasing, diminishing slope)
+  \draw[curveA] plot[smooth] coordinates {(0,0) (1.2,1.85) (2.4,2.6) (3.6,3.05) (4.8,3.3) (5.8,3.45)};
+  % v at higher price p' >= p (dashed, weakly lower)
+  \draw[curveB] plot[smooth] coordinates {(0,0) (1.2,1.1) (2.4,1.6) (3.6,1.95) (4.8,2.2) (5.8,2.35)};
+  % marked points on curveA
+  \node[nodewhite] at (1.2,1.85) {};
+  \node[nodewhite] at (3.6,3.05) {};
+  \draw[thin,dashed,black!60] (1.2,1.85) -- (1.2,0);
+  \draw[thin,dashed,black!60] (3.6,3.05) -- (3.6,0);
+  \draw[thin,dashed,black!60] (1.2,1.85) -- (0,1.85);
+  \draw[thin,dashed,black!60] (3.6,3.05) -- (0,3.05);
+  \node[figlabel] at (1.2,-0.22) {$w_1$};
+  \node[figlabel] at (3.6,-0.22) {$w_2$};
+  \node[figlabel] at (-0.15,1.85) {$v_1$};
+  \node[figlabel] at (-0.15,3.05) {$v_2$};
+  \node[figlabel] at (6.0,3.45) {$v(p,\cdot)$};
+  \node[figlabel] at (6.0,2.35) {$v(p',\cdot)$};
+\end{tikzpicture}
+\caption{固定价格下间接效用随财富严格递增}
+\figexplan{实线为固定 $p$ 时 $w\mapsto v(p,w)$ 的图像：曲线自 $(0,u(0))$ 出发（图中规范化 $u(0)=0$）并严格上升（定理~\ref{thm:incw}），示意性地画出边际财富效用递减。虚线为更高价格 $p'\ge p$ 下的间接效用：整条曲线被压低且不再过原点上方，体现对价格的非增性（命题~\ref{prop:decp}）。点 $(w_1,v_1)$、$(w_2,v_2)$ 标注财富增加带来的效用严格增益。}
+\end{figure}
+
+\subsubsection{对价格的非增性}
+
+\begin{proposition}[对 $p_i$ 非增]
+\label{prop:decp}
+设 $p'\ge p$（分量式），则 $B(p',w)\subseteq B(p,w)$，从而
+\[
+v(p',w)\le v(p,w).
+\]
+\end{proposition}
+\begin{proof}
+对 $x\in B(p',w)$：$p\cdot x\le p'\cdot x\le w$（因 $p\le p'$ 且 $x\ge0$），故 $x\in B(p,w)$。集合缩小，上确界不增。
+\end{proof}
+
+非增性不需要任何偏好假设：涨价只会砍掉消费机会。什么时候\emph{严格}下降？答案取决于该商品是否“被需要”。
+
+\begin{proposition}[严格递减的充分条件]
+\label{prop:decpstrict}
+设 $u$ 连续且严格递增（$x\ge y,\ x\ne y\Rightarrow u(x)>u(y)$）。若每个最优束 $x\in X(p,w)$ 都满足 $x_i>0$，则对任意 $p'\ge p$、$p'_i>p_i$，有 $v(p',w)<v(p,w)$。
+\end{proposition}
+\begin{proof}
+由命题~\ref{prop:max} 取 $x'\in X(p',w)$，则 $v(p',w)=u(x')\le v(p,w)$（命题~\ref{prop:decp}）。反设 $u(x')=v(p,w)$。则 $x'\in B(p',w)\subseteq B(p,w)$ 且取得 $B(p,w)$ 上的最大值，即 $x'\in X(p,w)$，由假设 $x'_i>0$。又严格递增偏好下预算必绑定：若 $p\cdot x'<w$，取 $\varepsilon>0$ 充分小使 $x'+\varepsilon e_i\in B(p,w)$，则 $u(x'+\varepsilon e_i)>u(x')$，与最优性矛盾；故 $p\cdot x'=w$。于是
+\[
+p'\cdot x'\;=\;p\cdot x'+(p'_i-p_i)\,x'_i\;=\;w+(p'_i-p_i)x'_i\;>\;w,
+\]
+与 $x'\in B(p',w)$ 矛盾。故 $v(p',w)<v(p,w)$。
+\end{proof}
+
+\notehead{经济解释：通胀的福利损失}
+对 $p$ 非增、对 $w$ 严格递增合起来刻画了“价格上涨即福利受损”。严格性的条件同样有内容：若商品 $i$ 在最优束中消费量为零（消费者视其为无关品甚至厌恶品），其涨价不损失任何效用。命题~\ref{prop:decpstrict} 的逆否形式在应用中常用：观测到 $v$ 对 $p_i$ 严格下降，等价于该商品在最优点处被正消费。此外，“涨价压低 $v$”正是补偿变差度量通胀损失的出发点：把消费者补回原效用水平所需的财富 $e(p',v(p,w))-w$，依赖的全部结构就是 $v$ 对 $p$ 的单调性与对 $w$ 的严格单调性。
+
+\subsubsection{连续性：Berge 最大值定理}
+
+前三条性质是纯代数的。连续性则需要拓扑工具——Berge 最大值定理，它是整个比较静态分析的合法性来源：若参数微扰能让最优值跳变，一切边际分析（导数、包络、Roy 恒等式）都无从谈起。
+
+\begin{lemma}[预算对应的连续性]
+\label{lem:budget}
+在 $\Theta=\R^L_{++}\times\R_+$ 上，预算对应 $(p,w)\mapsto B(p,w)$ 非空、紧值、上半连续且下半连续。
+\end{lemma}
+\begin{proof}
+非空（$0\in B$）与紧值（命题~\ref{prop:max} 的证明）已述。
+
+上半连续。设 $(p^n,w^n)\to(p,w)$，$x^n\in B(p^n,w^n)$。因 $p^n\to p\gg0$，存在 $c>0$ 与 $N$ 使 $n\ge N$ 时 $\min_i p^n_i\ge c$；于是 $0\le x^n_i\le w^n/c$ 有界。取任一收敛子列 $x^{n_k}\to x$；在 $p^{n_k}\cdot x^{n_k}\le w^{n_k}$ 中令 $k\to\infty$（内积连续）得 $p\cdot x\le w$，且 $x\ge0$，故 $x\in B(p,w)$。即：任意序列的任意收敛子列的极限都落回极限预算集，这是紧值情形下上半连续的序列刻画。
+
+下半连续。设 $(p^n,w^n)\to(p,w)$，任取 $x\in B(p,w)$。若 $x=0$，取 $x^n=0$ 即可。设 $x\ne0$。
+（i）若 $p\cdot x<w$（约束松弛），则 $n$ 充分大时 $p^n\cdot x<w^n$，取 $x^n\equiv x$。
+（ii）若 $p\cdot x=w$（约束绑定，此时 $w>0$），令
+\[
+\lambda^n=\min\Bigl\{1,\ \frac{w^n}{p^n\cdot x}\Bigr\},\qquad x^n=\lambda^n x .
+\]
+则 $x^n\ge0$ 且 $p^n\cdot x^n=\lambda^n(p^n\cdot x)\le w^n$，故 $x^n\in B(p^n,w^n)$；又 $w^n/(p^n\cdot x)\to w/(p\cdot x)=1$，故 $\lambda^n\to1$，$x^n\to x$。
+\end{proof}
+
+\begin{theorem}[Berge 最大值定理（度量情形，序列形式）]
+\label{thm:berge}
+设 $\Theta\subseteq\R^K$，$u:X\to\R$ 连续，$F:\Theta\to\to X$ 非空、紧值，且满足
+（i）\emph{上半连续}：对任意 $\theta^n\to\theta$ 与 $x^n\in F(\theta^n)$，$\{x^n\}$ 有界，且其每个收敛子列的极限都属于 $F(\theta)$；
+（ii）\emph{下半连续}：对任意 $\theta^n\to\theta$ 与 $x\in F(\theta)$，存在 $x^n\in F(\theta^n)$ 使 $x^n\to x$。
+则值函数 $\varphi(\theta)=\max_{x\in F(\theta)}u(x)$ 在 $\Theta$ 上连续；最优值对应 $\Psi(\theta)=\arg\max_{x\in F(\theta)}u$ 非空、紧值、上半连续。
+\end{theorem}
+\begin{proof}
+非空与紧值：紧集上连续函数达到最大（Weierstrass），$\Psi(\theta)$ 是紧集的闭子集。
+
+$\varphi$ 的上半连续。设 $\theta^n\to\theta$，取 $x^n\in\Psi(\theta^n)$，$\varphi(\theta^n)=u(x^n)$。取子列实现 $\limsup$：设 $u(x^{n_k})\to\limsup_n\varphi(\theta^n)$；由（i），$\{x^{n_k}\}$ 有再收敛子列 $x^{n_{k_j}}\to x\in F(\theta)$；$u$ 连续给出
+\[
+\limsup_n\varphi(\theta^n)=\lim_j u(x^{n_{k_j}})=u(x)\le\varphi(\theta).
+\]
+
+$\varphi$ 的下半连续。任给 $\varepsilon>0$，取 $x\in F(\theta)$ 使 $u(x)>\varphi(\theta)-\varepsilon$（最大值达到）。由（ii）取 $x^n\in F(\theta^n)$，$x^n\to x$，则
+\[
+\liminf_n\ \varphi(\theta^n)\ \ge\ \lim_n\ u(x^n)\ =\ u(x)\ >\ \varphi(\theta)-\varepsilon .
+\]
+令 $\varepsilon\downarrow0$。两个半连续性合并即连续性。
+
+$\Psi$ 的上半连续。设 $\theta^n\to\theta$，$x^n\in\Psi(\theta^n)$。由（i）取收敛子列 $x^{n_k}\to x\in F(\theta)$。对任意 $z\in F(\theta)$，由（ii）取 $z^n\in F(\theta^n)$，$z^n\to z$；最优性给出 $u(x^{n_k})\ge u(z^{n_k})$，令 $k\to\infty$ 得 $u(x)\ge u(z)$。故 $x\in\Psi(\theta)$。
+\end{proof}
+
+\begin{corollary}[间接效用的连续性]
+\label{cor:cont}
+设 $u$ 连续。则 $v$ 在 $\R^L_{++}\times\R_+$ 上连续，$X(p,w)$ 非空、紧值、上半连续；若偏好还严格凸，则 $X$ 单值，从而 $X$ 是连续的需求函数 $x(p,w)$。
+\end{corollary}
+\begin{proof}
+引理~\ref{lem:budget} 验证定理~\ref{thm:berge} 的条件（i）（ii），结论直接代入。单值情形：上半连续 + 单值 = 连续。
+\end{proof}
+
+\notehead{上、下半连续的直觉}
+\emph{上半连续}（upper hemicontinuity）说的是“极限可行仍可行”：参数序列下的可行点，其极限点不会跌出极限预算集之外——预算约束的图 $\{(p,w,x):p\cdot x\le w\}$ 是闭集，取极限保号。直觉上，约束条件在极限中不会“凭白放宽”。\emph{下半连续}（lower hemicontinuity）说的是“可行可被逼近”：极限预算集里的任何计划，都能被邻近参数下的可行计划逼近——约束不会“突然塌缩”。证明中的构造 $x^n=\lambda^nx$ 正是经济学内容本身：预算线上的消费计划按\emph{实际购买力} $w^n/(p^n\cdot x)$ 等比例缩放，恰好适配新价格与新财富。两个方向的失效都有经济对应物：消费集带生存下限 $\underline x$ 时，$w$ 逼近生存成本处下半连续失效（预算集塌缩），$v$ 可能跳变；这就是我们坚持闭消费锥与 $p\gg0$ 的原因。
+
+\subsubsection{对 \texorpdfstring{$(p,w)$}{(p,w)} 的拟凸性}
+
+\begin{theorem}[拟凸性]
+\label{thm:qvx}
+对任意 $(p,w),(p',w')\in\R^L_{++}\times\R_+$ 与 $t\in[0,1]$，记 $\tilde p=tp+(1-t)p'$，$\tilde w=tw+(1-t)w'$，则
+\[
+v(\tilde p,\tilde w)\ \le\ \max\{v(p,w),\ v(p',w')\}.
+\]
+等价地，每个下水平集 $\{(p,w)\in\R^L_{++}\times\R_+:\ v(p,w)\le \bar u\}$ 都是凸集。
+\end{theorem}
+\begin{proof}
+第一步（预算集的并集控制）。设 $x\in X$ 满足组合预算约束
+\[
+\tilde p\cdot x\ =\ t\,p\cdot x+(1-t)\,p'\cdot x\ \le\ tw+(1-t)w'\ =\ \tilde w .
+\]
+反设 $x\notin B(p,w)$ 且 $x\notin B(p',w')$，即 $p\cdot x>w$ 且 $p'\cdot x>w'$。以 $t$ 与 $1-t$ 加权相加：
+\[
+t\,p\cdot x+(1-t)\,p'\cdot x\ >\ t\,w+(1-t)w' ,
+\]
+与组合预算约束矛盾。故
+\[
+x\in B(p,w)\ \cup\ B(p',w').
+\]
+
+第二步（取上确界）。由第一步，$B(\tilde p,\tilde w)\subseteq B(p,w)\cup B(p',w')$，于是
+\[
+v(\tilde p,\tilde w)
+=\sup_{x\in B(\tilde p,\tilde w)}u(x)
+\le\sup_{x\in B(p,w)\cup B(p',w')}u(x)
+=\max\{v(p,w),\ v(p',w')\}.
+\]
+
+第三步（与下水平集凸性的等价）。设 $v$ 在两点处均 $\le\bar u$，则由已证不等式，$v(\tilde p,\tilde w)\le\max\{\bar u,\bar u\}=\bar u$，故下水平集在凸组合下封闭，是凸集。反之设下水平集皆凸，取 $\bar u=\max\{v(p,w),v(p',w')\}$，两点都在水平集内，凸组合亦然，即得定理中的不等式。
+\end{proof}
+
+\begin{example}[拟凹性一般不成立]
+\label{ex:notqc}
+不少讲义把定理~\ref{thm:qvx} 误称为“$v$ 拟凹”。拟凹要求 $v(\tilde p,\tilde w)\ge\min\{v(p,w),v(p',w')\}$，这在一般情形\emph{不成立}。取完美替代偏好 $u(x)=x_1+x_2$，此时 $v(p,w)=w/\min\{p_1,p_2\}$。令 $\theta=((1,10),1)$、$\theta'=((10,1),1)$，则 $v(\theta)=v(\theta')=1$；而中点 $\tilde\theta=((5.5,5.5),1)$ 给出
+\[
+v(\tilde\theta)=\frac{1}{5.5}\approx0.18\ <\ 1=\min\{v(\theta),v(\theta')\},
+\]
+拟凹性被违反。注意该偏好是凸的（甚至线性），可见凸偏好也救不回拟凹性；反过来，定理~\ref{thm:qvx} 的证明完全没用凸偏好——拟凸性是\emph{预算约束的线性结构}的直接后果。
+\end{example}
+
+\notehead{经济解释：混合环境不创造机会}
+定理~\ref{thm:qvx} 的第一步有独立的经济学内容：\emph{在两个价格—财富环境的凸组合下可行的消费计划，必然在其中一个原始环境下已经可行}。换言之，“混合/平均”价格—财富环境只会销毁消费机会，不会创造新机会——组合环境的可行集被控制在其两个来源可行集的\emph{并集}之内。因此平均环境的间接效用不超过两个环境中较好者。用下水平集的语言：使消费者福利不超过给定水平 $\bar u$ 的所有“坏环境”构成凸集——两个坏环境的任何凸组合仍是坏环境。政策含义：若两组（税后）价格—财富组合都使某家庭福利低于贫困线，则它们的任何凸组合也不高于贫困线；“福利上低于某阈值的环境”这一集合没有凹陷的漏洞。把该结论限制在固定 $w$ 上，就得到常见陈述“$v$ 对 $p$ 拟凸”。
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=1.0]
+  \draw[axisline] (0,0) -- (6.4,0) node[below,axislabel] {$p_1$（$p_2$ 固定）};
+  \draw[axisline] (0,0) -- (0,4.6) node[left,axislabel] {$w$};
+  % shaded lower level set below the middle contour
+  \fill[LightRed,fill opacity=0.6] plot[smooth] coordinates {(0,0) (0.25,0.7) (1,1.4) (2.25,2.1) (3.6,2.66) (5,3.13)} -- (5,0) -- cycle;
+  % three contours w = c sqrt(p1), increasing level upward
+  \draw[curveA] plot[smooth] coordinates {(0,0) (1,0.9) (2.25,1.35) (4,1.8) (5.5,2.11)};
+  \draw[curveB] plot[smooth] coordinates {(0,0) (0.25,0.7) (1,1.4) (2.25,2.1) (3.6,2.66) (5,3.13)};
+  \draw[curveC] plot[smooth] coordinates {(0,0) (0.25,1.0) (1,2.0) (2.25,3.0) (3.2,3.57)};
+  % labels
+  \node[figlabel] at (5.65,2.11) {$\bar v_1$};
+  \node[figlabel] at (5.15,3.13) {$\bar v_2=\bar u$};
+  \node[figlabel] at (3.35,3.57) {$\bar v_3$};
+  \node[figlabel] at (2.5,0.85) {$\{v\le\bar u\}$（凸集）};
+  \draw[arrblue] (4.6,3.9) -- (3.7,4.35);
+  \node[figlabel] at (4.75,4.25) {$v$ 递增方向};
+\end{tikzpicture}
+\caption{价格—财富平面上的间接效用等值线与凸的下水平集}
+\label{fig:vcontour}
+\figexplan{固定 $p_2$，在 $(p_1,w)$ 平面上画三条间接效用等值线 $\bar v_1<\bar v_2<\bar v_3$。效用沿左上方增大：财富更高、价格更低则间接效用更高。阴影为下水平集 $\{v\le\bar u\}$（$\bar u=\bar v_2$），它是凸集——这正是拟凸性（定理~\ref{thm:qvx}）的几何内容。等值线向左上方移动对应福利改善；任两点的“坏区域”无凹陷漏洞。}
+\end{figure}
+
+\subsection{偏好性质与需求、间接效用性质的对照}
+
+把前几节的结论放在一起，可以列一张“假设账单”：偏好的每一条性质，分别给需求对应 $x(p,w)$ 与间接效用 $v(p,w)$ 买到什么。表中“任意偏好”一行特别值得注意：$v$ 以 $\sup$ 良定、零次齐次、对 $p$ 非增、对 $(p,w)$ 拟凸，这四件事不花任何偏好假设——它们纯粹是预算结构（加上 $\sup$ 记号）的赠品。
+
+\begin{table}[H]
+\centering
+\caption{偏好性质与 Walrasian 需求、间接效用的性质对照}
+\begin{tabular}{p{3.1cm}p{5.4cm}p{5.6cm}}
+\toprule
+偏好/效用假设 & Walrasian 需求 $x(p,w)$ & 间接效用 $v(p,w)$ \\
+\midrule
+任意偏好 & 可能空 & 以 $\sup$ 良定；零次齐次、对 $p$ 非增、对 $(p,w)$ 拟凸 \\
+$u$ 连续 & 非空、紧值、上半连续（Berge） & 连续；$\sup=\max$ \\
+局部非饱和 & 预算绑定 $p\cdot x=w$ & 对 $w$ 严格递增 \\
+严格单调 & 预算绑定；最优束处无松弛 & 对 $p_i$ 严格递减（若每个最优束 $x_i>0$） \\
+凸偏好 & 凸值：$x(p,w)$ 是凸集 & 无新增（拟凸性本就不需要凸偏好） \\
+严格凸偏好 & 单值且连续，成为需求函数 & 无新增，但为可微性与 Roy 恒等式铺路 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+对表中两行作简短证明与说明。\emph{凸偏好 $\Rightarrow$ 需求凸值}：设 $x,y\in X(p,w)$，则 $u(x)=u(y)=v(p,w)$；偏好凸意味着 $u(tx+(1-t)y)\ge\min\{u(x),u(y)\}=v(p,w)$，而 $p\cdot(tx+(1-t)y)\le tw+(1-t)w=w$，故凸组合可行且最优，$tx+(1-t)y\in X(p,w)$。注意这与 $v$ 的拟凸性是\emph{两件不同的事}：前者靠偏好凸性，后者靠预算线性结构。\emph{严格凸偏好 $\Rightarrow$ 单值}：若 $x\ne y$ 均最优，则 $tx+(1-t)y\succ x$ 且仍可行，与最优性矛盾；单值加半连续（推论~\ref{cor:cont}）得连续。最后，\emph{局部非饱和 $\Rightarrow$ 预算绑定}（Walras 法则）：若 $p\cdot x^*<w$，则 $x^*$ 的邻域内有更优且仍可负担的束（证明同定理~\ref{thm:incw} 第二步），矛盾。
+
+\subsection{例题：Cobb--Douglas 间接效用与六条性质验证}
+
+\begin{example}[Cobb--Douglas 的 $v(p,w)$]
+\label{ex:cd}
+设 $u(x)=x_1^{\alpha}x_2^{1-\alpha}$，$0<\alpha<1$，$p\gg0$，$w>0$。内点解满足
+\[
+\mathrm{MRS}=\frac{\alpha x_2}{(1-\alpha)x_1}=\frac{p_1}{p_2}
+\quad\Longrightarrow\quad
+p_1x_1=\frac{\alpha}{1-\alpha}\,p_2x_2 ,
+\]
+与预算绑定 $p_1x_1+p_2x_2=w$ 联立，得支出份额 $p_1x_1=\alpha w$、$p_2x_2=(1-\alpha)w$，即
+\[
+x_1(p,w)=\frac{\alpha w}{p_1},\qquad x_2(p,w)=\frac{(1-\alpha)w}{p_2}.
+\]
+代回效用函数：
+\[
+v(p,w)=\Bigl(\frac{\alpha w}{p_1}\Bigr)^{\alpha}\Bigl(\frac{(1-\alpha)w}{p_2}\Bigr)^{1-\alpha}
+= A\,\frac{w}{p_1^{\alpha}p_2^{1-\alpha}},
+\qquad A=\alpha^{\alpha}(1-\alpha)^{1-\alpha}.
+\]
+记 $f(p)=p_1^{\alpha}p_2^{1-\alpha}$（Cobb--Douglas 价格指数），则 $v(p,w)=A\cdot w/f(p)$：间接效用正比于\emph{实际财富} $w/f(p)$，且财富的边际效用 $A/f(p)$ 只依赖价格、不依赖财富——这是位似偏好的特征。
+\end{example}
+
+\textbf{逐条验证六条性质。}
+
+（i）\emph{$\sup=\max$。}$u$ 连续、$B(p,w)$ 紧（命题~\ref{prop:max}），且显式解 $x(p,w)\gg0$ 达到 $v$：$v=u(x(p,w))$。
+
+（ii）\emph{零次齐次。}对 $t>0$，
+\[
+v(tp,tw)=A\,\frac{tw}{(tp_1)^{\alpha}(tp_2)^{1-\alpha}}
+=A\,\frac{tw}{t\,p_1^{\alpha}p_2^{1-\alpha}}=v(p,w),
+\]
+其中用到 $(tp_1)^{\alpha}(tp_2)^{1-\alpha}=t^{\alpha+1-\alpha}p_1^{\alpha}p_2^{1-\alpha}=t\,f(p)$。
+
+（iii）\emph{对 $w$ 严格递增。}$\partial v/\partial w=A/f(p)=v/w>0$，与定理~\ref{thm:incw} 一致（Cobb--Douglas 偏好单调，自然局部非饱和）。
+
+（iv）\emph{对 $p_i$ 非增（此处严格递减）。}
+\[
+\frac{\partial v}{\partial p_1}=-\frac{\alpha v}{p_1}<0,\qquad
+\frac{\partial v}{\partial p_2}=-\frac{(1-\alpha)v}{p_2}<0 .
+\]
+严格性正与命题~\ref{prop:decpstrict} 印证：内点最优束两种商品均正消费。
+
+（v）\emph{连续性。}$v$ 是初等函数，处处连续；这当然也可由推论~\ref{cor:cont}（Berge）直接得到。
+
+（vi）\emph{拟凸性。}设 $v(p,w)=Ac$，$v(p',w')\le Ac$，即 $w\le c\,f(p)$、$w'\le c\,f(p')$，其中 $c=\max\{w/f(p),\,w'/f(p')\}$。由加权 AM--GM 不等式，加权几何平均 $f$ 是凹函数：
+\[
+f\bigl(tp+(1-t)p'\bigr)\ \ge\ t\,f(p)+(1-t)\,f(p') .
+\]
+于是
+\[
+\tilde w=tw+(1-t)w'\ \le\ c\bigl[t\,f(p)+(1-t)f(p')\bigr]\ \le\ c\,f(\tilde p),
+\]
+即 $v(\tilde p,\tilde w)=A\tilde w/f(\tilde p)\le Ac=\max\{v(p,w),v(p',w')\}$，定理~\ref{thm:qvx} 的不等式成立。几何上，下水平集 $\{v\le Ac\}=\{(p,w):w\le c\,f(p)\}$ 是凹函数 $f$ 的下图形（hypograph），当然是凸集——这正是图~\ref{fig:vcontour} 阴影区域的来源。

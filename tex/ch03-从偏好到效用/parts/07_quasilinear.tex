@@ -1,0 +1,216 @@
+% ============================================================
+\section{理性偏好的结构性质：拟线性}\label{sec:quasilinear}
+% ============================================================
+
+拟线性是应用工作（产业组织、公共经济学、福利分析）中使用最频繁的效用形式。
+本节给出它的\textbf{偏好侧完整刻画}：三个序条件 $\iff$ 线性计价物表示，
+并推导其两大后果（无财富效应、福利的精确货币度量）。
+
+\subsection{设定与三个计价物条件}
+
+设 $X=\R\times Y$：第一坐标 $t\in\R$ 为\textbf{计价物}（数量可正可负、连续可分），
+$Y$ 为一般集合（不必是欧氏空间），$\succeq$ 为 $X$ 上的弱序。
+
+\begin{condition}[计价物有价值]\label{cond:num-valuable}
+对一切 $y\in Y$ 与 $t,t'\in\R$：
+\[
+(t,y)\succeq(t',y)\ \Longleftrightarrow\ t\ge t'.
+\]
+同一 $y$ 下，计价物越多越好，且严格。
+\end{condition}
+
+\begin{condition}[补偿可行]\label{cond:compensable}
+对任意 $y,y'\in Y$，存在 $t\in\R$ 使
+\[
+(0,y)\ \sim\ (t,y').
+\]
+任意两个 $Y$ 方案之间的价值差都能用计价物\textbf{恰好补偿}。
+\end{condition}
+
+\begin{condition}[无财富效应]\label{cond:no-wealth}
+若 $(t,y)\succeq(t',y')$，则对一切 $d\in\R$：
+\[
+(t+d,\,y)\ \succeq\ (t'+d,\,y').
+\]
+给两个方案同时增加等量计价物，不改变比较结果——偏好对计价物的“初始存量”不敏感。
+\end{condition}
+
+\begin{example}[无财富效应的直觉]
+若 $(10,\,y)\sim(0,\,y')$——“持有 10 单位计价物配 $y$”与“不持计价物配 $y'$”无差异，
+则同时加 100：$(110,\,y)\sim(100,\,y')$ 仍无差异。
+财富水平的变化不翻转、不破坏任何比较。
+\end{example}
+
+\subsection{拟线性表示定理}
+
+\begin{theorem}[拟线性表示定理]\label{thm:ql}
+设 $\succeq$ 为 $X=\R\times Y$ 上的弱序，满足
+条件~\ref{cond:num-valuable}、\ref{cond:compensable}、\ref{cond:no-wealth}。
+则存在 $v:Y\to\R$ 使
+\[
+u(t,y)\ =\ t+v(y)
+\]
+表示 $\succeq$。
+反之，任何由 $u(t,y)=t+v(y)$ 形式表示的偏好都满足三个计价物条件。
+\end{theorem}
+
+\begin{proof}
+\textbf{正方向。}
+\textbf{第 1 步（定义 $v$）}：固定基准 $\bar y\in Y$。
+由条件~\ref{cond:compensable}，对每个 $y\in Y$ 存在 $s\in\R$ 使
+$(0,y)\sim(s,\bar y)$；此 $s$ \textbf{唯一}——
+若 $(s,\bar y)\sim(0,y)\sim(s',\bar y)$，传递性给出 $(s,\bar y)\sim(s',\bar y)$，
+由条件~\ref{cond:num-valuable} 得 $s=s'$。定义
+\[
+v(y)\ \coloneqq\ \text{唯一的}\ s\ \text{使}\ (0,y)\sim(s,\bar y).
+\]
+
+\textbf{第 2 步（把任意点折算到 $\bar y$ 行）}：
+对任意 $(t,y)$，由 $(0,y)\sim(v(y),\bar y)$ 与条件~\ref{cond:no-wealth}
+（取 $d=t$）得
+\[
+(t,\,y)\ \sim\ \bigl(t+v(y),\,\bar y\bigr).
+\]
+
+\textbf{第 3 步（表示性验证）}：
+对任意 $(t,y),(t',y')\in X$，
+\[
+\begin{aligned}
+(t,y)\succeq(t',y')
+&\iff \bigl(t+v(y),\bar y\bigr)\succeq\bigl(t'+v(y'),\bar y\bigr)
+   && (\text{第 2 步} + \text{传递性})\\
+&\iff t+v(y)\ \ge\ t'+v(y')
+   && (\text{条件~\ref{cond:num-valuable}}).
+\end{aligned}
+\]
+即 $u(t,y)=t+v(y)$ 表示 $\succeq$。
+
+\textbf{逆方向。}设 $u(t,y)=t+v(y)$ 表示 $\succeq$，逐条验证：
+\textbf{条件~\ref{cond:num-valuable}}：$(t,y)\succeq(t',y)\iff t+v(y)\ge t'+v(y)\iff t\ge t'$。
+\textbf{条件~\ref{cond:compensable}}：取 $t=v(y)-v(y')$，则
+$u(0,y)=v(y)=t+v(y')=u(t,y')$，即 $(0,y)\sim(t,y')$。
+\textbf{条件~\ref{cond:no-wealth}}：$(t,y)\succeq(t',y')\iff t+v(y)\ge t'+v(y')
+\iff (t+d)+v(y)\ge(t'+d)+v(y')\iff(t+d,y)\succeq(t'+d,y')$。
+\end{proof}
+
+\begin{remark}[证明的结构]
+三步证明做了一件事：\textbf{用条件~\ref{cond:compensable} 把每个 $y$ “定价”为 $v(y)$，
+用条件~\ref{cond:no-wealth} 把定价沿计价物轴平移到任何财富水平，
+用条件~\ref{cond:num-valuable} 在单一 $\bar y$ 行上完成所有比较}。
+三条缺一，证明即断：无~\ref{cond:compensable} 则 $v$ 无定义；
+无~\ref{cond:no-wealth} 则定价随财富漂移；
+无~\ref{cond:num-valuable} 则 $\bar y$ 行上的比较无法数值化。
+\end{remark}
+
+\begin{proposition}[$v$ 的唯一性]\label{prop:ql-unique}
+若 $t+v(y)$ 与 $t+\tilde v(y)$ 表示同一 $\succeq$，则 $\tilde v=v+\text{常数}$。
+\end{proposition}
+
+\begin{proof}
+两者都表示时，$(0,y)\sim(0,y')\iff v(y)=v(y')\iff\tilde v(y)=\tilde v(y')$；
+且 $(t,y)\sim(0,y')\iff t=v(y')-v(y)\iff t=\tilde v(y')-\tilde v(y)$，
+故 $v(y')-v(y)=\tilde v(y')-\tilde v(y)$ 对一切 $y,y'$ 成立，
+固定 $y$ 即得 $\tilde v-v$ 为常数。
+\end{proof}
+
+\begin{remark}[序数性辨析]
+定理说“存在 $t+v(y)$ 形式的表示”，并\textbf{不}排除其他形式的表示：
+$u(t,y)=t+v(y)$ 经严格递增变换 $f$ 后一般不再是拟线性形式，
+却仍表示同一偏好（命题~\ref{prop:ordinal}）。
+“拟线性”是偏好的\textbf{序性质}（存在某表示具此形式），
+不是某个特定函数的\textbf{形式性质}。
+\end{remark}
+
+\subsection{两大后果}
+
+\notehead{后果一：需求无财富效应（收入扩张路径平行于计价物轴）}
+
+设 $Y=\R_+$（记其元素为 $q$），$v$ 可微、严格凹，价格结构为“每单位 $q$ 兑换 $p$ 单位计价物”，
+预算约束 $t+pq=m$。效用最大化：
+\[
+\max_{q\ge0}\ \bigl[m-pq+v(q)\bigr]
+\ \Longrightarrow\ v'(q^*)=p\quad(\text{内点解}).
+\]
+一阶条件\textbf{不含 $m$}：最优 $q^*$ 只由 $p$ 决定，收入 $m$ 的变化全部吸收到 $t$ 上。
+收入扩张路径是一条竖直线（$q$ 恒为 $q^*$）——这就是“无财富效应”的需求侧表达。
+
+\begin{center}
+\begin{tikzpicture}[scale=1.05]
+  \draw[axisline] (0,0) -- (6.2,0) node[below left, axislabel] {$q$};
+  \draw[axisline] (0,0) -- (0,4.8) node[below left, axislabel] {$t$};
+  % parallel ICs: t = c - sqrt(q)
+  \draw[thick, MidBlue, domain=0.02:5.8, smooth, variable=\x] plot ({\x},{3.6-sqrt(\x)});
+  \draw[thick, MidBlue, domain=0.02:5.8, smooth, variable=\x] plot ({\x},{2.6-sqrt(\x)});
+  \draw[thick, MidBlue, domain=0.02:5.8, smooth, variable=\x] plot ({\x},{1.6-sqrt(\x)});
+  \node at (5.0,1.6) {$u=c$};
+  % vertical expansion path
+  \draw[dashed, thick, AxisBlue] (2.6,0) -- (2.6,4.6) node[above, axislabel] {收入扩张路径};
+  \node[nodeblue] at (2.6,3.6-1.612) {};
+  \node[nodeblue] at (2.6,2.6-1.612) {};
+  \node[nodeblue] at (2.6,1.6-1.612) {};
+  \node[align=left] at (4.6,3.9) {无差异曲线互为\textbf{纵向平移}：\\ $t+v(q)=c\iff t=c-v(q)$，\\ 同一 $q$ 处斜率恒为 $v'(q)$};
+\end{tikzpicture}
+\end{center}
+\figexplan{三条无差异曲线互为纵向平移：$t+v(q)=c$ 等价于 $t=c-v(q)$，故在同一 $q$ 处斜率恒为 $v'(q)$。竖直虚线是收入扩张路径：一阶条件 $v'(q^*)=p$ 不含收入 $m$，收入变化全部由计价物 $t$ 吸收，$q^*$ 不变——这就是无财富效应的几何表现。}
+
+\begin{remark}[对照：正常品的收入扩张路径]
+一般偏好（如 $u(q,t)=q^{1/2}t^{1/2}$）下，收入增加时 $q^*$ 与 $t^*$ 同时增加，
+收入扩张路径弯曲向右上——存在财富效应。
+拟线性是一般偏好的\textbf{局部近似}：当计价物支出占财富比重很大、
+$q$ 的支出占比很小时，财富效应对 $q$ 的需求影响可忽略，
+拟线性是“部分均衡分析”的效用基础。
+\end{remark}
+
+\notehead{后果二：福利的精确货币度量}
+
+比较两个 $Y$ 方案 $y,y'$ 时，拟线性偏好给出\textbf{与财富无关}的补偿度量：
+\[
+(t,y)\succeq(t,y')\ \Longleftrightarrow\ v(y)\ge v(y'),
+\]
+且从 $y'$ 切换到 $y$ 的\textbf{补偿变化}恰为
+\[
+v(y)-v(y')\ =\ \text{使}\ (t,y')\sim\bigl(t-\bigl[v(y)-v(y')\bigr],\,y\bigr)\ \text{成立的计价物数量}.
+\]
+即：$v(y)-v(y')$ 是“为保持在 $y'$ 原状，愿意为换到 $y$ 支付的最大计价物数量”，
+与初始财富 $t$ \textbf{无关}。一般偏好下补偿变化依赖财富水平，
+$v$ 之差与财富无关正是拟线性被广泛用于福利计算（剩余度量）的原因。
+
+\begin{example}[补偿变化的数值计算]\label{ex:ql-welfare}
+设 $v(y)=\sqrt{y}$（$y$ 为某种公共品供给量），计价物 $t$ 为税收（可负，即补贴）。
+比较两个方案：现状 $y'=4$（$v(y')=2$）与拟建项目 $y=9$（$v(y)=3$）。
+由上述结论，从 $y'$ 切换到 $y$ 的补偿变化为
+\[
+v(y)-v(y')=3-2=1,
+\]
+即：为使纳税人在“维持现状 $y'$”与“接受项目 $y$”间无差异，需向其补偿 $1$ 单位计价物；
+该数值与初始财富 $t$ 无关。若改用一般（非拟线性）偏好 $u(t,y)=t^{1/2}y^{1/2}$ 作比较，
+对同一对 $(t,4)$ 与 $(t-1,9)$，无差异要求
+$t^{1/2}\cdot2=(t-1)^{1/2}\cdot3$，解得 $t=9/5=1.8$ 时才无差异——
+补偿量随 $t$ 变化，直观显示了财富效应如何破坏“精确货币度量”。
+\end{example}
+
+\subsection{拟线性与可分性的关系}
+
+拟线性是可加可分（§3.6）的特例加限制：
+$u(t,y)=t+v(y)$ 显然是可加形式 $u_1(t)+u_2(y)$，
+额外要求 $u_1$ 为\textbf{恒等映射}（对计价物坐标“价值=数量”）。
+在条件语言中：坐标独立性 + 矩形条件给出 $a\cdot u_1(t)+v(y)$ 型表示，
+条件~\ref{cond:num-valuable} 与 \ref{cond:no-wealth} 进一步把 $u_1$ 钉死为线性
+（无财富效应排除了 $u_1(t)=\sqrt{t}$ 之类的弯曲刻度）。
+因此拟线性偏好自动满足坐标独立性与矩形条件：
+$(t,y)\succeq(t',y)\iff t\ge t'$ 与 $(t,y')\succeq(t',y')$ 同真同假——
+第一坐标的比较与 $y$ 固定在何处无关。
+
+\subsection{可微情形 \texorpdfstring{$\star$}{*}}
+
+设 $Y=\R^{n-1}_+$，$v$ 二阶连续可微。$u(t,y)=t+v(y)$ 的梯度为 $(1,\nabla v(y))$，
+边际替代率
+\[
+\mathrm{MRS}_{t,i}(t,y)=\frac{\partial u/\partial y_i}{\partial u/\partial t}=\frac{\partial v}{\partial y_i}(y)
+\]
+\textbf{与 $t$ 无关}——无财富效应的可微表达。
+拟凹性等价于 $v$ 凹：
+$u$ 的海塞矩阵为 $\begin{pmatrix}0&0\\0&D^2v\end{pmatrix}$，
+其加边海塞行列式条件归结为 $D^2v$ 负半定。
+凸偏好（命题~\ref{prop:convex-qc}）$\iff$ $v$ 凹，
+严格凸 $\iff$ $v$ 严格凹——拟线性把偏好凸性完全压缩为 $v$ 的凹性。

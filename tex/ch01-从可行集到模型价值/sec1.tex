@@ -1,0 +1,65 @@
+% ==================== 第 1 节：导入（0–10 分钟）====================
+\section{导入：从现实选择到形式化对象}
+
+\notehead{1.1 一个真实的决策问题}
+
+想象一位博士生每月有可支配收入 $m=3000$ 元，需要在两类支出之间分配：书籍（每单位价格 $p_1=100$ 元）与餐饮（每单位价格 $p_2=50$ 元）。她能买“任意多”吗？不能。她买得起哪些组合？她最终会选哪个组合？我们能不能\emph{预测}她的选择、又能不能\emph{评价}她的选择“好不好”？
+
+把这三个问题逐一形式化，就是本章的全部内容：
+\begin{enumerate}
+  \item \textbf{买得起哪些} $\;\Longrightarrow\;$ 一个\emph{集合}问题（可行集）；
+  \item \textbf{会选哪个} $\;\Longrightarrow\;$ 一个\emph{映射}问题（选择对应）；
+  \item \textbf{好不好} $\;\Longrightarrow\;$ 一个\emph{方法论}问题（实证与规范的分界）。
+\end{enumerate}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[font=\small,scale=1.12,transform shape]
+  % 左面板：现实语言
+  \draw[thick,fill=gray!15] (0,0) rectangle (3.4,3.0);
+  \node[font=\bfseries] at (1.7,2.62) {现实语言};
+  \node[align=center,text width=3.1cm,font=\scriptsize] at (1.7,1.82) {月收入 3000 元；书籍单价 100 元\\餐饮单价 50 元；“这本书买不买？”};
+  \node[align=center,font=\scriptsize] at (1.7,0.62) {无法直接计算：\\既没有集合，也没有映射};
+  \node[font=\scriptsize] at (1.7,-0.48) {(a) 现实决策情境};
+  % 形式化箭头
+  \draw[-{Stealth[length=2.6mm]},thick] (3.6,1.5) -- (4.4,1.5);
+  \node[font=\scriptsize,above=3pt] at (4.0,1.5) {形式化};
+  % 右面板：形式语言
+  \begin{scope}[xshift=8.0cm]
+    \draw[thick,fill=gray!15] (0,0) rectangle (3.4,3.0);
+    \node[font=\bfseries] at (1.7,2.62) {形式语言};
+    \node[align=center,text width=3.1cm,font=\scriptsize] at (1.7,1.82) {$B(p,m)$：预算集（集合）\\$C(\theta)$：选择对应（映射）\\实证与规范之分（方法论）};
+    \node[align=center,font=\scriptsize] at (1.7,0.62) {可计算、可检验、可反驳};
+    \node[font=\scriptsize] at (1.7,-0.48) {(b) 形式化对象};
+  \end{scope}
+\end{tikzpicture}
+\caption{从现实决策到形式化对象：同一问题的两种语言}
+\end{figure}
+\figexplan{左面板是被提问的真实情境，其中没有集合、也没有映射，因此无法直接计算；经过中间的形式化箭头，右面板把同一问题拆成三个可操作的对象：预算集 $B(p,m)$ 是集合、选择对应 $C(\theta)$ 是映射、实证与规范之别是方法论区分。三者正是后续各节依次处理的对象。}
+
+\begin{example}[预算约束的形式化]
+给定收入 $m=3000$，价格 $p_1=100$、$p_2=50$，可行集为
+\[
+B(p,m)=\{(x_1,x_2)\in\R_+^2:100x_1+50x_2\le 3000\}.
+\]
+预算线为 $100x_1+50x_2=3000$，即 $x_2=60-2x_1$；在 $x_1$ 轴截距为 30，在 $x_2$ 轴截距为 60。若该生选择 10 本书，则最多可支配 $(3000-1000)/50=40$ 单位餐饮。选择哪一个 $(x_1,x_2)$，是第 4--5 节的问题；判断该选择好不好，是第 6 节的问题。
+\end{example}
+
+\notehead{1.2 模型究竟在映射什么？}
+
+理论经济学的第一步不是写方程，而是回答：“模型里的每个符号，对应现实世界里的什么？”本章的形式化链条是
+\[
+\theta \;\longmapsto\; B(\theta) \;\longmapsto\; C(\theta)
+\;\longmapsto\; \text{行为预测} \;\longmapsto\; \text{Positive / Normative analysis},
+\]
+其中每一环都是一次\emph{抽象}：
+\begin{itemize}
+  \item $\theta$：模型外的给定条件（价格、收入、税率、禀赋……），我们称之为\emph{参数}；
+  \item $B(\theta)$：在参数 $\theta$ 下，决策者可行的全部方案所成的\emph{集合}；
+  \item $C(\theta)$：在可行集中，决策者\emph{实际会选}的方案所成的集合——注意它仍是集合；
+  \item 行为预测：当 $\theta$ 变化时，$C(\theta)$ 如何变化（比较静态）；
+  \item Positive / Normative：对预测结果分别作\emph{事实陈述}与\emph{价值评价}。
+\end{itemize}
+
+\medskip
+\noindent\textbf{课堂提问：}在这个链条里，哪一环是“客观的”、哪一环可能掺入我们的价值判断？先记下你的直觉，第 6 节再回来检验。

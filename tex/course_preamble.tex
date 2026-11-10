@@ -1,0 +1,176 @@
+% ============================================================
+%  微观经济学理论课程讲义 —— 统一课程前言（四讲共用）
+%  版式参考 Nolan Miller, Notes on Microeconomic Theory (SWP/notes3 风格)
+%  编译：LuaLaTeX（两遍）
+%  各讲 preamble.tex 只需设定 \lectureno / \lectureshort 后 \input 本文件。
+% ============================================================
+\documentclass[11pt,a4paper,fontset=none,oneside,openany]{ctexbook}
+
+% ---------- 版式 ----------
+\usepackage{geometry}
+\geometry{
+  a4paper,
+  top=2.8cm, bottom=2.8cm,
+  left=2.6cm, right=2.6cm,
+  headsep=0.85cm, footskip=1.25cm
+}
+\setlength{\headheight}{14pt}
+
+% ---------- 字体（全部矢量嵌入，保证 PDF 高清晰度）----------
+% 注意：本机 macOS 已移除 Kaiti SC，CJK 斜体统一回退到 Songti SC；
+%        Songti SC / Heiti SC 经 OSFONTDIR 指向 Supplemental 后由 luaotfload 解析。
+\usepackage{fontspec}
+\setmainfont{TeX Gyre Termes}[Ligatures=TeX]
+\setsansfont{TeX Gyre Heros}[Ligatures=TeX,Scale=MatchLowercase]
+\setmonofont{TeX Gyre Cursor}[Scale=MatchLowercase]
+\setCJKmainfont{Songti SC}[BoldFont={Songti SC Bold},ItalicFont={Songti SC}]
+\setCJKsansfont{Heiti SC}[BoldFont={Heiti SC}]
+
+% ---------- 数学 ----------
+\usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage{amsthm}
+\usepackage{unicode-math}
+\setmathfont{TeX Gyre Termes Math}
+\allowdisplaybreaks[2]
+\setlength{\abovedisplayskip}{9pt plus 3pt minus 3pt}
+\setlength{\belowdisplayskip}{9pt plus 3pt minus 3pt}
+
+% ---------- 定理类环境（书稿格式：按章编号，如“定理 1.1”）----------
+\theoremstyle{plain}
+\newtheorem{theorem}{定理}[chapter]
+\newtheorem{proposition}[theorem]{命题}
+\newtheorem{lemma}[theorem]{引理}
+\newtheorem{corollary}[theorem]{推论}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{定义}
+\newtheorem{condition}[theorem]{条件}
+\newtheorem{example}[theorem]{例}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{注}
+% 公式、图、表按章编号（书稿格式：式 (1.1)、图 1.1、表 1.1）
+\numberwithin{equation}{chapter}
+\numberwithin{figure}{chapter}
+\numberwithin{table}{chapter}
+
+% 定理类环境标题后的标点：amsthm 默认加英文 "."，此处统一改为中文句号。
+% 原理：amsthm 的 \@thm 每次开环境都执行 \thm@headpunct{.}，而样式宏在其之后展开，
+% 故把 \thm@headpunct{。} 追加到三个样式宏末尾即可覆盖（用 \AtBeginDocument 以免被 ctex 覆盖）。
+\makeatletter
+\AtBeginDocument{%
+  \let\WBth@plain\th@plain
+  \let\WBth@definition\th@definition
+  \let\WBth@remark\th@remark
+  \def\th@plain{\WBth@plain\thm@headpunct{。}}%
+  \def\th@definition{\WBth@definition\thm@headpunct{。}}%
+  \def\th@remark{\WBth@remark\thm@headpunct{。}}%
+}
+\makeatother
+
+% 无编号小标题（仿 notes3 的 “A Note on ...”）
+\newcommand{\notehead}[1]{\par\medskip\noindent{\bfseries #1}\par\smallskip}
+
+% ---------- 表格 ----------
+\usepackage{booktabs}
+\usepackage{array}
+\renewcommand{\arraystretch}{1.25}
+\setlength{\tabcolsep}{8pt}
+
+% ---------- 图形 ----------
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric,calc,patterns,decorations.pathreplacing,decorations.markings}
+\usepackage{float}
+\usepackage{caption}
+\captionsetup{font=small,labelfont=bf,labelsep=quad,skip=4pt}
+
+% 统一图形配色（黑白模式：黑/灰梯度，供所有 TikZ 图复用）
+% —— 全局黑白化：原彩色调色板统一改为黑/灰，保证打印与投影均可读 ——
+\definecolor{AxisBlue}{RGB}{0,0,0}        % 轴线 / 主曲线：黑
+\definecolor{SoftBlue}{RGB}{130,130,130}  % 节点填充：中灰
+\definecolor{LightRed}{RGB}{224,224,224}  % 浅填充：浅灰
+\definecolor{DeepBlue}{RGB}{0,0,0}        % 描边：黑
+\definecolor{MidBlue}{RGB}{70,70,70}      % 次曲线 / 网格：深灰
+\tikzset{
+  >=Stealth,
+  every picture/.append style={font=\small},
+  axisline/.style={thick,color=black,-Stealth},
+  axislabel/.style={color=black},
+  fillsoft/.style={fill=LightRed,fill opacity=0.6,draw=black,thick},
+  nodeblue/.style={circle,fill=black!85,draw=black,thick,inner sep=2pt},
+  nodewhite/.style={circle,fill=white,draw=black,thick,inner sep=2pt},
+  arrblue/.style={->, thick, color=black},
+  boxsoft/.style={draw=black, rounded corners=2pt, align=center, inner sep=5pt, fill=black!6},
+  % 多曲线 / 多集合区分：以线型 + 标记代替颜色
+  curveA/.style={thick,black,solid},
+  curveB/.style={thick,black,dashed},
+  curveC/.style={thick,black,dotted},
+  markA/.style={mark=*,mark size=2.2pt,color=black},
+  markB/.style={mark=square*,mark size=2.0pt,color=black},
+  markC/.style={mark=triangle*,mark size=2.4pt,color=black},
+  % 图内区域 / 点标签（白底避免与图形重叠）
+  figlabel/.style={font=\scriptsize,fill=white,inner sep=1pt,outer sep=1pt,text=black},
+}
+% 图形说明（黑白模式下对图形区域 / 曲线 / 关键点的解释，置于图形下方）
+\newcommand{\figexplan}[1]{%
+  \par\smallskip\noindent{\small\itshape 图形说明：#1}\par\smallskip}
+
+% ---------- 页眉页脚（书稿格式：左=书名，右=章次与章名）----------
+\usepackage{fancyhdr}
+% 章标题：居中、大号（书稿章首样式）
+\CTEXsetup[format={\centering\LARGE\bfseries}]{chapter}
+\CTEXsetup[beforeskip=16pt,afterskip=14pt]{chapter}
+\CTEXsetup[format={\large\bfseries}]{section}
+\CTEXsetup[format={\normalsize\bfseries}]{subsection}
+\pagestyle{fancy}
+\fancyhf{}
+\providecommand{\booktitle}{微观经济学理论：可行集、偏好与效用}
+\providecommand{\lectureno}{第一章}
+\providecommand{\lectureshort}{课程讲义}
+\fancyhead[L]{\small\itshape \booktitle}
+\fancyhead[R]{\small \lectureno\quad \lectureshort}
+\fancyfoot[C]{\small \thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\fancypagestyle{plain}{\fancyhf{}\fancyfoot[C]{\small \thepage}\renewcommand{\headrulewidth}{0pt}}
+
+% ---------- 正文细节 ----------
+\usepackage{setspace}
+\setstretch{1.12}
+\usepackage{microtype}
+\tolerance=900
+\emergencystretch=2em
+\raggedbottom
+
+% ---------- 超链接与 PDF 书签 ----------
+\usepackage{hyperref}
+\hypersetup{
+  colorlinks=true,
+  linkcolor=black,
+  urlcolor=black,
+  citecolor=black,
+  pdfencoding=auto,
+  bookmarks=true,
+  pdftitle={\booktitle\quad \lectureno：\lectureshort},
+  pdfsubject={微观经济学理论书稿}
+}
+% 章节标题中常见数学符号的安全书签映射（避免 "Improper alphabetic constant"）
+\pdfstringdefDisableCommands{%
+  \def\leftrightarrow{<->}%
+  \def\star{*}%
+  \def\S{S}%
+  \def\succeq{\text{≽}}%
+  \def\succ{\text{≻}}%
+  \def\sim{\text{∼}}%
+}
+
+% ---------- 常用记号 ----------
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\succeqq}{\succeq}
+\newcommand{\argmax}{\operatorname*{arg\,max}}
+\newcommand{\argmin}{\operatorname*{arg\,min}}
+\newcommand{\st}{\text{s.t.}\ }

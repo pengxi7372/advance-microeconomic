@@ -1,0 +1,299 @@
+% ============================================================
+%  第二部分：边际转换率、梯度与几何辨析
+% ============================================================
+
+\section{边际转换率与均衡调整}
+\label{sec:mrt}
+
+\subsection{什么是边际转换率}
+
+"前沿上多生产一单位 $y_1$，必须放弃多少 $y_2$"这个问题由前沿的斜率回答。
+对隐函数 $F(y_1,y_2)=0$ 两边全微分：
+\begin{equation}
+F_1\,dy_1+F_2\,dy_2=0
+\quad\Longrightarrow\quad
+\frac{dy_2}{dy_1}=-\frac{F_1}{F_2}.
+\label{eq:implicit-diff}
+\end{equation}
+
+\begin{definition}[边际转换率]
+以 $y_1$ 为计价方向的边际转换率定义为
+\begin{equation}
+MRT_{12}\equiv-\frac{dy_2}{dy_1}=\frac{F_1}{F_2},
+\label{eq:mrt}
+\end{equation}
+读作"多生产 $1$ 单位 $y_1$，技术上必须放弃的 $y_2$ 数量"。
+反过来，$MRT_{21}=-dy_1/dy_2=F_2/F_1=1/MRT_{12}$。
+\end{definition}
+
+代入本案例的梯度 \eqref{eq:grad-components}：
+\begin{equation}
+MRT_{12}(y_2)=\frac{F_1}{F_2}=\frac{1}{y_2/2}=\frac{2}{y_2},
+\qquad
+MRT_{21}(y_2)=\frac{y_2}{2}.
+\label{eq:mrt-example}
+\end{equation}
+于是 $MRT_{12}$ 随 $y_2$ 递减、$MRT_{21}$ 随 $y_2$ 递增：蛋糕烤得越多，
+再增加一单位蛋糕要牺牲的面包越多。这再次印证前沿的机会成本递增性质，
+也保证了一阶条件给出的驻点是最大值而非最小值。
+
+在最优点 $(6,4)$：
+\begin{equation}
+MRT_{12}=\frac{2}{4}=\frac12,\qquad MRT_{21}=2.
+\label{eq:mrt-at-opt}
+\end{equation}
+
+\subsection{均衡条件：技术取舍等于市场交换}
+
+把一阶条件 \eqref{eq:foc} 相除得到的 \eqref{eq:core} 与定义 \eqref{eq:mrt} 合起来，
+就是本案例的经济学结论。
+
+\begin{theorem}[双产出收益最大化的内点均衡条件]
+设 $p\gg 0$，技术满足 $F_1,F_2>0$，且 $y^*$ 为 \eqref{eq:rm-formal} 的内点解，则
+\begin{equation}
+MRT_{12}(y^{*})=\frac{p_1}{p_2},
+\qquad\text{等价地}\qquad
+p=\lambda \nabla F(y^{*}),\ \lambda>0.
+\label{eq:equilibrium}
+\end{equation}
+\end{theorem}
+
+这句话的经济内容值得逐字拆开：
+
+\begin{itemize}
+  \item \textbf{左边 $MRT_{12}$ 是技术的边际成本}。要把 $1$ 单位资源从 $y_2$ 挪到 $y_1$，
+        技术上要付出 $MRT_{12}$ 单位 $y_2$。
+  \item \textbf{右边 $p_1/p_2$ 是市场的边际收益}。挪出来的那 $1$ 单位 $y_1$
+        在市场上能卖得 $p_1$，按 $y_2$ 计价就是 $p_1/p_2$ 单位 $y_2$。
+  \item \textbf{相等即不再有利可图}。$MRT_{12}=p_1/p_2$ 表示
+        "技术上的转换代价"恰好等于"市场上的交换所得"，
+        企业无论往哪个方向调整，收益都不再增加。
+\end{itemize}
+
+\subsection{三种情形与调整方向（含三份独立验证）}
+
+在尚未到达最优的位置上，比较 $MRT_{12}$ 与 $p_1/p_2$ 即可判断该往哪里调。
+判断的可靠办法是看\textbf{收益沿前沿的导数}。把 $y_1$ 作为调整对象，由
+\eqref{eq:implicit-diff} 有 $dy_2=-MRT_{12}\,dy_1$，于是
+\begin{equation}
+\frac{d\pi}{dy_1}=p_1+p_2\frac{dy_2}{dy_1}
+=p_1-p_2\,MRT_{12}.
+\label{eq:dpi-dy1}
+\end{equation}
+这条式子把一切都摆明了：多 $1$ 单位 $y_1$ 带来收入 $p_1$，
+代价是丢掉 $MRT_{12}$ 单位 $y_2$、值 $p_2\,MRT_{12}$。据此得到表 \ref{tab:mrt-cases}。
+
+\begin{table}[H]
+\centering
+\caption{$MRT_{12}$ 与 $p_1/p_2$ 的三种情形：本案例的最佳应对}
+\label{tab:mrt-cases}
+\begin{tabular}{p{3.5cm}p{3.3cm}p{3.9cm}p{2.7cm}}
+\toprule
+情形 & 经济含义（以 $y_1$ 计） & 本案例中的具体位置 & 最优应对 \\
+\midrule
+$MRT_{12}>\dfrac{p_1}{p_2}$ & 转产 $y_1$ 的成本高于收益：$p_2MRT_{12}>p_1$，$d\pi/dy_1<0$ & $y_2<4$（例如 $y_2=2$：$MRT_{12}=1>\frac12$） & 减少 $y_1$、\textbf{增加} $y_2$ \\[4pt]
+$MRT_{12}=\dfrac{p_1}{p_2}$ & 转换成本恰等于市场所得，$d\pi/dy_1=0$ & $y_2=4$：$MRT_{12}=\frac12$ & 停止调整，达到最优 \\[4pt]
+$MRT_{12}<\dfrac{p_1}{p_2}$ & 转产 $y_1$ 的成本低于收益：$p_2MRT_{12}<p_1$，$d\pi/dy_1>0$ & $y_2>4$（例如 $y_2=6$：$MRT_{12}=\frac13<\frac12$） & \textbf{增加} $y_1$、减少 $y_2$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+三份互相独立的验证可以消除任何符号疑虑：
+
+\begin{enumerate}
+  \item \textbf{边际成本—边际收益验证}（即 \eqref{eq:dpi-dy1}）。
+        在 $y_2=2$ 处，$MRT_{12}=1$，多产一个面包的代价是 $1$ 个蛋糕（值 $4$ 元），
+        多卖一个面包只多得 $2$ 元，亏 $2$ 元，故\textbf{不要}转产面包。
+  \item \textbf{直接求导验证}（把约束代入目标）。由 \eqref{eq:one-dim}
+        $\pi'(y_2)=4-y_2$：在 $y_2=2$ 时 $\pi'=2>0$，应增加 $y_2$；
+        在 $y_2=6$ 时 $\pi'=-2<0$，应减少 $y_2$。与表 \ref{tab:mrt-cases} 完全一致。
+  \item \textbf{解析验证}（完全平方）。由 \eqref{eq:pi-complete-square}，
+        $\pi(y_2)=28-\frac12(y_2-4)^2$，最高点在 $y_2=4$；
+        任何 $y_2\neq 4$ 的位置都只能通过向 $4$ 靠近来改进。
+\end{enumerate}
+
+\begin{remark}[一个高频误判]
+常见的错误说法是："若 $MRT_{12}>p_1/p_2$，说明技术上 $y_1$ 更值钱，
+所以应该多生产 $y_1$。"方向恰好反了。原因是没有分清\textbf{成本}与\textbf{所得}：
+$MRT_{12}$ 是生产 $y_1$ 的边际成本（以 $y_2$ 计），$p_1/p_2$ 是生产 $y_1$ 的边际所得
+（同样以 $y_2$ 计）。成本高于所得时应当收缩该项，而不是扩张。
+用一句口诀记住：\textbf{"贵的东西少做，便宜的东西多做"——这里的"贵"指的是技术代价。}
+\end{remark}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[x=0.95cm,y=0.50cm,line cap=round,line join=round]
+  % ---- 坐标轴 ----
+  \draw[axisline] (0,0) -- (7.6,0) node[below,axislabel] {$y_2$（蛋糕，件）};
+  \draw[axisline] (0,0) -- (0,13.8) node[left,axislabel] {$y_1$（面包，件）};
+  % ---- 生产前沿 ----
+  \draw[curveA,domain=0:6.3246,samples=90] plot (\x,{10-\x*\x/4});
+  \node[figlabel,anchor=north east] at (1.15,9.68) {PPF：$F=0$};
+  % ---- 等收益线 pi = 26（与前沿交于 (2,9) 与 (6,1)）----
+  \draw[curveB] (0,13) -- (6.5,0);
+  \node[figlabel,anchor=south west] at (0.15,12.65) {$\bar\pi=26$};
+  % ---- 沿前沿的改进方向：左段（从 y2=2 向 y2=3.6）----
+  \draw[thick,black,-Stealth,domain=2:3.7,samples=40] plot (\x,{10-\x*\x/4});
+  % ---- 沿前沿的改进方向：右段（从 y2=6 向 y2=4.6）----
+  \draw[thick,black,-Stealth,domain=6:4.5,samples=40] plot (\x,{10-\x*\x/4});
+  % ---- 两个交点 ----
+  \fill (4,6) circle (2.6pt);
+  \draw[nodewhite] (2,9) circle (2.6pt);
+  \draw[nodewhite] (6,1) circle (2.6pt);
+  \node[figlabel,anchor=south east] at (3.9,6.15) {最优 $(4,6)$};
+  \node[figlabel,anchor=west] at (2.12,9.5) {$A=(2,9)$：\,$MRT_{12}=1>\frac12$};
+  \node[figlabel,anchor=west] at (6.12,1.5) {$B=(6,1)$：\,$MRT_{12}=\frac13<\frac12$};
+  % ---- 方向说明 ----
+  \node[figlabel,anchor=north] at (2.85,7.4) {增加 $y_2$};
+  \node[figlabel,anchor=south] at (5.25,2.9) {减少 $y_2$};
+  \draw (0,0.12) -- (-0.12,0.12) -- (-0.12,0);
+  \node[figlabel,anchor=east] at (0.05,10) {$10$};
+  \node[figlabel,anchor=north] at (6.3246,0.05) {$\sqrt{40}$};
+\end{tikzpicture}
+\caption{$MRT_{12}$ 与价格比的偏离决定调整方向。
+  等收益线 $\bar\pi=26$ 与前沿交于 $A=(y_2,y_1)=(2,9)$ 与 $B=(6,1)$，
+  两点之间前沿位于该线之上，故从任一端沿前沿向中间移动都能提高收益。}
+\label{fig:mrt-adjustment}
+\end{figure}
+\figexplan{在 $A$ 点，$MRT_{12}=2/y_2=1$，大于价格比 $\frac12$：
+多产一单位面包要放弃 $1$ 个蛋糕（值 $4$ 元），而多卖一个面包只得 $2$ 元，
+亏本，因此应反向调整——减少面包、增加蛋糕，箭头指向 $y_2$ 增大方向。
+在 $B$ 点，$MRT_{12}=1/3$，小于 $\frac12$：多产一单位面包只需放弃 $1/3$ 个蛋糕
+（值 $4/3$ 元），却多得 $2$ 元，有利可图，箭头指向 $y_2$ 减小方向。
+两个方向的箭头都收敛到中间的实心点 $(y_2,y_1)=(4,6)$，那里 $MRT_{12}=\frac12=p_1/p_2$。}
+
+\section{梯度、法向量与乘子}
+\label{sec:grad}
+
+\subsection{为什么梯度是前沿的法向量}
+
+取前沿上过 $y^{*}$ 的任意一条光滑参数曲线 $y(t)$，满足 $F(y(t))\equiv 0$。
+对 $t$ 求导：
+\begin{equation}
+\nabla F(y^{*})\cdot \dot y(0)=F_1\dot y_1+F_2\dot y_2=0.
+\label{eq:normal}
+\end{equation}
+即前沿的任意切向量 $\dot y$ 都与 $\nabla F$ 正交，故 $\nabla F$ 是前沿的\textbf{法向量}。
+这是纯几何结论，不含任何价格信息。
+
+一阶条件 \eqref{eq:foc} 则可以重写为向量形式：
+\begin{equation}
+\boxed{\ p=\lambda\,\nabla F(y^{*}),\qquad \lambda>0\ }
+\label{eq:p-lambda-nabla}
+\end{equation}
+它说的是：在最优点，\textbf{收益目标函数的梯度（就是价格向量 $p$）}
+与技术约束的梯度（法向量）\textbf{共线且同向}，比例因子为 $\lambda$。
+这正是"相切"的代数表达——两条曲线的切线相同，法向量自然共线。
+
+\subsection{本案例中的三条向量}
+
+在最优点 $(y_1^{*},y_2^{*})=(6,4)$：
+\begin{equation}
+\nabla F=(F_1,F_2)=\Bigl(1,\frac{4}{2}\Bigr)=(1,2),
+\qquad
+p=(p_1,p_2)=(2,4),
+\qquad
+p=2\cdot(1,2)=2\,\nabla F.
+\label{eq:vectors}
+\end{equation}
+于是 $\lambda=2$ 承担了三重身份：
+
+\begin{enumerate}
+  \item \textbf{缩放因子}。$p$ 与 $\nabla F$ 同方向，长度是它的 $2$ 倍；
+  \item \textbf{分量比率}。由 \eqref{eq:lambda-ratio}，
+        $\lambda=p_1/F_1=2/1=2$ 与 $\lambda=p_2/F_2=4/2=2$ 给出同一个数，
+        这也是一阶条件相容性的校验；
+  \item \textbf{影子值}。$\lambda$ 等于收益对技术水平的导数，见 \S\ref{sec:shadow}。
+\end{enumerate}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[x=1.15cm,y=1.15cm,line cap=round,line join=round]
+  % ---- 受限 viewpoint：局部放大，横纵等尺度 ----
+  \begin{scope}
+    \clip (2.0,3.7) rectangle (6.45,8.5);
+    % 生产前沿
+    \draw[curveA,domain=1.9:6.0,samples=90] plot (\x,{10-\x*\x/4});
+    % 切线：y1 = 14 - 2 y2
+    \draw[curveB] (3.0,8.0) -- (6.0,2.0);
+    % 法向量所在的直线（点线，向右上延长）
+    \draw[curveC] (4,6) -- (7.4,7.7);
+    % 法向量：nabla F 段
+    \draw[thick,black,-Stealth] (4,6) -- (5,6.5);
+    % 价格向量：整段（长度为 2 倍）
+    \draw[very thick,black,-Stealth] (4,6) -- (6,7);
+  \end{scope}
+  % ---- 坐标轴（局部坐标，不从原点开始）----
+  \draw[thin,-Stealth] (2.0,3.7) -- (6.45,3.7) node[below,axislabel] {$y_2$};
+  \draw[thin,-Stealth] (2.1,3.7) -- (2.1,8.5) node[left,axislabel] {$y_1$};
+  % ---- 标注（在裁剪范围之外绘制，避免被截断）----
+  \fill (4,6) circle (2.4pt);
+  \node[figlabel,anchor=east] at (3.92,6.02) {切点 $(y_2,y_1)=(4,6)$};
+  \node[figlabel,anchor=north west] at (5.05,6.45) {$\nabla F=(1,2)$};
+  \node[figlabel,anchor=south west] at (6.05,7.02) {$p=\lambda\nabla F=(2,4)$};
+  \node[figlabel,anchor=north west] at (5.05,4.02) {切线 $\dfrac{dy_1}{dy_2}=-2$};
+  \node[figlabel,anchor=south east] at (2.6,6.9) {前沿 $F=0$};
+\end{tikzpicture}
+\caption{梯度、法向量与价格向量的共线关系（局部放大，横纵等尺度）。
+  在最优点，价格向量 $p$ 与技术梯度 $\nabla F$ 指向同一方向，
+  前者长度恰为后者的 $\lambda=2$ 倍；两者共同垂直于前沿在该点的切线。}
+\label{fig:gradient}
+\end{figure}
+\figexplan{本图比例为 $1:1$，因此"垂直"关系在视觉上成立：
+实线箭头从切点出发沿右上方向，短的一段是 $\nabla F=(1,2)$
+（分量按 $(y_1,y_2)$ 顺序书写，故在"横轴 $y_2$、纵轴 $y_1$"的图面上表现为向右 $2$、向上 $1$），
+长的一段是 $p=\lambda\nabla F=(2,4)$，长度恰为两倍。
+虚线是前沿的切线，斜率为 $dy_1/dy_2=-2$；点线是法线延长线，
+其斜率为 $1/2$，与切线斜率互为负倒数。需注意：本图纵轴不从原点开始，属于局部放大。}
+
+\subsection{量纲与直觉的再次确认}
+
+由 \S\ref{sec:convention} 的量纲约定，$[\nabla F]=1$（无量纲），
+$[p]=$ 元/件，故 $[\lambda]=$ 元/件。这让 \eqref{eq:p-lambda-nabla} 读起来非常自然：
+\begin{equation*}
+\underbrace{p}_{\text{元/件}}
+=\underbrace{\lambda}_{\text{元/件}}\cdot
+\underbrace{\nabla F}_{\text{无单位的技术方向}} .
+\end{equation*}
+技术决定"往哪个方向生产更有效"（梯度），市场决定"哪个方向更值钱"（价格），
+$\lambda$ 是两者之间的汇率。当所有价格按同一比例变动时，
+$p$ 的长度变了而方向不变，\eqref{eq:core} 只涉及价格比，
+因此\textbf{最优产出组合不变}——这正是收益最大化行为的零次齐次性，
+与消费者理论中马歇尔需求对 $(p,w)$ 零次齐次的性质完全对应。
+
+\section{几何辨析：切线斜率、MRT 与梯度比值}
+\label{sec:geometry-check}
+
+同一个几何事实可以有四五种写法，混淆就发生在这些写法之间。
+表 \ref{tab:geometry} 把它们并列摆出，并给出本案例在最优点 $(6,4)$ 处的具体数值。
+
+\begin{table}[H]
+\centering
+\caption{前沿几何的五种写法及其在最优点 $(y_1,y_2)=(6,4)$ 处的取值}
+\label{tab:geometry}
+\begin{tabular}{p{4.0cm}p{3.3cm}p{2.2cm}p{3.8cm}}
+\toprule
+对象 & 一般表达式 & 本例取值 & 含义与读法 \\
+\midrule
+前沿切线斜率 & $\dfrac{dy_1}{dy_2}=-\dfrac{F_2}{F_1}$ & $-2$ & 图上看得见的倾角；纵轴量除以横轴量 \\[4pt]
+$MRT_{21}$ & $-\dfrac{dy_1}{dy_2}=\dfrac{F_2}{F_1}$ & $2$ & 多产 $1$ 单位 $y_2$ 要放弃的 $y_1$ \\[4pt]
+$MRT_{12}$ & $-\dfrac{dy_2}{dy_1}=\dfrac{F_1}{F_2}$ & $\dfrac12$ & 多产 $1$ 单位 $y_1$ 要放弃的 $y_2$ \\[4pt]
+梯度分量之比 & $\dfrac{F_1}{F_2}=\dfrac{p_1}{p_2}$ & $\dfrac12$ & 均衡条件本身，与前一行同一个数 \\[4pt]
+梯度向量本身 & $(F_1,F_2)=(1,2)$ & $(1,2)$ & 按 $(y_1,y_2)$ 顺序书写的\textbf{法}向量 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+三条容易记混的经验规则：
+
+\begin{enumerate}
+  \item \textbf{带负号的那一行一定是"应运而生"的量}。$MRT$ 定义为"放弃量"，
+        恒为非负；而斜率可以是负的。写到斜率时记得带负号，
+        写到 $MRT$ 时它是斜率的相反数（或倒数，取决于方向）。
+  \item \textbf{$MRT_{ij}$ 的下标顺序决定用哪个偏导在分子}。
+        $MRT_{ij}=F_i/F_j$（$i$ 在分子，$j$ 在分母）。本例 $MRT_{12}=F_1/F_2=1/2$，
+        $MRT_{21}=F_2/F_1=2$。
+  \item \textbf{梯度是法向量，与切线无关}。写 $(F_1,F_2)$ 时按 $(y_1,y_2)$ 的顺序，
+        画到"横轴 $y_2$、纵轴 $y_1$"的图面上要\textbf{交换分量}得到 $(F_2,F_1)$；
+        这一步漏掉的人，画出来的箭头会指向切线的镜像方向。
+\end{enumerate}

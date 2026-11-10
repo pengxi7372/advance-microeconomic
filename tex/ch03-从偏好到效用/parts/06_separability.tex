@@ -1,0 +1,234 @@
+% ============================================================
+\section{从坐标独立性到可分性：可加表示定理}\label{sec:separability}
+% ============================================================
+
+本节回答：偏好满足什么\textbf{条件}，才允许把效用\textbf{拆开写}成
+各坐标贡献之和？结论是充要条件：
+\[
+\boxed{\ \text{可加表示 }u(x,y)=u_1(x)+u_2(y)\ \Longleftrightarrow\ \text{坐标独立性}+\text{矩形条件（}+ \text{正则性）}\ }
+\]
+并且当因子数 $\ge 3$ 时，矩形条件可由坐标独立性自动推出。
+
+\subsection{坐标独立性条件}
+
+\begin{condition}[坐标独立性]\label{cond:indep}
+设 $X=X_1\times X_2$，$\succeq$ 为 $X$ 上的弱序。称 $\succeq$ 满足\textbf{坐标独立性}，
+当且仅当对任意 $x,x'\in X_1$ 与 $y,y'\in X_2$：
+\[
+(x,y)\succeq(x',y)\ \Longleftrightarrow\ (x,y')\succeq(x',y'),
+\]
+且对称地对第二坐标成立：
+\[
+(x,y)\succeq(x,y')\ \Longleftrightarrow\ (x',y)\succeq(x',y').
+\]
+即：固定第二坐标后对第一坐标的比较，与第二坐标固定在何处\textbf{无关}。
+\end{condition}
+
+\begin{remark}
+坐标独立性允许我们把“$X_1$ 上的诱导偏好”良定义为：
+$x\succeq_1 x'\iff$ 任取（从而所有）$y$，$(x,y)\succeq(x',y)$。
+它是“可分”二字的全部序内容：\textbf{一个坐标内的排序不被另一个坐标的水平污染}。
+\end{remark}
+
+\begin{condition}[矩形条件（双消去条件）]\label{cond:thomsen}
+对任意 $x_1,x_2,x_3\in X_1$ 与 $y_1,y_2,y_3\in X_2$：若
+\[
+(x_1,y_2)\sim(x_2,y_1)\quad\text{且}\quad (x_2,y_3)\sim(x_3,y_2),
+\]
+则 $(x_1,y_3)\sim(x_3,y_1)$。
+\end{condition}
+
+\begin{remark}[矩形条件的可加性含义]
+若 $u=u_1+u_2$ 存在，前提两式给出
+$u_1(x_1)+u_2(y_2)=u_1(x_2)+u_2(y_1)$ 与 $u_1(x_2)+u_2(y_3)=u_1(x_3)+u_2(y_2)$，
+两式相加消去公共项得 $u_1(x_1)+u_2(y_3)=u_1(x_3)+u_2(y_1)$，即结论式。
+故矩形条件是可加表示的\textbf{必要条件}——它正是“坐标贡献可以互相抵消”的序表达。
+\end{remark}
+
+\begin{example}[可分性的数值检验]
+取 $X_1=X_2=\R_+$。
+\textbf{(i) 可分}：$u(x,y)=\sqrt{x}+\sqrt{y}$。取三点 $x_1=1,x_2=4,x_3=9$ 与 $y_1=1,y_2=4,y_3=9$。
+前提一 $(x_1,y_2)\sim(x_2,y_1)$：$u(1,4)=1+2=3=u(4,1)$，成立；
+前提二 $(x_2,y_3)\sim(x_3,y_2)$：$u(4,9)=2+3=5=u(9,4)$，成立；
+结论 $(x_1,y_3)\sim(x_3,y_1)$：$u(1,9)=1+3=4=u(9,1)$，成立——矩形闭合。
+\textbf{(ii) 不可分}：$u(x,y)=xy$。前提一要求 $x_1y_2=x_2y_1$，取 $x_1=1,y_2=4,x_2=2,y_1=2$ 满足 $1\cdot4=2\cdot2$；
+前提二要求 $x_2y_3=x_3y_2$，取 $y_3=8,x_3=1$ 得 $2\cdot8=1\cdot16$ 成立；
+但结论要求 $x_1y_3=x_3y_1$ 即 $1\cdot8=1\cdot2$，不成立——矩形条件破裂，
+正对应 $u$ 不能写成 $u_1(x)+u_2(y)$ 的加和形式（交叉偏导 $\partial^2u/\partial x\partial y=y+x\ne0$）。
+\end{example}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.1]
+  % grid
+  \foreach \x/\xl in {1/x_1, 3/x_2, 5/x_3}{
+    \draw[MidBlue!30] (\x,0.6) -- (\x,4.6);
+    \node at (\x,0.3) {$\xl$};
+  }
+  \foreach \y/\yl in {1/y_1, 2.6/y_2, 4.2/y_3}{
+    \draw[MidBlue!30] (0.6,\y) -- (5.4,\y);
+    \node at (0.3,\y) {$\yl$};
+  }
+  % premise 1: (x1,y2)~(x2,y1)
+  \node[nodeblue] at (1,2.6) {}; \node[nodeblue] at (3,1) {};
+  \draw[thick, AxisBlue] (1,2.6) -- (3,1) node[midway, above left] {$\sim$};
+  % premise 2: (x2,y3)~(x3,y2)
+  \node[nodeblue] at (3,4.2) {}; \node[nodeblue] at (5,2.6) {};
+  \draw[thick, AxisBlue] (3,4.2) -- (5,2.6) node[midway, above left] {$\sim$};
+  % conclusion: (x1,y3)~(x3,y1)
+  \node[nodeblue] at (1,4.2) {}; \node[nodeblue] at (5,1) {};
+  \draw[thick, dashed, AxisBlue] (1,4.2) -- (5,1) node[midway, above right] {$\sim$（结论）};
+  \node[align=left] at (6.35,2.6) {两条实线是前提，\\ 虚线是推论：\\ 大矩形的对角\\ 也无差异};
+\end{tikzpicture}
+\end{center}
+\figexplan{网格给出 $x_1,x_2,x_3$ 与 $y_1,y_2,y_3$ 构成的二维截面。两条实线是可加可分的两个前提：$(x_1,y_2)\sim(x_2,y_1)$ 与 $(x_2,y_3)\sim(x_3,y_2)$；虚线是由矩形条件推出的结论 $(x_1,y_3)\sim(x_3,y_1)$。若虚线不成立（矩形破裂），则不存在加和可分表示 $u_1(x)+u_2(y)$。}
+
+\subsection{可加表示定理（两因子）}
+
+\begin{definition}[本质坐标与可解性]\label{def:essential}
+坐标 $X_1$ 称为\textbf{本质的}：存在 $x,x'\in X_1$ 与 $y$ 使 $(x,y)\succ(x',y)$
+（该坐标并非摆设）。\textbf{可解性}：对任意 $x,x'\in X_1$（$x\succeq_1 x'$）与 $y,y'\in X_2$，
+方程 $(x,y)\sim(x',z)$ 在 $X_2$ 中有解 $z$——坐标间的“价值兑换”总是可行的。
+\end{definition}
+
+\begin{theorem}[两因子可加表示定理]\label{thm:additive}
+设 $X=X_1\times X_2$，$\succeq$ 为连续弱序，两坐标均本质，满足
+坐标独立性（条件~\ref{cond:indep}）、矩形条件（条件~\ref{cond:thomsen}）与可解性，
+且 $X_1,X_2$ 连通。则存在连续函数 $u_1:X_1\to\R$、$u_2:X_2\to\R$，使
+\[
+u(x,y)=u_1(x)+u_2(y)
+\]
+表示 $\succeq$；且 $\{u_1,u_2\}$ 在“共同正仿射变换”下唯一：
+任何其他可加表示 $(\tilde u_1,\tilde u_2)$ 都满足
+$\tilde u_i=a u_i+b_i$（$a>0$）。
+\end{theorem}
+
+\begin{proof}[证明（构造与关键步骤）]
+\textbf{第 1 步：取基准点，定义坐标刻度并完成刻度校准。}
+固定基准 $(x^*,y^*)\in X$。由定理~\ref{thm:continuous-rep}，
+$\succeq$ 存在连续表示 $U$。定义
+\[
+u_1(x)\coloneqq U(x,y^*)-U(x^*,y^*),\qquad
+u_2(y)\coloneqq U(x^*,y)-U(x^*,y^*).
+\]
+由坐标独立性，$(x,y^*)\succeq(x',y^*)\iff(x,y)\succeq(x',y)$ 对一切 $y$ 成立，
+故 $u_1$ 表示诱导偏好 $\succeq_1$；同理 $u_2$ 表示 $\succeq_2$。
+
+\textbf{刻度校准}（把 $X_1$ 刻度兑换为 $X_2$ 刻度）：
+由可解性，对每个 $x\in X_1$ 取 $w(x)\in X_2$ 使
+\[
+(x,y^*)\ \sim\ \bigl(x^*,w(x)\bigr).
+\]
+由 $U$ 表示 $\succeq$ 与 $u_1,u_2$ 的定义，
+\begin{equation}\label{eq:calib}
+u_1(x)\ =\ U(x,y^*)-U(x^*,y^*)\ =\ U\bigl(x^*,w(x)\bigr)-U(x^*,y^*)\ =\ u_2\bigl(w(x)\bigr)-u_2(y^*).
+\end{equation}
+即：\textbf{第一坐标的价值差可以无差异地平移为第二坐标的价值差}。
+
+\textbf{第 2 步：矩形条件给出基本导出关系。}
+任取 $x,x'\in X_1$。对方程组
+\[
+(x,y^*)\sim\bigl(x^*,w(x)\bigr),\qquad
+\bigl(x^*,w(x')\bigr)\sim(x',y^*)
+\]
+施用矩形条件~\ref{cond:thomsen}（取三个 $X_1$ 层 $x,x^*,x'$，
+三个 $X_2$ 层 $w(x),y^*,w(x')$：前提恰为
+$(x,y^*)\sim(x^*,w(x))$ 与 $(x^*,w(x'))\sim(x',y^*)$），得结论
+\begin{equation}\label{eq:derived}
+\bigl(x,w(x')\bigr)\ \sim\ \bigl(x',w(x)\bigr).
+\end{equation}
+
+\textbf{第 3 步：可加分解。}
+考察映射 $\Phi(x,y)\coloneqq u_1(x)+u_2(y)$。由式~\eqref{eq:calib}，
+$\Phi(x,y)=u_2(w(x))+u_2(y)-u_2(y^*)$。
+由式~\eqref{eq:derived}，$(x,y)\sim(x',y')$ 当且仅当沿导出关系逐层平移后
+两点的 $X_2$ 刻度之和相等：
+\[
+(x,y)\sim(x',y')
+\ \Longleftrightarrow\
+u_2\bigl(w(x)\bigr)+u_2(y)\ =\ u_2\bigl(w(x')\bigr)+u_2(y'),
+\]
+理由：比较 $(x,y)$ 与 $(x',y')$ 时，先用导出关系~\eqref{eq:derived}
+把 $(x',y')$ 换为与之无差异的 $\bigl(x,w(x')\bigr)$ 型点，
+使两比较点落在同一 $X_1$ 层 $x$ 上；同层比较只由第二坐标决定
+（坐标独立性），归结为 $u_2$ 的比较；
+而导出关系本身（再用一次矩形条件传递到任意 $y$ 层）表明
+该比较恰由 $u_2(w(x))+u_2(y)$ 与 $u_2(w(x'))+u_2(y')$ 的大小决定。
+代回式~\eqref{eq:calib} 即
+\[
+(x,y)\succeq(x',y')\ \Longleftrightarrow\ u_1(x)+u_2(y)\ \ge\ u_1(x')+u_2(y'),
+\]
+严格偏好对应严格不等号。连续性由 $U$ 连续与构造继承。
+
+\textbf{第 4 步：唯一性。}
+设 $\tilde u_1+\tilde u_2$ 是另一可加表示。
+$\tilde u_1(\cdot)+\tilde u_2(y^*)$ 与 $u_1(\cdot)+u_2(y^*)$ 都表示 $\succeq_1$
+且共用与 $X_2$ 的兑换率~\eqref{eq:calib}，故存在 $a>0,b_1$ 使 $\tilde u_1=a u_1+b_1$；
+同理 $\tilde u_2=a' u_2+b_2$。两斜率必须相等：取 $x\succ_1 x'$ 与 $y'\succ_2 y$ 使
+$u_1(x)+u_2(y)=u_1(x')+u_2(y')$（无差异对，存在性由可解性与连续性），
+若 $a\ne a'$ 则 $\tilde u$ 在该对上严格不等，破坏无差异，矛盾。
+\end{proof}
+
+\subsection{推广：三因子以上矩形条件自动成立 \texorpdfstring{$\star$}{*}}
+
+\begin{proposition}\label{prop:3factor}
+设 $X=X_1\times X_2\times X_3$，$\succeq$ 为弱序，三个坐标均本质且满足
+坐标独立性（任意两坐标固定时对第三坐标的比较不受影响）。
+则矩形条件自动成立，从而（在可解性与连续性下）存在可加表示
+$u(x_1,x_2,x_3)=u_1(x_1)+u_2(x_2)+u_3(x_3)$。
+\end{proposition}
+
+\begin{proof}[证明思路]
+矩形条件的前提为 $(x_1,y_2)\sim(x_2,y_1)$ 与 $(x_2,y_3)\sim(x_3,y_2)$
+（固定第三坐标为 $z_0$ 写成完整三元组）。
+利用第三坐标的本质性取 $z\succ_3 z_0$，构造辅助点把两条无差异
+“平移”到不同的第三坐标层，再用坐标独立性逐层搬回同一层，
+传递性完成闭合。第三坐标提供了两因子情形缺失的\textbf{自由度}：
+等值关系的“搬运”可以绕道第三维而不触碰矩形本身，
+这正是 $n\ge3$ 时独立性蕴含矩形条件的机制。
+\end{proof}
+
+\subsection{坐标独立性的另一表述：逐行表示与递增包络}
+
+坐标独立性还有一个与 §3.5 翻译词典直接衔接的等价表述。
+
+\begin{proposition}[逐行表示定理]\label{prop:rowwise}
+设 $\succeq$ 为 $X_1\times X_2$ 上的弱序，满足坐标独立性，
+且 $X_1$ 上的诱导偏好可由 $v:X_1\to\R$ 表示、$v$ 的值域为区间。
+则存在 $U:\R\times X_2\to\R$ 使
+\[
+u(x,y)=U(v(x),y)
+\]
+表示 $\succeq$，且 $U(\cdot,y)$ 对每个 $y$ \textbf{严格递增}。
+\end{proposition}
+
+\begin{proof}
+\textbf{第 1 步（逐行构造）}：固定 $y$，$X_1\times\{y\}$ 上的偏好由坐标独立性等同于
+$\succeq_1$，故 $u(x,y)\coloneqq U(v(x),y)$ 形式可行——
+只要定义 $U(t,y)$ 为“$X_1\times\{y\}$ 行上、$v$ 值为 $t$ 的点的效用层级”。
+由 1（坐标独立性：行内比较只依赖 $v$ 值）与 2（$v$ 值域为区间：每个 $t$ 都有原像），
+\[
+U(v(x),y)=u\bigl(v^{-1}(v(x)),y\bigr)=u(x,y).
+\]
+
+\textbf{第 2 步（$U(\cdot,y)$ 严格递增）}：
+任取 $y\in X_2$ 与 $x,x'\in X_1$ 使 $v(x')>v(x)$。则
+\[
+\begin{aligned}
+v(x')>v(x)
+&\Longrightarrow (x',y_0)\succ(x,y_0) && (\text{$v$ 表示 }\succeq_1)\\
+&\Longrightarrow (x',y)\succ(x,y) && (\text{坐标独立性})\\
+&\Longrightarrow u(x',y)>u(x,y) && (\text{$u$ 表示 }\succeq)\\
+&\Longrightarrow U(v(x'),y)>U(v(x),y) && (\text{第 1 步}).
+\end{aligned}
+\]
+故 $U(\cdot,y)$ 对每个 $y$ 严格递增。
+\end{proof}
+
+\begin{remark}
+命题~\ref{prop:rowwise} 的序内容：\textbf{第一坐标的“价值”可以用一个统一刻度 $v$ 度量，
+第二坐标只决定这个刻度如何被“翻译”进总效用}（$U(\cdot,y)$ 是逐 $y$ 的翻译器）。
+可分偏好正是“边际估值不串扰”的偏好：
+效用 $u(x,y)=x+\sqrt{y}$ 中，$x$ 的边际效用恒为 $1$，与 $y$ 的水平无关；
+反例 $u(x,y)=xy$ 中，$x$ 的边际效用为 $y$——坐标间互相“赋能”，坐标独立性失效：
+$(2,1)\succ(1,1)$ 而比较 $(2,0)$ 与 $(1,0)$ 时二者无差异。
+\end{remark}

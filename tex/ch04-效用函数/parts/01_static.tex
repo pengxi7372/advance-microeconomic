@@ -1,0 +1,365 @@
+% ============================================================
+\section{静态确定性效用函数：形式库与推导}
+% ============================================================
+
+设消费束 $x=(x_1,x_2)\in\R^2_+$（推广到 $n$ 商品处另注），价格 $p=(p_1,p_2)$，收入 $m$。
+每种函数按统一格式处理：\textbf{形式 → 关键性质（含推导）→ 图形 → 适用情形}。
+
+\subsection{总览：一条“替代弹性”谱系}
+
+多数静态函数可以排在替代弹性 $\sigma$ 的一条谱系上：
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+  \draw[axisline] (0,0) -- (12.8,0) node[below right, axislabel] {替代弹性 $\sigma$};
+  \foreach \x/\lab in {1/{0}, 5.4/{1}, 11.8/{$\infty$}}{
+    \draw[AxisBlue] (\x,0.1) -- (\x,-0.1) node[below] {\lab};
+  }
+  \node[nodeblue, label={above=4pt, align=center:{完全互补\\ （固定比例）}}] at (1,0) {};
+  \node[nodeblue, label={above=4pt, align=center:{CES\\ $0<\sigma<1$}}] at (3.2,0) {};
+  \node[nodeblue, label={above=4pt, align=center:{乘积型\\ （对数可加）}}] at (5.4,0) {};
+  \node[nodeblue, label={above=4pt, align=center:{CES\\ $\sigma>1$}}] at (8.4,0) {};
+  \node[nodeblue, label={above=4pt, align=center:{完全替代\\ （线性）}}] at (11.8,0) {};
+  \node[align=center] at (6.4,-1.3) {拟线性、基本需求型（平移乘积型）不在此轴上：它们变动的是\textbf{收入效应}而非替代弹性};
+\end{tikzpicture}
+\end{center}
+\figexplan{横轴为替代弹性 $\sigma$。自左至右：$\sigma=0$ 为完全互补（固定比例），$0<\sigma<1$ 为互补性较强的 CES，$\sigma=1$ 为乘积型（对数可加），$\sigma>1$ 为替代性较强的 CES，$\sigma=\infty$ 为完全替代（线性）。图下方注明：拟线性与基本需求型（平移乘积型）不在这条轴上——它们变动的是收入效应而非替代弹性。}
+
+\subsection{完全替代（线性效用）}
+
+\notehead{形式}
+$u(x_1,x_2)=ax_1+bx_2$（$a,b>0$）。
+
+\notehead{性质与推导}
+无差异曲线是直线 $x_2=u/b-(a/b)x_1$，边际替代率恒为
+\[
+\mathrm{MRS}=\frac{\partial u/\partial x_1}{\partial u/\partial x_2}=\frac{a}{b}.
+\]
+替代弹性 $\sigma=\infty$：价格比稍有偏离，需求就完全倒向一种商品。
+效用最大化 $\max ax_1+bx_2\ \st p_1x_1+p_2x_2=m$：
+比较“每单位收入的边际效用” $a/p_1$ 与 $b/p_2$，
+\[
+x_1^*=
+\begin{cases}
+m/p_1, & a/p_1>b/p_2,\\[2pt]
+[0,\,m/p_1]\ \text{任意}, & a/p_1=b/p_2,\\[2pt]
+0, & a/p_1<b/p_2,
+\end{cases}
+\qquad
+v(p,m)=m\cdot\max\Bigl\{\frac{a}{p_1},\frac{b}{p_2}\Bigr\}.
+\]
+支出函数 $e(p,u)=u\cdot\min\{p_1/a,\ p_2/b\}$。
+
+\begin{center}
+\begin{tikzpicture}[scale=0.9]
+  \draw[axisline] (0,0) -- (5.4,0) node[below left, axislabel] {$x_1$};
+  \draw[axisline] (0,0) -- (0,4.4) node[below left, axislabel] {$x_2$};
+  % 无差异曲线：平行直线族，斜率 -a/b = -0.9（比预算线陡）
+  \draw[thick, MidBlue] (0.0,1.8) -- (2.0,0.0);
+  \draw[thick, MidBlue] (0.0,3.0) -- (3.33,0.0);
+  \draw[thick, MidBlue] (0.0,4.5) -- (5.0,0.0);
+  % 预算线：斜率 -p1/p2 = -0.5 更平，与最高可达无差异曲线交于 x1 最大的端点
+  \draw[thick, dashed] (0.0,2.5) -- (5.0,0.0);
+  \fill (5.0,0.0) circle (2pt) node[below right=2pt] {\small 角点解};
+  \node[align=center,text width=5.4cm,font=\scriptsize] at (2.5,-1.35) {无差异曲线为平行直线族（斜率 $-a/b=-0.9$），预算线（虚线）更平（$-p_1/p_2=-0.5$）。因 $a/b>p_1/p_2$，商品 1 的边际价值相对更高，最优解不出现在切点，而落在预算线的端点 $(5,0)$ 上：全部收入购买商品 1。};
+\end{tikzpicture}
+\end{center}
+\figexplan{无差异曲线是一族平行直线，代表边际替代率恒定；预算线（虚线）斜率与之不同，因此最优解不是切点而落在预算线的端点（角点解，黑点）。这正是完全替代偏好的标志：不存在内点切解，需求对相对价格极度敏感。}
+
+\notehead{适用情形}
+近似同质商品（两个品牌的同规格产品、不同币种的现金）；
+也是\textbf{跨期消费}中“今天消费 vs 明天消费”极简模型的偏好形式。
+不适用：任何需要平滑替代、内点解的分析。
+
+\subsection{完全互补（固定比例效用）}
+
+\notehead{形式}
+$u(x_1,x_2)=\min\{ax_1,bx_2\}$（$a,b>0$）。
+
+\notehead{性质与推导}
+无差异曲线为 L 形，拐点在射线 $ax_1=bx_2$ 上；$\sigma=0$。
+最优必在拐点（拐点之外多买的商品不增效用却耗预算）：
+\[
+ax_1=bx_2\ \Longrightarrow\ x_2=\frac{a}{b}x_1;\qquad
+p_1x_1+p_2\frac{a}{b}x_1=m
+\]
+\[
+\boxed{\ x_1^*=\frac{mb}{bp_1+ap_2},\qquad x_2^*=\frac{ma}{bp_1+ap_2}\ }
+\]
+间接效用 $v(p,m)=\dfrac{mab}{bp_1+ap_2}$；支出函数 $e(p,u)=\dfrac{u(bp_1+ap_2)}{ab}$。
+需求只依赖“组合价格” $(bp_1+ap_2)/(ab)$：单一商品涨价与组合整体涨价效果相同。
+
+\begin{center}
+\begin{tikzpicture}[scale=0.9]
+  \draw[axisline] (0,0) -- (5.4,0) node[below left, axislabel] {$x_1$};
+  \draw[axisline] (0,0) -- (0,4.4) node[below left, axislabel] {$x_2$};
+  \draw[dashed, MidBlue] (0,0) -- (2.3,4.6) node[right] {$ax_1=bx_2$};
+  \draw[thick, MidBlue] (0,3.0) -- (1.5,3.0) -- (1.5,0);
+  \draw[thick, MidBlue] (0,2.0) -- (1.0,2.0) -- (1.0,0);
+  \draw[thick, MidBlue] (0,4.0) -- (2.0,4.0) -- (2.0,0);
+  \draw[thick, dashed, MidBlue] (0.3,3.9) -- (4.7,0.8);
+  \node[nodeblue] at (1.5,3.0) {};
+  \node[align=left] at (3.7,2.0) {L 形无差异曲线\\ 最优在拐点（黑点）\\ 无替代余地};
+\end{tikzpicture}
+\end{center}
+\figexplan{无差异曲线为 L 形（直角），其拐点全部落在过原点的射线 $ax_1=bx_2$ 上——该射线即固定比例的搭配轨迹。最优解位于预算线（虚线）与该射线的交点所对应的拐点（黑点）：两种商品必须按比例搭配，没有任何替代余地。}
+
+\notehead{适用情形}
+严格固定比例：左脚鞋与右脚鞋、发动机与车身、打印作业中的纸与墨；
+生产理论中的固定比例技术是其对偶。也是\textbf{悲观预期}（maximin）偏好的几何原型。
+
+\subsection{乘积型效用（Cobb--Douglas 型）}
+
+\notehead{形式}
+$u(x_1,x_2)=x_1^{\alpha}x_2^{\beta}$（$\alpha,\beta>0$）。
+
+\notehead{性质与推导}
+取严格递增变换 $\ln$，等价于对数可加形式 $\alpha\ln x_1+\beta\ln x_2$（第三章 §4.5：表示不唯一）。
+$\sigma=1$，位似，支出份额恒定。一阶条件
+\[
+\mathrm{MRS}=\frac{\alpha x_2}{\beta x_1}=\frac{p_1}{p_2}
+\ \Longrightarrow\ \beta p_1x_1=\alpha p_2x_2,
+\]
+代入预算：$\alpha(p_1x_1+p_2x_2)=\alpha m$，而 $p_2x_2=(\beta/\alpha)p_1x_1$，
+\[
+\boxed{\ x_1^*=\frac{\alpha}{\alpha+\beta}\frac{m}{p_1},\qquad x_2^*=\frac{\beta}{\alpha+\beta}\frac{m}{p_2}\ }
+\]
+\textbf{每种商品的支出份额恒为权重占比}（$\alpha/(\alpha+\beta)$），与价格、收入无关——
+这是该形式被大量使用的全部理由，也是被批评的全部理由。
+间接效用（记 $\bar\alpha=\alpha/(\alpha+\beta)$ 等）：
+$v(p,m)=\bar\alpha^{\alpha}\bar\beta^{\beta}\,m^{\alpha+\beta}p_1^{-\alpha}p_2^{-\beta}$。
+
+\begin{center}
+\begin{tikzpicture}[scale=0.9]
+  \draw[axisline] (0,0) -- (5.4,0) node[below left, axislabel] {$x_1$};
+  \draw[axisline] (0,0) -- (0,4.4) node[below left, axislabel] {$x_2$};
+  \draw[thick, MidBlue, domain=0.55:5.0, smooth, variable=\x] plot ({\x},{1.7/\x});
+  \draw[thick, MidBlue, domain=0.9:5.0, smooth, variable=\x] plot ({\x},{3.0/\x});
+  \draw[thick, MidBlue, domain=1.35:5.0, smooth, variable=\x] plot ({\x},{4.3/\x});
+  \draw[thick, dashed, MidBlue] (0.4,3.7) -- (4.9,0.9);
+  \node[nodeblue] at (2.11,1.42) {};
+  \node[align=left] at (3.8,3.4) {双曲线族\\ 份额恒定 $\Rightarrow$\\ 收入扩张路径为直线};
+  \draw[dashed, MidBlue] (0,0) -- (3.4,2.29);
+\end{tikzpicture}
+\end{center}
+\figexplan{无差异曲线为双曲线族。由于每种商品的支出份额恒定，收入扩张路径（自原点出发的虚线射线）是一条直线；另一条虚线为预算线，其与无差异曲线的切点即最优解。份额恒定也意味着恩格尔曲线为过原点的直线。}
+
+\notehead{适用情形}
+宏观基准模型（消费—闲暇、跨期对数效用 $\ln c$ 是其特例）、
+需要\textbf{闭式解}的任何教学与基准分析；
+经验上适用于支出份额近似稳定的加总品类。
+不适用：份额随收入系统变化（必需品/奢侈品）的情形——那要 §\ref{subsec:sg} 或非位似形式。
+
+\subsection{常替代弹性效用（CES）}
+
+\notehead{形式}
+$u(x_1,x_2)=\bigl(\alpha x_1^{\rho}+\beta x_2^{\rho}\bigr)^{1/\rho}$（$\rho\le1,\ \rho\ne0$）。
+
+\notehead{性质与推导}
+一次齐次（位似）。边际替代率
+\[
+\mathrm{MRS}=\frac{\alpha x_1^{\rho-1}}{\beta x_2^{\rho-1}}=\frac{\alpha}{\beta}\Bigl(\frac{x_1}{x_2}\Bigr)^{\rho-1},
+\qquad
+\sigma=\frac{\mathrm{d}\ln(x_2/x_1)}{\mathrm{d}\ln\mathrm{MRS}}=\frac{1}{1-\rho}.
+\]
+切线条件 $\mathrm{MRS}=p_1/p_2$ 给出
+\[
+\frac{x_1}{x_2}=\Bigl(\frac{\alpha}{\beta}\frac{p_2}{p_1}\Bigr)^{\sigma},
+\]
+代回预算约束，得需求与价格指数：
+\[
+\boxed{\ x_i^*=\frac{\alpha_i^{\sigma}p_i^{-\sigma}}{\alpha^{\sigma}p_1^{1-\sigma}+\beta^{\sigma}p_2^{1-\sigma}}\,m,
+\qquad
+P\equiv\bigl(\alpha^{\sigma}p_1^{1-\sigma}+\beta^{\sigma}p_2^{1-\sigma}\bigr)^{\frac{1}{1-\sigma}},
+\qquad v(p,m)=\frac{m}{P}\ }
+\]
+（$\alpha_1=\alpha,\alpha_2=\beta$；检验 $\sigma=1$：$x_i^*=\alpha_i m/p_i$，回到乘积型。）
+
+\textbf{三个极限}（谱系图的严格内容）：
+\begin{itemize}
+  \item $\rho\to1$（$\sigma\to\infty$）：$u\to\alpha x_1+\beta x_2$，完全替代；
+  \item $\rho\to0$（$\sigma\to1$）：对 $\ln u=\frac{1}{\rho}\ln(\alpha x_1^{\rho}+\beta x_2^{\rho})$
+        用洛必达，$\lim_{\rho\to0}\ln u=\frac{\alpha\ln x_1+\beta\ln x_2}{\alpha+\beta}$，乘积型；
+  \item $\rho\to-\infty$（$\sigma\to0$）：括号内被较小的 $x_i$ 主导，$u\to\min$ 型，完全互补。
+\end{itemize}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.9]
+  \draw[axisline] (0,0) -- (5.6,0) node[below left, axislabel] {$x_1$};
+  \draw[axisline] (0,0) -- (0,4.4) node[below left, axislabel] {$x_2$};
+  % sigma large (near linear)
+  \draw[thick, MidBlue] (0.7,3.5) -- (4.9,0.75);
+  % CD
+  \draw[thick, MidBlue, domain=0.75:5.0, smooth, variable=\x] plot ({\x},{2.6/\x});
+  % low sigma (near L): smooth curve close to L
+  \draw[thick, MidBlue] (1.05,3.8) .. controls (1.1,1.5) and (1.45,1.15) .. (4.6,0.85);
+  \node[align=left] at (4.3,3.7) {曲率 $=\sigma$ 的反面：\\ 近直线（$\sigma$ 大）\\ 双曲（$\sigma=1$）\\ 近 L 形（$\sigma$ 小）};
+\end{tikzpicture}
+\end{center}
+\figexplan{三条曲线显示 CES 族随替代弹性 $\sigma$ 变化的形态：$\sigma$ 大时接近直线（趋向完全替代），$\sigma=1$ 时为双曲线（乘积型），$\sigma$ 小时逼近 L 形（趋向完全互补）。曲率正是替代弹性的反面：越弯曲，两商品越难相互替代。}
+
+\notehead{适用情形}
+需要\textbf{参数化替代弹性}的一切场合：国际贸易（国家间产品替代）、
+宏观加总（资本—劳动）、垄断竞争（品种间替代）、能源模型。
+其垄断竞争特例 $\sigma>1$ 且品种数内生，是贸易与空间经济学的标准件。
+
+\subsection{拟线性效用}
+
+\notehead{形式}
+$u(x_1,x_2)=v(x_1)+x_2$，$x_2$ 为计价物。
+
+\notehead{性质与推导}
+第三章 §4.7 已给出偏好侧刻画（无财富效应）。需求侧：
+$x_2$ 为计价物（$p_2=1$），内点一阶条件
+\[
+v'(x_1^*)=p_1\ \Longrightarrow\ x_1^*=(v')^{-1}(p_1),
+\]
+\textbf{与收入 $m$ 无关}（直到 $m$ 不足以购买 $(v')^{-1}(p_1)$ 时出现角点）。
+例 $v(x_1)=\sqrt{x_1}$：$\frac{1}{2\sqrt{x_1}}=p_1\Rightarrow x_1^*=\frac{1}{4p_1^2}$，
+需求弹性恒为 $-2$。收入扩张路径为竖直线；消费者剩余
+$\int_{p_1}^{\infty}x_1^*(q)\,\mathrm{d}q$ 是福利变化的\textbf{精确}度量（无收入效应扭曲）。
+
+\begin{center}
+\begin{tikzpicture}[scale=0.9]
+  \draw[axisline] (0,0) -- (5.4,0) node[below left, axislabel] {$x_1$};
+  \draw[axisline] (0,0) -- (0,4.4) node[below left, axislabel] {$x_2$（计价物）};
+  \draw[thick, MidBlue, domain=0.02:5.0, smooth, variable=\x] plot ({\x},{3.5-sqrt(\x)});
+  \draw[thick, MidBlue, domain=0.02:5.0, smooth, variable=\x] plot ({\x},{2.6-sqrt(\x)});
+  \draw[thick, MidBlue, domain=0.02:5.0, smooth, variable=\x] plot ({\x},{1.7-sqrt(\x)});
+  \draw[dashed, thick] (2.1,0) -- (2.1,4.2) node[above] {收入扩张路径};
+  \node[align=left] at (4.15,3.6) {无差异曲线纵向平移\\ 最优 $x_1$ 不随收入变};
+\end{tikzpicture}
+\end{center}
+\figexplan{无差异曲线互为纵向平移，即在同一 $x_1$ 处斜率恒为 $v'(x_1)$。收入扩张路径是一条竖直线：一阶条件 $v'(x_1)=p_1$ 不含收入，故最优 $x_1^*$ 与收入无关，收入变化全部由计价物吸收。这也是消费者剩余成为福利变化精确度量的原因。}
+
+\notehead{适用情形}
+部分均衡分析（单个市场 + 其余一切合成计价物）、拍卖与机制设计、
+产业组织、公共经济学的福利计算。
+不适用：所研究商品支出占收入比重大（住房、食品之于低收入群体）——
+此时收入效应是一阶的，拟线性假设会抹掉它。
+
+\subsection{基本需求型（Stone--Geary / 线性支出系统）}\label{subsec:sg}
+
+\notehead{形式与推导}
+\[
+u(x_1,x_2)=(x_1-\gamma_1)^{\alpha}(x_2-\gamma_2)^{\beta},\qquad x_i>\gamma_i\ge0.
+\]
+$\gamma_i$ 为\textbf{基本需求}（生存/必需量）：先购买 $\gamma_i$，再对
+\textbf{剩余收入}（supernumerary income）$\tilde m=m-p_1\gamma_1-p_2\gamma_2$
+按乘积型分配。令 $z_i=x_i-\gamma_i$，问题化为 $\max z_1^{\alpha}z_2^{\beta}\ \st p_1z_1+p_2z_2=\tilde m$，
+由 §4.1.4（乘积型结果）：
+\[
+\boxed{\ x_i^*=\gamma_i+\frac{\alpha_i}{\alpha+\beta}\,\frac{m-p_1\gamma_1-p_2\gamma_2}{p_i}\ }
+\]
+需求对 $(p,m)$ \textbf{线性}（线性支出系统，LES），
+恩格尔曲线是直线但\textbf{不过原点}——必需品份额随收入递减、奢侈品份额递增，
+恰好补上乘积型“份额恒定”的缺口。
+
+\begin{center}
+\begin{tikzpicture}[scale=0.9]
+  \draw[axisline] (0,0) -- (5.6,0) node[below left, axislabel] {$x_1$};
+  \draw[axisline] (0,0) -- (0,4.4) node[below left, axislabel] {$x_2$};
+  \draw[dashed, MidBlue] (1.3,0) -- (1.3,4.2); \draw[dashed, MidBlue] (0,1.0) -- (5.2,1.0);
+  \node[below] at (1.3,0) {$\gamma_1$}; \node[left] at (0,1.0) {$\gamma_2$};
+  \draw[thick, MidBlue, domain=1.75:5.2, smooth, variable=\x] plot ({\x},{1.0+1.5/(\x-1.3)});
+  \draw[thick, MidBlue, domain=2.05:5.2, smooth, variable=\x] plot ({\x},{1.0+2.6/(\x-1.3)});
+  \node[nodeblue, label={above right:{渐近原点 $(\gamma_1,\gamma_2)$}}] at (1.3,1.0) {};
+  \node[align=left] at (4.35,3.4) {无差异曲线以\\ $(\gamma_1,\gamma_2)$ 为\\ “新原点”};
+\end{tikzpicture}
+\end{center}
+\figexplan{两条虚线标出基本需求量 $(\gamma_1,\gamma_2)$，它构成无差异曲线族的“新原点”：所有曲线都以该点为渐近中心向外弯曲。因此收入扩张路径是直线但不过原点，恩格尔曲线线性而截距非零——必需品份额随收入递减、奢侈品份额递增，补上了乘积型份额恒定的缺口。}
+
+\notehead{适用情形}
+发展经济学（食品必需量）、需求系统估计（LES 及其推广几乎理想需求系统）、
+跨期模型中的“习惯存量” $\gamma$（消费习惯如同基本需求，§\ref{subsec:habit}）。
+
+\subsection{非凸偏好（平方和效用）}
+
+\notehead{形式}
+$u(x_1,x_2)=x_1^{2}+x_2^{2}$。
+
+\notehead{性质}
+无差异曲线是以原点为圆心的四分之一圆弧，上轮廓集\textbf{非凸}
+（圆周外的区域不含其边界点的均值）：
+$(1,0)$ 与 $(0,1)$ 效用均为 $1$，但均值 $(0.5,0.5)$ 的效用为 $0.5<1$——
+\textbf{平均消费劣于极端消费}。最优解恒为角点：
+预算线上效用沿 $x_1^2+(m-p_1x_1)^2/p_2^2$ 是 $x_1$ 的凸函数，最大值在端点。
+$$x^*=\arg\max\bigl\{(m/p_1)^2,\ (m/p_2)^2\bigr\}\ \text{二选一}.$$
+
+\begin{center}
+\begin{tikzpicture}[scale=0.9]
+  \draw[axisline] (0,0) -- (5.2,0) node[below left, axislabel] {$x_1$};
+  \draw[axisline] (0,0) -- (0,4.4) node[below left, axislabel] {$x_2$};
+  \draw[thick, MidBlue] (3.6,0) arc (0:90:3.6);
+  \draw[thick, MidBlue] (2.4,0) arc (0:90:2.4);
+  \draw[thick, dashed, MidBlue] (4.4,0) -- (0,2.9);
+  \node[nodeblue, label={above right:{角点最优}}] at (4.4,0) {};
+  \node[align=left] at (3.6,3.4) {圆弧族向外弯\\ 均值点劣于端点\\ $\Rightarrow$ 专业化};
+\end{tikzpicture}
+\end{center}
+\figexplan{无差异曲线是向外弯的圆弧族，代表非凸偏好：上轮廓集是圆弧以外的区域，因此平均消费束劣于两个极端端点，最优恒为角点解（黑点）。这一形态刻画专业化与非此即彼的选择。}
+
+\notehead{适用情形}
+\textbf{专业化}与\textbf{非此即彼}的选择：职业选择（全时从商或从政）、
+成瘾品、网络效应下的标准之争。是凸偏好框架的基准反例。
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[font=\scriptsize]
+  \draw[axisline] (0,0) -- (4.6,0) node[below right] {$x_1$};
+  \draw[axisline] (0,0) -- (0,3.6) node[above left] {$x_2$};
+  \draw[very thick] (0,2.0) -- (1.4,2.0) -- (1.4,3.0) -- (2.8,3.0) -- (2.8,4.0) -- (4.4,4.0);
+  \node[font=\scriptsize] at (3.5,1.35) {(a) 完全可加 $u=u_1(x)+u_2(y)$：阶梯形};
+  \begin{scope}[xshift=6.4cm]
+    \draw[axisline] (0,0) -- (4.6,0) node[below right] {$x_1$};
+    \draw[axisline] (0,0) -- (0,3.6) node[above left] {$x_2$};
+    \draw[very thick,domain=0.5:4.3,smooth,variable=\t] plot ({\t},{3.4/\t});
+    \draw[very thick,domain=0.9:4.3,smooth,variable=\t] plot ({\t},{5.6/\t});
+    \node[font=\scriptsize] at (3.4,1.05) {(b) 不可加（Cobb--Douglas）：内弯双曲线};
+  \end{scope}
+  \node[align=center,font=\scriptsize] at (3.2,-1.15) {(a) 的无差异曲线是轴对齐的阶梯：两个坐标可分别“换算”，边际替代率在阶梯上无定义；\\ (b) 的无差异曲线光滑内弯， MRS 随 $x_2$ 递减。};
+\end{tikzpicture}
+\caption{可加与不可加：无差异曲线的形状差异}
+\end{figure}
+\figexplan{左面板是完全可加效用 $u=u_1(x_1)+u_2(x_2)$：沿无差异曲线，$x_1$ 增加多少可以按固定“汇率”换回 $x_2$，故曲线呈轴对齐的阶梯形，直角处边际替代率无定义。右面板是不可加的乘积型效用：无差异曲线是光滑内弯的双曲线，MRS 随 $x_2$ 递减。正是这一形状差异，使“坐标可分离”成为可检验的行为含义。}
+
+\subsection{加法可分效用}
+
+\notehead{形式}
+$u(x)=\sum_{i=1}^{n}u_i(x_i)$。
+
+\notehead{性质}
+第三章 §4.6 已给出偏好侧充要条件（坐标独立性 + 矩形条件）。
+需求侧含义：交叉偏导 $\partial^2u/\partial x_i\partial x_j=0$，
+一种商品的边际效用不依赖其他商品消费量；
+在预算约束下，一阶条件 $u_i'(x_i)=\lambda p_i$ 使各商品需求\textbf{仅通过乘子 $\lambda$ 联动}
+（收入效应渠道），无直接交叉替代。
+乘积型的对数形式 $\sum\alpha_i\ln x_i$、CES 的单调变换、拟线性都是其特例。
+
+\notehead{适用情形}
+跨期效用 $\sum_t\delta^t u(c_t)$ 的静态影子；多商品需求系统；
+需要“边际效用互不干扰”结构来识别参数的经验模型。
+
+\subsection{柔性函数形式（需求估计用）}\label{subsec:flexible}
+
+\begin{center}
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{llll}
+\toprule
+名称 & 形式 & 性质 & 适用 \\
+\midrule
+超越对数 & $\ln u=\alpha_0+\sum_i\alpha_i\ln x_i+\frac12\sum_{ij}\beta_{ij}\ln x_i\ln x_j$ & 二阶近似、弹性可变 & 需求系统 \\
+广义固定比例 & $u=\sum_{ij}b_{ij}\sqrt{x_ix_j}$（$b_{ij}=b_{ji}$） & 一次齐次、柔性 & 成本对偶 \\
+极式 & 间接效用 $F(p)\cdot v(x)+G_i(p)$ 型 & 恩格尔曲线线性 & 可加总 \\
+分支树型 & 嵌套 CES（分支内 $\rho_k$、分支间 $\sigma_k$） & 分组替代、层级 & 多品类需求 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\notehead{要点}
+柔性形式不追求“有经济学名字的偏好”，而是追求\textbf{对任意弹性结构的二阶近似能力}：
+参数多到足以让弹性随点变化。代价是参数多、需要大数据、
+必须事后检验正则性（拟凹、单调）是否在样本域内成立。
+分支树型是“CES 的 CES”：例如先在外层选择食品/服装/服务，
+再在外层之下做品类内替代——正是离散选择中嵌套结构（§\ref{subsec:rum}）的连续对偶。

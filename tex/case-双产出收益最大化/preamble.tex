@@ -1,0 +1,9 @@
+% 案例统一前言（与前三讲书稿共用版式）
+\newcommand{\lectureno}{案例}
+\newcommand{\lectureshort}{双产出收益最大化}
+\newcommand{\booktitle}{微观经济学理论：生产者选择与对偶}
+\input{../course_preamble}
+\setcounter{chapter}{0}
+% 缺字回退：主字体缺字符时回退到 Songti SC
+\directlua{luaotfload.add_fallback("wbfallback", {"name:Songti SC:mode=node;"})}
+\setmainfont{TeX Gyre Termes}[Ligatures=TeX,RawFeature={fallback=wbfallback}]

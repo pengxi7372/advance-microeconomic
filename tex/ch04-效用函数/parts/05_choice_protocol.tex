@@ -1,0 +1,166 @@
+% ============================================================
+\section{做研究时怎样选效用函数：十步流程}
+% ============================================================
+
+选错效用函数的后果有两类：\textbf{解不出}（形式太复杂）与
+\textbf{解出来但结论是假的}（形式排除了真机制）。
+下面的流程把“选函数”变成一组可执行的决定。每一步都给出
+\textbf{操作}与\textbf{检查点}。
+
+\subsection{第 1 步：界定问题的决策结构}
+
+\notehead{操作}
+回答三个是非题：(a) 选择是\textbf{一次性的还是序列的}（静态/动态）？
+(b) 结果\textbf{确定还是不确定}（风险/不确定性）？
+(c) 效用是否依赖\textbf{他人的选择或分配}（社会偏好/攀比）？
+三个答案把候选集切到 §4.1--§4.5 的某一格。
+
+\notehead{检查点}
+延迟退休研究：序列（生命周期）+ 部分不确定（寿命、收入冲击）+ 含代际分配
+（子女、父母）——落在“动态 + 风险 + 家庭内社会偏好”格，
+直接排除静态单一商品形式。
+
+\subsection{第 2 步：写清选择变量与状态变量}
+
+\notehead{操作}
+列两栏：个体\textbf{选择什么}（消费、储蓄、劳动、生育、退休时点），
+\textbf{什么被外生给定或随状态演化}（工资、年龄、健康、政策参数、习惯存量）。
+效用函数的自变量 $=$ 所有进入主观评价的变量，不能漏，也不必多。
+
+\notehead{检查点}
+漏掉关键自变量是高频错误：研究生育却不把子女数量/质量写入效用，
+等于假设生育决策与偏好无关；研究退休却不写入闲暇，等于假设退休无收益。
+
+\subsection{第 3 步：列出必须具备的偏好性质清单}
+
+\notehead{操作}
+对照第三章 §4.5 的翻译词典，写下本研究\textbf{不能排除}的性质：
+\begin{center}
+\small
+\begin{tabular}{ll}
+\toprule
+研究情境 & 必须具备的性质（对应函数特征） \\
+\midrule
+需求份额随收入变化（必需品/奢侈品） & 非位似（基本需求型、非位似 CES） \\
+单市场局部分析、要精确福利度量 & 无财富效应（拟线性） \\
+宏观加总、要平衡增长路径 & 位似 + CRRA 跨期 \\
+跨期与风险要分离 & 递归形式（EIS 与 RRA 解绑） \\
+政策实验含“拖延/自控” & 动态不一致（$\beta$-$\delta$） \\
+分配议题 & 差异厌恶项或攀比项 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\notehead{检查点}
+每条性质都应能回答：“如果形式不满足这条，我的核心机制会不会消失？”
+会消失才写入清单——清单越短，形式越简单。
+
+\subsection{第 4 步：可处理性分级}
+
+\notehead{操作}
+按计算资源选精度：
+\begin{center}
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{lll}
+\toprule
+级别 & 形式 & 代价 \\
+\midrule
+闭式解 & 对数、乘积型、CES、CARA-正态 & 弹性结构僵化 \\
+解析条件 + 数值解 & CRRA、递归型、习惯形成 & 需校准与算法 \\
+完全数值 & 非位似多部门、多维异质 & 检验成本高 \\
+\bottomrule
+\end{tabular}
+\end{center}
+经验法则：\textbf{理论命题用闭式解层级，政策定量用数值层级}，
+两者用同一偏好族衔接（先对数后 CRRA）。
+
+\subsection{第 5 步：参数从哪来——校准与识别}
+
+\notehead{操作}
+给每个参数指定来源：(i) 借用文献估计值（说明出处与适用性）；
+(ii) 用矩条件校准（储蓄率、劳动份额、生育率等稳态矩）；
+(iii) 结构估计（需求系统、选择数据）。
+写下每个参数的\textbf{识别方程}：哪条数据矩决定哪个参数。
+
+\notehead{检查点}
+参数数 $>$ 独立矩数 $=$ 识别不足，必须砍参数（固定一部分）或换更简单形式。
+
+\subsection{第 6 步：写出基准模型并求显式解}
+
+\notehead{操作}
+用最简可行形式完成全流程：一阶条件 $\to$ 闭式解或数值解
+$\to$ 比较静态（每个政策参数对各选择变量的偏导，带符号判断）。
+推导中每一步保留经济解释（如“$\partial n^*/\partial x$ = 收入效应 $-$ 照料成本效应”）。
+
+\notehead{检查点}
+若比较静态的符号无法从参数符号判断（含混），
+说明机制的相对大小需要校准——这正是数值化的入口。
+
+\subsection{第 7 步：对照数据做外部验证}
+
+\notehead{操作}
+用\textbf{未用于校准}的矩检验模型：预测的弹性、份额、政策响应
+是否落在独立估计的区间内。
+
+\subsection{第 8 步：逐步复杂化}
+
+\notehead{操作}
+一次只加一个成分（习惯 $\to$ 递归 $\to$ 异质性……），
+每加一步重跑第 6 步，记录\textbf{结论的增量}。
+增量为零的成分删掉：模型复杂度必须由结论需求证明。
+
+\subsection{第 9 步：函数形式稳健性（顶刊标准）}
+
+\notehead{操作}
+按 Kang--Vasserman（§4.7.2）的精神执行三层稳健性：
+\begin{enumerate}
+  \item \textbf{参数层}：每个参数在置信区间内扰动，重算核心结论；
+  \item \textbf{函数层}：换偏好族重做（对数 $\leftrightarrow$ CRRA；
+        CES $\leftrightarrow$ 非位似 CES；指数贴现 $\leftrightarrow$ $\beta$-$\delta$）；
+  \item \textbf{形式半径}：报告“偏离基准形式多远结论反转”的临界值。
+\end{enumerate}
+
+\subsection{第 10 步：与文献的对话定位}
+
+\notehead{操作}
+明确你的形式相对文献基准的\textbf{偏离点}：
+改了哪个自变量、解绑了哪对参数、放松了哪条性质，
+以及这个偏离为何对问题是必要的（不是为复杂而复杂）。
+
+\subsection{决策树}
+
+\begin{center}
+\begin{tikzpicture}[
+  font=\footnotesize,
+  q/.style={draw=AxisBlue, rounded corners=2pt, align=center, inner sep=3pt, fill=MidBlue!10},
+  a/.style={align=center, inner sep=2pt},
+  arr/.style={-{Stealth[length=2.2mm]}, thick, color=AxisBlue},
+  node distance=0.62cm and 0.8cm
+]
+\node[q] (q1) {动态？};
+\node[q, below left=of q1, xshift=-0.9cm] (s1) {静态：\\ §4.1 谱系};
+\node[q, below right=of q1, xshift=0.9cm] (q2) {有风险？};
+\node[q, below left=of q2, xshift=-0.5cm] (d1) {纯动态：\\ 指数贴现起步};
+\node[q, below right=of q2, xshift=0.5cm] (q3) {EIS 与 RRA\\ 需解绑？};
+\node[a, below left=of q3, xshift=-0.4cm] (r1) {否：CRRA\\ 期望效用};
+\node[a, below right=of q3, xshift=0.4cm] (r2) {是：\\ 递归形式};
+\node[q, below=3.0cm of q1] (q4) {收入/财富效应\\ 是一阶的？};
+\node[a, below left=of q4, xshift=-1.2cm] (f1) {否：拟线性\\ （部分均衡）};
+\node[a, below right=of q4, xshift=1.2cm] (q5) {是：位似够吗？\\ 够：CES 族\\ 不够：非位似};
+\draw[arr] (q1) -- node[above left] {否} (s1);
+\draw[arr] (q1) -- node[above right] {是} (q2);
+\draw[arr] (q2) -- node[above left] {否} (d1);
+\draw[arr] (q2) -- node[above right] {是} (q3);
+\draw[arr] (q3) -- (r1);
+\draw[arr] (q3) -- (r2);
+\draw[arr] (q4) -- (f1);
+\draw[arr] (q4) -- (q5);
+\draw[dashed, MidBlue] (s1) -- (q4);
+\draw[dashed, MidBlue] (d1) -- (q4);
+\end{tikzpicture}
+\end{center}
+\figexplan{决策树自“是否动态”起步：否则进入静态谱系；若是则再问有无风险——无风险取纯动态（指数贴现起步），有风险则按 EIS 与 RRA 是否需解绑选择 CRRA 期望效用或递归形式。两支最终由虚线汇入“收入/财富效应是否为一阶”的判断：否则用拟线性做部分均衡，是则按是否够位似选择 CES 族或非位似形式。}
+
+\noindent 树只解决“从哪出发”；
+第 6--9 步的\textbf{求解—验证—复杂化—稳健性}循环决定“走多远”。

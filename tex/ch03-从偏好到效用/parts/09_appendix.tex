@@ -1,0 +1,72 @@
+\clearpage
+\section{拓展：表示定理的证明策略与可计算含义}
+
+\subsection{从序关系到数值编码}
+效用表示的核心并不是给每个方案随意贴一个数字，而是寻找保持序关系的映射。若 $x\succ y$，必须有 $u(x)>u(y)$；若 $x\sim y$，必须有 $u(x)=u(y)$。因此，构造过程首先处理无差异类，再对商集排序。
+
+\begin{definition}[商集与严格序]
+令 $I$ 为无差异关系，定义 $X/I$ 为无差异类的集合。若偏好完备且传递，则在适当条件下可在 $X/I$ 上定义严格序：$[x]>[y]$ 当且仅当 $x\succ y$。
+\end{definition}
+
+\begin{figure}[H]\centering
+\begin{tikzpicture}[font=\scriptsize,>=stealth]
+\node[draw,rounded corners,minimum width=2.4cm,minimum height=1cm,fill=gray!10] (x) at (0,0) {$X$：方案集合};
+\node[draw,rounded corners,minimum width=2.6cm,minimum height=1cm,fill=gray!20] (q) at (4,0) {$X/I$：无差异类};
+\node[draw,rounded corners,minimum width=2.6cm,minimum height=1cm,fill=gray!30] (r) at (8,0) {$u(X)\subseteq\mathbb R$};
+\draw[->,thick] (x)--(q) node[midway,above] {合并 $x\sim y$};
+\draw[->,thick] (q)--(r) node[midway,above] {保持严格序};
+\node[align=center] at (4,-1.5) {先处理关系结构，再进行数值编码\\数字本身没有基数含义};
+\end{tikzpicture}
+\caption{效用表示的两步构造}
+\end{figure}
+\figexplan{左侧是原始方案集合，中间把无差异方案压缩为等价类，右侧才是实数值编码。箭头说明效用表示首先是序结构的嵌入，而不是对满意度的物理测量。}
+
+\subsection{单调变换与识别边界}
+若 $u$ 表示偏好，且 $\phi$ 严格递增，则 $\phi\circ u$ 表示同一偏好。证明直接来自
+$u(x)\ge u(y)\Leftrightarrow\phi(u(x))\ge\phi(u(y))$。因此，实证研究中由选择数据通常只能识别效用的序数类，而不能识别零点、单位或曲率。
+
+\begin{proposition}[严格递增变换不改变最优集合]
+对任意非空可行集 $B$，若 $\phi$ 严格递增，则
+\[
+\arg\max_{x\in B}u(x)=\arg\max_{x\in B}\phi(u(x)).
+\]
+\end{proposition}
+\begin{proof}
+若 $x^*$ 最大化 $u$，则对任意 $x\in B$ 有 $u(x^*)\ge u(x)$，严格递增性给出 $\phi(u(x^*))\ge\phi(u(x))$。反向同理。
+\end{proof}
+
+\subsection{连续性、闭图与极限偏好}
+令 $x^n\to x$ 且 $y^n\to y$。若每期 $x^n\succeq y^n$，偏好关系的闭性要求极限仍满足 $x\succeq y$。闭性是把有限样本推向连续状态空间的桥梁，也是连续效用表示存在的重要技术条件。
+
+\begin{figure}[H]\centering
+\begin{tikzpicture}[x=1cm,y=0.75cm,font=\scriptsize]
+\draw[->] (0,0)--(7,0) node[right] {$n$};\draw[->] (0,0)--(0,4) node[above] {比较结果};
+\draw[dashed] (0,2)--(7,2) node[right] {极限边界};
+\draw[thick] (0.5,3.1)--(1.5,2.8)--(2.5,2.6)--(3.5,2.35)--(4.5,2.15)--(5.5,2.02)--(6.5,2.0);
+\node[fill=white] at (3.2,3.45) {$x^n\succeq y^n$ 对所有 $n$};
+\end{tikzpicture}
+\caption{闭性把有限比较延伸到极限}
+\end{figure}
+\figexplan{曲线表示一列比较强度逐渐靠近边界。若偏好关系闭，则所有有限期成立的弱偏好在极限点仍成立；若不闭，极限可能落在关系图之外。}
+
+\subsection{拟凹性与凸偏好的几何对应}
+效用函数拟凹当且仅当其上水平集 $\{x:u(x)\ge c\}$ 为凸集。经济含义是：若两个消费束都至少达到 $c$，它们的混合束也至少达到 $c$，体现对多样化的偏好。
+
+\begin{theorem}[拟凹性的等价表述]
+对连续函数 $u$，以下命题等价：
+\begin{enumerate}
+\item $u$ 拟凹；
+\item 对任意 $c$，上水平集 $\{x:u(x)\ge c\}$ 凸；
+\item 对任意 $x,y$ 和 $t\in[0,1]$，有 $u(tx+(1-t)y)\ge\min\{u(x),u(y)\}$。
+\end{enumerate}
+\end{theorem}
+\begin{proof}
+(1) 与 (3) 是定义的两种写法。(3) 推出 (2)：若 $u(x),u(y)\ge c$，则右侧至少为 $c$，所以混合束仍在上水平集内。(2) 推出 (3)：令 $c=\min\{u(x),u(y)\}$，凸性即得。
+\end{proof}
+
+\subsection{计算练习：离散权数构造}
+设 $X=\{a,b,c,d\}$，偏好为 $a\succ b\sim c\succ d$。令
+$u(a)=3,u(b)=u(c)=2,u(d)=0$。任何严格递增变换均给出同一排序，例如 $v=2u+5$，但 $v(a)-v(b)=2$ 并没有“偏好强度”解释。该例说明序数效用中的差值和比值不可比较。
+
+\subsection{本章小结}
+存在性定理回答“能否表示”，构造定理回答“如何表示”，性质对应回答“表示后能否保留经济结构”。三者必须分开：一个函数可能表示排序，却不保留凸性、可加性或拟线性结构；附加结构必须由附加公理或可检验限制提供。

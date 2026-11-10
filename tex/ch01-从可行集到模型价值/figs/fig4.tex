@@ -1,0 +1,40 @@
+\documentclass[border=6pt]{standalone}
+\usepackage[fontset=none]{ctex}
+\usepackage{fontspec}
+\setCJKmainfont{Songti SC}[BoldFont={Songti SC}]
+\usepackage{amsmath,amssymb}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric,calc,patterns}
+\begin{document}
+\begin{tikzpicture}[scale=0.55]
+  % 平移
+  \draw[->,thick] (0,0) -- (7.6,0) node[below right] {\small $x_1$};
+  \draw[->,thick] (0,0) -- (0,6.2) node[above left] {\small $x_2$};
+  \fill[gray!12] (0,0) -- (6.4,0) -- (0,4.8) -- cycle;
+  \draw[very thick] (6.4,0) -- (0,4.8);
+  \draw[thick,dashed] (4.2,0) -- (0,3.15);
+  \node[below] at (6.4,0) {\small $m'/p_1$};
+  \node[below] at (4.2,0) {\small $m/p_1$};
+  \node[left] at (0,4.8) {\small $m'/p_2$};
+  \node[left] at (0,3.15) {\small $m/p_2$};
+  \draw[->,thick] (1.7,2.35) -- (2.6,2.95);
+  \node at (3.4,-1.4) {\small （a）收入 $m\to m'$：预算线\emph{平移}扩大};
+  % 旋转
+  \begin{scope}[xshift=9.6cm]
+    \draw[->,thick] (0,0) -- (7.6,0) node[below right] {\small $x_1$};
+    \draw[->,thick] (0,0) -- (0,6.2) node[above left] {\small $x_2$};
+    \fill[gray!12] (0,0) -- (3.4,0) -- (0,4.8) -- cycle;
+    \draw[very thick] (6.4,0) -- (0,4.8);
+    \draw[thick,dashed] (3.4,0) -- (0,4.8);
+    \node[below] at (6.4,0) {\small $m/p_1$};
+    \node[below] at (3.4,0) {\small $m/p_1'$};
+    \node[left] at (0,4.8) {\small $m/p_2$};
+    \draw[->,thick] (4.2,1.5) arc (20:45:2.6);
+    \node at (3.4,-1.4) {\small （b）$p_1$ 上升：预算线绕截距\emph{旋转}};
+  \end{scope}
+\end{tikzpicture}
+\end{document}

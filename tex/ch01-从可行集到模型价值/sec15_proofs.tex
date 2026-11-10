@@ -1,0 +1,75 @@
+\subsection{核心结论的逐步证明与反例核对}
+
+\begin{proposition}[预算集的逐坐标界]
+若 $p\gg0$ 且 $x\in B(p,m)$，则对任意 $i$ 有 $0\le x_i\le m/p_i$。
+\end{proposition}
+\begin{proof}
+由 $x\in\R_+^L$ 得 $x_i\ge0$。另一方面，$p_jx_j\ge0$ 对每个 $j$，故
+$p_ix_i\le\sum_jp_jx_j=p\cdot x\le m$。由于 $p_i>0$，两边除以 $p_i$ 得 $x_i\le m/p_i$。这一逐坐标界同时给出预算集有界性，并说明价格严格为正是有界性不可缺少的条件。
+\end{proof}
+
+\begin{proposition}[最大值定理的应用]
+若 $B$ 非空紧，$u:B\to\R$ 连续，则 $\argmax_{x\in B}u(x)$ 非空且紧。
+\end{proposition}
+\begin{proof}
+由 Weierstrass 定理，存在 $x^*\in B$ 使 $u(x^*)\ge u(x)$ 对所有 $x\in B$，故最优集合非空。令 $M=u(x^*)$，则
+$\argmax_Bu=B\cap u^{-1}(\{M\})$。单点集 $\{M\}$ 在实数中闭，连续性使其原像闭；闭集与紧集的交仍紧，故结论成立。
+\end{proof}
+
+\begin{example}[去掉闭性后的失败]
+取 $B=(0,1)$、$u(x)=x$。函数连续且 $B$ 有界，但对每个 $x<1$ 都有 $(x+1)/2\in B$ 且 $u((x+1)/2)>u(x)$，因此不存在最大元。若改为 $B=[0,1]$，同一函数在 $x=1$ 处达到最大值。失败来自集合的边界被删除，而非来自效用函数不连续。
+\end{example}
+
+\begin{example}[去掉有界性后的失败]
+取 $B=[0,\infty)$、$u(x)=x$。集合闭但无界，且对任意候选点 $x$ 都存在 $x+1$ 使效用更高。该例说明“闭”只保证极限点不丢失，不能阻止改进序列逃向无穷远。
+\end{example}
+
+\begin{proposition}[向下闭合与财富耗尽]
+若 $x\in B(p,m)$、$0\le\lambda\le1$，则 $\lambda x\in B(p,m)$。若 $u$ 局部非饱和且 $m>0$，任何最优点都满足 $p\cdot x=m$。
+\end{proposition}
+\begin{proof}
+第一结论已由 $p\cdot(\lambda x)=\lambda p\cdot x\le\lambda m\le m$ 得出。若某最优点满足 $p\cdot x<m$，则存在 $\varepsilon>0$ 使一个足够小的正方向仍留在预算集内。局部非饱和意味着沿某个正方向可得到严格更高效用，与最优性矛盾。因此预算约束绑定。
+\end{proof}
+
+\subsection{比较静态证明的逐步展开}
+设最优束由方程 $F(x,\theta)=0$ 定义，且 $F_x$ 在基准点可逆。对恒等式求导：
+\[
+F_x(x(\theta),\theta)\frac{\partial x}{\partial\theta_k}+F_{\theta_k}(x(\theta),\theta)=0.
+\]
+于是
+\[
+\frac{\partial x}{\partial\theta_k}=-F_x^{-1}F_{\theta_k}.
+\]
+该公式的每一个符号都有明确含义：$F_x^{-1}$ 描述最优条件对状态变量的敏感度，$F_{\theta_k}$ 描述参数对最优条件的直接冲击。只有两者都定义良好，比较静态方向才有数学依据。
+
+\begin{example}[两商品 Cobb--Douglas 的逐步推导]
+令 $u=x_1^\alpha x_2^{1-\alpha}$，预算约束为 $p_1x_1+p_2x_2=m$。拉格朗日函数为
+\[
+\mathcal L=x_1^\alpha x_2^{1-\alpha}+\lambda(m-p_1x_1-p_2x_2).
+\]
+一阶条件为
+\[
+\alpha x_1^{\alpha-1}x_2^{1-\alpha}=\lambda p_1,
+\quad (1-\alpha)x_1^\alpha x_2^{-\alpha}=\lambda p_2.
+\]
+两式相除，得到
+\[
+\frac{\alpha}{1-\alpha}\frac{x_2}{x_1}=\frac{p_1}{p_2},
+\quad\text{即}\quad x_2=\frac{1-\alpha}{\alpha}\frac{p_1}{p_2}x_1.
+\]
+代回预算约束：
+\[
+p_1x_1+p_2\frac{1-\alpha}{\alpha}\frac{p_1}{p_2}x_1
+=\frac{p_1}{\alpha}x_1=m,
+\]
+所以 $x_1=\alpha m/p_1$，再代回得 $x_2=(1-\alpha)m/p_2$。这一步同时验证了一阶条件、预算耗尽和需求的齐次性。
+\end{example}
+
+\subsection{对偶关系的证明链}
+定义 $v(p,m)=\max_{p\cdot x\le m}u(x)$。若最优解唯一且可微，包络定理给出
+$v_m=\lambda$、$v_{p_i}=-\lambda x_i$。因此
+\[
+-\frac{v_{p_i}}{v_m}=x_i.
+\]
+这不是额外假设，而是把同一个最优问题分别对财富和价格求导后消去乘子。支出问题
+$e(p,\bar u)=\min\{p\cdot x:u(x)\ge\bar u\}$ 的包络式为 $e_{p_i}=h_i$，其中 $h_i$ 是补偿需求。两条恒等式必须在同一组偏好与正则条件下使用。

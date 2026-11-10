@@ -1,0 +1,23 @@
+\subsection{现有模型的政策例题：参数、可行集与福利边界}
+
+\subsection{税收与补贴的统一表示}
+令一次性税收为 $T$、从价税率为 $\tau$，预算约束写为
+$(1+\tau)p\cdot x\le w-T$。该写法把税收同时分解为相对价格效应与财富效应：$\tau$ 改变预算线斜率，$T$ 平行移动预算线。补贴则可表示为负税率或增加有效财富，取决于政策是否按数量给付。
+
+\begin{figure}[H]\centering
+\begin{tikzpicture}[x=0.9cm,y=0.8cm,font=\scriptsize]
+\draw[->] (0,0)--(6,0) node[right] {$x_1$};\draw[->] (0,0)--(0,5) node[above] {$x_2$};
+\draw[thick] (0,4.2)--(5.2,0) node[pos=.22,above left] {税前};
+\draw[dashed] (0,3.1)--(5.2,0) node[pos=.2,above left] {对 $x_2$ 征税};
+\draw[dotted] (0,4.2)--(4.1,0) node[pos=.65,below] {一次性税收};
+\node[align=center,fill=white] at (2.0,3.4) {相对价格效应};\node[align=center,fill=white] at (4.6,1.6) {财富效应};
+\end{tikzpicture}
+\caption{税收的斜率效应与平移效应}
+\end{figure}
+\figexplan{实线为税前预算线，虚线改变斜率，点线保持斜率但向内平移。图中两个政策效应可以分别识别，也可在一般模型中同时存在。}
+
+\subsection{补偿原则与效率判断}
+若政策使某消费者效用下降，可用补偿变差衡量恢复到原效用所需的收入。福利分析不能只比较选择数量，还要明确基准价格、效用水平及补偿规则。帕累托改进要求没有人变差且至少一人变好；成本收益分析则允许有人受损，但要求总补偿可行。
+
+\subsection{模型边界}
+当预算集包含公共品、配额或非线性价格时，简单的线性预算式不再充分。应把制度规则直接写入可行集，而非事后把偏离归因于“偏好变化”。这也是本章从形式化基础进入政策应用的关键边界。

@@ -1,0 +1,25 @@
+\documentclass[border=6pt]{standalone}
+\usepackage[fontset=none]{ctex}
+\usepackage{fontspec}
+\setCJKmainfont{Songti SC}[BoldFont={Songti SC}]
+\usepackage{amsmath,amssymb}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric,calc,patterns}
+\begin{document}
+\begin{tikzpicture}[scale=1.0]
+  \fill (0,0) circle (2.2pt) node[below] {\small $a$};
+  \fill (3.2,0) circle (2.2pt) node[below] {\small $b$};
+  \fill (1.6,2.6) circle (2.2pt) node[above] {\small $c$};
+  \draw[->,very thick] (0.35,0.15) -- (2.85,0.15);
+  \node at (1.6,-0.5) {\small $a\succ b$};
+  \draw[->,very thick] (3.1,0.4) -- (2.0,2.3);
+  \node at (3.05,1.6) {\small $b\succ c$};
+  \draw[->,very thick] (1.2,2.3) -- (0.15,0.42);
+  \node at (0.1,1.6) {\small $c\succ a$};
+  \node[align=center] at (1.6,-1.4) {\small 循环偏好 $a\succ b\succ c\succ a$：\\ \small 无传递性，无法被效用函数表示};
+\end{tikzpicture}
+\end{document}

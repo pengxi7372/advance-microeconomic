@@ -1,0 +1,34 @@
+\documentclass[border=6pt]{standalone}
+\usepackage[fontset=none]{ctex}
+\usepackage{fontspec}
+\setCJKmainfont{Songti SC}[BoldFont={Songti SC}]
+\usepackage{amsmath,amssymb}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric,calc,patterns}
+\begin{document}
+\begin{tikzpicture}[scale=1.0]
+  \draw[->,thick] (0,0) -- (7.6,0) node[below right] {\small $x$};
+  \draw[->,thick] (0,0) -- (0,4.4) node[above left] {\small $u(x)$};
+  % 可行区间
+  \draw[very thick] (1.0,0) -- (6.6,0);
+  \node[below] at (1.0,0) {\small $a$};
+  \node[below] at (6.6,0) {\small $b$};
+  \node[below] at (3.8,-0.35) {\small $B=[a,b]$};
+  % u 曲线
+  \draw[very thick,domain=1.0:6.6,samples=120] plot (\x,{2.6*sin(62*(\x-1.0))+0.9});
+  % 最大值
+  \draw[dashed] (0,3.5) -- (4.55,3.5);
+  \node[left] at (0,3.5) {\small $v=\max u$};
+  \fill (3.45,3.5) circle (2pt);
+  \fill (4.55,3.32) circle (2pt);
+  \draw[dashed] (3.45,3.5) -- (3.45,0);
+  \draw[dashed] (4.55,3.32) -- (4.55,0);
+  \node[below] at (3.45,0) {\small $x^{*}_1$};
+  \node[below] at (4.55,0) {\small $x^{*}_2$};
+  \node[align=left] at (6.4,3.9) {\small $\argmax u=\{x^{*}_1\}$（本图唯一）};
+\end{tikzpicture}
+\end{document}

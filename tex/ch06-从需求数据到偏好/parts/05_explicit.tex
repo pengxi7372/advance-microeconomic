@@ -1,0 +1,206 @@
+\section{显式恢复：三个可算系统与计量约束}
+% ============================================================
+% 第六讲 6.5：CD、CES、LES 的显式 Slutsky 矩阵；AIDS/QUAIDS 的约束检验
+% ============================================================
+
+\subsection{Cobb--Douglas：最简单的可积系统}
+
+取 $u(x)=\prod_{i=1}^{n}x_i^{\alpha_i}$，$\sum_i\alpha_i=1$，$\alpha_i>0$。第 5 章已给出
+\[
+ x_i(p,w)=\frac{\alpha_iw}{p_i},\qquad
+ e(p,\bar u)=\bar u\prod_{i=1}^{n}\Bigl(\frac{p_i}{\alpha_i}\Bigr)^{\alpha_i}.
+\]
+代入定义~\ref{def:slutsky}（或用 $S=D_p^2e$ 直接算）：
+
+\begin{proposition}[CD 的 Slutsky 矩阵]\label{prop:S-cd}
+对 CD 需求，
+\[
+ \boxed{\;S_{ij}(p,w)=\frac{\alpha_i\alpha_j\,w}{p_ip_j}-\delta_{ij}\frac{\alpha_iw}{p_i^{2}}\;}
+ \qquad(\delta_{ij}=1\ \text{若}\ i=j,\ \text{否则}\ 0).
+\]
+\end{proposition}
+
+\begin{proof}
+由 $x_i=\alpha_iw/p_i$：$\partial x_i/\partial p_j=-\delta_{ij}\alpha_iw/p_i^2$，$\partial x_i/\partial w=\alpha_i/p_i$。
+代入 $S_{ij}=\partial x_i/\partial p_j+x_j\partial x_i/\partial w$ 即得。
+\end{proof}
+
+这个矩阵的每条性质都可以直接读出：对称显然；对角元
+$S_{ii}=-\alpha_iw(1-\alpha_i)/p_i^2<0$（$n\ge2$）；非对角元 $\alpha_i\alpha_jw/(p_ip_j)>0$，
+故\textbf{所有商品互为总替代品}；又因 $\sum_j\alpha_j=1$，行和为
+$\alpha_iw/p_i\cdot\bigl(\sum_j\alpha_j/p_j\bigr)\cdot p_j-\alpha_iw/p_i^2\cdot p_i=0$。
+
+\begin{example}[数值验证]\label{ex:cd-num}
+取 $\alpha=(0.3,0.5,0.2)$、$p=(2,3,5)$、$w=60$，则 $x=(9,\,10,\,2.4)$，
+\[
+ S=\begin{pmatrix}
+ -3.15 & \phantom{-}1.50 & 0.36\\
+ \phantom{-}1.50 & -1.6667 & 0.40\\
+ \phantom{-}0.36 & \phantom{-}0.40 & -0.384
+ \end{pmatrix},
+\]
+对称，特征值为 $(-4.0842,\,-1.1165,\,0)$，全部非正，$\operatorname{rank}S=2=n-1$。
+数值上与命题~\ref{prop:S-cd} 的闭式解误差在 $10^{-8}$ 量级（浮点舍入）。
+\end{example}
+
+\begin{remark}[CD 为什么"太顺"以至于不可信]
+CD 的三个特征同时成立：支出份额恒定（$s_i=\alpha_i$）、所有价格弹性为 $-1$、所有财富弹性为 $1$、
+所有商品互为总替代。这四条在数据中几乎从不成立：份额随收入变化（Engel 曲线非直线）、
+必需品与奢侈品的弹性不同、部分商品互为互补。
+因此 CD 在理论上是最方便的基准，在实证中却几乎总被拒绝——它的价值在于提供一个\emph{可解的参照系}，
+而不是一个可用的描述。
+\end{remark}
+
+\subsection{CES：把替代弹性作为参数}
+
+取 $u(x)=\bigl(\sum_i\alpha_ix_i^{\rho}\bigr)^{1/\rho}$，$\rho<1$，$\rho\ne0$。
+记替代弹性 $\sigma=1/(1-\rho)>0$。需求与支出函数为
+\[
+ x_i(p,w)=\frac{w\,(\alpha_i/p_i)^{\sigma}}{\sum_j p_j(\alpha_j/p_j)^{\sigma}},
+ \qquad
+ e(p,\bar u)=\bar u\Bigl[\sum_j\alpha_j^{\sigma}p_j^{1-\sigma}\Bigr]^{1/(1-\sigma)}.
+\]
+Slutsky 矩阵没有 CD 那样简洁的闭式，但可以完全显式地算出并作数值检验。
+表~\ref{tab:ces} 给出四组 $\sigma$ 下的结果（$p=(2,3,5)$、$w=60$、$\alpha=(0.4,0.35,0.25)$）。
+
+\begin{table}[H]
+\centering
+\caption{CES 系统在不同替代弹性下的数值结果}\label{tab:ces}
+\footnotesize
+\begin{tabular}{cccccc}
+\toprule
+$\sigma$ & $x(p,w)$ & $S$ 的三个特征值 & $\operatorname{rank}S$ & 最大非对称量 & $S_{11}$\\
+\midrule
+$0.5$ & $(8.835,\,6.748,\,4.417)$ & $(-1.818,\,-0.764,\,0)$ & 2 & $1.0\times10^{-9}$ & $-1.558$\\
+$1.0$ & $(12.00,\,7.000,\,3.000)$ & $(-4.341,\,-1.225,\,0)$ & 2 & $8.9\times10^{-10}$ & $-3.600$\\
+$2.0$ & $(18.00,\,6.125,\,1.125)$ & $(-9.316,\,-1.124,\,0)$ & 2 & $8.9\times10^{-9}$ & $-7.200$\\
+$4.0$ & $(25.35,\,2.935,\,0.099)$ & $(-11.052,\,-0.225,\,0)$ & 2 & $7.5\times10^{-10}$ & $-7.859$\\
+\bottomrule
+\end{tabular}
+\end{table}
+\figexplan{四组替代弹性下的 CES 需求与 Slutsky 矩阵。所有情形下 $S$ 对称（最大非对称量在浮点误差量级）、负半定（特征值非正）、秩为 $n-1=2$，与定理~\ref{thm:slutsky-necessity} 一致。$\sigma$ 增大时 $S_{11}$ 的绝对值上升：商品间越易替代，补偿需求对自身价格越敏感。$\sigma\to\infty$ 时趋于完全替代（$S_{11}\to-\infty$ 的方向），$\sigma\to0$ 时趋于 Leontief（$S_{11}\to0$）。注意 $\sigma=1$ 一行恰为 CD，此时 $S$ 与例~\ref{ex:cd-num} 结构相同（份额不同故数值不同）。}
+
+\begin{remark}[$\sigma$ 的经济含义与它的可检验性]
+$\sigma$ 是"相对价格变动 1\% 引起相对数量变动百分之几"的度量，即 Hicks 替代弹性的常数版本。
+在 CES 中它是一个标量参数，因此"检验可积性"退化为"检验 $\sigma>0$"（$\rho<1$）——
+只要估计出的 $\sigma$ 为正，系统自动满足对称与负半定。
+这说明\textbf{函数形式的选择本身就在施加理论约束}：选 CES 等于事先承诺了可积性，
+代价是放弃了检验理论的机会。这正是 \S 6.6 转向非参数方法的动机之一。
+\end{remark}
+
+\subsection{线性支出系统：与 CD 的同构}
+
+线性支出系统（linear expenditure system, LES，Stone 1954）设定
+\begin{equation}\label{eq:les}
+ x_i(p,w)=b_i+\frac{a_i}{p_i}\Bigl(w-\sum_{k=1}^{n}p_kb_k\Bigr),\qquad
+ \sum_i a_i=1,\quad a_i,b_i>0.
+\end{equation}
+其中 $b_i$ 为"生存必需量"，$A(p,w):=w-\sum_k p_kb_k$ 称为\textbf{超numerary 支出}
+（supernumerary expenditure），即扣除必需支出后可用于"自由分配"的部分；
+$a_i$ 是这部分支出的边际份额。LES 由 Stone 从效用函数
+$u=\sum_i a_i\ln(x_i-b_i)$ 推出，是 Gorman 极化形式的最早实例（\S 6.7）。
+
+\begin{proposition}[LES 的 Slutsky 矩阵与 CD 同构]\label{prop:S-les}
+在 \eqref{eq:les} 下，
+\[
+ \boxed{\;S_{ij}(p,w)=A(p,w)\left[\frac{a_ia_j}{p_ip_j}-\delta_{ij}\frac{a_i}{p_i^{2}}\right]
+ =A(p,w)\,S^{\mathrm{CD}}_{ij}(a,\,1)\;}
+\]
+其中 $S^{\mathrm{CD}}(a,1)$ 是份额为 $a$、财富为 $1$ 的 CD 系统的 Slutsky 矩阵（命题~\ref{prop:S-cd}）。
+\end{proposition}
+
+\begin{proof}
+记 $A=w-\sum_kp_kb_k$。由 \eqref{eq:les}：
+\[
+ \frac{\partial x_i}{\partial p_j}=-\delta_{ij}\frac{a_iA}{p_i^{2}}-\frac{a_ib_j}{p_i},
+ \qquad
+ \frac{\partial x_i}{\partial w}=\frac{a_i}{p_i}.
+\]
+代入 $S_{ij}=\partial x_i/\partial p_j+x_j\,\partial x_i/\partial w$：
+\begin{align*}
+S_{ij}&=-\delta_{ij}\frac{a_iA}{p_i^{2}}-\frac{a_ib_j}{p_i}
+ +\frac{a_i}{p_i}\Bigl(b_j+\frac{a_jA}{p_j}\Bigr)\\
+&=-\delta_{ij}\frac{a_iA}{p_i^{2}}+\frac{a_ia_jA}{p_ip_j}
+=A\left[\frac{a_ia_j}{p_ip_j}-\delta_{ij}\frac{a_i}{p_i^{2}}\right].
+\end{align*}
+方括号内正是命题~\ref{prop:S-cd} 在 $\alpha=a$、$w=1$ 处的表达式。
+\end{proof}
+
+\begin{example}[数值核对]\label{ex:les-num}
+取 $a=(0.5,0.3,0.2)$、$b=(1,2,0.5)$、$p=(2,3,5)$、$w=40$。
+则 $\sum_kp_kb_k=10.5$，$A=29.5$，$x=(8.375,\,4.95,\,1.68)$，
+\[
+ S=\begin{pmatrix}
+ -1.8438 & 0.7375 & 0.2950\\
+ \phantom{-}0.7375 & -0.6883 & 0.1180\\
+ \phantom{-}0.2950 & 0.1180 & -0.1888
+ \end{pmatrix}
+ =29.5\times S^{\mathrm{CD}}(a,1).
+\]
+直接按定义作数值微分与命题~\ref{prop:S-les} 的闭式解相差 $6\times10^{-9}$，
+确认同构关系成立。
+\end{example}
+
+\begin{remark}[同构的经济含义与一个必须注意的边界]
+命题~\ref{prop:S-les} 说的是：\textbf{LES 的替代效应与 CD 完全一样，区别只在标量 $A$}。
+经济上这很自然——LES 把消费者分成两个阶段：先用 $w$ 购买必需量 $b$（"生存"），
+再把剩余 $A$ 按 CD 规则分配（"享受"）。因此价格变化的替代效应只作用于第二阶段，
+其结构与 CD 相同，幅度被 $A$ 缩放。
+
+由此立刻得到一个可检验的边界条件：$S$ 负半定当且仅当 $A\ge0$（因为 $S^{\mathrm{CD}}$ 本身负半定）。
+\textbf{若 $A<0$，即财富不足以购买必需量，LES 失去可积性}：
+此时 \eqref{eq:les} 给出的 $x$ 仍满足会计恒等式，却不可能来自任何偏好。
+实证中若样本包含贫困家庭而 $b$ 被估计得过高，就会出现 $A<0$，模型在福利评价上随之失效。
+这是"参数化越强、越容易在数据边缘崩溃"的典型例子。
+\end{remark}
+
+三个系统并排比较，便于看清各自的约束强度：
+
+\begin{center}
+\footnotesize
+\begin{tabular}{l>{\raggedright\arraybackslash}p{4.2cm}>{\raggedright\arraybackslash}p{4.5cm}>{\raggedright\arraybackslash}p{3.9cm}}
+\toprule
+系统 & \multicolumn{1}{c}{$x_i(p,w)$} & \multicolumn{1}{c}{$S$ 的结构} & \multicolumn{1}{c}{隐含的行为限制}\\
+\midrule
+CD & $\alpha_iw/p_i$ & $a_ia_jw/(p_ip_j)-\delta_{ij}a_iw/p_i^2$ & 份额恒定、弹性全为 1\\
+CES & $w(a_i/p_i)^{\sigma}/\!\sum_jp_j(a_j/p_j)^{\sigma}$ & 无简式，恒对称负半定 & 替代弹性恒为 $\sigma$\\
+LES & $b_i+(a_i/p_i)A$ & $A\cdot S^{\mathrm{CD}}(a,1)$ & 线性 Engel 曲线、分两阶段\\
+\bottomrule
+\end{tabular}
+\end{center}
+\figexplan{三个系统的对照。三者的约束强度依次为：CD 最强（份额恒定，等于把全部弹性钉死）、CES 居中（只钉死替代弹性）、LES 最弱（只要求 Engel 曲线线性）。注意三者的 $S$ 都自动对称——这不是巧合，而是因为它们都由某个具体的效用函数推出；反过来说，\textbf{任何参数化系统只要写成显式效用函数再求导，可积性就自动满足，理论检验的机会随之消失}。}
+
+\subsection{从理论约束到计量约束：AIDS 的检验}
+
+实证中最常用的不是上面三个系统，而是 Deaton--Muellbauer（1980）的几乎理想需求系统（AIDS）：
+\[
+ s_i=\alpha_i+\sum_{j=1}^{n}\gamma_{ij}\ln p_j+\beta_i\ln\!\Bigl(\frac{w}{P(p)}\Bigr),
+ \qquad
+ \ln P(p)=\alpha_0+\sum_k\alpha_k\ln p_k+\tfrac12\sum_{k}\sum_{l}\gamma_{kl}\ln p_k\ln p_l .
+\]
+它是"任意"需求系统（能二阶逼近任意需求函数），但理论约束以线性参数约束的形式出现：
+
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+理论要求 & AIDS 参数约束 & 检验方式\\
+\midrule
+加总（adding-up） & $\sum_i\alpha_i=1,\ \sum_i\gamma_{ij}=0,\ \sum_i\beta_i=0$ & 估计时直接施加\\
+零次齐次 & $\sum_j\gamma_{ij}=0,\ \forall i$ & Wald 检验\\
+\textbf{Slutsky 对称} & $\gamma_{ij}=\gamma_{ji},\ \forall i\ne j$ & Wald / LR 检验\\
+负半定 & 由 $\gamma$ 组装的 Slutsky 矩阵负半定 & 特征值检验\\
+\bottomrule
+\end{tabular}
+\end{center}
+\figexplan{AIDS 的四类约束及其检验方式。前两行是会计恒等式，通常在估计中直接施加（否则参数不可解释）；第三行是对称性，是真正的理论检验对象，自由度为 $n(n-1)/2$；第四行是曲率，检验起来最麻烦（涉及矩阵的惯性），文献中常以"施加约束后估计"代替"检验"。Banks--Blundell--Lewbel（1997）的 QUAIDS 在 $\ln(w/P)$ 上加二次项，约束形式不变。}
+
+\begin{remark}[实证中对称性常被拒绝，怎么理解]
+跨国的需求系统研究里，对称性检验的 $p$ 值经常落在拒绝域。可能的原因有四：
+(1) 加总偏误——用总量数据估计个体偏好，而加总本身不保 Slutsky 条件（\S 6.7）；
+(2) 动态调整——当期需求依赖上期消费（习惯形成），静态模型被误设；
+(3) 价格测量误差——价格指数构造带来的衰减偏误；
+(4) 偏好异质——不同家庭的参数不同，混合样本的"平均需求"不再是任何个体的需求。
+这四条都不意味着"消费者不理性"，而意味着\textbf{模型的可积性条件与数据的生成过程不匹配}。
+把拒绝直接读成"理论被推翻"是过度解读；反过来，把约束强行施加后宣称"模型通过检验"同样是循环论证。
+正确的做法是报告施加前与施加后的估计，并说明差异的来源。
+\end{remark}

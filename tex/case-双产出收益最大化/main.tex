@@ -1,0 +1,42 @@
+% 双产出收益最大化案例
+\input{preamble}
+\begin{document}
+\chapter{双产出技术的收益最大化：一个完整可算的数值案例}
+
+\noindent\textbf{本案例的任务。}本案例以一个可以手算到底的两产品企业为对象，
+把生产者理论中"转换函数—边际转换率—拉格朗日乘子—收益函数"这条主线
+从符号约定走到经济解释，逐步给出全部中间步骤，并对每一处容易出错的符号与方向
+做显式辨析。案例所用技术为
+\begin{equation*}
+F(y_1,y_2)=y_1+\frac{y_2^{2}}{4}-10=0,
+\qquad p_1=2,\quad p_2=4,
+\end{equation*}
+它足够简单（一阶条件是线性的）、又足够丰富（包含机会成本递增、
+唯一内点解、可显式写出收益函数、并能在价格比极端时出现角点解），
+因此适合作为课堂讲授、作业与考试的标准母题。
+
+\noindent 本案例同时承担三个"辨析"任务，这三处正是初学者最常出错的地方：
+
+\begin{enumerate}
+  \item \textbf{符号约定}。转换函数写 $F=0$ 还是 $F\ge 0$，
+        可行集在 $F<0$ 一侧还是 $F>0$ 一侧，不是客观事实，而是约定；
+        但它决定拉格朗日里写 $-\lambda F$ 还是 $+\lambda F$，决定 $\lambda$ 的符号，
+        一旦中途换约定就会全盘出错（\S\ref{sec:convention}）。
+  \item \textbf{MRT 的方向}。若以 $MRT_{12}$ 表示"多产 $1$ 单位 $y_1$
+        必须放弃的 $y_2$ 数量"，则均衡条件为 $MRT_{12}=p_1/p_2$；
+        而当 $MRT_{12}>p_1/p_2$ 时，正确的调整方向是\textbf{减少} $y_1$、
+        \textbf{增加} $y_2$，而不是相反（\S\ref{sec:mrt} 给出三种独立验证）。
+  \item \textbf{$-\lambda F$ 的性质}。在等式约束问题里，$-\lambda F$ 不是"惩罚项"，
+        $\lambda$ 是技术约束的影子值；真正的惩罚项只出现在罚函数法中，
+        且惩罚的对象是 $F^{2}$ 而非 $\lambda F$（\S\ref{sec:penalty}）。
+\end{enumerate}
+
+\tableofcontents
+\clearpage
+
+\input{parts/01_setup}
+\input{parts/02_mrt}
+\input{parts/03_lambda}
+\input{parts/04_extensions}
+
+\end{document}

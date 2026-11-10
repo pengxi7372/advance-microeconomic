@@ -1,0 +1,150 @@
+\section{包络定理与 Roy identity}
+% ============================================================
+% 第五讲 5.6：包络定理与 Roy identity
+% ============================================================
+\subsection{包络定理}
+
+前几节把 Marshallian 需求 $x(p,w)$ 与间接效用 $v(p,w)$ 定义为最优化问题的解与最优值。本节回答一个更一般的问题：\textbf{当问题的参数变动时，最优值如何变动？}答案是包络定理（envelope theorem）：最优值对参数的导数，等于目标函数（或拉格朗日函数）直接对参数求偏导，而\emph{不需要}考虑最优解本身随参数移动带来的间接效应。这一定理是整个对偶理论（Roy identity、Shephard 引理、Slutsky 方程）的技术引擎。
+
+\begin{theorem}[一般包络定理（无约束形式）]\label{thm:env-general}
+设 $f:\R^{n}\times\Theta\to\R$ 连续可微，$\Theta\subseteq\R$ 为开区间，且对每个 $\theta\in\Theta$，最大化问题
+\[
+ v(\theta)=\max_{x\in D}\,f(x,\theta)
+\]
+在 $D$ 的内部有唯一解 $x^*(\theta)$，且 $x^*(\cdot)$ 可微。若 $v$ 在 $\theta$ 处可微，则
+\[
+ \boxed{\;v'(\theta)=\frac{\partial f}{\partial \theta}\bigl(x^*(\theta),\theta\bigr).\;}
+\]
+\end{theorem}
+
+\begin{proof}
+由定义，$v(\theta)=f\bigl(x^*(\theta),\theta\bigr)$ 对所有 $\theta$ 成立。两边对 $\theta$ 用链式法则求全导数：
+\[
+ v'(\theta)
+ =\underbrace{\sum_{i=1}^{n}\frac{\partial f}{\partial x_i}\bigl(x^*(\theta),\theta\bigr)\,\frac{\mathrm dx_i^*}{\mathrm d\theta}(\theta)}_{\text{间接效应：解随参数移动}}
+ \;+\;\underbrace{\frac{\partial f}{\partial \theta}\bigl(x^*(\theta),\theta\bigr)}_{\text{直接效应}}.
+\]
+关键在第一项。由于 $x^*(\theta)$ 是\emph{内部}最优解且 $f$ 可微，它必须满足一阶条件
+\[
+ \frac{\partial f}{\partial x_i}\bigl(x^*(\theta),\theta\bigr)=0,\qquad i=1,\ldots,n,
+\]
+否则沿某个坐标方向微调 $x_i$ 即可增大 $f$，与最优性矛盾。把一阶条件代入上式，间接效应整项为零，只剩下直接效应。
+\end{proof}
+
+\begin{remark}[为什么间接项会消失]
+直觉如下：在最优解处，决策者已经把“通过调整 $x$ 获利”的空间用尽了——\textbf{最优性即一阶意义上无利可图}。参数 $\theta$ 变动一点点时，最优解 $x^*(\theta)$ 确实会移动，但这个移动是二阶小事：移动 $x$ 带来的收益在 $x^*$ 附近的边际值为零（一阶条件），所以调整量乘以零边际值，一阶贡献为零。用泰勒展开的语言说，$f\bigl(x^*(\theta+\mathrm d\theta),\theta+\mathrm d\theta\bigr)$ 与 $f\bigl(x^*(\theta),\theta+\mathrm d\theta\bigr)$ 之差是 $O(\mathrm d\theta^2)$，故对导数（一阶量）无贡献。几何上，值函数曲线在每一点都与某条“固定 $x$ 的”曲线相切，故称“包络”：$v$ 是一族曲线 $\{f(x,\cdot)\}_{x\in D}$ 的上包络线。
+\end{remark}
+
+\begin{remark}[带约束的形式]
+经济学的最优化问题通常带约束，而参数往往恰好出现在约束里（价格、财富都进入预算约束而非效用函数）。设
+\[
+ v(\theta)=\max_{x}\;\{f(x,\theta):g(x,\theta)=0\},
+\]
+构造拉格朗日函数 $\mathcal L(x,\lambda,\theta)=f(x,\theta)+\lambda\,g(x,\theta)$，内点最优解 $(x^*,\lambda^*)$ 满足 $\mathcal L_x=0$。由于约束在最优解处绑定，$g(x^*(\theta),\theta)=0$，故
+\[
+ v(\theta)=f\bigl(x^*(\theta),\theta\bigr)=\mathcal L\bigl(x^*(\theta),\lambda^*(\theta),\theta\bigr).
+\]
+对 $\theta$ 全微分并利用 $\mathcal L_x=0$ 消去 $x^{*\prime}(\theta)$ 项，再利用 $g=0$ 使含 $\lambda^{*\prime}(\theta)$ 的项也消失，得
+\[
+ v'(\theta)=\frac{\partial \mathcal L}{\partial\theta}\bigl(x^*(\theta),\lambda^*(\theta),\theta\bigr).
+\]
+结论：\textbf{求值函数对参数的导数，只需对拉格朗日函数直接求偏导，然后在最优解处取值。}约束随参数移动的部分已被乘子 $\lambda$ 计价。
+\end{remark}
+
+\subsection{包络定理应用于效用最大化}
+
+回到 UMP。设 $u$ 连续可微、偏好严格凸、局部非饱和，$p\gg0$、$w>0$，最优解 $x(p,w)$ 唯一且为内点，则 $v$ 可微。UMP 的拉格朗日函数为
+\[
+ \mathcal L(x,\lambda;p,w)=u(x)+\lambda\,(w-p\cdot x),
+\]
+其中预算约束写成 $w-p\cdot x=0$（局部非饱和保证绑定）。
+
+\begin{proposition}[间接效用的包络性质]\label{prop:env-ump}
+在上述假设下，
+\[
+ \frac{\partial v(p,w)}{\partial w}=\lambda(p,w),\qquad
+ \frac{\partial v(p,w)}{\partial p_i}=-\lambda(p,w)\,x_i(p,w),\quad i=1,\ldots,n.
+\]
+\end{proposition}
+
+\begin{proof}
+对 $\mathcal L=u(x)+\lambda(w-p\cdot x)$ 分别关于 $w$ 与 $p_i$ 求偏导：
+\[
+ \frac{\partial\mathcal L}{\partial w}=\lambda,\qquad
+ \frac{\partial\mathcal L}{\partial p_i}=-\lambda x_i.
+\]
+由带约束的包络定理，$v_w=\partial\mathcal L/\partial w=\lambda$，$v_{p_i}=\partial\mathcal L/\partial p_i$，并在最优解 $(x(p,w),\lambda(p,w))$ 处取值，即得两式。
+\end{proof}
+
+两条等式各有清晰的经济含义。
+
+\begin{remark}[财富的影子价值：$\partial v/\partial w=\lambda$]
+$\lambda$ 是预算约束的乘子，度量\textbf{约束放松一单位的边际价值}：财富增加一元，最优效用增加 $\lambda$ 个效用单位。因此 $\lambda$ 被称为\emph{财富的边际效用}或\emph{收入的影子价格}。它把“效用”这个不可观测的序数刻度与“元”这个基数刻度连起来：$\lambda$ 是效用对元的汇率。注意 $\lambda$ 本身依赖 $(p,w)$——越富的人一元钱的边际效用（按此效用表示）通常越低，这正是 $\lambda(p,w)$ 随 $w$ 递减的形态（在效用函数为凹的货币变换下）。
+\end{remark}
+
+\begin{remark}[涨价等于变穷：$\partial v/\partial p_i=-\lambda x_i$]
+价格 $p_i$ 上升一元时，若消费者维持原消费束 $x(p,w)$ 不变，第 $i$ 种商品每单位多花一元，总支出增加 $x_i$ 元。也就是说，\textbf{$p_i$ 上涨一元在预算上的效果，等价于财富损失 $x_i$ 元}；而财富损失 $x_i$ 元的效用代价是 $\lambda x_i$，故 $v_{p_i}=-\lambda x_i$。注意没有消费的商品（$x_i=0$）涨价不直接损害消费者——这解释了为什么间接效用只通过\emph{被购买的}商品的价格起作用。把两式相除，$x_i$ 恰好是被“价格损失/财富边际价值”约分还原出来，这正是 Roy identity 的来源。
+\end{remark}
+
+\subsection{Roy identity}
+
+\begin{theorem}[Roy identity]\label{thm:roy}
+设 $u$ 连续可微、偏好严格凸且局部非饱和，$x(p,w)$ 唯一、内点，$v$ 在 $(p,w)$ 处可微且 $v_w(p,w)\neq0$。则对每种商品 $i$，
+\[
+ \boxed{\;x_i(p,w)=-\frac{\partial v(p,w)/\partial p_i}{\partial v(p,w)/\partial w}.\;}
+\]
+\end{theorem}
+
+\begin{proof}
+由命题~\ref{prop:env-ump}，
+\[
+ -\frac{v_{p_i}(p,w)}{v_w(p,w)}
+ =-\frac{-\lambda(p,w)\,x_i(p,w)}{\lambda(p,w)}=x_i(p,w).\qedhere
+\]
+\end{proof}
+
+Roy identity 的价值在于\textbf{方向的可逆性}：给定任何一个行为良好的间接效用函数 $\tilde v(p,w)$，不必重新解 UMP，直接求偏导即可恢复 Marshallian 需求。这把“解最优化问题”变成“求两个偏导数之比”，也是宏观与计量中由间接效用设定（如 LOGEX、Almost Ideal 体系的对偶写法）直接导出需求系统的标准手法。
+
+\begin{remark}[用包络定理重证预算耗尽]
+包络性质还能反过来推出 Walras 法则。$v$ 对 $(p,w)$ 零次齐次：$v(tp,tw)=v(p,w)$ 对一切 $t>0$ 成立。在 $t=1$ 处对 $t$ 求导（Euler 定理）：
+\[
+ \sum_{i=1}^{n}v_{p_i}(p,w)\,p_i+v_w(p,w)\,w=0 .
+\]
+代入命题~\ref{prop:env-ump} 的 $v_{p_i}=-\lambda x_i$、$v_w=\lambda$，约去 $\lambda>0$：
+\[
+ \sum_{i=1}^{n}p_i\,x_i(p,w)=w .
+\]
+局部非饱和下的预算耗尽——第五章前半用“邻域内存在更好束”证明的结论——在此作为齐次性与包络定理的代数推论重新出现。同一条思路也给出 $\lambda$ 的齐次性质：对 $v(tp,tw)=v(p,w)$ 分别关于 $tp_i$ 与 $tw$ 求偏导可得 $\lambda(tp,tw)=t^{-1}\lambda(p,w)$，即财富的边际效用随货币单位的放大而同比缩小——货币只是标签。
+\end{remark}
+
+\begin{remark}[包络定理的普适性：一个定理，三处引理]
+包络定理不专属消费者理论。把“目标函数对参数求偏导”套到不同的问题上，就得到不同领域的经典引理：
+\begin{itemize}
+\item UMP（参数 $p,w$ 进入约束）$\Rightarrow$ $v_w=\lambda$、$v_{p_i}=-\lambda x_i$，进而 Roy identity；
+\item EMP（参数 $p$ 进入目标）$\Rightarrow$ Shephard 引理 $h_i=\partial e/\partial p_i$（下节）；
+\item 厂商利润最大化 $\pi(p)=\max_x\{p\cdot y(x)-c(x)\}$（参数 $p$ 进入目标）$\Rightarrow$ Hotelling 引理：供给 $y_i(p)=\partial\pi/\partial p_i$；对成本最小化值函数 $c(w,y)$ 关于产出 $y$ 求导 $\Rightarrow$ 边际成本 $\partial c/\partial y$。
+\end{itemize}
+识别一个引理是不是包络定理的化身，只需看一句话：\textbf{参数出现在哪里，导数就从哪里来；最优解的移动不贡献一阶项。}
+\end{remark}
+
+\begin{example}[Cobb--Douglas 的数值验证]\label{ex:roy-cd}
+取 $u(x_1,x_2)=x_1^{1/2}x_2^{1/2}$，价格 $p=(4,1)$，财富 $w=8$。第五章前半已得
+\[
+ v(p,w)=\alpha^{\alpha}(1-\alpha)^{1-\alpha}\frac{w}{p_1^{\alpha}p_2^{1-\alpha}}
+ =\frac{1}{2}\cdot\frac{8}{4^{1/2}\cdot 1^{1/2}}=2 .
+\]
+\textbf{第一步：两个包络导数。}$v_w=v/w=2/8=1/4$，即财富的边际效用为 $1/4$；$v_{p_1}=-\alpha v/p_1=-\tfrac12\cdot 2/4=-1/4$，即第一种商品涨价一元使效用损失 $1/4$。
+\textbf{第二步：Roy identity。}
+\[
+ x_1=-\frac{v_{p_1}}{v_w}=-\frac{-1/4}{1/4}=1,
+\]
+与直接求解 UMP 得到的 $x_1=\alpha w/p_1=\tfrac12\cdot 8/4=1$ 完全一致。同理 $x_2=-v_{p_2}/v_w=-( -\tfrac12\cdot 2/1)/(1/4)=4=\tfrac12\cdot 8/1$。验证了 $\lambda=v_w=1/4$，且 $v_{p_1}=-\lambda x_1=-\tfrac14\cdot 1$、$v_{p_2}=-\lambda x_2=-\tfrac14\cdot 4$，包络关系逐项吻合。
+\end{example}
+
+\begin{remark}[财富边际效用的递减形态]
+接例~\ref{ex:roy-cd}：对 Cobb--Douglas，$\lambda=v_w=K/(p_1^{\alpha}p_2^{1-\alpha})$（$K=\alpha^{\alpha}(1-\alpha)^{1-\alpha}$）\emph{不依赖} $w$——同位偏好下财富边际效用恒定。这不是常态：换成效用 $u(x)=\ln(x_1^{\alpha}x_2^{1-\alpha})$（同一偏好、另一表示），则 $v=\alpha\ln\alpha+(1-\alpha)\ln(1-\alpha)+\alpha\ln w-\alpha\ln p_1-\cdots$，$\lambda=\alpha/w$ 随 $w$ 严格递减。两件事同时说明：\textbf{$\lambda$ 的具体形态依赖效用表示的选取}（序数性），但“给定表示后 $\lambda$ 度量约束的边际价值”这一定性含义（以及 Roy identity 的比值）在表示替换下不变。
+\end{remark}
+
+\begin{remark}[一个常见的误用]
+Roy identity 的分母 $v_w=\lambda$ 不能为零：局部非饱和保证 $\lambda>0$（多一元财富总能严格改善），故在标准假设下除法合法。但若把不可微的 $v$（如完全替代偏好的角点解附近）硬套进公式，就会得到错误结果——包络定理要求内点、唯一与可微，这些条件在角点解处失效，此时应回到 Kuhn--Tucker 条件与对应的互补松弛不等式。
+\end{remark}

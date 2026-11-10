@@ -1,0 +1,352 @@
+\section{Marshallian 需求求解与 Kuhn--Tucker 条件}
+% ============================================================
+% 第五讲第四分节：Marshallian 求解、存在性与 Kuhn--Tucker 条件
+% ============================================================
+
+\subsection{Marshallian 需求的求解与可微性准备}
+\label{sec:kt-setup}
+
+设消费集 $X=\R^n_+$，价格 $p\in\R^n_{++}$，财富 $w\ge 0$。Marshallian（非补偿）效用最大化问题为
+\begin{equation}
+ v(p,w)=\max_{x\in\R^n_+}\ u(x)\quad\st\quad p\cdot x\le w,
+ \qquad
+ x(p,w)\in\argmax_{x\in\R^n_+}\{u(x):p\cdot x\le w\}.
+ \label{eq:ump-kt}
+\end{equation}
+存在性不需要任何微分工具：若 $u$ 连续且 $p\gg 0$，则 $B(p,w)$ 非空紧，最大值达到；偏好严格凸时最优束唯一，需求成为单值函数（存在性与唯一性的完整证明见 \S 5.2）。本节处理更精细的问题：\emph{给定解存在，如何把它解出来}。路线有两条：或猜测内点解，用等式约束的拉格朗日法求解后再回头验证猜测；或直接使用允许不等式与角点的 Kuhn--Tucker 条件。后者的适用范围覆盖前者，失效模式更少，是本节的重点。
+
+在动用一阶条件之前，先澄清一个概念性的负债：可微性从何而来。
+
+\begin{remark}[可微性是表示的性质，不是偏好的性质]
+\label{rem:diff}
+偏好关系 $\succeq$ 本身没有导数的概念。说“偏好可微”，严格含义是\emph{存在}一个可微的效用表示。三点澄清如下。
+（一）可微性不是序数不变的。$u(x)=x_1x_2$ 可微；取严格递增但带扭结的 $\phi(t)=t+\tfrac12|t-1|$，则 $\phi\circ u$ 是同一偏好的合法表示，却在 $x_1x_2=1$ 处不可微——同一偏好，一个表示光滑，一个带扭结。反过来，某些偏好\emph{任何}表示都不可微：完全互补 $u=\min\{x_1,x_2\}$ 的无差异曲线有直角，MRS 从 $+\infty$ 跳到 $0$，这种跳跃无法被任何单调变换抹平。因此“存在可微表示”是对偏好的真实限制，而“手头这个表示恰好可微”只是运气。
+（二）可微性不能被有限数据证伪。对任何有限组满足显示偏好一致性的价格—选择观测，既可以构造穿过观测点的光滑无差异曲线，得到可微的理性化偏好；也可以构造折线无差异曲线，得到带扭结的理性化偏好。于是可微性不是一条可检验的假设，而是为了书写一阶条件而支付的建模代价。
+（三）这笔代价换来的内容是序数的。MRS 在严格递增的可微变换下不变（见下一分节的证明）；内点最优条件 $\mathrm{MRS}_{jk}=p_j/p_k$ 中，基数乘子 $\lambda$ 被完全消去。换言之，“哪个函数可微”依赖表示的选择，但“最优点的梯度平行于价格向量”这一几何事实不依赖。
+\end{remark}
+
+\subsection{拉格朗日函数的构造逻辑}
+\label{sec:lagrange-build}
+
+Kuhn--Tucker 方法的第一步，是把所有约束统一写成 $g(x)\ge 0$ 的形式。预算约束与非负约束改写为
+\[
+ g_0(x)=w-p\cdot x\ge 0,
+ \qquad
+ g_i(x)=x_i\ge 0\quad(i=1,\dots,n).
+\]
+为什么坚持这个方向？这纯粹是符号约定，但统一方向能让乘子的符号规则唯一化：对最大化问题，约束一律写 $g\ge 0$、拉格朗日函数中乘子一律取正号并入，则最优乘子一律非负。若有人坚持把预算写成 $p\cdot x-w\le 0$ 仍以正号并入，乘子的最优符号会翻转为非正；两种约定自洽时都正确，混乱只出现在混用之时。
+
+按此约定，拉格朗日函数为
+\begin{equation}
+ \mathcal L(x,\lambda,\mu)
+ =u(x)+\lambda\,(w-p\cdot x)+\sum_{i=1}^n\mu_i\,x_i,
+ \qquad \lambda\in\R,\ \mu\in\R^n.
+ \label{eq:lagrangian}
+\end{equation}
+
+\textbf{为什么预算约束只配一个乘子，而 $n$ 个非负约束各配一个乘子？}乘子度量“放宽某条约束的价值”，其个数由约束的条数决定，更准确地说，由\emph{可能分别绑定}的约束决定。预算只有一条，其影子价值是\emph{财富的边际效用}：把 $w$ 提高 $\mathrm dw$，可达效用大约增加 $\lambda\,\mathrm dw$。非负约束有 $n$ 条，且哪些商品落在角点因价格与偏好而异：Cobb--Douglas 偏好下全部商品内点消费；完全替代偏好下永远有商品落在角点；更一般的情形是部分商品零消费、部分商品内点，必须逐商品记录各自的影子价值。若强行共用一个乘子，就无法表达“商品 1 在内点、商品 2 被压在角点”的差异化结构。
+
+$\mu_i$ 的经济含义是商品 $i$ 非负约束的影子补贴：假如允许 $x_i<0$（消费者可以按市价“倒卖”商品 $i$），最优值还能提高多少。由于我们不允许，$\mu_i$ 度量这条禁令的机会成本；它只在该约束真正起作用（$x_i=0$）时才可能为正——这正是后面互补松弛条件的内容。
+
+还有一个观察值得记录：对乘子求偏导恰好恢复对应的约束，
+\[
+ \frac{\partial\mathcal L}{\partial\lambda}=w-p\cdot x\ge 0,
+ \qquad
+ \frac{\partial\mathcal L}{\partial\mu_i}=x_i\ge 0,
+\]
+对决策变量求偏导并令其为零则给出驻点条件。Kuhn--Tucker 系统的“四组条件”并非拼凑，而是“$\mathcal L$ 对全体变量的最优性条件 + 符号约束”的自然拆解，下节逐条展开。
+
+\subsection{Kuhn--Tucker 四组条件逐条详解}
+\label{sec:kt-conditions}
+
+\begin{theorem}[Kuhn--Tucker 必要条件]
+\label{thm:kt}
+设 $u\in C^1$，$x^*$ 是问题\eqref{eq:ump-kt}的局部解。由于预算约束与非负约束都是仿射函数，约束规格自动成立。故存在乘子 $\lambda\in\R$、$\mu\in\R^n$，使得：
+\begin{enumerate}
+\item \textbf{原始可行性}：$p\cdot x^*\le w$，$x^*\ge 0$；
+\item \textbf{驻点条件}：$u_i(x^*)=\lambda p_i-\mu_i$，$i=1,\dots,n$；
+\item \textbf{对偶可行性}：$\lambda\ge 0$，$\mu_i\ge 0$，$i=1,\dots,n$；
+\item \textbf{互补松弛}：$\lambda\,(w-p\cdot x^*)=0$，$\mu_i x_i^*=0$，$i=1,\dots,n$。
+\end{enumerate}
+\end{theorem}
+
+四组条件缺一不可。下面逐条说明“为什么需要”，并为每条配一个删去它就会失效的反例。
+
+\subsubsection{原始可行性：候选点必须先合法}
+
+第一条看起来最平凡：候选点必须落在预算集内。但它的地位是逻辑上最先的：四组条件里只有这一条约束“点本身”，其余三条构造的是关于乘子的系统。删去它，一个不可行点可以顺利通过其余三条件。
+
+\begin{example}[删去可行性的反例：买不起的极乐点]
+\label{ex:no-feas}
+取 $u(x)=8-(x_1-1)^2-(x_2-1)^2$（极乐点偏好，唯一最大点为 $(1,1)$，$u=8$），$p=(1,1)$，$w=1$。考察 $x=(1,1)$：花费 $2>w$，不可行。但在该点 $\nabla u=(0,0)$，取 $\lambda=\mu_1=\mu_2=0$：驻点条件 $0=0-0$ 成立；乘子非负成立；互补松弛 $\lambda(w-p\cdot x)=0$、$\mu_ix_i=0$ 也成立。也就是说，\emph{除可行性外全部条件都满足的点是全局无约束最大点}——消费者最想要的点，却买不起。该问题真正的解是 $(\tfrac12,\tfrac12)$，效用 $7.5$。没有第①条，KT 系统会把“最好但买不起”认证为解。
+\end{example}
+
+\subsubsection{驻点条件：沿可行方向不能再改进}
+
+驻点条件 $u_i(x^*)=\lambda p_i-\mu_i$ 可以读作：边际效用 = 预算的影子价值 $\times$ 价格 $-$ 非负约束的影子补偿。它的几何内容是：在最优点，效用沿任何\emph{可行方向}的一阶变化不能为正。设 $x^*$ 处预算绑定，可行方向 $d$ 满足 $p\cdot d\le 0$，且若 $x_i^*=0$ 则 $d_i\ge 0$。用驻点条件与符号约束计算方向导数：
+\[
+ \nabla u(x^*)\cdot d=(\lambda p-\mu)\cdot d
+ =\underbrace{\lambda\,p\cdot d}_{\le 0}
+  \underbrace{-\sum_{i:\,x_i^*=0}\mu_i d_i}_{\le 0}\ \le 0,
+\]
+其中用到 $x_i^*>0$ 时 $\mu_i=0$（互补松弛）、$d_i\ge 0$ 时 $\mu_i d_i\ge 0$。反过来，若存在可行方向使方向导数为正，沿它走一小步即可改进，与最优性矛盾——这就是“为什么需要②”的核心。乘子 $(\lambda,-\mu)$ 恰好是把 $\nabla u(x^*)$ 分解到“起作用约束的法锥”上的那组权重。
+
+\begin{example}[删去驻点条件的反例：可行但可改进的内点]
+\label{ex:no-stat}
+取 $u=x_1x_2$，$p=(1,1)$，$w=2$，候选点 $x=(1.5,\,0.5)$：可行且预算绑定，$u=0.75$。检验驻点条件：$u_1=x_2=0.5$，$u_2=x_1=1.5$，要求 $0.5=\lambda=1.5$，无 $\lambda$ 可满足——条件②正确地拒绝了它。事实上把一元钱从商品 2 移到商品 1（移向 $(1,1)$，$u=1>0.75$）即可严格改进。注意：删去②后，\emph{任何}可行点都能平凡地通过其余三组条件——取 $\lambda=\mu=0$，互补松弛全部成立。四组条件中只有②携带一阶信息。
+\end{example}
+
+\subsubsection{乘子非负：影子价格的方向必须正确}
+
+乘子是约束的影子价格，非负性说的是\emph{方向}：放宽一条约束，最优值只能不降。对 $\lambda$：财富增加扩大预算集（新旧预算集嵌套），最大效用单调不减，故在可微点处 $\lambda=\partial v/\partial w\ge 0$。对 $\mu_i$：把 $x_i\ge 0$ 放宽为 $x_i\ge-\varepsilon$ 同样只会扩大可行集，故 $\mu_i\ge 0$。若解出负乘子，等于宣称“约束越紧、处境越好”，这在单调嵌套的可行集结构下是荒谬的。
+
+\begin{example}[删去乘子非负的反例：伪角点]
+\label{ex:no-sign}
+取 $u=x_1x_2$，$p=(1,1)$，$w=2$，候选点 $x=(2,0)$：可行角点，$u=0$，而真正的最优是 $(1,1)$，$u=1$。检验：$u_1=x_2=0$，$u_2=x_1=2$。驻点条件要求 $0=\lambda-\mu_1$、$2=\lambda-\mu_2$；互补松弛中 $\mu_1x_1=2\mu_1=0$ 迫使 $\mu_1=0$，于是 $\lambda=0$，进而 $\mu_2=-2<0$——条件③被违反。若允许负乘子，$(\lambda,\mu_1,\mu_2)=(0,0,-2)$ 通过①②④，效用为零的伪角点被错误认证。对称的角点 $(0,2)$ 同理。正是③排除了这类“看似角点、实则劣于内点”的候选。
+\end{example}
+
+\subsubsection{互补松弛：约束不紧则乘子为零，乘子为正则约束必紧}
+
+互补松弛把“约束是否起作用”与“乘子是否为零”绑在一起，两个方向都要：
+（a）若 $w-p\cdot x^*>0$（预算没花完），则 $\lambda=0$——不稀缺的资源没有影子价格；
+（b）若 $\lambda>0$，则 $p\cdot x^*=w$——财富有正的边际价值，预算必然用尽。
+对每个商品同理：$\mu_i>0$ 意味着非负约束“真的在咬”（$x_i^*=0$）；$x_i^*>0$ 则该约束形同虚设，$\mu_i=0$。在单调偏好下 $\lambda>0$，于是预算恒绑定，这就是 Walras 定律的乘子版本。
+
+\begin{example}[删去互补松弛的反例：不起作用的约束挂上了正乘子]
+\label{ex:no-comp}
+取 $u(x)=8-(x_1-1)^2-(x_2-1)^2$，$p=(1,1)$，$w=4$，候选点 $x=(3,1)$：可行、预算绑定、$u=4$；真正的最优是可负担的极乐点 $(1,1)$，$u=8$。在 $(3,1)$ 处 $\nabla u=(-4,0)$。驻点条件：$-4=\lambda-\mu_1$、$0=\lambda-\mu_2$。取 $(\lambda,\mu_1,\mu_2)=(0,4,0)$：①②③全部通过。但互补松弛要求 $\mu_1x_1=4\times 3=12=0$，不可能——商品 1 消费为 3，非负约束根本不起作用，$\mu_1$ 却为正，等于给一条虚设的约束标了正的影子价格。删去④，该点通过；保留④，它被正确拒绝。
+\end{example}
+
+\subsection{必要而非充分：反例、凸问题与拟凹效用的处理}
+\label{sec:kt-suff}
+
+\subsubsection{KT 点未必是最大点}
+
+定理\ref{thm:kt}只保证“最优点满足 KT”，不保证“KT 点是最优点”。满足四组条件的候选可以是鞍点、甚至局部极小。
+
+\begin{example}[KT 点是全局最小点]
+\label{ex:saddle}
+单商品问题：$\max\ x^3$ s.t. $0\le x\le w$（即 $p=1$）。考察 $x^*=0$：驻点条件 $3(x^*)^2=\lambda-\mu$ 即 $0=\lambda-\mu$；互补松弛 $\lambda(w-0)=0$ 迫使 $\lambda=0$（$w>0$），于是 $\mu=0$；乘子非负成立；可行性成立。四组条件在 $x^*=0$ 全部满足，但 $x^3$ 严格递增，$x^*=0$ 是可行集上的全局\emph{最小}点。多商品情形同理：非凸偏好可以在预算线上制造多个局部极大，每一个都满足 KT；仅凭一阶条件无法在其中挑选。要把“满足条件”升级为“确为最优”，需要全局结构——凹性与凸性。
+\end{example}
+
+\subsubsection{凸问题：KT 条件充分必要}
+
+\begin{theorem}[凸问题的充分性]
+\label{thm:convex-suff}
+设 $u\in C^1$ 且凹，$p\gg 0$。若 $(x^*,\lambda,\mu)$ 满足定理\ref{thm:kt}的四组条件，则 $x^*$ 是问题\eqref{eq:ump-kt}的全局最大点；若 $u$ 严格凹，则最优唯一。
+\end{theorem}
+\begin{proof}
+预算集由仿射不等式之交构成，自动是凸集。对任意可行 $x$（$p\cdot x\le w$，$x\ge0$），凹效用的一阶特征给出
+\[
+ u(x)-u(x^*)\le\nabla u(x^*)\cdot(x-x^*)=(\lambda p-\mu)\cdot(x-x^*),
+\]
+其中驻点条件代入 $\nabla u(x^*)=\lambda p-\mu$。展开右边并逐项估计：
+\[
+ (\lambda p-\mu)\cdot(x-x^*)
+ =\underbrace{\lambda\,(p\cdot x-w)}_{\le 0}
+  +\underbrace{\lambda\,(w-p\cdot x^*)}_{=0}
+  -\underbrace{\mu\cdot x}_{\le 0}
+  +\underbrace{\mu\cdot x^*}_{=0}.
+\]
+第一项非正，因为 $\lambda\ge0$ 且 $p\cdot x\le w$；第二、四项由互补松弛为零；第三项非正，因为 $\mu\ge0$、$x\ge0$。故 $u(x)\le u(x^*)$对一切可行 $x$ 成立，$x^*$ 是全局最大点。严格凹时，一阶特征中的等号仅当 $x=x^*$ 成立，最优唯一。
+\end{proof}
+
+\begin{remark}[鞍点视角]
+\label{rem:saddle}
+上述证明其实证明了更多：在给定乘子下，$x^*$ 在整个 $\R^n_+$ 上最大化 $\mathcal L(\cdot,\lambda^*,\mu^*)$（不必再检查预算），而 $(\lambda^*,\mu^*)$ 在给定 $x^*$ 下最小化 $\mathcal L(x^*,\cdot)$。这就是拉格朗日鞍点：
+\[
+ \mathcal L(x,\lambda^*,\mu^*)\ \le\ \mathcal L(x^*,\lambda^*,\mu^*)\ \le\ \mathcal L(x^*,\lambda,\mu),
+ \qquad x\ge0,\ \lambda\ge0,\ \mu\ge0.
+\]
+“乘子是惩罚参数”的直觉由此严格化：最小化一方把违反预算的惩罚调到无利可图，最大化一方则在惩罚后的全景中选中 $x^*$。乘子非负（条件③）正是惩罚参数的合法取值域。
+\end{remark}
+
+\subsubsection{拟凹而非凹：Cobb--Douglas 型效用的处理}
+
+凹性是充分性的便利条件，不是必要条件，而且许多常用效用并不凹。
+
+\begin{remark}[拟凹非凹效用的两种处理]
+\label{rem:quasi}
+$u=x_1x_2$ 拟凹（上水平集 $\{x:x_1x_2\ge c\}$ 是凸区域），但沿对角射线 $u(t,t)=t^2$ 是凸函数，故 $u$ 不凹——直接套用定理\ref{thm:convex-suff}不合法。两种标准处理如下。
+其一，\textbf{换一个凹表示}。取 $\ln u=\ln x_1+\ln x_2$：两个凹函数之和，凹；且与 $u$ 表示同一偏好。Marshallian 需求是 $\arg\max$，不随表示的单调变换改变，故用 $\ln u$ 求出的需求与用 $u$ 求出的完全相同；改变的只是 $\lambda$——乘子是基数的，随表示缩放，而 MRS 条件不变（下一分节证明）。凡是经单调变换可凹化的拟凹效用（整个 CES/CD 族均可）都可用这条路走通凸问题定理。
+其二，\textbf{直接用拟凹版本的充分性}（Kuhn--Tucker--Arrow--Enthoven 定理）：$u$ 拟凹可微、且在候选点边际效用非负（例如强单调偏好）时，KT 条件仍充分。证明思路：拟凹性使上水平集 $\{x:u(x)\ge u(x^*)\}$ 是凸集，$x^*$ 位于其边界；在梯度非零处，边界有以 $\nabla u(x^*)$ 为法向的支撑超平面，于是 $u(x)>u(x^*)$ 蕴含 $\nabla u(x^*)\cdot(x-x^*)\ge0$；再复用定理\ref{thm:convex-suff}证明中“$(\lambda p-\mu)\cdot(x-x^*)\le0$”的链条即得矛盾。梯度为零的退化边界情形需要附加论证，此处从略。
+\end{remark}
+
+\subsection{与等式约束拉格朗日方法的对比}
+\label{sec:compare}
+
+经济学初级课程里的“拉格朗日法”默认两件事：预算约束写成等式 $p\cdot x=w$，所有商品内点消费 $x_i>0$。这两个先验假设一旦不真，等式法或无解、或解出负需求。表\ref{tab:compare}给出系统对比。
+
+\begin{table}[H]
+\centering
+\caption{等式约束拉格朗日法与 Kuhn--Tucker 方法}
+\label{tab:compare}
+\begin{tabular}{@{}lp{5.1cm}p{5.9cm}@{}}
+\toprule
+维度 & 等式拉格朗日 & Kuhn--Tucker \\
+\midrule
+约束形式 & $p\cdot x=w$（先验绑定）；$x_i>0$ 先验假设 & $p\cdot x\le w$、$x_i\ge0$ 全部保留为不等式 \\
+乘子个数与符号 & 一个 $\lambda$，无符号限制 & $\lambda\ge0$ 加每商品 $\mu_i\ge0$ \\
+驻点条件 & $u_i=\lambda p_i$，全部商品 & $u_i=\lambda p_i-\mu_i$，逐商品 \\
+互补松弛 & 无 & $\lambda(w-p\cdot x)=0$，$\mu_ix_i=0$ \\
+角点处理 & 无：解出 $x_i<0$ 时只能人工截断 & 内生：$x_i=0$ 由 $\mu_i>0$ 解释 \\
+预算是否绑定 & 强制绑定 & 由互补松弛判定（单调偏好下绑定） \\
+典型失效 & 完全替代、$p_1\ne p_2$ 时方程组无解 & 不失效，自动给出角点 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+以完全替代 $u=x_1+x_2$ 说明最后一行。等式法的驻点条件是 $1=\lambda p_1$ 且 $1=\lambda p_2$，当 $p_1\ne p_2$ 时直接矛盾：方程组无解。初学者容易误读为“该消费者没有最优选择”；正确结论是\emph{没有内点最优}，最优在角点上，而等式法的框架里根本没有角点的位置。Kuhn--Tucker 把同样的计算写成 $1=\lambda p_1-\mu_1$、$1=\lambda p_2-\mu_2$：方程组不再矛盾，多余的约束压力由 $\mu$ 吸收，解自动指向角点（见例\ref{ex:corner-kt}）。
+
+公平地说，等式法可以作为两步流程安全使用：先假设内点求解，再验证解确实满足 $x_i>0$。验证通过时两法等价；验证失败时必须回到 KT 补做角点分析。KT 的优势是把“求解—验证—修正”一步化，并且把“为什么不买商品 $i$”翻译成一个有经济含义的量 $\mu_i$，而不是一句“方程无解”。
+
+\subsection{内点解与角点解}
+\label{sec:interior-corner}
+
+\subsubsection{内点解：切点条件}
+
+\begin{proposition}[内点一阶条件]
+\label{prop:interior-foc}
+设 $u\in C^1$ 强单调（各 $u_i>0$），$p\gg0$，$x^*\gg0$ 是问题\eqref{eq:ump-kt}的解。则预算绑定 $p\cdot x^*=w$，且存在 $\lambda>0$ 使
+\[
+ u_i(x^*)=\lambda p_i,\qquad i=1,\dots,n,
+\]
+从而对任意商品对 $j,k$：
+\[
+ \mathrm{MRS}_{jk}(x^*)=\frac{u_j(x^*)}{u_k(x^*)}=\frac{p_j}{p_k},
+ \qquad\text{等价地}\qquad
+ \frac{u_j(x^*)}{p_j}=\frac{u_k(x^*)}{p_k}=\lambda .
+\]
+\end{proposition}
+\begin{proof}
+$x_i^*>0$ 与互补松弛 $\mu_ix_i^*=0$ 给出 $\mu_i=0$，驻点条件化为 $u_i(x^*)=\lambda p_i$。局部非饱和使预算绑定。强单调与 $p\gg0$ 保证 $\lambda=u_i/p_i>0$。对 $j,k$ 两式相除，$\lambda$ 消去，得 MRS 等于价格比。
+\end{proof}
+
+条件的两个读法都重要。\textbf{边际读法}：每一元花在任何商品上的边际效用相同，$u_i/p_i=\lambda$；若不等，把一元从比值低的商品移到比值高的商品即可严格改进。\textbf{交换读法}：$p_j/p_k$ 是市场允许的“以 $k$ 换 $j$”的比率，$\mathrm{MRS}_{jk}$ 是消费者自己的意愿比率；内点最优即二者打平——无差异曲线与预算线在 $x^*$ 相切，见图\ref{fig:interior}。注意相切的说法只在 $x^*$ 处梯度与价格向量平行这一意义上使用；图形上即 $\nabla u(x^*)$ 与 $p$ 同向。
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=1.0]
+  \draw[axisline] (0,0)--(6.3,0) node[below,axislabel]{$x_1$};
+  \draw[axisline] (0,0)--(0,5.3) node[left,axislabel]{$x_2$};
+  % 预算线：(0,4) -- (5,0)，斜率 -0.8
+  \draw[thick] (0,4)--(5,0);
+  \node[figlabel,anchor=west] at (0.18,4.18) {$p\cdot x=w$};
+  % 无差异曲线 x1*x2 = 5（经过 (2.5,2)）
+  \draw[curveA] plot[domain=1.06:5.9,samples=60] (\x,{5/\x});
+  \node[figlabel] at (5.62,1.22) {$\bar u$};
+  % 较低无差异曲线 x1*x2 = 2
+  \draw[curveB] plot[domain=0.72:5.7,samples=60] (\x,{2/\x});
+  \node[figlabel] at (5.42,0.55) {$\underline u$};
+  % 切点
+  \node[nodewhite] at (2.5,2) {};
+  \node[figlabel] at (2.72,1.78) {$x^*$};
+  % 梯度箭头：方向 (2,2.5)
+  \draw[arrblue] (2.5,2)--(3.31,3.01);
+  \node[figlabel,anchor=south west] at (3.36,3.04) {$\nabla u(x^*)$};
+  % 价格向量箭头：方向 (4,5)，从预算线上一点出发
+  \draw[arrblue] (0.9,3.28)--(1.44,3.95);
+  \node[figlabel,anchor=south] at (1.5,4.02) {$p$};
+\end{tikzpicture}
+\caption{内点最优：无差异曲线与预算线相切。}
+\label{fig:interior}
+\end{figure}
+\figexplan{粗实线为无差异曲线 $x_1x_2=\bar u$，虚线为较低水平 $\underline u$；直线为预算线，斜率 $-p_1/p_2=-0.8$，切点为 $x^*$。梯度 $\nabla u(x^*)=(x_2^*,x_1^*)$ 垂直于无差异曲线，价格向量 $p$ 垂直于预算线；相切等价于两箭头平行，即 $\nabla u(x^*)=\lambda p$（本图取 $\lambda=0.5$，$p=(0.8,1)$）。虚线曲线在预算集内可达但严格劣。}
+
+\subsubsection{角点解：完全替代的分情形求解}
+
+\begin{example}[完全替代的角点解与 KT 验证]
+\label{ex:corner-kt}
+设 $u=x_1+x_2$，$p\gg0$，$w>0$。$u$ 线性故凹，定理\ref{thm:convex-suff}适用：任何满足 KT 的点即全局最优。$u_1=u_2=1$ 恒成立，分三种情形。
+\textbf{情形一，$p_1<p_2$。}猜测 $x^*=(w/p_1,\,0)$。验证：$x_1^*>0$ 迫使 $\mu_1=0$，驻点条件给 $1=\lambda p_1$，即 $\lambda=1/p_1>0$；对商品 2，$1=\lambda p_2-\mu_2$ 给 $\mu_2=p_2/p_1-1>0$；互补松弛：$\lambda(w-p\cdot x^*)=\lambda\cdot0=0$，$\mu_1x_1=0$，$\mu_2\cdot0=0$，全部成立。故 $(w/p_1,0)$ 为全局最优。经济解读：$\mathrm{MRS}_{12}=1>p_1/p_2$，消费者对商品 1 的内部评价高于市场要价，全部预算买商品 1。
+\textbf{情形二，$p_1>p_2$。}对称地，$x^*=(0,\,w/p_2)$，$\lambda=1/p_2$，$\mu_1=p_1/p_2-1>0$。
+\textbf{情形三，$p_1=p_2$。}预算线上任一点 $p\cdot x=w$ 都是最优（$u=w/p_1$ 为常数），需求对应是整段预算线（多值）。KT 检验：$\lambda=1/p_1$、$\mu=0$ 在线上任一点成立；预算集内部的点（$p\cdot x<w$）则被互补松弛排除——$\lambda>0$ 与 $w-p\cdot x>0$ 不能并存，对应“钱没花完必可改进”。
+三情形合并：比较 $\mathrm{MRS}_{12}=1$ 与 $p_1/p_2$，大于则全买商品 1，小于则全买商品 2，相等则整线最优。见图\ref{fig:corner}。
+\end{example}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=1.0]
+  \draw[axisline] (0,0)--(6.2,0) node[below,axislabel]{$x_1$};
+  \draw[axisline] (0,0)--(0,4.6) node[left,axislabel]{$x_2$};
+  % 预算线：(0,2) -- (4,0)，对应 p1=1, p2=2, w=4
+  \draw[thick] (0,2)--(4,0);
+  \node[figlabel,anchor=west] at (0.14,2.17) {$p\cdot x=w$};
+  \node[figlabel,anchor=east] at (-0.06,2.0) {$w/p_2$};
+  \node[figlabel] at (4.0,-0.3) {$w/p_1$};
+  % 无差异直线 x1+x2=4（穿过角点）
+  \draw[curveA] (0.7,3.3)--(4,0);
+  \node[figlabel] at (1.02,3.48) {$u=4$};
+  % 较低无差异直线 x1+x2=2
+  \draw[curveB] (0.3,1.7)--(2,0);
+  \node[figlabel] at (0.62,1.9) {$u=2$};
+  % 不可达无差异直线 x1+x2=5
+  \draw[curveC] (1.3,3.7)--(5,0);
+  \node[figlabel] at (1.62,3.88) {$u=5$};
+  % 角点
+  \node[nodeblue] at (4,0) {};
+  \node[figlabel] at (3.62,0.42) {$x^*$};
+\end{tikzpicture}
+\caption{完全替代的角点最优。}
+\label{fig:corner}
+\end{figure}
+\figexplan{参数取 $p_1=1<p_2=2$、$w=4$：预算线斜率 $-p_1/p_2=-0.5$，比无差异直线的斜率 $-1$ 平缓。最高可达的无差异直线 $u=4$ 与预算集只接触于 $x_1$ 轴上的截距 $x^*=(w/p_1,0)$；虚线 $u=2$ 可达但劣；点线 $u=5$ 完全在预算集之外。此时 $\mathrm{MRS}_{12}=1>p_1/p_2=0.5$，边际上消费者对商品 1 的评价高于市场，最优反应是全部预算购买商品 1。}
+
+一般地，角点的判定法则从驻点条件读出：若 $x_j^*=0$，则
+\[
+ u_j(x^*)=\lambda p_j-\mu_j\le\lambda p_j,
+\]
+即商品 $j$ 的“每元边际效用”不超过已购商品的相应值——不买它不是被排除在最优之外，而是在边际上不值得买。内点条件是等式，角点条件是不等式，KT 框架把两者统一在同一个方程 $u_i=\lambda p_i-\mu_i$ 里。
+
+\subsection{Cobb--Douglas 效用最大化：完整求解}
+\label{sec:cd-solve}
+
+\begin{example}[Cobb--Douglas 的完整求解、验证与乘子]
+\label{ex:cd-full}
+设 $u(x)=x_1^{\alpha}x_2^{1-\alpha}$，$0<\alpha<1$，$p\gg0$，$w>0$。按 KT 流程完整走一遍。
+
+\textbf{第一步（内点判定）。}边界上 $u=0$；而 $w>0$ 时任何严格正的消费束（如 $(\varepsilon,\varepsilon)$ 适当小）可行且 $u>0$，故最优束 $x^*\gg0$，于是 $\mu_1=\mu_2=0$，驻点条件简化为 $u_i=\lambda p_i$。偏导数为
+\[
+ u_1=\alpha x_1^{\alpha-1}x_2^{1-\alpha}=\frac{\alpha u}{x_1},
+ \qquad
+ u_2=(1-\alpha)x_1^{\alpha}x_2^{-\alpha}=\frac{(1-\alpha)u}{x_2}.
+\]
+
+\textbf{第二步（解方程组）。}驻点条件两边同乘 $x_i$：
+\[
+ \frac{\alpha u}{\lambda}=p_1x_1,
+ \qquad
+ \frac{(1-\alpha)u}{\lambda}=p_2x_2.
+\]
+相加并用预算绑定 $p_1x_1+p_2x_2=w$（局部非饱和保证）：
+\[
+ w=\frac{u}{\lambda}
+ \quad\Longrightarrow\quad
+ \lambda=\frac{u(x^*)}{w},
+ \qquad
+ x_1^*=\frac{\alpha w}{p_1},
+ \qquad
+ x_2^*=\frac{(1-\alpha)w}{p_2}.
+\]
+支出份额为常数：$p_1x_1^*/w=\alpha$，$p_2x_2^*/w=1-\alpha$，与 $(p,w)$ 无关——这是 CD 偏好的指纹。
+
+\textbf{第三步（Walras 定律验证）。}$p_1x_1^*+p_2x_2^*=\alpha w+(1-\alpha)w=w$。预算恰好用尽，与局部非饱和的预测一致。
+
+\textbf{第四步（零次齐次验证）。}对 $t>0$，
+\[
+ x_1(tp,tw)=\frac{\alpha tw}{tp_1}=\frac{\alpha w}{p_1}=x_1(p,w),
+ \qquad x_2(tp,tw)=x_2(p,w),
+\]
+需求只依赖实际预算集，无货币幻觉。
+
+\textbf{第五步（充分性与唯一性）。}$u$ 的对数变换 $\ln u=\alpha\ln x_1+(1-\alpha)\ln x_2$ 是严格凹函数（Hessian 负定），表示同一偏好；由定理\ref{thm:convex-suff}，所求解是唯一全局最优。（$u$ 本身也是凹的——指数和为 1 的 CD 函数凹——两种论证皆可。）
+
+\textbf{第六步（乘子与包络验证）。}代回得间接效用
+\[
+ v(p,w)=u(x^*)=\Big(\frac{\alpha w}{p_1}\Big)^{\alpha}
+ \Big(\frac{(1-\alpha)w}{p_2}\Big)^{1-\alpha}
+ =\alpha^{\alpha}(1-\alpha)^{1-\alpha}\,
+ \frac{w}{p_1^{\alpha}p_2^{1-\alpha}} .
+\]
+一方面 $\partial v/\partial w=v/w$；另一方面 $\lambda=u(x^*)/w=v/w$，二者相等——这正是包络定理 $\lambda=\partial v/\partial w$ 的直接验证。若改用 $\ln u$ 求解，需求与 $v$ 的形状（经变换后）不变，但乘子变为 $\tilde\lambda=1/w\ne\lambda$：乘子是基数的，随表示改变，而需求与 MRS 条件不随表示改变（对照注\ref{rem:diff}与下一分节）。
+\end{example}

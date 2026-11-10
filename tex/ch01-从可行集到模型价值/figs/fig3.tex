@@ -1,0 +1,40 @@
+\documentclass[border=6pt]{standalone}
+\usepackage[fontset=none]{ctex}
+\usepackage{fontspec}
+\setCJKmainfont{Songti SC}[BoldFont={Songti SC}]
+\usepackage{amsmath,amssymb}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric,calc,patterns}
+\begin{document}
+\begin{tikzpicture}[scale=0.95]
+  % 函数
+  \draw[thick] (0,0) ellipse (0.8 and 1.3);
+  \draw[thick] (3.0,0) ellipse (0.8 and 1.3);
+  \node at (0,1.75) {\small $X$};
+  \node at (3.0,1.75) {\small $Y$};
+  \fill (0,0.6) circle (1.5pt) node[left] {\small $x_1$};
+  \fill (0,-0.5) circle (1.5pt) node[left] {\small $x_2$};
+  \fill (3.0,0.7) circle (1.5pt) node[right] {\small $f(x_1)$};
+  \fill (3.0,-0.4) circle (1.5pt) node[right] {\small $f(x_2)$};
+  \draw[->,thick] (0,0.6) -- (2.9,0.68);
+  \draw[->,thick] (0,-0.5) -- (2.9,-0.42);
+  \node at (1.5,-2.0) {\small 函数 $f:X\to Y$：一个 $x$ 对一个 $y$};
+  % 对应
+  \begin{scope}[xshift=7.2cm]
+    \draw[thick] (0,0) ellipse (0.8 and 1.3);
+    \draw[thick] (3.0,0) ellipse (0.8 and 1.3);
+    \node at (0,1.75) {\small $X$};
+    \node at (3.0,1.75) {\small $Y$};
+    \fill (0,0.1) circle (1.5pt) node[left] {\small $x$};
+    \fill (3.0,0.8) circle (1.5pt) node[right] {\small $a$};
+    \fill (3.0,-0.6) circle (1.5pt) node[right] {\small $c$};
+    \draw[->,thick] (0,0.1) -- (2.9,0.78);
+    \draw[->,thick] (0,0.1) -- (2.9,-0.58);
+    \node at (1.5,-2.0) {\small 对应 $F:X\rightrightarrows Y$：一个 $x$ 对一个\emph{集合}};
+  \end{scope}
+\end{tikzpicture}
+\end{document}

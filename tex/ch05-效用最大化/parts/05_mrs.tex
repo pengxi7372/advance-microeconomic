@@ -1,0 +1,191 @@
+\section{边际替代率与可分性}
+% ============================================================
+% 第五讲第五分节：边际替代率与可分性
+% ============================================================
+
+\subsection{边际替代率：定义与序数性质}
+\label{sec:mrs-def}
+
+\begin{definition}[边际替代率]
+\label{def:mrs}
+设 $u\in C^1$ 表示偏好 $\succeq$，且在 $x$ 处 $u_k(x)\ne 0$。商品 $j$ 对商品 $k$ 的边际替代率定义为
+\[
+ \mathrm{MRS}_{jk}(x)=\frac{u_j(x)}{u_k(x)}
+ =\frac{\partial u/\partial x_j}{\partial u/\partial x_k}.
+\]
+几何上，过 $x$ 的无差异曲线的切线斜率为 $-u_j/u_k$，MRS 是其绝对值；经济上，它是在保持效用不变的前提下，为多得到一单位 $j$ 而愿意放弃的 $k$ 的数量的边际值。
+\end{definition}
+
+效用函数是序数的：同一偏好有无穷多个表示。一个自然的问题是，MRS 依赖表示的选择吗？答案是否定的。
+
+\begin{proposition}[MRS 是序数概念]
+\label{prop:mrs-ordinal}
+设 $u\in C^1$，$\phi:\R\to\R$ 可微且严格递增（$\phi'>0$）。则 $\phi\circ u$ 与 $u$ 表示同一偏好，且在两者 MRS 同时有定义之处，
+\[
+ \mathrm{MRS}^{\phi\circ u}_{jk}(x)=\mathrm{MRS}^{u}_{jk}(x).
+\]
+\end{proposition}
+\begin{proof}
+链式法则给出
+\[
+ (\phi\circ u)_j(x)=\phi'\big(u(x)\big)\,u_j(x),
+ \qquad
+ (\phi\circ u)_k(x)=\phi'\big(u(x)\big)\,u_k(x).
+\]
+由于 $\phi'(u(x))>0$，分子分母的公共正因子消去：
+\[
+ \mathrm{MRS}^{\phi\circ u}_{jk}(x)
+ =\frac{\phi'(u(x))\,u_j(x)}{\phi'(u(x))\,u_k(x)}
+ =\frac{u_j(x)}{u_k(x)}
+ =\mathrm{MRS}^{u}_{jk}(x). \qedhere
+\]
+同时 $u_k(x)\ne0$ 当且仅当 $(\phi\circ u)_k(x)\ne0$，故两者的定义域也一致。
+\end{proof}
+
+\begin{remark}[MRS 不含乘子，但一般含整个消费束]
+\label{rem:mrs-lambda}
+两个常被混淆的事实需要分开陈述。
+其一，MRS 与乘子 $\lambda$ 无关，而 $\lambda$ 不是序数的。$\lambda=u_i/p_i$ 是\emph{基数}量：把 $u$ 换成 $\phi\circ u$，乘子变为 $\phi'(u)\,\lambda$，随表示改变；同一偏好下“财富的边际效用”没有表示无关的数值。而 MRS 在严格递增变换下不变（命题\ref{prop:mrs-ordinal}）。正因如此，最优性条件一旦写成 $\mathrm{MRS}_{jk}=p_j/p_k$，其中已不含任何依赖表示的对象；写成 $u_i=\lambda p_i$ 则还拖着随表示缩放的 $\lambda$。
+其二，MRS 一般依赖消费束的\emph{全部}坐标。$u=x_1x_2$ 时 $\mathrm{MRS}_{12}=x_2/x_1$ 同时依赖两者；商品更多时，$\mathrm{MRS}_{jk}$ 还可能依赖第三种商品，例如 $u=x_1(x_2+x_3)$ 给出 $\mathrm{MRS}_{12}=(x_2+x_3)/x_1$，随 $x_3$ 变化。“组内 MRS 只依赖组内数量”是一种特殊的结构性质——可分性，第\ref{sec:separability}节专门讨论；在此之前，应当默认 MRS 是 $x_1,\dots,x_n$ 的函数。
+\end{remark}
+
+\subsection{内点最优：MRS 等于价格比}
+\label{sec:mrs-price}
+
+\begin{proposition}[从 Kuhn--Tucker 到 MRS 条件]
+\label{prop:mrs-price}
+设 $u\in C^1$ 强单调（各 $u_i>0$），$p\gg0$，$x^*\gg0$ 是效用最大化问题 $\max\{u(x):p\cdot x\le w,\ x\ge0\}$ 的解。则存在 $\lambda>0$ 使 $u_i(x^*)=\lambda p_i$ 对一切 $i$ 成立，从而对任意商品对 $j,k$：
+\[
+ \mathrm{MRS}_{jk}(x^*)=\frac{u_j(x^*)}{u_k(x^*)}=\frac{p_j}{p_k},
+ \qquad\text{等价地}\qquad
+ \frac{u_j(x^*)}{p_j}=\frac{u_k(x^*)}{p_k}=\lambda .
+\]
+\end{proposition}
+\begin{proof}
+由 $x_i^*>0$ 与互补松弛 $\mu_ix_i^*=0$ 得 $\mu_i=0$；驻点条件 $u_i=\lambda p_i-\mu_i$ 化为 $u_i=\lambda p_i$。强单调与 $p\gg0$ 保证 $\lambda=u_i/p_i>0$。对商品 $j,k$ 的两个方程相除，$\lambda$ 消去：
+\[
+ \frac{u_j(x^*)}{u_k(x^*)}=\frac{\lambda p_j}{\lambda p_k}=\frac{p_j}{p_k}. \qedhere
+\]
+\end{proof}
+
+这一推导值得细看：乘子在相除中消去并非巧合，而是命题\ref{prop:mrs-ordinal}的体现——最优条件中唯一可能依赖表示的对象 $\lambda$ 必须也从任何表示无关的表述中消失，而 $\mathrm{MRS}_{jk}=p_j/p_k$ 恰是消去后的形式。条件本身有两个等价读法：\textbf{交换读法}，$p_j/p_k$ 是市场按 $k$ 计的 $j$ 的相对价格，$\mathrm{MRS}_{jk}(x^*)$ 是消费者在 $x^*$ 处的内部意愿比率，内点最优即两者打平，无差异曲线与预算线相切；\textbf{每元读法}，$u_j/p_j=\lambda$ 对所有 $j$ 成立，每一元花在任何商品上的边际效用相同——若商品 $j$ 的比值更高，把一元从别的商品挪到 $j$ 即可严格改进，与最优矛盾。
+
+\begin{remark}[角点版本：等式弱化为不等式]
+\label{rem:corner-mrs}
+当 $x_j^*=0$ 而 $x_k^*>0$ 时，驻点条件是 $u_j(x^*)=\lambda p_j-\mu_j\le\lambda p_j$，于是
+\[
+ \frac{u_j(x^*)}{p_j}\ \le\ \lambda=\frac{u_k(x^*)}{p_k},
+ \qquad\text{即}\qquad
+ \mathrm{MRS}_{jk}(x^*)\ \le\ \frac{p_j}{p_k}
+\]
+（当 $u_j>0$ 时）。不买商品 $j$ 的原因由此有了精确表述：每一元花在 $j$ 上的边际效用不超过花在已购商品上的边际效用。完全替代 $u=x_1+x_2$、$p_1<p_2$ 即是 $1/p_1>1/p_2$（等价地 $\mathrm{MRS}_{12}=1>p_1/p_2$）的角点情形；等式与不等式分别对应内点与角点，这正是 Kuhn--Tucker 框架统一的两种状态。
+\end{remark}
+
+\subsection{可分偏好与组内边际替代率}
+\label{sec:separability}
+
+\begin{definition}[弱可分性]
+\label{def:weak-sep}
+设商品向量分块为 $(x,y)$，其中 $x\in\R^m_+$ 为关注组（$m\ge2$），$y$ 为其余商品。若存在函数 $v:\R^m_+\to\R$ 与 $U:\R\times Y\to\R$，使得偏好可表示为
+\[
+ u(x,y)=U\big(v(x),\,y\big),
+\]
+其中 $v$ 对组内向量严格递增、$U$ 对第一自变量严格递增，则称偏好对分组 $X|Y$ \textbf{弱可分}，$v$ 称为组子效用函数。
+\end{definition}
+
+含义是：组内商品只通过其聚合指标 $v(x)$ 进入整体效用——组内“怎么搭配”与组外商品无关，组内偏好自成体系。弱可分性的全部边际含义浓缩在下述命题中。
+
+\begin{proposition}[组内 MRS 不依赖组外商品]
+\label{prop:sep-mrs}
+设 $u(x,y)=U(v(x),y)$，$u,U,v$ 均可微，$U_1>0$（$U$ 对第一自变量严格递增），$v_k(x)\ne0$。则对组内任意商品 $j,k$：
+\[
+ \mathrm{MRS}_{jk}(x,y)=\frac{u_j(x,y)}{u_k(x,y)}
+ =\frac{v_j(x)}{v_k(x)},
+\]
+右端不含任何组外商品 $y$。
+\end{proposition}
+\begin{proof}
+链式法则：
+\[
+ \frac{\partial u}{\partial x_j}
+ =U_1\big(v(x),y\big)\,v_j(x),
+ \qquad
+ \frac{\partial u}{\partial x_k}
+ =U_1\big(v(x),y\big)\,v_k(x),
+\]
+其中 $U_1$ 是 $U$ 对第一自变量的偏导数。两式相除，公共正因子 $U_1$ 消去，得 $\mathrm{MRS}_{jk}=v_j/v_k$，只依赖组内数量 $x$，与 $y$ 无关。
+\end{proof}
+
+证明的结构与命题\ref{prop:mrs-ordinal}完全同构：外层函数的边际权重（$\phi'$ 或 $U_1$）在比值中消去。这提示两个命题的逆命题也都有内容：在正则条件下（MRS 光滑且处处非零），“组内 MRS 与组外商品无关”反过来蕴含存在弱可分表示，证明需要沿无差异曲线积分的构造，此处从略。要点是：弱可分性是\emph{偏好}的性质而非某个表示的性质——命题\ref{prop:sep-mrs} 的结论本身用 MRS 表述，而 MRS 是序数的。
+
+\begin{remark}[可加可分：特例与更强的含义]
+\label{rem:additive}
+\textbf{可加可分} $u(x)=\sum_{i}u_i(x_i)$ 是弱可分的极端情形：每组只有一件商品，组子效用就是单变量函数 $u_i$。此时
+\[
+ \mathrm{MRS}_{jk}=\frac{u_j'(x_j)}{u_k'(x_k)},
+\]
+只依赖 $x_j$ 与 $x_k$ 各自的数量，不依赖任何其他商品。相比一般弱可分（组内 MRS 不依赖组外商品），可加性额外要求组内 MRS 可按商品\emph{逐个}分离。
+两点提醒。其一，“某个表示可加”不等于“偏好可加可分”：可加性在单调变换下一般不保持，但\emph{存在}可加表示是偏好的性质（有完整的刻画定理，条件较繁，从略）。经典例子：$u=x_1x_2$ 本身不可加，但 $\ln u=\ln x_1+\ln x_2$ 可加，故该偏好可加可分；一般地，二商品偏好可加可分当且仅当 MRS 可写成 $f(x_1)g(x_2)$ 的乘积形式。其二，可加性给出可检验的交叉效应限制：它要求第 $i$ 种商品的边际效用不随其他商品的数量变化（$u_i'(x_i)$ 只看 $x_i$），这在需求估计中表现为具体的系数约束。
+\end{remark}
+
+\begin{remark}[实证意义：两阶段预算]
+\label{rem:two-stage}
+弱可分性是需求系统估计中“分而治之”的许可证。理论逻辑：组内偏好只通过子效用 $v(x)$ 与组外商品互动，于是在最优处，组内需求只依赖组内相对价格与分配到该组的（间接）支出，组外价格只通过组支出总额发生作用。计量上这允许\textbf{两阶段预算}：第一阶段估计组间支出份额方程（食品、住房、交通等大类如何瓜分总支出），第二阶段在各组内部估计组内需求。AIDS、QUAIDS 以及嵌套 CES/CD 结构的实证需求系统大量依赖这一性质，其收益是参数维度的大幅下降。
+可分性由此从“记号便利”变成“可证伪假设”：弱可分性蕴含（在适当的组价格指数化下）组内需求不直接依赖其他组的价格；若估计出的组内需求对组外价格仍有显著敏感反应，弱可分结构即被数据拒绝。理论结构、参数节约与假设检验在此合为一体。
+\end{remark}
+
+\subsection{例题：Cobb--Douglas、CES 与可分性检验}
+\label{sec:mrs-examples}
+
+\begin{example}[Cobb--Douglas 的 MRS 与可分性]
+\label{ex:cd-mrs}
+设 $u=x_1^{\alpha}x_2^{1-\alpha}$，$0<\alpha<1$。偏导数 $u_1=\alpha u/x_1$、$u_2=(1-\alpha)u/x_2$，故
+\[
+ \mathrm{MRS}_{12}=\frac{\alpha}{1-\alpha}\cdot\frac{x_2}{x_1}.
+\]
+\textbf{序数性检验：}换表示 $\ln u=\alpha\ln x_1+(1-\alpha)\ln x_2$，则
+\[
+ \frac{(\ln u)_1}{(\ln u)_2}=\frac{\alpha/x_1}{(1-\alpha)/x_2}
+ =\frac{\alpha}{1-\alpha}\cdot\frac{x_2}{x_1},
+\]
+与原表示一致，验证命题\ref{prop:mrs-ordinal}。
+\textbf{三商品与弱可分：}设 $u=x_1^{a}x_2^{b}x_3^{c}$（$a,b,c>0$），则
+\[
+ \mathrm{MRS}_{12}=\frac{a}{b}\cdot\frac{x_2}{x_1},
+\]
+不含 $x_3$，故对分组 $\{1,2\}|\{3\}$ 弱可分：取 $v(x_1,x_2)=x_1^{a/(a+b)}x_2^{b/(a+b)}$ 与 $U(v,x_3)=v^{a+b}x_3^{c}$ 即可，且 $v_1/v_2=(a/b)(x_2/x_1)$，与命题\ref{prop:sep-mrs}一致。又因 $\ln u=a\ln x_1+b\ln x_2+c\ln x_3$ 可加，该偏好还是可加可分的：CD 族在两种可分性下都表现良好。
+\end{example}
+
+\begin{example}[CES 的 MRS、替代弹性与可分性]
+\label{ex:ces-mrs}
+设 $u=(x_1^{\rho}+x_2^{\rho})^{1/\rho}$，$\rho\le1$、$\rho\ne0$（$\rho<1$ 保证拟凹）。偏导数
+\[
+ u_1=(x_1^{\rho}+x_2^{\rho})^{1/\rho-1}x_1^{\rho-1},
+ \qquad
+ u_2=(x_1^{\rho}+x_2^{\rho})^{1/\rho-1}x_2^{\rho-1},
+\]
+公共因子 $(x_1^{\rho}+x_2^{\rho})^{1/\rho-1}$ 在比值中消去：
+\[
+ \mathrm{MRS}_{12}=\Big(\frac{x_1}{x_2}\Big)^{\rho-1}.
+\]
+\textbf{序数性检验：}换表示 $\ln u=\tfrac1\rho\ln(x_1^{\rho}+x_2^{\rho})$，偏导数为 $(\ln u)_i=x_i^{\rho-1}/(x_1^{\rho}+x_2^{\rho})$，比值仍为 $(x_1/x_2)^{\rho-1}$，不变。
+\textbf{替代弹性的读法：}MRS 对数量比 $(x_1/x_2)$ 的弹性为 $\rho-1$，替代弹性 $\sigma=1/(1-\rho)$：$\sigma$ 越大（$\rho\to1$），MRS 对数量比越敏感，无差异曲线越平直（极限是完全替代的直线）；$\rho\to0$ 时 MRS $\to x_2/x_1$，退回 CD（$\sigma=1$）；$\rho\to-\infty$ 时趋于完全互补的直角。
+\textbf{最优条件与可分性：}内点最优要求 $(x_1/x_2)^{\rho-1}=p_1/p_2$，即
+\[
+ \frac{x_1}{x_2}=\Big(\frac{p_2}{p_1}\Big)^{\sigma},
+\]
+需求比只依赖价格比。又因单调变换 $x_1^{\rho}+x_2^{\rho}$ 可加，CES 偏好可加可分；CD 是其 $\rho\to0$ 极限，与例\ref{ex:cd-mrs}的结论相洽。
+\end{example}
+
+\begin{example}[一个不可分偏好]
+\label{ex:nonsep}
+设 $u=(x_1+x_2)(x_2+x_3)$。检验分组 $\{1,3\}|\{2\}$ 是否弱可分：
+\[
+ \frac{\partial u}{\partial x_1}=x_2+x_3,
+ \qquad
+ \frac{\partial u}{\partial x_3}=x_1+x_2,
+ \qquad
+ \mathrm{MRS}_{13}=\frac{x_2+x_3}{x_1+x_2},
+\]
+随组外商品 $x_2$ 变化，故该分组不弱可分。这个例子同时说明一个容易被忽视的平凡性：把\emph{单件}商品算作一组时，任何效用都能写成 $U(v(x_j),\text{其余})$（取 $v(x_j)=x_j$、$U=u$ 即可），弱可分性因此只在组内至少两件商品时才有内容；命题\ref{prop:sep-mrs}的价值正在于把非平凡的情形（组内 MRS 摆脱组外商品）与平凡情形区分开。
+\end{example}

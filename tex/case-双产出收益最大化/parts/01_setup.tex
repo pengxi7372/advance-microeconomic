@@ -1,0 +1,438 @@
+% ============================================================
+%  第一部分：案例设定、收益最大化问题与逐步数值求解
+% ============================================================
+
+\section{案例设定：双产出技术与 Shephard 转换函数}
+\label{sec:convention}
+
+\subsection{一个"厨房"里的两产品企业}
+
+设想一家面包房，给定一天内可支配的全部要素（一名师傅、一台烤箱、固定数量的面粉与糖），
+它可以生产两种产品：
+
+\begin{itemize}
+  \item $y_1$：面包的产量（单位：件）；
+  \item $y_2$：蛋糕的产量（单位：件）。
+\end{itemize}
+
+两种产品都要占用同一批要素，因此之间存在替代关系：多烤一个蛋糕，
+就得少烤几个面包。这种"给定要素禀赋下两种产出的技术替代关系"，
+在数学上不必回到生产函数去处理，而可以直接用一个\textbf{转换函数}
+（transformation function，Shephard 的标准设定）来描述。
+本案例的技术设定为
+\begin{equation}
+F(y_1,y_2)=y_1+\frac{y_2^{2}}{4}-10,
+\label{eq:tech}
+\end{equation}
+市场价格为 $p_1=2$、$p_2=4$（单位：元/件）。目标是选择产出组合最大化收益：
+\begin{equation}
+\max_{y_1,y_2}\ \pi=p_1y_1+p_2y_2=2y_1+4y_2
+\quad\text{s.t.}\quad F(y_1,y_2)=0.
+\label{eq:rm}
+\end{equation}
+
+在进一步讨论之前，必须先固定 $F$ 的\textbf{符号约定}。
+这是整件事的根基：约定一旦确定，$- \lambda F$ 还是 $+\lambda F$、
+$\lambda$ 的正负、可行集在哪一侧，就全部锁定了。
+
+\subsection{转换函数的三项约定}
+
+\begin{definition}[转换函数及其约定]
+设 $F:\R^{2}_{+}\to\R$ 连续可微，且对每个 $i$ 有 $\partial F/\partial y_i>0$
+（产出越多，$F$ 越大，即技术约束是"紧"的、不存在自由处置意义上的浪费被隐藏）。
+称 $F$ 为该技术的\textbf{转换函数}，并约定：
+\begin{equation}
+F(y_1,y_2)
+\begin{cases}
+=0, & \text{产出组合恰好落在生产可能性边界（PPF）上，技术有效；}\\[2pt]
+<0, & \text{产出组合落在 PPF 内部，资源未用尽，技术无效率；}\\[2pt]
+>0, & \text{产出组合超出 PPF，技术上不可行。}
+\end{cases}
+\label{eq:convention}
+\end{equation}
+\end{definition}
+
+三条约定的含义要逐条落实。
+
+\begin{itemize}
+  \item \textbf{为什么 $F=0$ 是边界。}等值线 $F(y)=0$ 是一条曲线，
+        它把平面分成两块区域；由于 $F$ 连续，从 $F>0$ 的点走到 $F<0$ 的点
+        必定穿过这条曲线，所以它就是集合 $\{y:F(y)\le 0\}$ 的边界，
+        也就是生产可能集的上边界。
+  \item \textbf{为什么可行的一侧是 $F\le 0$ 而不是 $F\ge 0$。}
+        关键在于单调性假设 $\partial F/\partial y_i>0$：
+        若某点满足 $F<0$，则把任一产出减少一点点，$F$ 会变得更小，
+        于是该点连同它"左下方的所有点"都属于可行集；
+        而若 $F>0$，减少产出只能使 $F$ 沿着连续路径下降，
+        无论减多少都不可能把它变进 $F\le 0$ 而不丢掉已实现的一部分产出，
+        因此 $F>0$ 的点位于要素禀赋所支持的范围之外。
+        一句话：$\partial F/\partial y_i>0$ 保证了"内部点可达、外部点不可达"。
+  \item \textbf{为什么必须是严格不等号才叫无效率。}
+        $F<0$ 表示存在未用尽的要素：可以在不减少 $y_1$ 的条件下增加一些 $y_2$
+        （或反之），直到 $F$ 上升到 $0$。因此利润最大化企业绝不会停在严格内部点上。
+\end{itemize}
+
+\begin{remark}[约定是任意的，但不能中途更换]
+把可行的一侧写成 $F\le 0$ 只是约定。若有人用\ $\widetilde{F}=-F$，
+则同一技术的可行集变为 $\widetilde{F}\ge 0$，拉格朗日要写成
+$\mathcal{L}=p\cdot y+\mu\,\widetilde{F}$ 才能得到正的乘子。
+\textbf{判断一套写法是否自洽，只有一条标准：在最优点上，价格向量必须与所选转换函数的梯度同向且成严格正比例。}
+本案例始终遵守定义 \ref{eq:convention}，故拉格朗日写为减去 $\lambda F$，乘子为正。
+\end{remark}
+
+除上述三项约定之外还有一层容易被忽略的问题：$F$ 本身的量纲。\eqref{eq:tech} 中的 $\frac14 y_2^{2}$ 看似与 $y_1$ 量纲不合，
+严格写法应引入带单位的曲率参数 $\kappa$：
+\begin{equation}
+F(y_1,y_2)=y_1+\frac{\kappa}{2}y_2^{2}-c,
+\qquad [\kappa]=\text{件}^{-1},\quad [c]=\text{件},
+\label{eq:tech-general}
+\end{equation}
+本案例取 $\kappa=\tfrac12$、$c=10$，于是 $\frac{\kappa}{2}y_2^{2}=\frac14 y_2^{2}$，
+恰为 \eqref{eq:tech}。此时 $[F]=\text{件}$，
+$F_1=1$ 无量纲，$F_2=\kappa y_2$ 也无量纲。
+后面 \S\ref{sec:grad} 会用到这一点：$\lambda$ 的单位是元/件，与价格一致。
+
+\subsection{三项约定的数值检验}
+
+取同一条竖线 $y_2=4$ 上的三个点来检验约定 \eqref{eq:convention}：
+
+\begin{equation}
+\begin{array}{lll}
+\text{点 }(y_1,y_2)=(6,4): & F=6+\tfrac{16}{4}-10=0, & \text{前沿（技术有效）；}\\[2pt]
+\text{点 }(y_1,y_2)=(4,4): & F=4+\tfrac{16}{4}-10=-2<0, & \text{内部（要素闲置）；}\\[2pt]
+\text{点 }(y_1,y_2)=(8,4): & F=8+\tfrac{16}{4}-10=+2>0, & \text{不可行。}
+\end{array}
+\label{eq:check-three}
+\end{equation}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[x=0.95cm,y=0.50cm,line cap=round,line join=round]
+  % ---- 可行集（F<=0）阴影 ----
+  \fill[black!6] (0,0) -- (0,10)
+    -- plot[domain=0:6.3246,samples=70] (\x,{10-\x*\x/4})
+    -- (6.3246,0) -- cycle;
+  % ---- 坐标轴 ----
+  \draw[axisline] (0,0) -- (7.6,0) node[below,axislabel] {$y_2$（蛋糕，件）};
+  \draw[axisline] (0,0) -- (0,13.8) node[left,axislabel] {$y_1$（面包，件）};
+  % ---- 生产可能性边界 ----
+  \draw[curveA,domain=0:6.3246,samples=90] plot (\x,{10-\x*\x/4});
+  \node[figlabel,anchor=east] at (6.0,0.55) {$y_1=10-\dfrac{y_2^{2}}{4}$};
+  % ---- 检验点所在的竖线 ----
+  \draw[curveC] (4,0) -- (4,8.6);
+  % ---- 三个检验点 ----
+  \draw[nodewhite] (4,6) circle (2.2pt);
+  \draw[nodewhite] (4,4) circle (2.2pt);
+  \draw[nodewhite] (4,8) circle (2.2pt);
+  \fill (4,6) circle (2.2pt);
+  \fill (4,4) circle (2.2pt);
+  \fill (4,8) circle (2.2pt);
+  % ---- 三个标签 ----
+  \node[figlabel,anchor=west] at (4.25,8.0) {$(8,4)$：$F=+2>0$，技术不可行};
+  \node[figlabel,anchor=west] at (4.25,6.0) {$(6,4)$：$F=0$，生产前沿};
+  \node[figlabel,anchor=west] at (4.25,4.0) {$(4,4)$：$F=-2<0$，内部无效率};
+  % ---- 区域说明 ----
+  \node[figlabel] at (2.2,2.2) {$F<0$：可行域};
+  \node[figlabel] at (1.6,11.6) {$F>0$：不可行域};
+  % ---- 端点 ----
+  \draw (0,0.12) -- (-0.12,0.12) -- (-0.12,0);
+  \node[figlabel,anchor=east] at (0.05,10) {$10$};
+  \node[figlabel,anchor=north] at (6.3246,0.05) {$\sqrt{40}$};
+\end{tikzpicture}
+\caption{转换函数的符号约定：粗实线为生产可能性边界 $F(y_1,y_2)=0$，
+  其左下方的浅灰区域为可行集 $\{y:F(y)\le 0\}$，右上区域技术不可行。
+  同一竖线 $y_2=4$ 上的三个点分别对应 $F>0$、$F=0$、$F<0$ 三种情形。}
+\label{fig:convention}
+\end{figure}
+\figexplan{横轴为 $y_2$（蛋糕），纵轴为 $y_1$（面包）。
+粗实线 $y_1=10-y_2^{2}/4$ 是唯一的技术前沿，它向下弯曲，
+反映 $y_2$ 越多、再多烤一单位蛋糕要放弃的面包越多（机会成本递增）。
+浅灰阴影为可行集，其与两坐标轴之间的部分就是"要素未用尽"的内部点。
+虚线竖线穿过三个检验点：最低点 $(4,4)$ 在阴影内（$F=-2$），
+中间点 $(6,4)$ 恰在边界上（$F=0$），最高点 $(8,4)$ 在阴影外（$F=+2$），
+它在给定要素下无法生产出来。}
+
+\subsection{本案例技术的三条性质}
+
+在动手求解之前，先把技术的形状说清楚，因为二阶条件与唯一性都取决于它。
+
+\begin{enumerate}
+  \item \textbf{单调性}。$F_1=\partial F/\partial y_1=1>0$，
+        $F_2=\partial F/\partial y_2=\dfrac{y_2}{2}>0$（对 $y_2>0$），
+        满足转换函数的单调性要求，故约定 \eqref{eq:convention} 成立。
+  \item \textbf{可行集紧（闭且有界）}。由 $F\le 0$ 且 $y\ge 0$ 得
+        $0\le y_2\le \sqrt{40}$、$0\le y_1\le 10-\dfrac{y_2^{2}}{4}$，
+        可行集是有界闭集；连续函数 $p\cdot y$ 在其上必取到最大值（Weierstrass 定理），
+        \textbf{最大值一定存在}，这是后面一切讨论的前提。
+  \item \textbf{前沿严格凹、机会成本递增}。把前沿写成显式函数
+        \begin{equation}
+        y_1=T(y_2)=10-\frac{y_2^{2}}{4},\qquad
+        T'(y_2)=-\frac{y_2}{2}<0,\quad T''(y_2)=-\frac12<0,
+        \label{eq:ppf-explicit}
+        \end{equation}
+        $T$ 严格凹，即生产可能集严格凸之外的"边界向外凸"形状：
+        随着 $y_2$ 增加，$-(dy_1/dy_2)=y_2/2$ 递增，
+        每多烤一单位蛋糕要放弃的面包越来越多。
+\end{enumerate}
+
+第三条性质直接给出\textbf{二阶充分条件}：把约束代入目标，
+得到只含一个变量的收益函数
+\begin{equation}
+\pi(y_2)=p_1T(y_2)+p_2y_2
+=2\Bigl(10-\frac{y_2^{2}}{4}\Bigr)+4y_2
+=20-\frac{y_2^{2}}{2}+4y_2,
+\qquad \pi''(y_2)=-1<0,
+\label{eq:one-dim}
+\end{equation}
+它是 $y_2$ 的严格凹函数。因此任何满足一阶条件的内点都是\textbf{唯一的全局最大点}，
+不需要再讨论多峰或局部极值问题。这一点在课堂上值得先说，
+因为它把"检查二阶条件"变成了看一眼二阶导数符号。
+
+完成平方还能把 \eqref{eq:one-dim} 写成一个更便于口算的形式：
+\begin{equation}
+\pi(y_2)=28-\frac{(y_2-4)^{2}}{2}.
+\label{eq:pi-complete-square}
+\end{equation}
+沿前沿的收益是一条以 $y_2=4$ 为顶点、最高值为 $28$ 的抛物线。
+后面 \S\ref{sec:solve} 用拉格朗日法得到的答案，必须与这条抛物线的顶点完全一致。
+
+\section{收益最大化问题与拉格朗日一阶条件}
+\label{sec:foc}
+
+\subsection{问题与几何图像}
+
+把 \eqref{eq:rm} 写成一个正式的最优化问题：
+\begin{equation}
+\tag{RM}
+\max_{y_1,y_2}\ p_1y_1+p_2y_2
+\quad\text{s.t.}\quad F(y_1,y_2)=0,\quad y_1\ge 0,\ y_2\ge 0.
+\label{eq:rm-formal}
+\end{equation}
+目标函数 $p\cdot y$ 是线性的，其等值线$p_1y_1+p_2y_2=\bar{\pi}$ 是直线，
+斜率（以横轴 $y_2$、纵轴 $y_1$ 度量）为
+\begin{equation}
+\frac{dy_1}{dy_2}=-\frac{p_2}{p_1}=-\frac{4}{2}=-2.
+\label{eq:isor-slope}
+\end{equation}
+几何上，\eqref{eq:rm-formal} 就是问：在给定斜率的直线族中，
+哪一条与前沿 $F=0$ 相交且截距（即收益）最大。
+答案是与前沿\textbf{相切}的那一条——这就是后面所有代数要复述的内容。
+
+\subsection{拉格朗日函数与一阶条件}
+
+按定义 \ref{eq:convention} 的约定构造拉格朗日函数：
+\begin{equation}
+\mathcal{L}(y_1,y_2,\lambda)=p_1y_1+p_2y_2-\lambda F(y_1,y_2).
+\label{eq:lagrange}
+\end{equation}
+对两个产出求偏导并令其为零：
+\begin{equation}
+\begin{cases}
+\dfrac{\partial \mathcal{L}}{\partial y_1}=p_1-\lambda\dfrac{\partial F}{\partial y_1}=0,\\[8pt]
+\dfrac{\partial \mathcal{L}}{\partial y_2}=p_2-\lambda\dfrac{\partial F}{\partial y_2}=0,
+\end{cases}
+\quad\Longleftrightarrow\quad
+\begin{cases}
+p_1=\lambda F_1,\\
+p_2=\lambda F_2.
+\end{cases}
+\label{eq:foc}
+\end{equation}
+两式相除消去 $\lambda$（要求 $F_2\neq 0$），得到本案例的核心等式：
+\begin{equation}
+\boxed{\ \frac{p_1}{p_2}=\frac{F_1}{F_2}\ }
+\label{eq:core}
+\end{equation}
+第三个一阶条件是把 $\mathcal{L}$ 对 $\lambda$ 求偏导，它把约束还回来：
+$\partial \mathcal{L}/\partial \lambda=-F(y_1,y_2)=0$，即 $F=0$。
+
+三个未知数 $y_1,y_2,\lambda$，三个方程，可解。
+这里只需要一条约束规格：$\nabla F=(F_1,F_2)\neq (0,0)$，
+在最优点附近由 $F_1=1$ 自动满足（梯度秩为 $1$）。
+
+\subsection{为什么乘子为正：符号、量纲与经济含义}
+
+由 \eqref{eq:foc} 直接读出：
+\begin{equation}
+\lambda=\frac{p_1}{F_1}=\frac{p_2}{F_2}.
+\label{eq:lambda-ratio}
+\end{equation}
+本例中 $p_1,p_2>0$ 且 $F_1,F_2>0$，故 $\lambda>0$。这不是巧合：
+
+\begin{itemize}
+  \item \textbf{符号方面}。$F$ 沿任一产出增加的方向上升，而价格非负，
+        两者之比自然为正。拉格朗日里写 $-\lambda F$ 而不是 $+\lambda F$，
+        正是为了保证这个正数出现；若写成 $+\lambda F$，
+        解出的 $\lambda$ 会是 $-2$，解释为"价格与技术梯度反向"，徒增混乱。
+  \item \textbf{量纲方面}。由 \eqref{eq:tech-general}，
+        $[F_1]=1$（无量纲），$[p_1]=$ 元/件，故 $[\lambda]=$ 元/件，
+        与价格同量纲。于是 $p=\lambda\nabla F$ 两边量纲一致：
+        无单位的梯度方向被乘以一个"元/件"的比例因子，得到价格向量。
+  \item \textbf{经济方面}。$\lambda$ 把\textbf{纯技术的方向}
+        （$\nabla F$，不含任何价格信息）缩放成\textbf{市场价格的方向}。
+        \S\ref{sec:shadow} 将证明它等于收益对技术水平的导数，
+        是技术约束的影子值。
+\end{itemize}
+
+\section{逐步求解：从梯度到最优产出组合}
+\label{sec:solve}
+
+下面按四个步骤把 \eqref{eq:rm-formal} 解到底，每一步的中间结果都单独列出，
+便于课堂上逐步板书。
+
+\subsection{第一步：求偏导（梯度分量）}
+
+由 $F=y_1+\dfrac{y_2^{2}}{4}-10$：
+\begin{equation}
+F_1=\frac{\partial F}{\partial y_1}=1,
+\qquad
+F_2=\frac{\partial F}{\partial y_2}=\frac{y_2}{2}.
+\label{eq:grad-components}
+\end{equation}
+注意 $F_1$ 是常数，$F_2$ 随 $y_2$ 递增：这条技术对 $y_1$ 而言是"线性的"，
+对 $y_2$ 而言呈凸的技术代价，这正是前沿弯曲的来源。
+
+\subsection{第二步：代入一阶条件}
+
+把 \eqref{eq:grad-components} 与价格 $p_1=2,p_2=4$ 代入 \eqref{eq:foc}：
+\begin{equation}
+2=\lambda\cdot 1,
+\qquad
+4=\lambda\cdot \frac{y_2}{2}.
+\label{eq:foc-numbers}
+\end{equation}
+第一式立刻给出
+\begin{equation}
+\lambda=2.
+\label{eq:lambda-value}
+\end{equation}
+代入第二式：$4=2\cdot \dfrac{y_2}{2}=y_2$，故
+\begin{equation}
+y_2^{*}=4.
+\label{eq:y2-star}
+\end{equation}
+
+\subsection{第三步：回代前沿求出产出组合与收益}
+
+把 $y_2^{*}=4$ 代入前沿 $F=0$，即显式形式 \eqref{eq:ppf-explicit}：
+\begin{equation}
+y_1^{*}=10-\frac{(4)^{2}}{4}=10-4=6.
+\label{eq:y1-star}
+\end{equation}
+对应的最优收益（最大可能的总收入）为
+\begin{equation}
+\pi^{*}=p_1y_1^{*}+p_2y_2^{*}=2\times 6+4\times 4=12+16=28.
+\label{eq:pi-star}
+\end{equation}
+最优解汇总：
+\begin{equation}
+\boxed{\ (y_1^{*},y_2^{*})=(6,4),\qquad \lambda^{*}=2,\qquad \pi^{*}=28\ }
+\label{eq:solution}
+\end{equation}
+
+\subsection{第四步：验证核心等式}
+
+核心等式 \eqref{eq:core} 的左边是市场价格比，右边取在最优点 $(6,4)$ 处的技术梯度比：
+\begin{equation}
+\frac{p_1}{p_2}=\frac{2}{4}=\frac12,
+\qquad
+\frac{F_1}{F_2}\bigg|_{(6,4)}=\frac{1}{4/2}=\frac{1}{2}.
+\label{eq:core-check}
+\end{equation}
+两边相等，验证通过。同时检查 $p=\lambda\nabla F$：
+\begin{equation}
+\lambda\nabla F=2\cdot\Bigl(1,\frac{y_2}{2}\Bigr)\bigg|_{y_2=4}
+=2\cdot(1,2)=(2,4)=(p_1,p_2)=p.
+\label{eq:p-lambda-grad}
+\end{equation}
+价格向量与技术梯度在最优点上共线，比例因子为 $\lambda=2$。
+
+\subsection{交叉验证一：消元法}
+
+不做拉格朗日，改用"把约束消掉"的老办法。由前沿 $y_1=10-\dfrac{y_2^{2}}{4}$
+代入目标，得到单变量问题
+\begin{equation}
+\max_{0\le y_2\le \sqrt{40}}\ \pi(y_2)=20-\frac{y_2^{2}}{2}+4y_2
+=28-\frac{(y_2-4)^{2}}{2}.
+\label{eq:onedim}
+\end{equation}
+一阶条件：$\pi'(y_2)=4-y_2=0\Rightarrow y_2^{*}=4$；
+二阶条件：$\pi''=-1<0$，严格凹，故为唯一全局最大点。回代得 $y_1^{*}=6$、$\pi^{*}=28$。
+与 \eqref{eq:solution} 完全一致。
+
+两种方法的对应关系值得点明：消元法里的"$4-y_2$"就是"$p_2-\lambda F_2$"
+除以某个正因子的结果，二者是同一条边际条件的两种写法；
+拉格朗日法的优势在于不必显式解出前沿函数 $T(\cdot)$，
+在多产出、多约束的问题里尤其明显。
+
+\subsection{交叉验证二：前沿上的收益对照表}
+
+沿前沿逐点计算收益，可以直接看到最大值出现在何处。
+由 \eqref{eq:pi-complete-square}，收益只取决于 $(y_2-4)^{2}$，
+表 \ref{tab:frontier-pi} 给出七个代表性组合。
+
+\begin{table}[H]
+\centering
+\caption{沿生产可能性边界的收益对照（$p_1=2,\ p_2=4$）}
+\label{tab:frontier-pi}
+\begin{tabular}{ccccc}
+\toprule
+$y_2$  & $y_1=10-\dfrac{y_2^{2}}{4}$ & $\pi=2y_1+4y_2$ & $28-\dfrac{(y_2-4)^{2}}{2}$ & 位置 \\
+\midrule
+$0$      & $10.00$  & $20.00$  & $20.00$  & 端点（只产面包）\\
+$2$      & $9.00$   & $26.00$  & $26.00$  & 偏离 \\
+$3$      & $7.75$   & $27.50$  & $27.50$  & 偏离 \\
+$\mathbf{4}$ & $\mathbf{6.00}$ & $\mathbf{28.00}$ & $\mathbf{28.00}$ & \textbf{最优（相切）}\\
+$5$      & $3.75$   & $27.50$  & $27.50$  & 偏离 \\
+$6$      & $1.00$   & $26.00$  & $26.00$  & 偏离 \\
+$\sqrt{40}\approx 6.325$ & $0$ & $25.30$ & $25.30$ & 端点（只产蛋糕）\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+表 \ref{tab:frontier-pi} 说明两件事。第一，最大值确实出现在 $y_2=4$ 而不是别处；
+第二，两个端点都明显吃亏：只产面包得到 $20$，只产蛋糕得到 $25.30$，
+都低于混合生产的 $28$。也就是说，\textbf{只要价格比不极端，
+专业化（走到端点）就不是最优}，这一点在 \S\ref{sec:corner} 会被严格化。
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[x=0.95cm,y=0.50cm,line cap=round,line join=round]
+  % ---- 可行集阴影 ----
+  \fill[black!6] (0,0) -- (0,10)
+    -- plot[domain=0:6.3246,samples=70] (\x,{10-\x*\x/4})
+    -- (6.3246,0) -- cycle;
+  % ---- 坐标轴 ----
+  \draw[axisline] (0,0) -- (7.6,0) node[below,axislabel] {$y_2$（蛋糕，件）};
+  \draw[axisline] (0,0) -- (0,13.8) node[left,axislabel] {$y_1$（面包，件）};
+  % ---- 生产前沿 ----
+  \draw[curveA,domain=0:6.3246,samples=90] plot (\x,{10-\x*\x/4});
+  \node[figlabel,anchor=north east] at (1.15,9.68) {PPF：$F=0$};
+  % ---- 等收益线 pi = 20（过端点 (10,0)）----
+  \draw[curveB] (0,10) -- (5,0);
+  \node[figlabel,anchor=north west] at (0.85,8.3) {$\bar\pi=20$};
+  % ---- 等收益线 pi = 25.30（过端点 (0,sqrt40)）----
+  \draw[curveC] (0,12.649) -- (6.3246,0);
+  \node[figlabel,anchor=south west] at (0.15,12.3) {$\bar\pi\approx 25.30$};
+  % ---- 等收益线 pi = 28（与 PPF 相切）----
+  \draw[thick,black] (2,10) -- (7,0);
+  \node[figlabel,anchor=south west] at (6.0,1.6) {$\bar\pi=28$};
+  % ---- 最优 -----端点标记
+  \fill (4,6) circle (2.6pt);
+  \node[figlabel,anchor=south east] at (3.9,6.15) {$(y_2^{*},y_1^{*})=(4,6)$};
+  \draw (0,0.12) -- (-0.12,0.12) -- (-0.12,0);
+  \node[figlabel,anchor=east] at (0.05,10) {$10$};
+  \node[figlabel,anchor=north] at (6.3246,0.05) {$\sqrt{40}$};
+\end{tikzpicture}
+\caption{收益最大化的几何：粗实线为生产前沿，
+  三条直线为不同收益水平的等收益线。$2y_1+4y_2=28$ 与前沿相切于 $(y_2,y_1)=(4,6)$，
+  是所有与前沿有交点的等收益线中位置最高的一条。}
+\label{fig:optimal-tangency}
+\end{figure}
+\figexplan{横轴 $y_2$、纵轴 $y_1$。
+粗实线（PPF）向下弯曲；三条等收益线斜率同为 $-p_2/p_1=-2$：
+虚线 $\bar\pi=20$ 经过只产面包的端点，
+点线 $\bar\pi\approx 25.30$ 经过只产蛋糕的端点，
+实线 $\bar\pi=28$ 与前沿恰好相切，黑点即最优点 $(y_2^{*},y_1^{*})=(4,6)$。
+在穿过相同两条直线的意义上，$\bar\pi=28$ 的位置"最高"：
+任何更高的平行线都会与前沿脱离接触，对应技术做不到的产出组合。}

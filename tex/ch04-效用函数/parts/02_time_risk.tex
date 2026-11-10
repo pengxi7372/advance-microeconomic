@@ -1,0 +1,224 @@
+% ============================================================
+\section{跨期与风险效用函数}
+% ============================================================
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[font=\scriptsize]
+  \draw[axisline] (0,0) -- (6.0,0) node[below right] {今天消费 $c_1$};
+  \draw[axisline] (0,0) -- (0,4.2) node[above left] {明天消费 $c_2$};
+  % 跨期预算线
+  \draw[thick] (0,3.2) -- (4.9,0) node[midway,above left] {跨期预算线 $c_2+\frac{c_1}{1+r}=w$};
+  % 禀赋点与借贷
+  \draw[dashed,thin] (2.2,1.05) -- (2.2,0) node[below=2pt] {禀赋点};
+  \node[font=\scriptsize] at (2.2,0.72) {借贷点};
+  % 无差异曲线
+  \draw[very thick,domain=0.35:3.6,smooth,variable=\t] plot ({\t},{2.6-0.45*\t*\t});
+  \draw[very thick,domain=1.9:4.6,smooth,variable=\t] plot ({\t},{3.5-0.16*\t*\t});
+  \fill (2.2,1.55) circle (1.5pt) node[above right=2pt] {$c^{*}$};
+  \node[align=center,font=\scriptsize] at (4.6,3.35) {无差异曲线内弯（凸偏好）\\最优点为切点，取决于利率 $r$};
+\end{tikzpicture}
+\caption{跨期选择：两期无差异曲线、跨期预算线与借贷点}
+\end{figure}
+\figexplan{横轴为今天消费、纵轴为明天消费。跨期预算线斜率为 $-(1+r)$，即相对价格；虚线标出禀赋点，它把平面分为“借贷区”（今日消费大于禀赋）与“储蓄区”。无差异曲线内弯表示偏好具凸性，最优点 $c^{*}$ 是无差异曲线与跨期预算线的切点，满足 $u'(c^{*}_1)=\beta u'(c^{*}_2)(1+r)$。图形要点：利率改变的是斜率，从而改变储蓄与借贷的方向。}
+
+\subsection{指数贴现效用}\label{subsec:expdisc}
+
+\notehead{形式}
+$U=\sum_{t=0}^{T}\delta^{t}u(c_t)$（$\delta\in(0,1)$）。
+
+\notehead{性质与推导}
+时间可加 + 贴现率恒定：$t$ 与 $t+1$ 之间的边际替代率
+$\mathrm{MRS}_{t,t+1}=\delta\,u'(c_{t+1})/u'(c_t)$ 只依赖两期消费，
+与决策时点无关——这是\textbf{动态一致性}的来源：
+今天为明天做的计划，明天不会推翻。
+取 $u(c)=c^{1-\gamma}/(1-\gamma)$（$\gamma>0$），跨期欧拉方程
+\[
+u'(c_t)=\delta(1+r_{t+1})\,u'(c_{t+1})
+\ \Longrightarrow\
+c_t^{-\gamma}=\delta(1+r_{t+1})\,c_{t+1}^{-\gamma}
+\ \Longrightarrow\
+\boxed{\ \frac{c_{t+1}}{c_t}=\bigl[\delta(1+r_{t+1})\bigr]^{1/\gamma}\ }
+\]
+消费增长率由\textbf{跨期替代弹性} $\mathrm{EIS}=1/\gamma$ 调节：
+$\gamma$ 越大，消费路径越平（不愿在不同时期间挪动消费）。
+$\gamma=1$ 时 $u=\ln c$，储蓄率对利率不变（收入效应与替代效应相消）。
+
+\notehead{适用情形}
+一切动态基准：增长模型、生命周期储蓄、消费平滑。
+局限：EIS 与相对风险厌恶被同一个 $\gamma$ 绑定（见 §\ref{subsec:ez} 的解绑）。
+
+\subsection{习惯形成}\label{subsec:habit}
+
+\notehead{内部习惯}
+\[
+u(c_t,h_t)=\frac{(c_t-\theta h_t)^{1-\gamma}}{1-\gamma},\qquad
+h_t=\sum_{s=1}^{\infty}\phi^{s}c_{t-s},
+\]
+效用依赖\textbf{超出习惯存量的部分}（差值形式）：
+今天的消费抬高明天的参照标准，产生“消费棘轮”。
+结构上与基本需求型（§\ref{subsec:sg}）同构：$h_t$ 就是内生的 $\gamma$。
+
+\notehead{外部习惯（攀比形式）}
+\[
+u(c_t,\bar c_t)=\frac{\bigl(c_t/\bar c_t^{\theta}\bigr)^{1-\gamma}}{1-\gamma},
+\]
+效用依赖自己消费与社会平均消费 $\bar c_t$ 的\textbf{比值}：
+个体不把 $\bar c$ 当决策变量，均衡中出现“消费军备竞赛”——
+全社会消费都涨，个体效用不涨（位置性外部性），
+为\textbf{消费税/累进税}提供规范依据。
+
+\notehead{适用情形}
+资产定价（解释股权溢价、消费的过度平滑）、储蓄的持续性、
+幸福悖论（收入增长而主观福利停滞）。
+差值形式易解（近似对数线性化后保持线性），比值形式政策含义强。
+
+\subsection{递归偏好与 EIS--风险厌恶解绑}\label{subsec:ez}
+
+\notehead{Kreps--Porteus 递归形式}
+\[
+U_t=W\bigl(c_t,\ \mathcal{I}_t(U_{t+1})\bigr),
+\]
+当期消费与“未来效用的确定性等价” $\mathcal{I}_t$ 通过聚合器 $W$ 复合。
+时间可加指数贴现是其特例：$W(c,z)=u(c)+\delta z$，$\mathcal{I}_t=\mathbb{E}_t$。
+
+\notehead{Epstein--Zin 形式}
+\[
+U_t=\Bigl[(1-\delta)c_t^{1-\rho}+\delta\Bigl(\mathbb{E}_t\bigl[U_{t+1}^{1-\gamma}\bigr]\Bigr)^{\frac{1-\rho}{1-\gamma}}\Bigr]^{\frac{1}{1-\rho}},
+\]
+两个参数各司其职：$\mathrm{EIS}=1/\rho$（跨期替代意愿），
+$\gamma$ = 相对风险厌恶（对不确定性的态度）。
+\textbf{检验归约}：当 $\rho=\gamma$ 时，
+\[
+U_t^{1-\gamma}=(1-\delta)c_t^{1-\gamma}+\delta\,\mathbb{E}_t\bigl[U_{t+1}^{1-\gamma}\bigr],
+\]
+即 $U^{1-\gamma}$ 是期望效用型的——退化为时间可加的 CRRA 贴现期望效用。
+当 $\gamma>\rho$：偏好\textbf{不确定性早解决}（尽早知道命运）；
+$\gamma<\rho$：偏好晚解决。时间可加模型无法表达这种态度（$\gamma=\rho$ 强制中立）。
+
+\notehead{适用情形}
+资产定价（长期风险模型）、气候经济学（百年尺度的不确定性+贴现）、
+任何需要“风险厌恶很强烈但跨期替代不必同样强烈”的场合——
+数据上两者本就不相等，时间可加形式是强加的束缚。
+
+\subsection{准双曲贴现（贝塔-德尔塔形式）}\label{subsec:betadelta}
+
+\notehead{形式}
+\[
+U_t=u(c_t)+\beta\sum_{s=1}^{\infty}\delta^{s}u(c_{t+s}),\qquad \beta\in(0,1].
+\]
+“现在”与“一切未来”之间有一个额外折扣 $\beta$：
+$t$ 与 $t+1$ 的权衡，从 $t$ 看是 $\beta\delta$，从 $t+1$ 看变成 $\delta$——
+\textbf{动态不一致}：计划推翻计划。
+
+\notehead{数值例（计划反转）}
+设 $u$ 线性，$\beta=1/2$，$\delta=1$。任务“写报告”：今天做成本 $6$（今天承担），
+收益 $10$ 明天到账；明天做成本仍是 $6$（明天承担），收益 $10$ 后天到账。
+\begin{itemize}
+  \item \textbf{今天的计算}：今天做：$-6+\frac12\cdot10=-1$；
+        明天做：$\frac12(-6+10)=2$；不做：$0$。决定：\textbf{明天做}。
+  \item \textbf{明天的计算}：明天做：$-6+\frac12\cdot10=-1$；
+        后天做：$\frac12\cdot4=2$；不做：$0$。决定：\textbf{再推一天}。
+\end{itemize}
+每一天都把任务推给下一天：拖延是 $\beta<1$ 的理性结果。
+\textit{老练型}个体预见自己的推翻，会寻求\textbf{承诺装置}
+（截止期限、自动储蓄扣款）；\textit{天真型}个体反复惊讶。
+对照：$\beta=1$（指数贴现）时两天的计算结果一致，无拖延。
+
+\notehead{适用情形}
+储蓄不足与养老金设计（自动加入机制）、成瘾、健身与学习投资、
+一切“自我控制”问题。经验估计中 $\beta\approx0.5$--$0.8$ 是常见区间。
+
+\subsection{期望效用与风险厌恶的度量}\label{subsec:risk}
+
+\notehead{vNM 期望效用}
+$U=\sum_i p_i u(c_i)$，独立性公理是其偏好基础。
+风险态度完全由 $u$ 的曲率刻画：
+\[
+\text{绝对风险厌恶}\ \mathrm{ARA}(w)=-\frac{u''(w)}{u'(w)},\qquad
+\text{相对风险厌恶}\ \mathrm{RRA}(w)=-\frac{w\,u''(w)}{u'(w)}.
+\]
+（推导：对公平赌局 $\tilde\varepsilon$ 收风险金 $\pi$，泰勒展开
+$u(w-\pi)\approx\mathbb{E}[u(w+\tilde\varepsilon)]$ 得
+$\pi\approx\frac{1}{2}\mathrm{ARA}(w)\cdot\mathrm{Var}(\tilde\varepsilon)$。）
+
+\notehead{三大族系（均为一参数可估）}
+\begin{enumerate}
+  \item \textbf{CRRA}：$u(w)=\dfrac{w^{1-\gamma}}{1-\gamma}$（$\gamma>0$，$\gamma=1$ 时为 $\ln w$）。
+        $u'=w^{-\gamma}$，$u''=-\gamma w^{-\gamma-1}$，
+        $\mathrm{ARA}=\gamma/w$（递减），$\mathrm{RRA}=\gamma$（\textbf{常数}）：
+        风险金占财富比例不随财富变。宏观金融默认值。
+  \item \textbf{CARA}：$u(w)=-e^{-\alpha w}$（$\alpha>0$）。
+        $u'=\alpha e^{-\alpha w}$，$u''=-\alpha^2 e^{-\alpha w}$，
+        $\mathrm{ARA}=\alpha$（\textbf{常数}）：风险金的绝对额不随财富变。
+        正态收益 + CARA $\Rightarrow$ 均值—方差效用
+        $\mathbb{E}w-\frac{\alpha}{2}\mathrm{Var}(w)$，组合选择闭式解。
+  \item \textbf{二次型}：$u(w)=w-\theta w^2$（$w<1/(2\theta)$）。
+        $u'=1-2\theta w$，$\mathrm{ARA}=2\theta/(1-2\theta w)$（\textbf{递增}）：
+        越富越怕风险——与直觉相反；且 $w>1/(2\theta)$ 后边际效用为负（餍足点）。
+        优点仅是均值—方差结构，现代应用已少，但教学上仍是
+        “递增绝对风险厌恶”的标准反例。
+\end{enumerate}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.86]
+  \draw[axisline] (0,0) -- (6.4,0) node[below left, axislabel] {$w$};
+  \draw[axisline] (0,-2.6) -- (0,2.6) node[below left, axislabel] {$u(w)$};
+  % ln
+  \draw[thick, MidBlue, domain=0.12:6.0, smooth, variable=\x] plot ({\x},{ln(\x)});
+  \node at (5.6,1.95) {$\ln w$};
+  % CRRA gamma=2: 1-1/w
+  \draw[thick, MidBlue, domain=0.42:6.0, smooth, variable=\x] plot ({\x},{1-1/\x});
+  \node at (3.1,0.95) {$\gamma=2$};
+  % CARA: 1-exp(-x)
+  \draw[thick, MidBlue, domain=0.02:6.0, smooth, variable=\x] plot ({\x},{1-exp(-\x)});
+  \node at (4.7,1.28) {CARA};
+  % sqrt
+  \draw[thick, MidBlue, domain=0.02:6.0, smooth, variable=\x] plot ({\x},{sqrt(\x)-0.6});
+  \node at (5.9,1.45) {$\gamma=1/2$};
+  \node[align=left] at (2.2,-2.1) {曲率越大 $\Rightarrow$ 风险厌恶越强；\\ 直线（风险中性）为 $\gamma=0$ 的极限};
+\end{tikzpicture}
+\end{center}
+\figexplan{四条曲线均为递增凹函数，凹性（曲率）越强代表风险厌恶越强：$\ln w$ 与 $\gamma=2$ 属于 CRRA 族，CARA 为常数绝对风险厌恶，$\gamma=1/2$ 曲率最平缓。直线（风险中性）对应 $\gamma=0$ 的极限情形。}
+
+\notehead{HARA 统一表}
+三族都是\textbf{双曲绝对风险厌恶}族的成员：
+$\mathrm{ARA}(w)=1/(Aw+B)$。
+\begin{center}
+\small
+\begin{tabular}{llll}
+\toprule
+族 & 参数限制 & ARA 形态 & 经验含义 \\
+\midrule
+CRRA & $B=0$ & 递减、双曲线 & 风险金比例不随财富变 \\
+CARA & $A=0$ & 常数 & 风险金绝对额不随财富变 \\
+二次型 & $A<0$ & 递增 & 有餍足点，越富越避险 \\
+一般 HARA & $A>0,B>0$ & 递减 & 含“基本需求”式底线 $B$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+统一形式 $u(w)=\dfrac{1-\gamma}{\gamma}\Bigl(\dfrac{aw}{1-\gamma}+b\Bigr)^{\gamma}$。
+HARA 的可贵之处：组合分离（两基金分离定理）在该族成立。
+
+\subsection{状态依赖效用与失望厌恶}
+
+\notehead{状态依赖}
+$u=u(c,s)$：效用直接依赖状态 $s$（健康、生存状态）。
+例：健康状态下钱的边际效用高于患病状态。
+后果：最优保险不再是全额保险——即使保费公平，
+也可能只部分投保（状态间边际替代率不再等于 1）。
+适用：健康经济学、寿险、长护险。
+
+\notehead{失望厌恶}
+\[
+U=\mathbb{E}[u(c)]-\theta\,\mathbb{E}\bigl[\max\{\mathcal{CE}-c,\,0\}\bigr],
+\]
+以确定性等价 $\mathcal{CE}$ 为内生参照点：结果低于 $\mathcal{CE}$ 的部分
+被额外加权 $\theta$。\textbf{一阶风险厌恶}：
+对小赌局的风险金与赌局规模同阶（期望效用下为二阶），
+可同时解释“对小赌过度规避”与“股权溢价”，而不必把 $\gamma$ 设得离谱。
+
+\notehead{幂指数型}
+$u(w)=-\exp(-\alpha w^{\theta})$（$\alpha,\theta>0$）：
+两参数使 ARA 形态更灵活（$\theta<1$ 递减 ARA + 递减 RRA 的组合），
+用于拟合实验数据中风险态度随财富的变化。

@@ -1,0 +1,155 @@
+% ==================== 第 3 节：对应（30–50 分钟）====================
+\section{从函数到对应}
+
+\subsection{函数与对应的形式差异}
+
+\begin{definition}[对应]
+\emph{对应}（correspondence，又称集值映射）$F:X\rightrightarrows Y$ 是一个规则，使每个 $x\in X$ 对应 $Y$ 的一个\emph{子集} $F(x)\subseteq Y$。
+\end{definition}
+
+对照函数 $f:X\to Y$（输出一个点），对应 $F:X\rightrightarrows Y$（输出一个集合）。双横箭头 $\rightrightarrows$ 不是装饰：它提醒我们，对应不是“函数写得不够精确”，而是\emph{理论对象本身允许多值}。
+
+\begin{example}
+设 $Y=\{a,b,c\}$，$F(x)=\{a,c\}$。这表示 $a$ 与 $c$ 都是可接受的结果。不能擅自写成 $f(x)=a$——那会丢失“并列”“无差异”或“制度性多解”的信息。
+\end{example}
+
+函数是对应的\emph{特殊情形}：若对所有 $x$，$F(x)$ 恰含一个元素，才可以把它视为函数。反向不成立：把多值对象硬写成函数，等于在模型里偷偷加了一条“任意决胜规则”。
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.95]
+  % 函数
+  \draw[thick] (0,0) ellipse (0.8 and 1.3);
+  \draw[thick] (3.0,0) ellipse (0.8 and 1.3);
+  \node at (0,1.75) {\small $X$};
+  \node at (3.0,1.75) {\small $Y$};
+  \fill (0,0.6) circle (1.5pt) node[left] {\small $x_1$};
+  \fill (0,-0.5) circle (1.5pt) node[left] {\small $x_2$};
+  \fill (3.0,0.7) circle (1.5pt) node[right] {\small $f(x_1)$};
+  \fill (3.0,-0.4) circle (1.5pt) node[right] {\small $f(x_2)$};
+  \draw[->,thick] (0,0.6) -- (2.9,0.68);
+  \draw[->,thick] (0,-0.5) -- (2.9,-0.42);
+  \node at (1.5,-2.0) {\small 函数 $f:X\to Y$：一个 $x$ 对一个 $y$};
+  % 对应
+  \begin{scope}[xshift=7.2cm]
+    \draw[thick] (0,0) ellipse (0.8 and 1.3);
+    \draw[thick] (3.0,0) ellipse (0.8 and 1.3);
+    \node at (0,1.75) {\small $X$};
+    \node at (3.0,1.75) {\small $Y$};
+    \fill (0,0.1) circle (1.5pt) node[left] {\small $x$};
+    \fill (3.0,0.8) circle (1.5pt) node[right] {\small $a$};
+    \fill (3.0,-0.6) circle (1.5pt) node[right] {\small $c$};
+    \draw[->,thick] (0,0.1) -- (2.9,0.78);
+    \draw[->,thick] (0,0.1) -- (2.9,-0.58);
+    \node at (1.5,-2.0) {\small 对应 $F:X\rightrightarrows Y$：一个 $x$ 对一个\emph{集合}};
+  \end{scope}
+\end{tikzpicture}
+\caption{函数与对应：单值输出与集值输出}
+\end{figure}
+\figexplan{左图为函数 $f:X\to Y$：左侧定义域中每个点只对应右侧一个点（箭头单发）。右图为对应 $F:X\rightrightarrows Y$：同一个 $x$ 可同时指向多个元素 $a,c$，输出是一个集合。把多值对象硬写成函数，等于在模型里偷偷加入一条任意决胜规则。}
+
+\subsection{选择对应}
+
+\begin{definition}[选择对应]
+给定可行集 $B$，\emph{选择对应}定义为
+\[
+C(B)\subseteq B,
+\]
+即从可行集中实际被选出的方案所成的集合。若可行集由参数生成，则写作
+\[
+C:\Theta\rightrightarrows X,\qquad C(\theta)\subseteq B(\theta).
+\]
+\end{definition}
+
+当多个方案并列最优时，$C(\theta)$ \emph{必须同时包含它们}。
+
+\begin{example}
+设 $B=\{a,b\}$，个体对 $a$ 与 $b$ 无差异，则 $C(B)=\{a,b\}$。若只写 $C(B)=a$，就把理论中的非唯一性错误地替换成了一个任意选择规则——模型于是多了不该有的结论。
+\end{example}
+
+\subsection{存在性、唯一性与连续性}
+
+三个性质必须分开问：
+\begin{itemize}
+  \item \textbf{存在性}：$C(\theta)\neq\varnothing$——“有没有最优解？”
+  \item \textbf{唯一性}：$C(\theta)$ 恰含一个元素——“最优解是否只有一个？”
+  \item \textbf{连续性}：$\theta$ 微调时 $C(\theta)$ 是否平滑变化——这决定了比较静态是否可靠。
+\end{itemize}
+
+\begin{theorem}[Weierstrass 极值定理]
+若 $u:X\to\R$ 连续且 $B\subseteq\R^{L}$ 是非空紧集，则 $u$ 在 $B$ 上达到最大值与最小值，即存在 $x^{*}\in B$ 使 $u(x^{*})=\max_{x\in B}u(x)$。因此
+\[
+\argmax_{x\in B}u(x)\neq\varnothing .
+\]
+\end{theorem}
+
+\begin{example}[开集上最大值可以不存在]
+取 $X=\R$，$B=(0,1)$（开区间），$u(x)=x$。$u$ 连续，但 $\sup_{x\in(0,1)}u(x)=1$ 无法达到：对任意 $x\in(0,1)$，总可取 $x'=(x+1)/2>x$。故 $\argmax_{x\in(0,1)}u(x)=\varnothing$。问题正出在 $B$ 不闭，从而不是紧集。
+\end{example}
+
+\begin{remark}
+连续效用 + 紧致可行集通常只能保证最大值\emph{达到}（存在性），不能保证\emph{唯一}。唯一性需要额外结构：严格凹（或严格拟凹）的目标函数配上凸的可行集，通常带来唯一最优；而线性效用、平坦偏好或非严格凸偏好可能产生\emph{整段}最优解——这正是 $C(\theta)$ 必须是集合而非点的第二个理由（第一个理由是无差异）。
+\end{remark}
+
+\subsection{最优值与最优束如何随参数变化}
+
+上一小节保证了最优束\emph{存在}且唯一。本小节追问一个比较静态层面的问题：参数 $\theta$（价格、收入、税基）连续地变动时，$C(\theta)$ 与 $v(\theta)$ 如何随之变动？这不是纯粹的技术问题——经济学的许多“政策冲击效应”正是靠这条通道传导的。
+
+\begin{definition}[对应的连续性（Berge 意义）]
+设 $C:\Theta\rightrightarrows X$。称 $C$ 在 $\theta_{0}$ 处\emph{上半连续}（upper hemicontinuous），若对每个满足 $C(\theta_{0})\subseteq O$（$O$ 开）的 $O$，都存在 $\theta_{0}$ 的邻域 $U$，使得 $\theta\in U\Rightarrow C(\theta)\subseteq O$。
+称 $C$ 在 $\theta_{0}$ 处\emph{下半连续}（lower hemicontinuous），若对每个满足 $\theta_{0}\in U$（$U$ 开）的 $U$，都存在邻域 $V$，使得 $\theta\in V\Rightarrow C(\theta)\cap U\neq\varnothing$。
+\end{definition}
+
+两个条件分别管两件事：上半连续说“$\theta$ 稍一动，选出来的束不会跳出 $C(\theta_{0})$ 附近的紧集”；下半连续说“$C(\theta_{0})$ 里的每一个束，在 $\theta$ 稍动之后都还仍然被选得到”。偏好既不漏（对映）也不溢出（对含），称为\emph{连续}。
+
+\begin{theorem}[最优值函数上半连续]\label{thm:berge}
+设 $X$ 是紧集，$u:X\to\R$ 连续，$B(\cdot)$ 关于 $\theta$ 连续，则
+\[
+v(\theta)=\max_{x\in B(\theta)}u(x)
+\]
+是 $\theta$ 的上半连续函数。
+\end{theorem}
+
+\begin{proof}
+记 $x^{*}$ 为 $\theta_{0}$ 处的最优束。给定任意 $\varepsilon>0$：由 $u$ 在紧集 $B(\theta_{0})$ 上一致连续，存在 $\delta>0$，
+使当 $x$ 与 $x^{*}$ 的距离小于 $\delta$ 时 $u(x)>u(x^{*})-\varepsilon$；又由 $B(\cdot)$ 在 $\theta_{0}$ 处连续，存在 $\theta_{0}$ 的邻域 $U$，
+使 $\theta\in U$ 时 $B(\theta)$ 整体落在 $x^{*}$ 的 $\delta$ 邻域内。于是在 $U$ 上有
+\[
+v(\theta)\ \ge\ u(x^{*})-\varepsilon\ =\ v(\theta_{0})-\varepsilon .
+\]
+因 $\varepsilon$ 任意，这正是 $v$ 在 $\theta_{0}$ 处的上半连续性。
+\end{proof}
+
+定理~\ref{thm:berge} 的经济学含义是：\emph{最优值可以“跳”，但只能往下跳，且跳跃必然由约束的变动造成，不能由偏好造成}。更精确地说，$v$ 的向下跳跃只能发生在参数使可行集\emph{收缩}的位置（例如税收使预算集突然变小），而不能发生在可行集\emph{扩张}的位置。因此“税收导致消费者剩余下降”这类结论有严格的数学基础。
+
+\begin{remark}[上半连续不是连续]
+把 $v$ 说成“连续”是错的。$v$ 一般只是上半连续：在参数空间的某些点上它会\emph{向下跳跃}。典型的例子是配额或从量税——当配额恰好用尽时，价格的微小上升会使可行集突然收缩，最优值随之跳到一个更低的水平。反过来，$v$ 的上包络自动“是”半连续的，这是包络定理的全部内容。
+\end{remark}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[font=\scriptsize]
+  \draw[axisline] (0,0) -- (6.2,0) node[below right] {$\theta$};
+  \draw[axisline] (0,0) -- (0,4.0) node[above left] {$v(\theta)$};
+  % 上半连续阶梯：向右跳
+  \draw[very thick] (0.6,2.6) -- (2.8,2.6);
+  \draw[very thick,dashed] (2.8,2.6) -- (2.8,1.4);
+  \draw[very thick] (2.8,1.4) -- (5.2,1.4);
+  \draw[dashed,thin] (2.8,1.4) -- (2.8,2.6);
+  \fill (2.8,1.4) circle (1.5pt);
+  \node[figlabel,anchor=west] at (3.0,1.75) {配额用尽：可行集骤然收缩，$v$ 向下跳};
+  \node[figlabel,anchor=west] at (0.75,2.85) {约束未变：$v$ 连续};
+  \node[figlabel] at (5.2,1.15) {$\theta$};
+  \node[align=center,text width=7.2cm,font=\scriptsize] at (3.1,-0.95) {$v$ 上半连续的含义：在跳点 $\theta^{*}$ 处取“跳后”的那一支（$\le v(\theta^{*})$），而不取“跳前”的高支。\\ 图形上就是从 $(2.8,\,1.4)$ 出发向右的实线，而上方那段不是 $v$ 的值。};
+\end{tikzpicture}
+\caption{最优值函数的向下跳跃：$v(\theta)$ 只上半连续}
+\end{figure}
+\figexplan{曲线在 $\theta^{*}\le 2.8$ 处连续，然后在 $\theta^{*}$ 处\textbf{向下}跳到较低水平并继续水平。向右的虚线段只用于对照，不是 $v$ 的取值。这正是“半连续”的几何含义：跳点处取较低的一支（$v(\theta^{*})$ 等于右段高度），从而对任意 $\varepsilon>0$，在 $\theta^{*}$ 的邻域内 $v(\theta)>v(\theta^{*})-\varepsilon$ 成立。这种跳跃只能由可行集的收缩（配额用尽、从量税起征）造成，与偏好无关。}
+
+\notehead{本节要点}
+\begin{itemize}
+  \item $f:X\to Y$ 输出点，$F:X\rightrightarrows Y$ 输出子集；函数是对应的特例；
+  \item 选择对应 $C(\theta)\subseteq B(\theta)$ 天生是集值对象；
+  \item 存在性靠“连续 + 紧”，唯一性靠“严格凹 + 凸”，二者不可混淆；
+  \item 反例：开区间上的线性函数没有最大值。
+\end{itemize}

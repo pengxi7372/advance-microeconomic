@@ -1,0 +1,91 @@
+% ==================== 第 7 节：模型价值（102–115 分钟）====================
+\section{模型的价值与适用边界}
+
+一个好模型不是“更复杂”或“更现实”的模型。本节给出六个评价维度，并说明它们之间的张力。
+
+\subsection{六维评价框架}
+
+\begin{center}
+\small
+\begin{tabular}{p{2.4cm}p{3.9cm}p{4.0cm}p{3.2cm}}
+\toprule
+维度 & 核心问题 & 证据 & 主要风险 \\
+\midrule
+Useful 有用 & 能回答重要问题吗？ & 解释、政策用途、反事实 & 问题选择过窄 \\
+Accurate 准确 & 预测与数据一致吗？ & 样本外预测、实验与准实验 & 过拟合 \\
+Broad 广泛 & 能迁移到其他场景吗？ & 消费、生产、劳动等应用 & 过宽而不可证伪 \\
+Compact 简洁 & 以少量结构产生清晰推论？ & 假设–结论压缩比 & 忽略关键机制 \\
+Identifiable 可识别 & 参数能被数据区分吗？ & 识别策略、敏感性分析 & 依赖不可观测假设 \\
+Falsifiable 可证伪 & 什么结果会推翻它？ & 明确反事实与拒绝条件 & 模型永远可解释 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[font=\scriptsize]
+  % 图例
+  \fill[gray!25] (0,3.34) rectangle (0.22,3.56);
+  \node[anchor=west] at (0.30,3.45) {模型 A：简洁但问题过窄};
+  \fill[gray!25] (2.62,3.34) rectangle (2.84,3.56);
+  \node[anchor=west] at (2.92,3.45) {模型 B：广泛但不可证伪};
+  \fill[gray!25] (2.40,{2.74+0.06}) rectangle ({2.40+1.30},2.80);
+  \fill[gray!55] (2.40,{2.74-0.10}) rectangle ({2.40+2.55},2.70);
+  % 六个维度
+  \foreach \y/\nm/\a/\b in {2.70/Useful/1.30/2.55, 2.25/Accurate/2.10/1.55, 1.80/Broad/0.65/2.95,
+                            1.35/Compact/2.90/1.10, 0.90/Identifiable/1.35/2.35, 0.45/Falsifiable/0.95/0.70}{
+    \node[anchor=east] at (2.30,\y) {\nm};
+    \fill[gray!25] (2.40,{\y+0.06}) rectangle ({2.40+\a},{\y+0.20});
+    \fill[gray!55] (2.40,{\y-0.10}) rectangle ({2.40+\b},{\y+0.04});
+  }
+  \node[align=center,font=\scriptsize] at (3.60,-0.28) {条长表示该维度的相对得分。\\两个模型各擅一端：六维之间存在张力，\\“更好的模型”往往只是换了取舍。};
+\end{tikzpicture}
+\caption{六维评价框架：简洁性与广泛性之间的张力}
+\end{figure}
+\figexplan{每一行是一个评价维度，浅灰条为模型 A、深灰条为模型 B。模型 A 在 Compact（简洁）上得分高、在 Broad（广泛）上得分低；模型 B 恰好相反。可识别性与可证伪性亦呈此消彼长。图形要传达的不是“哪个模型更好”，而是六维之间不可同时最大化的取舍结构。}
+
+\subsection{逐维展开}
+
+\notehead{7.2.1 Useful：有用而非万能}
+模型的有用性取决于\emph{问题}。选择模型能从选择恢复偏好、组织制度比较，并与个体自主性相容；但人际效用比较困难——不能把个体内部的序数排序直接加总为社会福利（这正是第 6 节 $W$ 需要外生权重的根源）。
+
+\notehead{7.2.2 Accurate：准确必须指向可检验含义}
+一个模型不是因为数学精致就准确。应区分四种“准确”：样本内拟合、样本外预测、结构参数识别、反事实有效性。比较静态只有在参数具有清晰制度含义、且其他机制被控制时，才有经验内容。
+
+\notehead{7.2.3 Broad 与 Compact 的张力}
+越宽泛的模型越可能迁移，但越难产生锐利预测；越紧凑的模型越便于推导，却可能忽略注意力、身份、规范与非传递性。简化本身不是缺陷，关键是明确回答：\emph{为了哪个问题，牺牲了哪些现实因素？}
+
+\notehead{7.2.4 Identifiable：参数能否被数据区分}
+若两组截然不同的参数 $(\theta_1,\theta_2)$ 产生完全相同的选择数据，则该参数不可识别。识别失败时，一切“结构解释”都是空中楼阁。补救办法：补充数据维度、施加可辩护的约束、或改问可识别的问题。
+
+\notehead{7.2.5 Falsifiable：必须说清什么会推翻它}
+一个“无论看到什么都能解释”的模型没有信息量。写模型时就应写下拒绝条件：若数据呈现 $X$，则放弃该模型。可证伪性是把实证研究与讲故事区分开的底线。
+
+\subsection{简化假设、反例与边界}
+
+经典选择框架的最小假设可表述为：
+\begin{enumerate}
+  \item 选择来自某个可行集；
+  \item 被偏好的方案更可能被选择；
+  \item 任意两个潜在方案可以比较（完全性）；
+  \item 偏好具有传递性。
+\end{enumerate}
+
+每一条假设都应对应一个\emph{结论依赖点}和一个\emph{最小反例}：
+\begin{itemize}
+  \item 删除\emph{完全性} $\Rightarrow$ 某些方案无法比较，$C(B)$ 可能无法定义；
+  \item 删除\emph{传递性} $\Rightarrow$ 可能出现 $a\succ b\succ c\succ a$ 的循环，无法被效用表示；
+  \item 删除\emph{紧致性} $\Rightarrow$ 最大值可能不存在（开区间上的线性函数）；
+  \item 删除\emph{严格凹性} $\Rightarrow$ 最优方案可能不唯一（线性效用）。
+\end{itemize}
+
+\notehead{边界声明的写法}
+好的论文在模型之后紧跟一段“边界声明”：本模型在哪些条件下成立、哪些机制被有意忽略、哪些结论对哪些假设敏感。这不是示弱，而是把模型的\emph{适用范围}写清楚——它恰恰是可信度的来源。
+
+\notehead{本节要点}
+\begin{itemize}
+  \item 六维评价：Useful、Accurate、Broad、Compact、Identifiable、Falsifiable；
+  \item Broad 与 Compact 存在张力；Accurate 必须指向可检验含义；
+  \item 每条假设对应一个结论依赖点 + 一个最小反例；
+  \item 边界声明是模型可信度的一部分。
+\end{itemize}

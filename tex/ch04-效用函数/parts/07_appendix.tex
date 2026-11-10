@@ -1,0 +1,71 @@
+\clearpage
+\section{拓展：效用函数选择的识别、估计与稳健性}
+
+\subsection{从理论形式到可估计对象}
+写下效用函数只是研究设计的起点。一个可估计模型还必须明确参数、观测变量、误差结构与识别来源。以离散选择为例，随机效用写为
+\[
+U_{ij}=V_{ij}(\theta)+\varepsilon_{ij},
+\]
+其中 $V$ 是可解释部分，$\varepsilon$ 是未观测冲击。若误差服从独立同分布极值分布，则选择概率为 Logit 形式；若误差相关，必须改用 Nested Logit 或混合 Logit。
+
+\begin{figure}[H]\centering
+\begin{tikzpicture}[font=\scriptsize,>=stealth,scale=0.92,transform shape]
+\node[draw,rounded corners,fill=gray!10,minimum width=2.3cm,minimum height=.8cm] (t) at (0,0) {理论偏好};
+\node[draw,rounded corners,fill=gray!18,minimum width=2.3cm,minimum height=.8cm] (f) at (3.5,0) {函数形式};
+\node[draw,rounded corners,fill=gray!26,minimum width=2.3cm,minimum height=.8cm] (d) at (7,0) {数据与变异};
+\node[draw,rounded corners,fill=gray!34,minimum width=2.3cm,minimum height=.8cm] (e) at (10.5,0) {估计与检验};
+\draw[->,thick] (t)--(f);\draw[->,thick] (f)--(d);\draw[->,thick] (d)--(e);
+\node[align=center] at (5.25,-1.25) {每一步都可能引入不可识别参数\\不能用更复杂的函数弥补缺少的变异};
+\end{tikzpicture}
+\caption{效用函数研究的识别链条}
+\end{figure}
+\figexplan{四个方框依次表示理论、函数、数据和估计。箭头不是单纯的计算流程，而是识别约束逐步收紧的过程；若数据没有足够变异，形式越复杂并不意味着结论越可信。}
+
+\subsection{尺度归一化与参数识别}
+在随机效用模型中，若同时把系统效用与误差项乘以正数，选择概率不变。因此必须固定误差尺度，例如令误差方差为 $\pi^2/6$，或固定某一个价格系数。若不归一化，参数向量只在比例类意义下识别。
+
+\begin{proposition}[Logit 概率]
+若 $\varepsilon_{ij}$ 独立服从标准极值分布，则
+\[
+P_{ij}=\frac{\exp(V_{ij})}{\sum_k\exp(V_{ik})}.
+\]
+对任意常数 $c$，$P_{ij}(V_i+c)=P_{ij}(V_i)$；这体现了效用水平零点不可识别。
+\end{proposition}
+
+\subsection{弹性、福利与反事实}
+价格弹性必须说明保持什么不变。马歇尔需求的自身价格弹性为
+$\varepsilon_{ii}=\partial\log x_i/\partial\log p_i$；补偿弹性则保持效用不变。福利分析中，消费者剩余近似适用于小变化，但当收入效应显著时，应使用等价变差或补偿变差：
+\[
+EV=e(p^0,u^1)-e(p^0,u^0),\qquad
+CV=e(p^1,u^1)-e(p^1,u^0).
+\]
+这两个量分别把福利变化放在初始价格和最终价格下衡量。
+
+\begin{figure}[H]\centering
+\begin{tikzpicture}[x=0.9cm,y=0.85cm,font=\scriptsize,scale=0.92,transform shape]
+\draw[->] (0,0)--(6,0) node[right] {$q$};\draw[->] (0,0)--(0,4.5) node[above] {$p$};
+\draw[thick] (0.8,4)--(5.4,.8) node[right] {$D$};
+\draw[dashed] (0,2.7)--(5.4,2.7) node[right] {$p^0$};
+\draw[dotted] (0,1.8)--(5.4,1.8) node[right] {$p^1$};
+\fill[gray!25] (0,1.8)--(0,2.7)--(2.6,2.7)--cycle;
+\node[align=center,fill=white] at (1.15,2.3) {福利变化\\面积};
+\end{tikzpicture}
+\caption{价格变化与福利面积}
+\end{figure}
+\figexplan{横轴为数量、纵轴为价格。两条水平线表示政策前后的价格，需求曲线与两线之间的灰色区域是小幅变化下的消费者剩余变化；大幅变化应回到支出函数定义。}
+
+\subsection{稳健性：函数形式不是结论本身}
+至少应报告四类稳健性：替换函数形式、替换误差分布、改变样本窗口、改变关键变量定义。若核心结论只在一种形式下成立，应将其表述为模型依赖结果，而非普遍事实。
+
+\begin{example}[三种函数形式的比较]
+同一政策问题可分别使用 Cobb--Douglas、CES 与 Translog。Cobb--Douglas 施加单位替代弹性，CES 允许恒定但不必为一的替代弹性，Translog 则允许弹性随消费束变化。比较三者的拟合、外推和参数稳定性，才能判断简洁性是否以错误限制为代价。
+\end{example}
+
+\subsection{研究清单}
+\begin{enumerate}
+\item 明确效用是序数、基数还是随机效用指数；
+\item 列出每个参数的经济含义和识别来源；
+\item 检查角点、边界与不可微点；
+\item 说明福利度量采用 EV、CV 还是消费者剩余近似；
+\item 报告至少一种替代函数与一种替代估计策略。
+\end{enumerate}

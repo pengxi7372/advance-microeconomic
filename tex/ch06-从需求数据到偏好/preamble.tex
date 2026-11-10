@@ -1,0 +1,8 @@
+% 第 6 章 统一书稿前言包装
+\newcommand{\lectureno}{第六章}
+\newcommand{\lectureshort}{从需求数据到偏好}
+\input{../course_preamble}
+\setcounter{chapter}{5}
+% 缺字回退：主字体缺 ①②③④ 等字形时回退到 Songti SC
+\directlua{luaotfload.add_fallback("wbfallback", {"name:Songti SC:mode=node;"})}
+\setmainfont{TeX Gyre Termes}[Ligatures=TeX,RawFeature={fallback=wbfallback}]

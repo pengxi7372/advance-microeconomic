@@ -1,0 +1,94 @@
+\input{preamble}
+
+\begin{document}
+
+\chapter{从可行集到模型价值：选择理论的形式化基础与方法论边界}
+\noindent{\normalsize\itshape Individual decision-making under certainty\par}
+\vspace{0.5cm}
+
+\section*{本章定位与学习目标}
+
+本章从确定性下的个体决策出发，建立一条严格的形式化链条：
+\[
+\theta \;\longmapsto\; B(\theta) \;\longmapsto\; C(\theta)
+\;\longmapsto\; \text{行为预测} \;\longmapsto\; \text{Positive / Normative analysis}.
+\]
+
+完成本章后，读者应能够：
+\begin{enumerate}
+  \item 区分方案空间、可行集、函数与对应，并准确使用集合语言；
+  \item 解释为何选择对应的输出是\emph{集合}而非点；
+  \item 准确使用
+        \[
+          C(\theta)=\argmax\{\,u(x):x\in B(\theta)\,\};
+        \]
+  \item 说明纯选择理论为何可以不预设目标函数；
+  \item 区分正向命题（positive statement）与规范判断（normative statement）；
+  \item 以有用性、准确性、广泛性、简洁性、识别性与可证伪性评价一个模型。
+\end{enumerate}
+
+\notehead{本章内容与主线}
+
+\begin{center}
+\begin{tabular}{clp{6.5cm}}
+\toprule
+次序 & 单元 & 核心任务 \\
+\midrule
+1 & 导入 & 从现实选择到形式化对象；提出“模型究竟在映射什么？” \\
+2 & 集合与可行集 & 集合语言、实数空间、方案空间、预算集 \\
+3 & 函数与对应 & 单值函数与集值映射；为什么输出可以是集合 \\
+4 & 参数与选择 & 预算集、$\argmax$、最大值函数、比较静态 \\
+5 & 纯选择理论 & 不预设目标函数；理性化与显示偏好 \\
+6 & Positive / Normative & 事实、因果、价值与福利的三层分离 \\
+7 & 模型价值 & Useful、Accurate、Broad、Compact、Identifiable、Falsifiable \\
+8 & 本章要点 & 一条逻辑链、三个反例、一道综合题 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\notehead{本章核心公式链}
+\[
+X\supseteq B(\theta)\;;\qquad
+u:X\to\R\;;\qquad
+C(\theta)\subseteq B(\theta)\;;\qquad
+C(\theta)=\argmax_{x\in B(\theta)} u(x).
+\]
+随后写：$v(\theta)=\max u$ 是\emph{数}，$C(\theta)$ 是\emph{集合}；最后写：Positive 是事实与机制，Normative 是价值与评价。
+
+\clearpage
+\tableofcontents
+\clearpage
+
+\input{sec1}
+\input{sec2}
+\input{sec3}
+\input{sec4}
+\input{sec5}
+\input{sec6}
+\input{sec7}
+\input{sec8}
+% 现有内容的证明补充：并入本章正文层级，不单列附录章节
+\input{sec9_appendix}
+\input{sec10_exercises}
+\input{sec11_case}
+\input{sec12_research_notes}
+\input{sec13_extended}
+\input{sec14_appendix}
+\input{sec15_proofs}
+\input{sec16_proofs}
+\input{sec17_proofs}
+
+% ==================== 参考文献 ====================
+\clearpage
+\section*{本章参考文献}
+\begin{enumerate}
+  \item Arrow, K. J. (1951). \emph{Social Choice and Individual Values}. Yale University Press.
+  \item Debreu, G. (1959). \emph{Theory of Value}. Wiley.
+  \item Afriat, S. N. (1967). The construction of separable utility functions from expenditure data. \emph{International Economic Review}, 8(1), 67–77.
+  \item Sen, A. (1970). \emph{Collective Choice and Social Welfare}. Holden-Day.
+  \item Varian, H. R. (1992). \emph{Microeconomic Analysis} (3rd ed.). Norton.
+  \item Hausman, D. M. (1992). \emph{The Inexact and Separate Science of Economics}. Cambridge University Press.
+  \item Mas-Colell, A., Whinston, M. D., \& Green, J. R. (1995). \emph{Microeconomic Theory}. Oxford University Press.
+\end{enumerate}
+
+\end{document}

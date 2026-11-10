@@ -1,0 +1,37 @@
+\subsection{核心公理的证明与有限检验}
+
+\begin{proposition}[严格偏好的传递性]
+若 $\succeq$ 完备且传递，且 $x\succ y$、$y\succ z$，则 $x\succ z$。
+\end{proposition}
+\begin{proof}
+由严格偏好定义，$x\succeq y$、$y\succeq z$，故传递性给出 $x\succeq z$。若反向关系 $z\succeq x$ 成立，则与 $x\succeq y$ 结合得到 $z\succeq y$，这与 $y\succ z$ 所要求的 $z\not\succeq y$ 矛盾。因此 $z\not\succeq x$，从而 $x\succ z$。
+\end{proof}
+
+\begin{proposition}[无差异关系的等价性]
+在理性偏好下，$\sim$ 是等价关系，因而可把方案集合分解成互不相交的无差异类。
+\end{proposition}
+\begin{proof}
+自反性来自完备性推出的自反性。对称性直接来自定义。若 $x\sim y$、$y\sim z$，则有 $x\succeq y\succeq z$，传递性给出 $x\succeq z$；同理 $z\succeq x$，故 $x\sim z$。
+\end{proof}
+
+\begin{example}[三方案矩阵的逐项检验]
+设 $X=\{a,b,c\}$，弱偏好矩阵的非对角元素满足 $a\succeq b$、$b\succeq c$、$a\succeq c$，且反向关系均不成立。则严格偏好为 $a\succ b\succ c$，传递闭包没有新增矛盾边，最优集为 $\{a\}$。若再加入 $c\succeq a$，则传递性迫使 $c\succeq b$，并与 $b\succ c$ 冲突，故该矩阵不能被效用函数表示。
+\end{example}
+
+\begin{proposition}[WARP 是 SARP 的二期特例]
+在只有两个观测期时，SARP 的显示偏好链只可能形成直接的二环，因此 SARP 检验退化为 WARP 检验。
+\end{proposition}
+\begin{proof}
+两期数据中，若存在反向显示偏好，则有 $x^1\succeq^Rx^2$ 与 $x^2\succeq^Rx^1$。这正是 WARP 禁止的构型，也是长度为二的显示偏好环。除该构型外不存在长度更长的不同期链，因此两期时二者等价。
+\end{proof}
+
+\subsection{显示偏好检验的算术展开}
+设 $p^t\cdot x^t=m^t$。若 $p^t\cdot x^s\le m^t$，则 $x^s$ 在 $t$ 期可负担，因而 $x^t\succeq^Rx^s$。检验流程必须分为三步：先计算每个交叉支出；再画出有向边；最后寻找返回原点的路径。只检查相邻两期可能漏掉三期环。
+
+\begin{example}[三期环的识别]
+若交叉可负担关系为 $x^1\succeq^Rx^2$、$x^2\succeq^Rx^3$、$x^3\succeq^Rx^1$，则传递闭包产生 $x^1\succeq^Rx^1$ 的严格返回路径。若其中至少一条关系严格，SARP 失败；若每条均为无差异，则需要进一步检查是否存在严格环。
+\end{example}
+
+\begin{remark}
+有限数据检验的逻辑顺序不能倒置：先由价格和数量构造显示偏好，再判断公理，最后讨论是否存在效用表示。直接从观察到的选择宣称“偏好传递”，会把待检验结论当作前提。
+\end{remark}

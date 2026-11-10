@@ -1,0 +1,40 @@
+\subsection{证明细节：从集合性质到选择结论}
+
+\begin{proof}[Heine--Borel 条件在预算集上的逐步验证]
+对任意序列 $x^n\in B(p,m)$，由逐坐标界 $0\le x_i^n\le m/p_i$，序列落在有界盒 $\prod_i[0,m/p_i]$ 内。Bolzano--Weierstrass 定理给出收敛子列 $x^{n_k}\to x^*$。非负性由坐标极限保持，且连续性给出
+$p\cdot x^*=\lim_k p\cdot x^{n_k}\le m$，故 $x^*\in B(p,m)$。这直接验证了紧性的序列刻画，不必只引用闭且有界的结论。
+\end{proof}
+
+\begin{proof}[最优集合为何是闭集]
+令 $M=\max_{x\in B}u(x)$，取任意序列 $x^n\in\argmax_Bu$ 且 $x^n\to x$。由于每个 $u(x^n)=M$，连续性给出 $u(x)=\lim_nu(x^n)=M$。若 $B$ 闭，则 $x\in B$，所以 $x\in\argmax_Bu$。这说明最优集合不仅非空，而且对极限过程稳定。
+\end{proof}
+
+\begin{example}[最优集合不必是单点]
+令 $B=\{x\in\R_+^2:p\cdot x\le m\}$，$u(x)=p\cdot x$。所有预算边界点都达到 $m$，因此 $C(p,m)=\{x:p\cdot x=m,x\ge0\}$ 是一条线段。连续性和紧性保证这条线段存在，但只有严格拟凹性才能排除多重最优。
+\end{example}
+
+\subsection{一阶条件与约束资格的核对}
+在内点情形，拉格朗日一阶条件是必要条件；在角点情形，必须改用 Kuhn--Tucker 条件。对
+$\max u(x)$ s.t. $g(x)\le0$、$x\ge0$，拉格朗日函数可写为
+\[
+\mathcal L=u(x)-\lambda g(x)+\mu\cdot x,
+\qquad \lambda\ge0,\ \mu_i\ge0.
+\]
+其条件包括原始可行性、对偶可行性、互补松弛和驻点条件。内点时 $\mu=0$，才退化为边际效用比例等于价格比例。
+
+\begin{example}[角点与内点的区别]
+若 $u(x)=x_1+\frac12x_2$、预算为 $x_1+x_2\le m$，商品一的单位效用为 $1$，商品二为 $1/2$，最优是 $(m,0)$。若机械套用内点切线条件，会错误地要求 $1=1/2$。正确判断是比较单位价格下的边际效用，并检查非负约束的乘子。
+\end{example}
+
+\subsection{对偶恒等式的再推导}
+由 $v(p,m)=u(x(p,m))$，全微分为
+$dv=\nabla u(x)\cdot dx$。在内点最优点有 $\nabla u=\lambda p$，而预算恒等式给出
+$p\cdot dx+x\cdot dp=dm$。故
+\[
+dv=\lambda(dm-x\cdot dp),
+\]
+从而 $v_m=\lambda$、$v_{p_i}=-\lambda x_i$。这给出 Roy 恒等式，也说明价格导数为负并非独立假设，而是最优性与预算恒等式共同推出的结果。
+
+\begin{remark}
+本章所有比较静态结论均应回到三项检查：最优解是否存在、是否唯一、是否位于内点。只有三项条件分别核对后，导数符号才具有清晰的经济含义。
+\end{remark}

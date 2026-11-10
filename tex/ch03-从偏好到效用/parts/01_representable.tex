@@ -1,0 +1,230 @@
+% ============================================================
+\section{哪些偏好可以被效用表示}
+% ============================================================
+
+\subsection{效用表示的定义与序数等价}
+
+\begin{definition}[效用表示（回顾 \S2.2）]\label{def:rep}
+设 $\succeq$ 为备选集 $X$ 上的弱偏好关系。函数 $u:X\to\R$ \textbf{表示}（represents）$\succeq$，
+当且仅当
+\[
+\forall x,y\in X:\qquad x\succeq y\ \Longleftrightarrow\ u(x)\ge u(y).
+\]
+此时称 $\succeq$ \textbf{可效用表示}（utility-representable），$u$ 称为 $\succeq$ 的一个效用函数。
+\end{definition}
+
+表示定义是\textbf{双向}的：不仅“偏好高 $\Rightarrow$ 数值高”，而且“数值高 $\Rightarrow$ 偏好高”。
+因此 $u(x)=u(y)\iff x\sim y$，$u(x)>u(y)\iff x\succ y$：
+一个效用函数同时编码了 $\succeq$、$\succ$、$\sim$ 三层信息。
+
+\begin{proposition}[可表示 $\Rightarrow$ 理性]\label{prop:rep-rational}
+若 $\succeq$ 可被某 $u:X\to\R$ 表示，则 $\succeq$ 完备且传递（即为理性偏好/弱序）。
+\end{proposition}
+
+\begin{proof}
+\textbf{完备性}：任取 $x,y\in X$，$u(x),u(y)\in\R$。实数的全序性给出 $u(x)\ge u(y)$ 或 $u(y)\ge u(x)$，
+由表示定义即 $x\succeq y$ 或 $y\succeq x$。
+
+\textbf{传递性}：设 $x\succeq y$、$y\succeq z$。由表示定义 $u(x)\ge u(y)\ge u(z)$，
+实数 $\ge$ 传递给出 $u(x)\ge u(z)$，即 $x\succeq z$。
+\end{proof}
+
+命题~\ref{prop:rep-rational} 给出第一道门槛：\textbf{非理性偏好（不完备或不传递）一律不可表示}。
+但理性远不是充分条件——§\ref{subsec:lex} 将给出理性却不可表示的偏好。
+
+\begin{proposition}[序数等价：表示不唯一]\label{prop:ordinal}
+设 $u$ 表示 $\succeq$，$f:\R\to\R$ 严格递增，则 $\tilde u\coloneqq f\circ u$ 也表示 $\succeq$；
+反之，若 $u,\tilde u$ 表示同一 $\succeq$，则存在严格递增 $f:u(X)\to\R$ 使 $\tilde u=f\circ u$。
+\end{proposition}
+
+\begin{proof}
+\textbf{正向}：$x\succeq y\iff u(x)\ge u(y)\iff f(u(x))\ge f(u(y))\iff \tilde u(x)\ge \tilde u(y)$，
+第二步用 $f$ 严格递增（保持 $\ge$ 的双向性）。
+
+\textbf{反向}：在值域 $u(X)$ 上定义 $f(t)=\tilde u\bigl(u^{-1}(t)\bigr)$（任取原像）：
+若 $u(x)=u(x')$，则 $x\sim x'$，故 $\tilde u(x)=\tilde u(x')$，$f$ 良定义；
+若 $t_1>t_2$，取 $u(x_1)=t_1>u(x_2)=t_2$，则 $x_1\succ x_2$，故 $\tilde u(x_1)>\tilde u(x_2)$，即 $f$ 严格递增。
+\end{proof}
+
+\begin{remark}[序数性质与基数性质]\label{rem:cardinal}
+命题~\ref{prop:ordinal} 意味着效用数值本身\textbf{没有绝对意义}：$u(x)=10$ 与 $u(x)=2$ 之差为 $8$
+不代表“好 8 个单位”，因为 $\tilde u=\sqrt{u}$ 同样是合法表示。
+凡在\textbf{一切严格递增变换下保持不变}的性质称为\textbf{序数性质}
+（如“无差异曲线的形状”“最优选择集”）；
+只对特定表示成立的性质称为\textbf{基数性质}（如“边际效用递减”）。
+§\ref{subsec:ordinal-cardinal} 将严格区分这两类性质——这是性质对应问题（§3.5）的逻辑前提。
+\end{remark}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[font=\scriptsize,scale=1.18,transform shape]
+  % ---------- (a) 定义域离散：序上存在相邻对 ----------
+  \draw[thick,fill=gray!15] (0,0) rectangle (3.6,3.0);
+  \node[font=\small\bfseries] at (1.8,2.62) {(a) 离散定义域：序上存在相邻对};
+  \draw[thick,dashed] (0.5,1.45) -- (3.1,1.45);
+  \node[figlabel,anchor=east] at (0.42,1.45) {$X$};
+  \fill (0.9,1.45) circle (1.8pt) node[below=3pt] {$x$};
+  \fill (2.7,1.45) circle (1.8pt) node[below=3pt] {$y$};
+  \draw[decorate,decoration={brace,amplitude=4pt,mirror}] (1.05,2.00) -- (2.55,2.00)
+    node[midway,above=3pt,font=\scriptsize] {此处无任何元素};
+  \node[align=center,text width=3.3cm,font=\scriptsize] at (1.8,0.62)
+    {虚线只表示\emph{序的位置}，不代表区间内的点。\\ $x$ 与 $y$ 是相邻的无差异类，\\
+     $u(x)$ 与 $u(y)$ 之间留下一段实数空隙};
+  % ---------- (b) 序稠密：任意一对之间都有元素 ----------
+  \begin{scope}[xshift=6.2cm]
+    \draw[thick,fill=gray!15] (0,0) rectangle (3.6,3.0);
+    \node[font=\small\bfseries] at (1.8,2.62) {(b) 序稠密：任意一对之间有元素};
+    \draw[thick,dashed] (0.5,1.45) -- (3.1,1.45);
+    \node[figlabel,anchor=east] at (0.42,1.45) {$X$};
+    \fill (0.7,1.45) circle (1.8pt) node[below=3pt] {$x$};
+    \fill (1.5,1.45) circle (1.8pt) node[above=3pt] {$d$};
+    \fill (2.3,1.45) circle (1.8pt) node[above=3pt] {$d'$};
+    \fill (3.1,1.45) circle (1.8pt) node[below=3pt] {$y$};
+    \draw[decorate,decoration={brace,amplitude=4pt}] (0.9,1.90) -- (2.9,1.90)
+      node[midway,above=3pt,font=\scriptsize] {每个空隙都插入了 $d,d'$};
+    \node[align=center,text width=3.3cm,font=\scriptsize] at (1.8,0.62)
+      {对每一对 $x\succ y$ 都存在 $d$ 夹在中间，\\ 于是可以把 $u(d)$ 插进 $u(x)$ 与 $u(y)$ 之间，\\
+       序被填满、跳跃被细分};
+  \end{scope}
+\end{tikzpicture}
+\caption{可数序稠密子集为何必要：序上的缺口与稠密}
+\end{figure}
+\figexplan{两幅图的横轴都是\emph{序的位置}（虚线），不是实数轴本身——这一点是读图的关键。左面板的定义域是\textbf{离散}的：$x$ 与 $y$ 是相邻的两个无差异类，它们之间没有任何方案，因此无论怎样定义 $u$，$u(x)$ 与 $u(y)$ 之间总会留下一段实数空隙，而空隙中的值没有任何方案与之对应，序无法被完整编码。右面板表示序稠密：每一对相邻方案之间都插入了 $d,d'$，空隙被不断细分，跳跃至多可数个，从而序可以被 $\R$ 上的数值完整承载。}
+
+\begin{theorem}[可表示的必要条件]\label{thm:dense-necessary}
+若弱序 $\succeq$ 可被效用函数表示，则 $X$ 中存在\textbf{至多可数}的序稠密子集。
+\end{theorem}
+
+\begin{proof}
+设 $u$ 表示 $\succeq$。分两类收集“见证点”构成 $Z$。
+
+\textbf{第一类：跳跃之间的点。}考虑 $u(X)\subseteq\R$ 中所有满足如下条件的无差异类 $[x]$：
+存在无差异类 $[y]$ 使 $u(x)>u(y)$ 且开区间 $\bigl(u(y),u(x)\bigr)$ 内\textbf{没有} $u$ 的值
+（即 $[x]$ 与 $[y]$ 之间是一个“跳跃”）。
+对每个这样的跳跃，区间 $\bigl(u(y),u(x)\bigr)$ 是 $\R$ 中非空开区间，
+且不同跳跃对应的区间\textbf{两两不交}（每个跳跃区间以值域中的两个相邻值为端点）。
+实数轴上任何一族两两不交的非空开区间至多可数
+（每个区间任取一有理数，即得该族到 $\Q$ 的单射），
+故跳跃点至多可数个；从每个跳跃两端的无差异类中各取一代表元，记入 $Z_1$。
+
+\textbf{第二类：非跳跃点的逼近。}对不是跳跃端点的无差异类 $[x]$，
+若 $[x]$ 上方（或下方）紧邻没有跳跃，则 $u(x)$ 可被值域中的其他值从一侧逼近。
+对每个 $n\in\N$，在 $u(X)$ 的每个长度落入 $\bigl[\frac{1}{n+1},\frac{1}{n}\bigr)$ 的
+“空洞”端点无差异类中取代表元；同样的不交区间论证给出至多可数个，记为 $Z_2$。
+
+令 $Z=Z_1\cup Z_2$，则 $Z$ 至多可数。任取 $x\succ y$：
+若 $u(x)$ 与 $u(y)$ 之间隔着某个跳跃，跳跃端点的代表元即满足序稠密要求；
+否则 $u(X)$ 在 $(u(y),u(x))$ 内有值（无跳跃），任取 $u(z)\in\bigl(u(y),u(x)\bigr)$ 对应的无差异类，
+其代表元可由 $Z_2$ 中的逼近点替代满足要求。故 $Z$ 序稠密。
+\end{proof}
+
+定理~\ref{thm:dense-necessary} 的逆命题也成立（充分性），其证明就是 §3.4 连续编号构造的目标：
+\[
+\boxed{\ \succeq\ \text{可表示}\ \Longleftrightarrow\ \succeq\ \text{为弱序，且}\ X\ \text{含可数序稠密子集}\ }
+\]
+这是可表示性问题的\textbf{完全刻画}：没有任何额外的拓扑假设，纯粹的序条件。
+
+\subsection{基准反例：词典序偏好不可表示}\label{subsec:lex}
+
+\begin{definition}[词典序偏好]\label{def:lex}
+在 $X=\R^2_+$ 上定义 $\succeq_L$：
+\[
+(x_1,x_2)\succeq_L (y_1,y_2)\ \Longleftrightarrow\
+\Bigl[x_1>y_1\ \ \text{或}\ \ \bigl(x_1=y_1\ \text{且}\ x_2\ge y_2\bigr)\Bigr].
+\]
+即先比较第一坐标；第一坐标相同时才比较第二坐标——如同字典先按首字母排序。
+\end{definition}
+
+\begin{proposition}[$\succeq_L$ 是理性偏好]\label{prop:lex-rational}
+$\succeq_L$ 完备、传递（从而是弱序），且满足强单调性：$x\gg y\Rightarrow x\succ_L y$。
+\end{proposition}
+
+\begin{proof}
+\textbf{完备性}：任取 $x,y$。若 $x_1\ne y_1$，第一坐标大者严格优；若 $x_1=y_1$，比较 $x_2,y_2$ 即得结论。
+\textbf{传递性}：设 $x\succeq_L y$、$y\succeq_L z$。
+若 $x_1>y_1$ 或 $y_1>z_1$，则 $x_1>z_1$，故 $x\succ_L z$；
+若 $x_1=y_1=z_1$，则 $x_2\ge y_2\ge z_2$，故 $x\succeq_L z$。
+\textbf{强单调性}：$x\gg y$ 蕴含 $x_1>y_1$ 或（$x_1\ge y_1$ 且 $x_2>y_2$ 当 $x_1=y_1$），两种情形均得 $x\succ_L y$。
+\end{proof}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.24,transform shape]
+  % axes
+  \draw[axisline] (0,0) -- (6.4,0) node[below left, axislabel] {$x_1$};
+  \draw[axisline] (0,0) -- (0,4.4) node[below left, axislabel] {$x_2$};
+  % vertical first-coordinate iso-lines
+  \foreach \x in {1,2,3,4,5} {\draw[MidBlue!35, thin] (\x,0) -- (\x,4.1);}
+  % point and better/worse sets
+  \node[nodeblue, label=below right:{$x$}] at (3,2.2) {};
+  \draw[arrblue] (3,2.2) -- (3,3.9) node[midway, right] {$y\succ_L x$（同一竖线向上）};
+  \draw[arrblue] (3,2.2) -- (3,0.25) node[midway, right] {$y\prec_L x$（同一竖线向下）};
+  \draw[arrblue] (3.05,2.2) -- (5.7,2.2) node[pos=0.82, below=3pt,fill=white,inner sep=1pt] {右侧点严格优于 $x$};
+  \draw[arrblue] (2.95,2.1) -- (0.35,2.1) node[pos=0.62, above=3pt,fill=white,inner sep=1pt] {左侧点严格劣于 $x$};
+  \node[align=center,text width=6.4cm,fill=white,inner sep=2pt] at (3,-0.9) {无差异类 $=\{x\}$：无无差异曲线；\\只有竖直方向和左右方向的严格比较};
+\end{tikzpicture}
+\end{center}
+\figexplan{横轴 $x_1$、纵轴 $x_2$。每根浅灰竖线是“第一坐标固定”的比较基准：在同一条竖线上，位置越高越优、越低越劣；整条竖线向右移动严格变优、向左移动严格变劣。由于词典序先比较 $x_1$，无差异类退化为单点 $\{x\}$，故不存在通常意义的无差异曲线，只有竖直方向与左右方向两组严格比较。}
+
+\begin{theorem}[词典序偏好不可效用表示]\label{thm:lex}
+不存在任何 $u:\R^2_+\to\R$ 表示 $\succeq_L$。
+\end{theorem}
+
+\begin{proof}
+反设 $u$ 表示 $\succeq_L$。对每个 $t\in\R_+$，比较两点 $(t+1,0)$ 与 $(t,1)$：
+\[
+(t+1,0)\succ_L(t,1)\quad(\text{第一坐标 }t+1>t)
+\ \Longrightarrow\ u(t+1,0)>u(t,1).
+\]
+于是对每个 $t\in\R_+$，开区间
+\[
+I_t\ \coloneqq\ \bigl(u(t,0),\,u(t,1)\bigr)
+\]
+非空（因 $(t,1)\succ_L(t,0)$，第二坐标 $1>0$，故 $u(t,1)>u(t,0)$）。
+
+\textbf{关键一步：$\{I_t\}_{t\in\R_+}$ 两两不交。}
+取 $s<t$。则 $(s,1)\prec_L(t,0)$（第一坐标 $s<t$），故 $u(s,1)<u(t,0)$，即
+\[
+I_s=\bigl(u(s,0),u(s,1)\bigr)\ \text{整体位于}\ u(t,0)\ \text{左侧},\qquad
+I_s\cap I_t=\varnothing.
+\]
+
+每个 $I_t$ 是非空开区间，任取有理数 $q(t)\in I_t\cap\Q$。
+由两两不交，$t\ne s\Rightarrow q(t)\ne q(s)$，故 $q:\R_+\to\Q$ 是\textbf{单射}。
+但这要求 $|\R_+|\le|\Q|$，与 $\R_+$ 不可数、$\Q$ 可数矛盾。故表示不存在。
+\end{proof}
+
+\begin{remark}[反例的结构]\label{rem:lex-structure}
+证明的三步骨架值得记住：(i) 对每个“层级”$t$ 制造一个非空开区间 $I_t$；
+(ii) 用偏好的序结构证明这些区间两两不交；(iii) 用“不交开区间族至多可数”完成基数矛盾。
+词典序偏好有\textbf{不可数多个}无差异类（每个单点都是一类），且类与类之间都隔着“跳跃”，
+直接违反定理~\ref{thm:dense-necessary} 的必要条件——可数序稠密子集不存在：
+任何序稠密子集必须在每个层级 $t$ 内部布点，故至少与 $\R_+$ 等势。
+\end{remark}
+
+\subsection{本章路线图}
+
+\begin{center}
+\begin{tikzpicture}[
+  font=\small,
+  box/.style={draw=AxisBlue, rounded corners=2pt, align=center, inner sep=5pt, fill=MidBlue!10},
+  arr/.style={-{Stealth[length=2.5mm]}, thick, color=AxisBlue},
+  node distance=0.9cm and 1.15cm
+]
+\node[box] (ax) {偏好公理\\ 完备 + 传递};
+\node[box, right=of ax] (fin) {有限集\\ 归纳 / 排名构造\\ （§3.2）};
+\node[box, right=of fin] (inf) {无限集\\ 权数构造（可数）\\ 连续编号（连续统）\\ （§3.3--§3.4）};
+\node[box, below=of ax] (nsec) {必要条件\\ 可数序稠密子集\\ 词典序反例（§3.1）};
+\node[box, below=of fin] (prop) {性质对应\\ 单调/凸/位似/可分\\ 拟线性/连续（§3.5）};
+\node[box, below=of inf] (rep2) {结构表示定理\\ 可加表示（§3.6）\\ 拟线性表示（§3.7）};
+\node[box, below=of prop] (beh) {行为批判\\ 公理的系统性失效（§3.8）};
+\draw[arr] (ax) -- (fin);
+\draw[arr] (fin) -- (inf);
+\draw[arr] (ax) -- (nsec);
+\draw[arr] (nsec) -- (prop);
+\draw[arr] (inf) -- (rep2);
+\draw[arr] (prop) -- (rep2);
+\draw[arr] (prop) -- (beh);
+\draw[arr] (rep2) -- (beh);
+\end{tikzpicture}
+\end{center}
+\figexplan{上支为构造主线：偏好公理 $\to$ 有限集构造 $\to$ 无限集构造；下支为约束与性质：必要条件（可数序稠密子集，词典序反例）与性质对应 $\to$ 结构表示定理（可加表示、拟线性表示）；两支最终汇入行为批判。箭头表示逻辑推进方向，方框内注明对应小节。}

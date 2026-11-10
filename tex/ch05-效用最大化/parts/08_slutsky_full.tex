@@ -1,0 +1,215 @@
+\section{Hicksian 需求与 Slutsky 分解}
+% ============================================================
+% 第五讲 5.8：Slutsky 矩阵与 Slutsky 方程
+% ============================================================
+\subsection{Slutsky 矩阵}
+
+对偶理论最大的红利是关于\textbf{价格效应}的一组定理。回忆 Hicksian 需求 $h(p,\bar u)$ 把效用钉死、只让价格起作用，因此它对价格的导数恰好是“纯粹的”替代效应。
+
+\begin{definition}[Slutsky 矩阵]
+设 $h(p,\bar u)$ 可微。\textbf{Slutsky 矩阵}（补偿价格效应矩阵）定义为
+\[
+ D_p h(p,\bar u)=\Bigl[\frac{\partial h_i}{\partial p_j}(p,\bar u)\Bigr]_{i,j=1}^{n},
+\]
+即第 $(i,j)$ 元为：商品 $j$ 价格上升一单位时，为保持效用 $\bar u$ 不变，商品 $i$ 的补偿需求变化多少。在财富水平 $w$ 处取 $\bar u=v(p,w)$ 时，记
+\[
+ S(p,w)=D_p h\bigl(p,v(p,w)\bigr).
+\]
+\end{definition}
+
+\subsection{Slutsky 矩阵的三大性质}
+
+\begin{theorem}[对称性、负半定性与零次齐次性]\label{thm:slutsky-props}
+设 $u$ 连续可微、偏好严格凸且局部非饱和，$e$ 对 $p$ 二阶连续可微，$h$ 可微且为内点。则：
+\begin{enumerate}
+\item \textbf{对称性}：$\dfrac{\partial h_i}{\partial p_j}=\dfrac{\partial h_j}{\partial p_i}$（$S$ 为对称矩阵）；
+\item \textbf{负半定性}：对任意向量 $\mathrm dp\in\R^n$，$\mathrm dp^{\top}S\,\mathrm dp\le0$；
+\item \textbf{行和为零}：$D_p h(p,\bar u)\cdot p=0$，即 $\sum_j\frac{\partial h_i}{\partial p_j}p_j=0$ 对每个 $i$ 成立。
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+(1) Shephard 引理给出 $h(p,\bar u)=\nabla_p e(p,\bar u)$（按分量 $h_i=\partial e/\partial p_i$）。于是
+\[
+ D_p h(p,\bar u)=\nabla^2_p e(p,\bar u),
+\]
+即 Slutsky 矩阵是支出函数关于价格的 \textbf{Hessian 矩阵}。$e$ 对 $p$ 二阶连续可微，由 Young 定理（混合偏导相等，亦称 Schwarz/Clairaut 定理），
+\[
+ \frac{\partial h_i}{\partial p_j}
+ =\frac{\partial^2 e}{\partial p_j\,\partial p_i}
+ =\frac{\partial^2 e}{\partial p_i\,\partial p_j}
+ =\frac{\partial h_j}{\partial p_i}.
+\]
+(2) 命题~\ref{prop:e-props}（上节）证明过 $e$ 对 $p$ 凹。二阶连续可微的凹函数其 Hessian 处处负半定：对任意 $\mathrm dp$，
+\[
+ e(p+t\,\mathrm dp)\le e(p)+t\,\nabla_p e(p)\cdot\mathrm dp
+ \quad\text{与}\quad
+ e(p+t\,\mathrm dp)=e(p)+t\,\nabla_p e(p)\cdot\mathrm dp+\tfrac{t^2}{2}\,\mathrm dp^{\top}\nabla^2_p e\,\mathrm dp+o(t^2)
+\]
+联立并除以 $t^2/2$、令 $t\to0$，得 $\mathrm dp^{\top}\nabla^2_p e\,\mathrm dp\le0$。代入 $\nabla_p e=h$ 即 $\mathrm dp^{\top}D_p h\,\mathrm dp\le0$。
+(3) $h$ 对 $p$ 零次齐次（命题~\ref{prop:e-props} 第 4 条）。对齐次可微函数用 Euler 定理：若 $h_i(tp,\bar u)=h_i(p,\bar u)$，两边在 $t=1$ 处对 $t$ 求导，得
+\[
+ \sum_{j=1}^{n}\frac{\partial h_i}{\partial p_j}(p,\bar u)\,p_j=0,
+\]
+即 $(D_p h\,p)_i=0$ 对每个 $i$ 成立，故 $D_p h\cdot p=0$。
+\end{proof}
+
+\begin{corollary}[补偿自身价格效应非正]\label{cor:diag}
+负半定矩阵的对角元非正：取 $\mathrm dp=e_i$（第 $i$ 个单位向量），得
+\[
+ \frac{\partial h_i}{\partial p_i}(p,\bar u)\le0.
+\]
+\end{corollary}
+\begin{proof}
+$\mathrm dp^{\top}S\,\mathrm dp\le0$ 中取 $\mathrm dp=e_i$ 立得 $S_{ii}\le0$。
+\end{proof}
+
+这就是\textbf{补偿需求定律}：保持效用不变，商品自身涨价（其余价格不动），对该商品的补偿需求不增。注意它与（未补偿的）需求定律不同：后者可以因财富效应而失效（Giffen 品），前者是偏好凸性的代数必然，不可违反——只要偏好是凸的，补偿自身价格效应必然非正。负半定性还蕴含更一般的命题：对任意价格变化向量 $\mathrm dp$，补偿需求的变化 $\mathrm dx=D_p h\,\mathrm dp$ 与价格变化本身的方向“不顺行”：
+\[
+ \mathrm dp\cdot\mathrm dx=\mathrm dp^{\top}D_p h\,\mathrm dp\le0.
+\]
+
+\subsection{Slutsky 方程：总效应的分解}
+
+现在把两个世界接起来。对偶恒等式 $h(p,\bar u)=x\bigl(p,e(p,\bar u)\bigr)$ 说明：补偿需求就是“财富被恰好补偿到能维持效用 $\bar u$”的普通需求。对第 $i$ 个分量
+\[
+ h_i(p,\bar u)=x_i\bigl(p,\,e(p,\bar u)\bigr)
+\]
+两边关于 $p_j$ 求偏导（$\bar u$ 固定），用链式法则展开右边——$p_j$ 既直接进入 $x_i$，又通过最小支出 $e(p,\bar u)$ 间接进入：
+\[
+ \frac{\partial h_i}{\partial p_j}
+ =\frac{\partial x_i}{\partial p_j}
+ +\frac{\partial x_i}{\partial w}\bigl(p,e(p,\bar u)\bigr)\cdot\frac{\partial e}{\partial p_j}(p,\bar u).
+\]
+再用 Shephard 引理 $\partial e/\partial p_j=h_j$，并在对偶点 $\bar u=v(p,w)$（此时 $e(p,\bar u)=w$、$h_j=x_j$）处取值，移项即得：
+
+\begin{theorem}[Slutsky 方程]\label{thm:slutsky-eq}
+在定理~\ref{thm:slutsky-props} 的假设下，对一切 $i,j$：
+\begin{equation}
+ \boxed{\;
+ \frac{\partial x_i}{\partial p_j}(p,w)
+ =\underbrace{\frac{\partial h_i}{\partial p_j}(p,\bar u)}_{\text{替代效应}}
+ -\underbrace{x_j(p,w)\,\frac{\partial x_i}{\partial w}(p,w)}_{\text{财富效应}},\qquad \bar u=v(p,w).\;}
+ \label{eq:slutsky}
+\end{equation}
+矩阵形式（$\nabla_p x$ 为 $x$ 对 $p$ 的 Jacobian，$\nabla_w x=(\partial x_i/\partial w)_i$ 为列向量）：
+\[
+ \nabla_p x(p,w)=S(p,w)-\bigl(\nabla_w x(p,w)\bigr)\,x(p,w)^{\top}.
+\]
+\end{theorem}
+
+\begin{proof}
+如上推导；形式地：对 $h(p,\bar u)=x(p,e(p,\bar u))$ 关于 $p$ 全微分，
+\[
+ D_p h=D_p x+\bigl(\nabla_w x\bigr)\bigl(\nabla_p e\bigr)^{\top}
+ =D_p x+\bigl(\nabla_w x\bigr)h^{\top},
+\]
+第二等号用了 Shephard 引理 $\nabla_p e=h$。移项并在 $\bar u=v(p,w)$ 处取值（此时 $h=x$）即得矩阵形式。
+\end{proof}
+
+\begin{remark}[逐项经济解释]
+把 $p_j$ 上升一元对 $x_i$ 的影响拆成两块：
+\begin{itemize}
+\item \textbf{替代效应 $\partial h_i/\partial p_j$}：假想消费者被“补偿”到恰好维持原效用 $\bar u$（财富被调整为 $e(p,\bar u)$），此时 $x_i$ 的变化纯由相对价格驱动。它满足对称与负半定——理论对它的符号有硬约束（自身价格情形必为非正，见推论~\ref{cor:diag}）。
+\item \textbf{财富效应 $-x_j\,\partial x_i/\partial w$}：撤销假想的补偿，回到固定财富 $w$。$p_j$ 上升一元使维持原消费束贵了 $x_j$ 元，等价于财富缩水 $x_j$ 元；财富缩水对 $x_i$ 的影响是 $-x_j\cdot\partial x_i/\partial w$。它的大小取决于 $x_j$（商品 $j$ 在预算中的份额越大，缩水越狠）与 $x_i$ 对财富的敏感度（$x_i$ 是正常品还是劣等品）。
+\end{itemize}
+“总效应 $=$ 替代效应 $+$ 财富效应”由此不再是图形直觉，而是恒等式——它对任何偏好（凸、连续、局部非饱和）无条件成立。
+\end{remark}
+
+\begin{remark}[Hicks 补偿与 Slutsky 补偿]
+“补偿”有两种操作定义，须加区分。\textbf{Hicks 补偿}（本节的 $h$）：把财富调整到恰好维持\emph{原效用水平}，即 $w'=e(p',\bar u)$——精确但不可观察（$\bar u$ 不可观测）。\textbf{Slutsky 补偿}：把财富调整到恰好还能买得起\emph{原消费束}，即 $w''=p'\cdot x(p,w)$——可观察（只用到价格与数量），Slutsky（1915）原始论文用的正是这种。两种补偿一阶等价：对 $p_j$ 的微分，Slutsky 补偿给出的分解项为 $\partial x_i/\partial p_j+x_j\,\partial x_i/\partial w$，与式~(\ref{eq:slutsky}) 右端的替代项在 $(p,w)$ 处取值后相差 $O(\mathrm dp^2)$ 的项。差异的二阶性质（Slutsky 补偿矩阵不对称、Hicks 补偿矩阵对称）是指数理论中 Living Cost Index 与 Laspeyres 型指数分歧的根源。
+\end{remark}
+
+\begin{remark}[自身价格情形的符号分析]
+取 $i=j$：
+\[
+ \frac{\partial x_i}{\partial p_i}
+ =\underbrace{\frac{\partial h_i}{\partial p_i}}_{\le\,0}-x_i\,\frac{\partial x_i}{\partial w}.
+\]
+\begin{itemize}
+\item 若 $x_i$ 是\textbf{正常品}（$\partial x_i/\partial w>0$）：两项同为非正，故 $\partial x_i/\partial p_i<0$ 严格——正常品必是普通品（价格升、需求减）。
+\item 若 $x_i$ 是\textbf{劣等品}（$\partial x_i/\partial w<0$）：第二项为正，与第一项对抗。仅当财富效应在数值上压倒替代效应（$x_i\,|\partial x_i/\partial w|>|\partial h_i/\partial p_i|$，要求商品既劣等又占预算大头）时才有 $\partial x_i/\partial p_i>0$，即 Giffen 品。Giffen 品因此是劣等品的特例，且是“预算份额很大的劣等品”这一相当苛刻的特例。
+\end{itemize}
+这一符号逻辑的完整展开与经典案例见下一节。
+\end{remark}
+
+\subsubsection*{交叉价格效应的符号分析}
+
+自身价格效应的符号已如上述；交叉项 $\partial x_i/\partial p_j$（$i\ne j$）则\textbf{没有}普适符号。Slutsky 方程把它拆成两个方向都可能变的量：
+\[
+ \frac{\partial x_i}{\partial p_j}
+ =\underbrace{S_{ij}}_{\text{符号自由（}n\ge3\text{ 时）}}
+ -\underbrace{x_j\,x_{i,w}}_{\text{符号自由}} .
+\]
+逐情形讨论：
+\begin{itemize}
+\item \textbf{Hicksian 替代 $+$ $i$ 正常}（$S_{ij}>0$，$x_{i,w}>0$）：总效应必为正——$j$ 是 $i$ 的总替代品。这是最常见的组合（如茶对咖啡）。
+\item \textbf{Hicksian 互补 $+$ $i$ 正常}（$S_{ij}<0$，$x_{i,w}>0$）：财富效应 $-x_jx_{i,w}<0$ 与替代效应同向为负，总效应必为负——$j$ 是 $i$ 的总互补品（如糖对咖啡：糖涨价，少喝咖啡）。
+\item \textbf{Hicksian 替代 $+$ $i$ 劣等}（$S_{ij}>0$，$x_{i,w}<0$）或 \textbf{Hicksian 互补 $+$ $i$ 劣等}：两项方向相反，总效应符号不定，取决于 $x_j$（$j$ 的预算份额）与敏感度的乘积大小。
+\end{itemize}
+由此可见“总替代/总互补”的不对称性来源：$\partial x_i/\partial p_j$ 含 $x_j x_{i,w}$、$\partial x_j/\partial p_i$ 含 $x_i x_{j,w}$，两个财富项一般不等；而补偿项 $S_{ij}=S_{ji}$ 恒对称。分类学细节（两商品世界的必然替代、CD 的中性总效应）见下一节。
+
+\begin{example}[完全替代：可微性失效的边界情形]\label{ex:perf-sub}
+设 $u=x_1+x_2$。UMP 的解是角点：$p_1<p_2$ 时 $x=(w/p_1,0)$。EMP 同样极端：
+\[
+ e(p,\bar u)=\bar u\min\{p_1,p_2\},\qquad
+ h(p,\bar u)=
+ \begin{cases}
+ (\bar u/p_1,0), & p_1<p_2,\\
+ (0,\bar u/p_2), & p_1>p_2,
+ \end{cases}
+\]
+而在 $p_1=p_2$ 处，任何 $x_1+x_2=\bar u$ 的束都是最优——\textbf{$h$ 多值、$e$ 有折点（kink）、不可微}。Shephard 引理与整个 Slutsky 矩阵在折点处失效：$D_p h$ 在 $p_1=p_2$ 两侧是两个不同的常数矩阵，中间发生跳跃（$h_1$ 从 $\bar u/p_1$ 跳到 $0$）。教训有二：其一，定理~\ref{thm:slutsky-props} 中“$e$ 二阶连续可微”不是装饰性假设——偏好凸性只保证 $e$ 凹与 $h$ 存在，可微性需要无差异曲线本身光滑（无折点）；其二，折点恰恰对应\emph{离散选择}（只买较便宜那种）——计量中处理角点与离散选择需求（如 logit 型）时，正是这一情形的现代推广。
+\end{example}
+
+图~\ref{fig:slutsky-decomp} 把三点分解画成几何：价格下降使预算线绕纵轴截距外旋；先沿原无差异曲线滑到补偿切点（替代效应），再平行移到新预算线上的最终点（财富效应）。
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=.88]
+  \draw[axisline] (0,0)--(7.4,0) node[below]{$x_1$};
+  \draw[axisline] (0,0)--(0,4.65) node[left]{$x_2$};
+  % 原预算线 x2=4-x1
+  \draw[thick] (0,4)--(4,0);
+  \node[figlabel] at (3.62,4.28) {原预算线};
+  % 新预算线 x2=4-x1/2
+  \draw[thick,dashed] (0,4)--(7.2,0.4);
+  \node[figlabel] at (6.05,4.4) {新预算线};
+  % 补偿预算线 x2=2.83-x1/2
+  \draw[thick,dotted] (0,2.83)--(5.66,0);
+  \node[figlabel] at (5.15,3.28) {补偿预算线};
+  % 无差异曲线 u1: xy=4
+  \draw[curveA,domain=1.0:5.3,smooth] plot (\x,{4/\x});
+  \node[figlabel] at (4.7,1.28) {$u_1$};
+  % 无差异曲线 u2: xy=8
+  \draw[curveB,domain=1.75:6.9,smooth] plot (\x,{8/\x});
+  \node[figlabel] at (6.35,1.62) {$u_2$};
+  % 三点
+  \node[nodeblue] at (2,2) {};
+  \node[figlabel,left] at (1.9,2.06) {$x$};
+  \node[nodewhite] at (2.83,1.41) {};
+  \node[figlabel,left] at (2.68,1.36) {$h$};
+  \node[nodeblue] at (4,2) {};
+  \node[figlabel,right] at (4.1,2.05) {$x'$};
+  % 分解箭头
+  \draw[arrblue] (2.25,1.9) to[bend left=30] (2.6,1.5);
+  \node[figlabel] at (2.95,1.05) {替代效应};
+  \draw[arrblue] (3.15,1.65) to[bend left=30] (3.7,1.9);
+  \node[figlabel] at (3.8,1.25) {财富效应};
+\end{tikzpicture}
+\caption{价格下降的 Slutsky 三点分解}
+\figexplan{商品 1 价格下降（预算线由实线外旋为虚线，纵截距不变）。$x$ 为原最优束；补偿预算线（点线，与新预算线平行、与原无差异曲线 $u_1$ 相切）给出补偿点 $h$；新预算线与更高无差异曲线 $u_2$ 的切点为最终束 $x'$。$x\to h$ 沿 $u_1$ 滑动，是替代效应（$x_1$ 增加）；$h\to x'$ 平行外移，是财富效应（两种商品都是正常品时 $x_1$ 进一步增加）。}
+\label{fig:slutsky-decomp}
+\end{figure}
+
+\begin{remark}[Slutsky 方程是可检验命题]
+注意方程两边都是\textbf{可观察}的量：$\partial x_i/\partial p_j$、$x_j$ 与 $\partial x_i/\partial w$ 都能由需求数据估出，而方程断言它们组合出的矩阵 $S=\nabla_p x+(\nabla_w x)x^{\top}$ 必然对称、负半定、行和为零。这是消费者理论对横截面与面板需求数据最核心的可检验限制（也是需求系统计量估计中约束设定的来源）。反过来，\emph{可积性问题}问：给定一个满足这些限制的矩阵 $S$，能否反解出产生它的偏好？答案是肯定的——这正是 $S=\nabla^2_p e$ 把 $S$ “积分”回支出函数的路线，对偶理论在这里与实证需求分析会师。
+\end{remark}
+
+\begin{remark}[副产品：真实生活成本指数]
+Slutsky 机制还有一个重要的福利应用。要在保持效用 $\bar u$ 不变的意义下度量从价格 $p^0$ 到 $p^1$ 的生活成本变化，正确的指数是 \textbf{Konüs 真实生活成本指数}
+\[
+ \mathrm{COLI}(p^0,p^1;\bar u)=\frac{e(p^1,\bar u)}{e(p^0,\bar u)} :
+\]
+分子分母都是达到\emph{同一}效用水平的（最小）支出，比值即纯价格效应。统计机构用的 Laspeyres 指数 $P_L=p^1\cdot x(p^0,w)/w$ 以\emph{基期束}为权重，而 $e(p^1,\bar u)\le p^1\cdot h(p^0,\bar u)$（最优束成本不超过任一可行束成本，取 $\bar u=v(p^0,w)$ 即基期束）给出 $P_L\ge\mathrm{COLI}$：Laspeyres 系统性\emph{高估}生活成本（忽略替代）。对偶地可以证明 Paasche 指数系统性低估。这组不等式是支出函数凹性（确切说是定义式的最小性）的直接推论—— Slutsky 理论之外，对偶方法免费赠送的福利经济学结论。
+\end{remark}

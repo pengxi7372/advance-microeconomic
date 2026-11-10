@@ -1,0 +1,273 @@
+\section{支出最小化与对偶：EMP、Shephard 引理与对偶恒等式}
+% ============================================================
+% 第五讲 5.7：支出最小化、Shephard 引理与对偶恒等式
+% ============================================================
+\subsection{为什么需要第二个最优化问题}
+
+UMP 把 $(p,w)$ 作为给定，最大化 $u(x)$。细看会发现一个结构上的不便：\textbf{参数 $p$ 与 $w$ 全都进入约束集 $B(p,w)$，而不进入目标函数}。参数一动，整个可行域就变了形状，值函数 $v$ 与需求 $x$ 的性质（凹凸、单调、齐次）因此难以直接刻画：例如 $v$ 对 $(p,w)$ 是拟凹而非凹，对 $p$ 的二阶性质更无从谈起。
+
+经济学家的对策是把问题“翻转”一次：\textbf{固定效用水平，最小化支出}。这样一来，价格 $p$ 进入目标函数，而约束（达到目标效用）不再依赖 $p$——目标函数对参数的全部二阶性质立刻可用。这就是支出最小化问题（expenditure minimization problem, EMP）。
+
+先看它为什么必要，再定义它。
+
+\begin{example}[苹果涨价：两种效应方向可能相反]\label{ex:apple}
+苹果价格上升。一方面，\emph{相对价格}变了：苹果相对变贵，消费者会\textbf{用其他商品替代苹果}——替代效应使苹果消费减少。另一方面，\emph{实际财富}变了：同样的货币财富买不到原来的消费束，消费者实际变穷——若苹果是正常品（越富吃得越多），财富效应同样使苹果消费减少；但若苹果是劣等品（越富吃得越少，如某种廉价主食），财富效应反而使苹果消费\textbf{增加}。两种效应方向相反时，总效应的符号成为经验问题。UMP 把两者搅在一起；要把它们干净地拆开，需要一个“固定效用、让支出变动”的问题——替代效应正是在那里定义的。本节先把 EMP 的代数结构建好，Slutsky 分解留到下节。
+\end{example}
+
+\subsection{支出最小化问题及其与成本最小化的同构}
+
+\begin{definition}[支出最小化问题]\label{def:emp}
+给定价格 $p\gg0$ 与目标效用水平 $\bar u$，
+\[
+ \min_{x\in\R^n_+}\;p\cdot x\qquad\st\;u(x)\ge\bar u.
+\]
+其最优值称为\textbf{支出函数}
+\[
+ e(p,\bar u)=\min\{p\cdot x:x\ge0,\;u(x)\ge\bar u\},
+\]
+其最优解（严格凸偏好下唯一）称为\textbf{Hicksian（补偿）需求}
+\[
+ h(p,\bar u)=\arg\min\{p\cdot x:x\ge0,\;u(x)\ge\bar u\}.
+\]
+\end{definition}
+
+\begin{remark}[解的存在性]
+设 $u$ 连续、$\bar u$ 可达（存在 $x$ 使 $u(x)\ge\bar u$）、$p\gg0$。可行集 $\{x\ge0:u(x)\ge\bar u\}$ 非空且为闭集（$u$ 连续）。任取可行点 $\bar x$，则最优解若存在必落在子集 $\{x\ge0:u(x)\ge\bar u,\;p\cdot x\le p\cdot\bar x\}$ 中；该子集有界（$p\gg0$ 与 $x\ge0$ 给出 $0\le x_i\le(p\cdot\bar x)/p_i$）且闭，故为紧集，连续函数 $p\cdot x$ 在其上达到最小值。因此 EMP 的解存在；偏好严格凸时唯一（与 UMP 中同款的凸组合论证）。
+\end{remark}
+
+\begin{remark}[与厂商成本最小化的同构]\label{rem:isomorphism}
+EMP 与厂商理论中的成本最小化问题在数学上\textbf{完全同构}，只需把消费者理论的对象按下表“翻译”成厂商理论的对象：
+\begin{center}
+\begin{tabular}{ll}
+\toprule
+消费者理论（EMP） & 厂商理论（成本最小化）\\
+\midrule
+消费束 $x\in\R^n_+$ & 投入向量 $x\in\R^n_+$\\
+价格 $p\gg0$ & 投入价格 $w\gg0$\\
+效用 $u(x)$（视作“享乐生产函数”） & 生产函数 $f(x)$\\
+目标效用 $\bar u$ & 目标产量 $y$\\
+Hicksian 需求 $h(p,\bar u)$ & 条件要素需求 $x(w,y)$\\
+支出函数 $e(p,\bar u)$ & 成本函数 $c(w,y)$\\
+\bottomrule
+\end{tabular}
+\end{center}
+把 $u$ 读作“用消费束 $x$ 生产出享乐水平 $u(x)$ 的生产函数”，消费者就是一个把效用当产出的厂商：他以市场价格 $p$ 购买“投入品”（商品），以最省钱的方式“生产”出 $\bar u$ 单位的效用。因此，厂商理论中关于成本函数的全部定理（齐次、凹性、Shephard 引理）可以原封不动地搬到 $e$ 上；反过来，本节对 $e$ 的每条证明也都是成本函数相应性质的证明。这种一鱼两吃正是对偶方法的价值。
+\end{remark}
+
+\begin{remark}[EMP 的一阶条件：与 UMP 相同的切点]
+内点最优解 $h(p,\bar u)$ 满足（拉格朗日函数 $\mathcal L=p\cdot x+\mu(\bar u-u(x))$ 对 $x$ 的一阶条件）
+\[
+ p_i=\mu\,u_i\bigl(h(p,\bar u)\bigr),\qquad i=1,\ldots,n,
+\]
+即 $\mathrm{MRS}_{ij}=u_i/u_j=p_i/p_j$：\textbf{等支出线与无差异曲线相切}。这与 UMP 的一阶条件（$u_i=\lambda p_i$，同样 $\mathrm{MRS}_{ij}=p_i/p_j$）形式完全相同——两个问题在各自的对偶点 $(p,w)\leftrightarrow(p,\bar u=v(p,w))$ 上是\emph{同一个}切点。这正是对偶恒等式 $h(p,v(p,w))=x(p,w)$（定理~\ref{thm:duality}）的几何内容：UMP 的切点在预算线上，EMP 的切点在同一条无差异曲线上，而两个约束在同一束上同时绑定。区别只在外围：UMP 沿一族预算线找最高切点，EMP 沿一条无差异曲线找最平的等支出线。
+\end{remark}
+
+\subsection{支出函数与 Hicksian 需求的性质}
+
+\begin{proposition}[支出函数的基本性质]\label{prop:e-props}
+设 $u$ 连续、局部非饱和，$p\gg0$，$\bar u$ 可达。则：
+\begin{enumerate}
+\item $e(p,\bar u)$ 对 $p$ \textbf{一次齐次}：$e(tp,\bar u)=t\,e(p,\bar u)$，$t>0$；
+\item $e(p,\bar u)$ 对 $p$ \textbf{凹}；
+\item $e(p,\bar u)$ 对 $\bar u$ \textbf{非减}；若偏好严格单调且 $\bar u$ 在可达范围内变动，则严格递增；
+\item $h(p,\bar u)$ 对 $p$ \textbf{零次齐次}：$h(tp,\bar u)=h(p,\bar u)$，$t>0$。
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+(1) 价格同比例放大不改变可行集 $\{x\ge0:u(x)\ge\bar u\}$，只把目标函数乘以 $t$：
+\[
+ e(tp,\bar u)=\min_{u(x)\ge\bar u}(tp)\cdot x=t\min_{u(x)\ge\bar u}p\cdot x=t\,e(p,\bar u).
+\]
+(2) 任取 $p^1,p^2\gg0$，$t\in(0,1)$，记 $p=tp^1+(1-t)p^2$，$x^*=h(p,\bar u)$。关键观察：$x^*$ 对两个子问题都可行（可行集只看 $u(x)\ge\bar u$，与价格无关），故
+\[
+ e(p,\bar u)=p\cdot x^*=t\,(p^1\cdot x^*)+(1-t)(p^2\cdot x^*)
+ \;\ge\;t\,e(p^1,\bar u)+(1-t)\,e(p^2,\bar u),
+\]
+其中不等号用了“每个子问题的最小值不超过任一可行点的成本”。这正是凹性。
+(3) 若 $\bar u'\ge\bar u$，则 $\{x:u(x)\ge\bar u'\}\subseteq\{x:u(x)\ge\bar u\}$；在更小的集合上求最小只会更大：$e(p,\bar u')\ge e(p,\bar u)$。严格递增的论证：若 $u$ 严格递增且 $e(p,\bar u')=e(p,\bar u)$，则公共最小点 $x$ 满足 $u(x)\ge\bar u'$，再沿任一坐标加 $\varepsilon e_i$ 可使效用更高而成本 $e+\varepsilon p_i$，与 $e(p,\bar u')$ 已是达到 $\bar u'$ 的最小成本矛盾（当 $\varepsilon$ 足够小时 $e+\varepsilon p_i<e(p,\bar u'')$ 对介于其间的 $\bar u''$ 成立）。
+(4) 由 (1) 的证明，$\min_{u\ge\bar u}(tp)\cdot x=t\min_{u\ge\bar u}p\cdot x$，两边的最优解集合相同：把成本乘以正常数不改变哪个可行点成本最小。故 $h(tp,\bar u)=h(p,\bar u)$。
+\end{proof}
+
+\begin{remark}[对照 UMP 一侧]
+这些性质与 $v$ 一侧形成镜像：$v$ 对 $(p,w)$ 零次齐次（规模不变），$e$ 对 $p$ 一次齐次（货币单位）；$v$ 对 $(p,w)$ 拟凹，$e$ 对 $p$ 凹。凹性是 $e$ 最有用的性质：凹函数在区间中点的函数值不低于端点值的平均——直觉是“混合价格下的最小支出，不超过分别面对两种价格的最小支出的平均”，因为混合价格下的最优束 $h(p,\bar u)$ 对两种原始价格都可行，可作为两者的备选方案。这个直觉将在下节直接生成 Slutsky 矩阵的负半定性。
+\end{remark}
+
+图~\ref{fig:emp-tangency} 给出 EMP 的几何：一族斜率为 $-p_1/p_2$ 的等支出线（iso-expenditure lines）从原点向外平移，最先触到无差异曲线 $u=\bar u$ 的那条决定了最小支出，切点即 Hicksian 需求。
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=.92]
+  \draw[axisline] (0,0)--(6.1,0) node[below]{$x_1$};
+  \draw[axisline] (0,0)--(0,4.7) node[left]{$x_2$};
+  % 无差异曲线 xy=4
+  \draw[curveA,domain=0.95:5.55,smooth] plot (\x,{4/\x});
+  \node[figlabel] at (4.85,1.15) {$u=\bar u$};
+  % 等支出线族（斜率 -1）：低、切、高
+  \draw[curveC] (0,3.2)--(3.2,0);
+  \draw[curveB] (0,4)--(4,0);
+  \draw[curveC] (0,4.65)--(4.65,0);
+  \node[figlabel] at (3.05,3.55) {$E_3$};
+  \node[figlabel] at (3.95,4.25) {$E_2$};
+  \node[figlabel] at (2.25,2.45) {$E_1$};
+  \node[nodewhite] at (2,2) {};
+  \node[figlabel,above right] at (2.05,2.05) {$x^*=h(p,\bar u)$};
+\end{tikzpicture}
+\caption{EMP：等支出线与无差异曲线的切点}
+\figexplan{实线为无差异曲线 $u=\bar u$（其右上方向为可行区域 $u\ge\bar u$）。三条平行线段为等支出线 $p\cdot x=E_k$，斜率 $-p_1/p_2$，$E_1<E_2<E_3$。$E_1$（点线）与可行区域不相交，支出太低达不到 $\bar u$；$E_3$（点线）整段落入可行区域，支出浪费；$E_2$（虚线）恰好与无差异曲线相切于 $x^*$，是最小支出 $e(p,\bar u)=E_2$，切点即 Hicksian 需求 $h(p,\bar u)$。}
+\label{fig:emp-tangency}
+\end{figure}
+
+\subsection{Shephard 引理}
+
+\begin{theorem}[Shephard 引理]\label{thm:shephard}
+设 $u$ 连续可微、偏好严格凸且局部非饱和，$\bar u>u(0)$ 可达，$p\gg0$，$h(p,\bar u)$ 为内点。若 $e$ 在 $(p,\bar u)$ 处对 $p$ 可微，则
+\[
+ \boxed{\;\frac{\partial e(p,\bar u)}{\partial p_i}=h_i(p,\bar u),\qquad i=1,\ldots,n.\;}
+\]
+\end{theorem}
+
+\begin{proof}
+EMP 的拉格朗日函数（约束写成 $\bar u-u(x)\le0$）为
+\[
+ \mathcal L(x,\mu;p,\bar u)=p\cdot x+\mu\bigl(\bar u-u(x)\bigr).
+\]
+\textbf{第一步：效用约束绑定。}若 $u\bigl(h(p,\bar u)\bigr)>\bar u$，由 $u$ 连续与 $\bar u>u(0)$，存在 $t\in(0,1)$ 使 $u\bigl(t\,h(p,\bar u)\bigr)=\bar u$，而其成本 $t\,p\cdot h<p\cdot h$，与 $h$ 的最小性矛盾。故 $u(h)=\bar u$，从而在最优解处
+\[
+ e(p,\bar u)=p\cdot h(p,\bar u)=\mathcal L\bigl(h(p,\bar u),\mu(p,\bar u);p,\bar u\bigr).
+\]
+\textbf{第二步：用包络定理。}把 $e$ 看作 EMP 的值函数，参数为 $p_i$。约束 $\bar u-u(x)\ge0$ 不含 $p$，故带约束的包络定理给出
+\[
+ \frac{\partial e}{\partial p_i}
+ =\frac{\partial\mathcal L}{\partial p_i}\Bigl|_{(h,\mu)}
+ =h_i(p,\bar u),
+\]
+其中 $\partial\mathcal L/\partial p_i=x_i$ 在 $x=h$ 处取值。与 Roy identity 同理：价格只出现在目标函数里，直接求偏导即可；解随价格移动的间接效应被一阶条件 $\mathcal L_x=0$ 消去。
+\end{proof}
+
+\begin{remark}[乘子的对照与“效用价格”]
+同一个包络论证还给出 $\partial e/\partial\bar u=\mu$：$\mu$ 是\textbf{目标效用的影子价格}——多要求一个单位的效用要多花多少元。对偶地，UMP 的乘子 $\lambda=v_w$ 是\textbf{一元财富的边际效用}。比较两个问题的一阶条件（内点情形）
+\[
+ \text{UMP：}\;u_i=\lambda p_i;\qquad
+ \text{EMP：}\;\mu u_i=p_i\;\text{即}\;u_i=\tfrac{1}{\mu}p_i,
+\]
+可见在对偶点上有 $\lambda=1/\mu$：一个把效用换成钱，一个把钱换成效用，两个乘子互为倒数。这也解释了 $e$ 与 $v$ 的反函数关系（见下节对偶恒等式）。
+\end{remark}
+
+\begin{example}[直接解 CD 的 EMP 并验证 Shephard]
+取 $u=x_1^{\alpha}x_2^{1-\alpha}$。EMP 的一阶条件给出 $x_2=\frac{1-\alpha}{\alpha}\frac{p_1}{p_2}x_1$；代入约束 $x_1^{\alpha}x_2^{1-\alpha}=\bar u$ 解出
+\[
+ h_1=\bar u\Bigl(\frac{\alpha p_2}{(1-\alpha)p_1}\Bigr)^{1-\alpha},\qquad
+ h_2=\bar u\Bigl(\frac{(1-\alpha)p_1}{\alpha p_2}\Bigr)^{\alpha},
+\]
+于是
+\[
+ e=p_1h_1+p_2h_2=\frac{\bar u\,p_1^{\alpha}p_2^{1-\alpha}}{\alpha^{\alpha}(1-\alpha)^{1-\alpha}} .
+\]
+Shephard 验证：$\partial e/\partial p_1=\alpha e/p_1$。另一方面
+\[
+ \alpha\frac{e}{p_1}
+ =\frac{\alpha\,\bar u\,p_1^{\alpha-1}p_2^{1-\alpha}}{K}
+ =\bar u\Bigl(\frac{\alpha p_2}{(1-\alpha)p_1}\Bigr)^{1-\alpha}=h_1,\qquad K=\alpha^{\alpha}(1-\alpha)^{1-\alpha},
+\]
+其中第二个等号是初等代数整理（把 $\alpha^{\alpha}(1-\alpha)^{1-\alpha}$ 拆进幂次）。同理 $\partial e/\partial p_2=(1-\alpha)e/p_2=h_2$。数值例：$\alpha=1/2$、$p=(4,1)$、$\bar u=2$，则 $e=2\cdot 2\cdot 1/0.5=8$，$h_1=\tfrac12\cdot 8/4=1$、$h_2=\tfrac12\cdot 8/1=4$恰为 \S 5.6 中 Roy identity 数值例（例~\ref{ex:roy-cd}）中 $(p,w)=(4,1)$、$w=8$ 的 Marshallian 需求，印证 $h(p,v(p,w))=x(p,w)$。
+\end{example}
+
+图~\ref{fig:hicksian-slide} 展示 Hicksian 需求如何随价格变化：$p_1$ 下降时，等支出线变平，切点沿\textbf{同一条}无差异曲线 $u=\bar u$ 向右下滑动——效用被钉死，只有相对价格在起作用。这正是“补偿”的含义，也是下节替代效应的定义。
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=.92]
+  \draw[axisline] (0,0)--(6.1,0) node[below]{$x_1$};
+  \draw[axisline] (0,0)--(0,4.7) node[left]{$x_2$};
+  % 同一条无差异曲线 xy=4
+  \draw[curveA,domain=0.95:5.55,smooth] plot (\x,{4/\x});
+  \node[figlabel] at (4.85,1.15) {$u=\bar u$};
+  % 两条等支出线
+  \draw[curveB] (0,4)--(4,0);
+  \node[figlabel] at (3.9,4.3) {$E$};
+  \draw[curveC] (0,2.83)--(5.66,0);
+  \node[figlabel] at (5.35,3.0) {$E'$};
+  \node[nodewhite] at (2,2) {};
+  \node[figlabel,above left] at (1.9,2.1) {$h$};
+  \node[nodewhite] at (2.83,1.41) {};
+  \node[figlabel,below right] at (2.88,1.32) {$h'$};
+  \draw[arrblue] (2.35,1.95) to[bend left=28] (2.62,1.55);
+\end{tikzpicture}
+\caption{Hicksian 需求沿同一条无差异曲线滑动}
+\figexplan{固定目标效用 $\bar u$（实线）。虚线为价格比 $p_1/p_2=1$ 时的等支出线，切点 $h$；点线为 $p_1$ 下降（$p_1/p_2=1/2$）后变平的等支出线，切点 $h'$。切点从 $h$ 滑到 $h'$：商品 1 变便宜，补偿需求 $h_1$ 上升、$h_2$ 下降，且最小支出由 $E$ 降到 $E'$（价格下降使达到同一效用更便宜）。整条轨迹始终贴着同一条无差异曲线——这就是“保持效用不变”的替代效应。}
+\label{fig:hicksian-slide}
+\end{figure}
+
+\subsection{对偶恒等式}
+
+UMP 与 EMP 是同一枚硬币的两面：一个固定财富求最高效用，一个固定效用求最小财富。下列四条恒等式把两个问题焊接成闭环。以下均设 $u$ 连续、偏好严格凸且局部非饱和（保证 $x$、$h$ 单值），$p\gg0$；涉及 $\bar u$ 的恒等式要求 $\bar u$ 落在\textbf{相关区间}内：$u(0)<\bar u$ 且 $\bar u$ 可达。
+
+\begin{theorem}[对偶恒等式]\label{thm:duality}
+在上述假设下：
+\begin{enumerate}
+\item $e\bigl(p,\,v(p,w)\bigr)=w$；
+\item $h\bigl(p,\,v(p,w)\bigr)=x(p,w)$；
+\item $v\bigl(p,\,e(p,\bar u)\bigr)=\bar u$；
+\item $x\bigl(p,\,e(p,\bar u)\bigr)=h(p,\bar u)$。
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+\textbf{(1)} 记 $\bar v=v(p,w)$，$x^*=x(p,w)$。一方面，$u(x^*)=v(p,w)=\bar v\ge\bar v$，即 $x^*$ 是 EMP（目标 $\bar v$）的可行点，故
+\[
+ e(p,\bar v)\le p\cdot x^*=w,
+\]
+末一等号用了局部非饱和下的预算耗尽（Walras 法则）。另一方面，设 $z$ 为 EMP（目标 $\bar v$）的任一可行点：$u(z)\ge\bar v=v(p,w)$。断言 $p\cdot z\ge w$：若不然 $p\cdot z<w$，则 $z$ 落在预算集内部，由局部非饱和，存在 $z'$ 靠近 $z$ 使 $p\cdot z'\le w$ 且 $u(z')>u(z)\ge v(p,w)$，与 $v$ 是 $B(p,w)$ 上的最大效用矛盾。对所有可行 $z$ 取最小，得 $e(p,\bar v)\ge w$。两方向合并即 $e(p,v(p,w))=w$。
+
+\textbf{(2)} 由 (1) 的证明，$x^*=x(p,w)$ 可行且成本恰为最小值 $e(p,\bar v)=w$，故 $x^*$ 本身就是 EMP 的最优解：$h(p,v(p,w))=x(p,w)$。
+
+\textbf{(3)} 记 $w'=e(p,\bar u)$，$h^*=h(p,\bar u)$。\emph{先证 $v(p,w')\ge\bar u$}：$h^*$ 满足 $p\cdot h^*=w'$（EMP 约束绑定可如 Shephard 引理证明中那样由 $\bar u>u(0)$ 与连续性得到，或直接由 $p\cdot h^*=e=w'$），故 $h^*\in B(p,w')$，且 $u(h^*)\ge\bar u$，于是 $v(p,w')\ge u(h^*)\ge\bar u$。\emph{再证 $v(p,w')\le\bar u$}：反设 $v(p,w')>\bar u$，取 $x^*\in B(p,w')$ 使 $u(x^*)=v(p,w')>\bar u$。由 $u$ 连续，对充分接近 $1$ 的 $t<1$ 有 $u(t x^*)>\bar u$；而
+\[
+ p\cdot(t x^*)=t\,(p\cdot x^*)\le t\,w'<w'=e(p,\bar u),
+\]
+（$t<1$ 且 $p\cdot x^*>0$，后者因 $u(x^*)>\bar u>u(0)$ 蕴含 $x^*\ne0$、$p\gg0$）。于是 $t x^*$ 以严格低于 $e(p,\bar u)$ 的成本达到了 $\bar u$，与 $e$ 的最小性矛盾。故 $v(p,e(p,\bar u))=\bar u$。
+
+\textbf{(4)} 在恒等式 (2) 中取财富为 $w'=e(p,\bar u)$，得
+\[
+ h\bigl(p,\,v(p,w')\bigr)=x(p,w').
+\]
+再由 (3)，$v(p,w')=\bar u$，代入即 $h(p,\bar u)=x\bigl(p,e(p,\bar u)\bigr)$。
+\end{proof}
+
+四条恒等式两两配对，构成一个闭环：
+
+\begin{center}
+\begin{tikzpicture}[>=Stealth,node distance=1.05cm]
+  \node[boxsoft] (ump) {UMP：固定 $w$\\ $v(p,w)=\max\{u(x):p\cdot x\le w\}$};
+  \node[boxsoft,right=2.2cm of ump] (emp) {EMP：固定 $\bar u$\\ $e(p,\bar u)=\min\{p\cdot x:u(x)\ge\bar u\}$};
+  \draw[arrblue] (ump)--node[figlabel,above]{$\bar u=v(p,w)$} (emp);
+  \draw[arrblue] (emp)--node[figlabel,above]{$w=e(p,\bar u)$} (ump);
+  \node[figlabel,below=0.35cm of ump] {$x(p,w)\ \longleftrightarrow\ h(p,\bar u)$};
+\end{tikzpicture}
+\end{center}
+\figexplan{上箭头：把 UMP 的最优效用 $\bar u=v(p,w)$ 喂给 EMP，EMP 还回同样的财富 $w$ 且 $h=x$（恒等式 1、2）。下箭头：把 EMP 的最小支出 $w=e(p,\bar u)$ 喂给 UMP，UMP 还回同样的效用 $\bar u$ 且 $x=h$（恒等式 3、4）。两个问题互为镜像，$(p,w)\mapsto(p,\bar u)$ 的换算是无损的。}
+
+\begin{remark}[“相关区间”不可省略]
+恒等式 (3)、(4) 在 $\bar u\le u(0)$ 时会失效：什么都不买就已达 $\bar u$，$e(p,\bar u)=0$，而 $v(p,0)\ge u(0)$ 可能严格超过 $\bar u$。此时“最小支出”是平凡的零，无法携带关于偏好的信息。因此对偶理论习惯上只在 $\bar u\in(u(0),\sup u)$ 的区间内展开；该区间正是每一点效用都“值得花钱去购买”的范围。
+\end{remark}
+
+\begin{remark}[对偶性的方法论意义]
+四条恒等式意味着：知道 $(v,x)$ 就能复原 $(e,h)$，反之亦然；而复原的运算是求逆与代入，不需要重新解任何最优化问题。再配合 Roy identity（由 $v$ 得 $x$）与 Shephard 引理（由 $e$ 得 $h$），四个对象 $v,x,e,h$ 中\textbf{任何一个}都足以生成其余三个。这为需求分析提供了自由度：研究者可以挑一个性质最好刻画的对象（通常是 $e$ 或 $h$，因为它们享受凹性与对称性）作为建模起点，其余对象按表索取——这正是下一节 Slutsky 矩阵的路线。
+\end{remark}
+
+把四个对象的性质并排放在一起，便于总览与记忆：
+
+\begin{center}
+\begin{tabular}{lllll}
+\toprule
+对象 & 定义 & 齐次性 & 凸凹/单调 & 生成工具\\
+\midrule
+$v(p,w)$ & UMP 最优值 & $(p,w)$ 零次 & 对 $w$ 增、对 $p$ 减、拟凹 & $\to x$：Roy identity\\
+$x(p,w)$ & Marshallian 需求 & $(p,w)$ 零次 & 满足预算耗尽 & $\to v$：代入 $u$\\
+$e(p,\bar u)$ & EMP 最优值 & $p$ 一次 & 对 $p$ 凹、对 $\bar u$ 增 & $\to h$：Shephard 引理\\
+$h(p,\bar u)$ & Hicksian 需求 & $p$ 零次 & $D_ph$ 对称、负半定 & $\to e$：代入 $p\cdot h$\\
+\bottomrule
+\end{tabular}
+\end{center}
+\figexplan{四对象速查表：每行第一格是对象，末格是“由它生成另一个对象”的引理；中间两格列出各自的结构性质。配合对偶恒等式（$(p,w)\leftrightarrow(p,\bar u)$ 的无损换算），从任一格出发都能走完整张表。注意凹性集中在 $e$ 一侧、拟凹性在 $v$ 一侧——这正是“参数进入目标函数”的 EMP 在结构上更易刻画的原因。}

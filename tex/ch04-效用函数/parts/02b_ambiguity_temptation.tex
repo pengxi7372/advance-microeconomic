@@ -1,0 +1,184 @@
+% ============================================================
+\section{模糊、非期望效用与自控（补全）}
+% ============================================================
+
+\subsection{最大最小期望效用（多先验/模糊厌恶）}\label{subsec:meu}
+
+\notehead{动机：埃尔斯伯格悖论}
+一缸 90 球：红 30，黑与黄各 0--60（比例未知）。
+赌局 A：抽红得 100；赌局 B：抽黑得 100。
+多数人选 A（已知概率）而非 B（未知概率）；
+但对“红或黄得 100”与“黑或黄得 100”，同一批人又选后者。
+两对选择合在一起\textbf{没有任何单一概率分布}能解释：
+若 $p(\text{红})>p(\text{黑})$（第一对），则 $p(\text{黑或黄})>p(\text{红或黄})$（第二对）——矛盾。
+期望效用的“信念必为单一概率”假设被证伪。
+
+\notehead{形式}
+\[
+U(f)=\min_{p\in\mathcal{C}}\ \mathbb{E}_p\,u(f),
+\]
+$\mathcal{C}$ 为先验集合（对未知成分的概率“只确定一个范围”）。
+模糊厌恶 = 按\textbf{最坏}先评估。上例中
+$\mathcal{C}=\{p:\ p(\text{红})=1/3,\ p(\text{黑})\in[0,2/3]\}$，
+A 的期望确定（$u(100)/3$），B 的最坏期望为 $0$——选 A；
+“黑或黄”得 100：$p(\text{黑})+p(\text{黄})=2/3$ 对一切先验恒定，期望 $=\frac23u(100)$ 无模糊；
+“红或黄”得 100：$p(\text{红或黄})=\frac13+p(\text{黄})\in[\frac13,1]$，最坏期望 $=\frac13u(100)$——
+故选“黑或黄”。悖论被容纳。
+
+\notehead{性质与变体}
+\begin{itemize}
+  \item 无差异曲线在确定性线（45° 线）处出现\textbf{折点}（一阶风险厌恶的来源之一）；
+  \item $\alpha$-最大最小：$U(f)=\alpha\min_{\mathcal{C}}\mathbb{E}u+(1-\alpha)\max_{\mathcal{C}}\mathbb{E}u$，
+        $\alpha$ 度量悲观程度，可容纳模糊中性/爱好；
+  \item 平滑模糊厌恶：$U=\phi^{-1}\Bigl(\mathbb{E}_{\mu}\,\phi\bigl(\mathbb{E}_p u\bigr)\Bigr)$，
+        二阶信念 $\mu$（对先验的先验）经凹函数 $\phi$ 聚合——
+        把“对风险的态度”与“对模糊的态度”分置两层，便于资产定价应用。
+\end{itemize}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+  \draw[axisline] (0,0) -- (5.6,0) node[below left, axislabel] {状态 1 消费 $c_1$};
+  \draw[axisline] (0,0) -- (0,4.6) node[below left, axislabel] {状态 2 消费 $c_2$};
+  \draw[dashed, MidBlue] (0,0) -- (3.4,3.4);
+  \node[below right, align=center] at (1.15,3.75) {确定性线};
+  % kinked ICs at 45 line
+  \draw[thick, MidBlue] (0.6,3.9) -- (2.1,2.1) -- (4.4,1.4);
+  \draw[thick, MidBlue] (0.6,2.7) -- (1.4,1.4) -- (4.4,0.35);
+  \node[align=left] at (4.6,3.3) {多先验下的\\ 无差异曲线：\\ 折点在确定性线上\\ （对两状态的概率\\ 各按最坏情形评估）};
+\end{tikzpicture}
+\end{center}
+\figexplan{横纵轴为两状态下的消费。虚线为确定性线（两状态消费相等）；无差异曲线在确定性线上出现折点，因为多先验偏好对两个状态分别按各自的最坏先验评估，折点两侧的有效概率不同。折点恰落在确定性线上，是这类偏好区别于期望效用的几何特征。}
+
+\notehead{为什么选它}
+宏观金融（政策规则的模糊、模型不确定性下的稳健决策）、
+气候变化（概率本身未知的深不确定性）、健康冲击。
+选择标准：若“连概率都不知道”是问题的核心（而非修辞），
+期望效用不是近似而是\textbf{误设}——必须用多先验类形式。
+
+\subsection{秩依赖效用：概率加权}
+
+\notehead{形式与推导}
+把结果从低到高排序 $x_1\le x_2\le\cdots\le x_n$，权重
+\[
+\pi_i=w\Bigl(\sum_{j\ge i}p_j\Bigr)-w\Bigl(\sum_{j>i}p_j\Bigr),
+\qquad U=\sum_i\pi_i u(x_i),
+\]
+$w:[0,1]\to[0,1]$ 递增、$w(0)=0,w(1)=1$ 为\textbf{概率加权函数}。
+$\pi_i$ 是“结果 $x_i$ 在累积分布尾部增量上的权重”：
+$w$ 的曲率决定权重如何向极端结果倾斜。
+典型反 S 形（小概率放大、大概率压缩）：买彩票（放大尾部小概率收益）
+与买保险（放大尾部小概率损失）在同一人身上并存——
+期望效用需要 $u$ 既凸又凹才能解释，秩依赖用一个 $w$ 即可。
+
+\begin{center}
+\begin{tikzpicture}[scale=0.95]
+  \draw[axisline] (0,0) -- (5.0,0) node[below left, axislabel] {累积概率 $p$};
+  \draw[axisline] (0,0) -- (0,4.6) node[below left, axislabel] {$w(p)$};
+  \draw[dashed, MidBlue] (0,0) -- (4.2,4.2);
+  \draw[thick, MidBlue, domain=0:4.2, samples=90] plot ({\x},{4.2*((\x/4.2)^0.61)/(((\x/4.2)^0.61+(1-\x/4.2)^0.61)^(1/0.61))});
+  \node[align=left] at (3.0,1.2) {反 S 形：\\ 小概率放大\\ 大概率压缩};
+\end{tikzpicture}
+\end{center}
+\figexplan{横轴为累积概率 $p$，纵轴为加权后的决策权重 $w(p)$。虚线是 $w(p)=p$ 的参照线（期望效用）；实线呈反 S 形：小概率被放大（左下高于虚线）、大概率被压缩（右上低于虚线）。同一条曲线因此可同时解释买彩票与买保险。}
+
+\notehead{为什么选它}
+保留序的单调性（一阶随机占优不被违反——前景理论的原始加权函数做不到），
+又能解释共同比率效应、阿莱悖论、彩票与保险并存。
+是行为风险模型中\textbf{理论与数据兼容度最高}的一支。
+
+\subsection{后悔理论}
+
+\notehead{形式}
+两选项 $A,B$ 的结果对 $(x^A_s,x^B_s)$ 在状态 $s$ 实现。
+效用含\textbf{比较项}：
+\[
+U(A)=\sum_s p_s\Bigl[u(x^A_s)+Q\bigl(u(x^A_s)-u(x^B_s)\bigr)\Bigr],
+\]
+$Q$ 递增且 $Q(0)=0$（$Q$ 凹于负域时产生后悔厌恶）。
+选择 $A$ 后若 $B$ 的结果更好，承受“本可以”的负效用。
+
+\notehead{能反映什么}
+偏好反转（§4.3 第三章）、事后归因改变事前选择
+（因担心踏空而跟风投资、因担心后悔而过度投保）。
+与前景理论的区别：参照点不是状态变量，而是\textbf{未选项的反事实}。
+
+\subsection{诱惑与自控：菜单上的偏好}
+
+\notehead{形式（Gul--Pesendorfer）}
+偏好定义在\textbf{菜单}（选择集）上，效用
+\[
+U(A)=\max_{x\in A}\,\bigl[u(x)+v(x)\bigr]-\max_{y\in A}\,v(y),
+\]
+$u$：长期（规范性）偏好；$v$：诱惑（短期）偏好。
+第二项是\textbf{自控成本}：菜单里最有诱惑力的选项即使没选，
+也消耗自控资源。
+
+\notehead{数值例}
+沙拉：$u=3,v=0$；蛋糕：$u=0,v=2$。
+\begin{itemize}
+  \item 菜单 $\{\text{沙拉}\}$：$U=3-0=3$；
+  \item 菜单 $\{\text{沙拉,蛋糕}\}$：$\max(u+v)=3$（选沙拉），$U=3-2=1$。
+\end{itemize}
+$U(\{\text{沙拉}\})>U(\{\text{沙拉,蛋糕}\})$：\textbf{菜单越大越差}——
+理性框架中不可能（选择集扩大弱占优），
+它刻画的是\textbf{承诺需求}：主动删除选项（注销账户、不囤零食）。
+若蛋糕 $v=4$：选蛋糕（$u+v=4>3$），$U=4-4=0$——抵抗失败，效用归零。
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0, font=\small]
+  \node[draw=AxisBlue, rounded corners=2pt, align=center, fill=MidBlue!10] (m1) at (0,0) {$\{\text{沙拉}\}$\\ $U=3$};
+  \node[draw=AxisBlue, rounded corners=2pt, align=center, fill=MidBlue!10] (m2) at (4.2,0) {$\{\text{沙拉,蛋糕}\}$\\ $U=1$（抵抗成功）};
+  \node[draw=AxisBlue, rounded corners=2pt, align=center, fill=MidBlue!10] (m3) at (9.2,0) {$\{\text{沙拉,蛋糕}^*\}$\\ $U=0$（抵抗失败）};
+  \draw[-{Stealth}, thick, color=AxisBlue] (m1) -- (m2) node[midway, above] {加入诱惑};
+  \draw[-{Stealth}, thick, color=AxisBlue] (m2) -- (m3) node[midway, above] {诱惑增强 $v=2\to4$};
+  \node[align=center] at (4.6,-1.5) {偏好承诺：宁可面对更小的菜单——选择集扩大不再弱占优};
+\end{tikzpicture}
+\end{center}
+\figexplan{三个方框是三个可选菜单及其承诺效用：只有沙拉时效用为 $3$；加入蛋糕后虽可抵抗，但要付出自控成本，效用降为 $1$；诱惑进一步增强（$v=2\to4$）时抵抗失败，效用归零。箭头表示菜单扩大与诱惑增强的方向——选择集扩大不再弱占优，这正是承诺需求的含义。}
+
+\notehead{为什么选它}
+与 $\beta$-$\delta$（§4.3.4）是自控问题的两种语法：
+$\beta$-$\delta$ 用时间结构（计划反转），
+本形式用偏好结构（承诺偏好、自控成本）。
+后者可直接做福利分析：自控成本有明确的效用单位，
+节食计划、储蓄承诺产品的定价都可模型化。
+
+\subsection{参照依赖的获得—损失效用}
+
+\notehead{形式（Kőszegi--Rabin）}
+\[
+u(c\mid r)=m(c)+\mu\bigl(m(c)-m(r)\bigr),\qquad
+\mu(z)=
+\begin{cases}
+\eta z, & z\ge0,\\
+\eta\lambda z, & z<0,
+\end{cases}
+\quad \lambda>1,
+\]
+$m(c)$：消费效用；$\mu$：相对参照点 $r$ 的获得—损失效用，
+$\eta$ 为获得—损失效用的权重。
+关键创新：\textbf{参照点 $r$ 内生于期望}——
+$ r$ 是个体事前对结果的理性预期分布（个人均衡：
+预期一致，即实际选择所隐含的分布正是参照点）。
+
+\notehead{能反映什么（统一账户）}
+禀赋效应（拥有后参照点含该物，卖出是损失）、
+消费对收入冲击的过度敏感（预期调整滞后时，意外收入是获得）、
+劳动供给的目标收入行为、拍卖中的虚高报价。
+它把第三章 §4.8 罗列的一批现象压缩为\textbf{一个两参数结构}（$\eta,\lambda$），
+且保持期望效用的大部分可操作性——这是它成为应用基准的原因。
+
+\subsection{心理账户与选择括定}
+
+\notehead{形式}
+不是单一效用函数，而是\textbf{评价的结构}：
+总决策被拆分为子账户（日常开销/旅行基金/养老储蓄），
+各账户有各自的效用与预算约束，账户间资金不完全可替代；
+宽括定 = 单一账户联合最大化；窄括定 = 逐账户独立最大化。
+
+\notehead{能反映什么}
+边际消费倾向随资金来源变化（意外之财花得快、工资存得多）、
+“ sunk cost ”支付后继续消费、养老金自动加入的高留存率
+（默认选项被归入“不可动账户”）。
+§4.7.4 的 AER 2024 文献给出从选择数据识别括定方式的公理化检验：
+先实证判断当事人如何记账，再决定效用该写成一个还是一叠。

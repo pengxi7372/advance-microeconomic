@@ -1,0 +1,290 @@
+% ============================================================
+\section{政策应用：延迟退休、生育选择与效用函数的选取}
+% ============================================================
+
+本节以“中国延迟退休 + 生育政策”为完整案例，
+执行 §4.8 十步流程的全部环节：选函数（论证）→ 建模型 → 逐步推导
+→ 数值计算 → 政策对照 → 敏感性。所有算例数字精确到四位小数，可手工复算。
+
+\subsection{第 1--3 步：问题界定与函数选择的论证}
+
+\notehead{问题结构}
+个体生命周期两期：成年工作期（选择消费 $c_1$、储蓄 $s$、生育数 $n$）、
+老年期（消费 $c_2$；政策允许老年期的比例 $x$ 继续工作——$x$ 即\textbf{延迟退休强度}，
+$x=0.2$ 对应 60 岁退休、$x=0.5$ 对应 65 岁退休，老年期长度标准化为 1 中的份额）。
+政策参数：养老金缴费率 $\theta$、老年工作工资 $w_2$、养老金 $P$。
+
+\notehead{效用函数的选择（对照 §4.8 第 3 步清单）}
+\[
+U=\ln c_1+\beta\ln c_2+\phi\ln n,
+\]
+逐项论证：
+\begin{enumerate}
+  \item \textbf{为什么跨期可加}：基准模型不需要习惯/递归结构；
+        生命周期两期的储蓄—生育联合决策在可加形式下有闭式解（第 4 步）。
+  \item \textbf{为什么 $\ln$ 而非一般 CRRA}：$\mathrm{EIS}=1$ 是中性基准；
+        且 $\ln$ 使生育决策有\textbf{常数支出份额}结构，
+        $n^*$ 闭式可解、比较静态符号清晰。$\gamma\ne1$ 的稳健性在 §\ref{subsec:crra-check} 检验。
+  \item \textbf{为什么 $\phi\ln n$}：生育要成为\textbf{选择}，子女必须进入效用
+        （第 2 步：不漏自变量）；$\ln n$ 意味着子女“越多越好但边际收益递减”，
+        且养育支出占资源比例为常数 $\phi/(1+\phi+\beta)$——校准方便。
+  \item \textbf{为什么暂不写父母消费/祖辈照料}：基准保持最小；
+        照料渠道作为\textbf{机制扩展}在 §\ref{subsec:care} 引入（第 8 步：一次加一个成分）。
+\end{enumerate}
+
+\subsection{基准模型与完整推导}\label{subsec:baseline}
+
+\notehead{预算约束}
+成年期：工资 $w$（标准化为 $1$），缴费率 $\theta$，单位养育成本占工资 $v$：
+\[
+c_1=(1-\theta)w-s-vwn.
+\]
+老年期：比例 $x$ 工作（税后工资 $(1-\theta)w_2$），比例 $1-x$ 领取养老金 $P$，
+储蓄按总回报 $R$ 积累：
+\[
+c_2=Rs+\underbrace{x(1-\theta)w_2+(1-x)P}_{\displaystyle\equiv\ \Omega(x)},
+\]
+其中 $\Omega(x)$ 是\textbf{老年期非资本收入}，
+$\Omega'(x)=(1-\theta)w_2-P$：只要老年工作税后收入高于养老金，延迟退休就增加终身资源。
+
+\notehead{一阶条件}
+对 $s$：$-\dfrac{1}{c_1}+\beta\dfrac{R}{c_2}=0\ \Longrightarrow\ c_2=\beta Rc_1$。
+
+对 $n$：$-\dfrac{vw}{c_1}+\dfrac{\phi}{n}=0\ \Longrightarrow\ n^*=\dfrac{\phi c_1}{vw}$。
+
+\notehead{闭式解（逐步）}
+\textbf{第一步}，把生育 FOC 代入成年预算消去 $n$：
+$vwn=\phi c_1$，故
+\[
+c_1=(1-\theta)w-s-\phi c_1
+\ \Longrightarrow\
+c_1=\frac{(1-\theta)w-s}{1+\phi}.
+\]
+\textbf{第二步}，代入储蓄 FOC $c_2=\beta Rc_1$ 与老年预算 $c_2=Rs+\Omega$：
+\[
+\beta R\,\frac{(1-\theta)w-s}{1+\phi}=Rs+\Omega
+\ \Longrightarrow\
+\beta\bigl[(1-\theta)w-s\bigr]=(1+\phi)\Bigl(s+\frac{\Omega}{R}\Bigr),
+\]
+\[
+\boxed{\ s^*=\frac{\beta(1-\theta)w-(1+\phi)\,\Omega/R}{1+\phi+\beta}\ }
+\]
+\textbf{第三步}，回代求 $c_1^*$：
+\[
+(1-\theta)w-s^*
+=\frac{(1+\phi)\bigl[(1-\theta)w+\Omega/R\bigr]}{1+\phi+\beta}
+\ \Longrightarrow\
+\boxed{\ c_1^*=\frac{(1-\theta)w+\Omega/R}{1+\phi+\beta}\ }
+\]
+即\textbf{终身资源的现值}（劳动收入 $+$ 老年非资本收入的贴现）除以总权重 $1+\phi+\beta$。
+\textbf{第四步}，其余变量：
+\[
+\boxed{\ c_2^*=\beta R\,\frac{(1-\theta)w+\Omega/R}{1+\phi+\beta},
+\qquad
+n^*=\frac{\phi}{vw}\cdot\frac{(1-\theta)w+\Omega/R}{1+\phi+\beta}\ }
+\]
+
+\notehead{比较静态（符号分析）}
+\[
+\frac{\partial n^*}{\partial x}
+=\frac{\phi}{vw(1+\phi+\beta)}\cdot\frac{\Omega'(x)}{R}
+=\frac{\phi\bigl[(1-\theta)w_2-P\bigr]}{vwR(1+\phi+\beta)}.
+\]
+基准模型中 $\Omega'(x)>0$（工作收入高于养老金），
+故 $\partial n^*/\partial x>0$：\textbf{延迟退休提高终身收入，收入效应推升生育}；
+同时 $\partial s^*/\partial x=-\dfrac{1+\phi}{1+\phi+\beta}\cdot\dfrac{\Omega'(x)}{R}<0$：
+老年收入保障越好，储蓄动机越弱。
+这是\textbf{只有收入效应}时的结论——机制不完整，见 §\ref{subsec:care}。
+
+\subsection{数值算例（基准）}
+
+取参数（25 年一期）：$w=1$，$w_2=1.2$，$\theta=0.16$，$P=0.4$，
+$R=1.8$，$\beta=0.62$（$\approx0.98^{25}$），$\phi=0.35$，$v=0.12$。
+则 $1+\phi+\beta=1.97$，$(1-\theta)w=0.84$，
+$\Omega(x)=0.4+0.608x$。
+
+\begin{center}
+\small
+\begin{tabular}{lccc}
+\toprule
+ & $x=0.2$（60 岁退） & $x=0.5$（65 岁退） & 变化 \\
+\midrule
+$\Omega(x)$ & $0.5216$ & $0.7040$ & $+35.0\%$ \\
+$\Omega/R$ & $0.2898$ & $0.3911$ & \\
+$c_1^*=(0.84+\Omega/R)/1.97$ & $0.5735$ & $0.6249$ & $+9.0\%$ \\
+$c_2^*=\beta Rc_1^*$ & $0.6400$ & $0.6974$ & $+9.0\%$ \\
+$s^*$ & $0.0658$ & $-0.0037$ & 储蓄动机消失 \\
+$n^*=\phi c_1^*/(vw)$ & $1.6727$ & $1.8227$ & $+9.0\%$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+（复算示例：$c_1^*(0.2)=(0.84+0.2898)/1.97=1.1298/1.97=0.5735$；
+$n^*(0.2)=0.35\times0.5735/0.12=0.2007/0.12=1.6727$。）
+
+\notehead{解读}
+在只有收入效应的世界里，延迟退休 5 年使终身资源增加、
+生育率从 $1.67$ 升至 $1.82$——与直觉和中国情境证据\textbf{相反}。
+模型缺了关键一环：\textbf{祖辈照料}。这是函数形式（自变量集合）层面的问题，
+不是参数问题。
+
+\subsection{机制扩展：祖辈照料渠道}\label{subsec:care}
+
+\notehead{修改}
+中国家庭中祖辈是托育的主要供给者；延迟退休把祖父母的时间从照料中抽走。
+把这一机制压缩为\textbf{有效养育成本随 $x$ 上升}：
+\[
+v(x)=v_0\bigl[1+\mu(x-0.2)\bigr],\qquad \mu>0,
+\]
+$x=0.2$ 为政策前基准，$\mu$ 衡量照料短缺的成本弹性。
+解的形式不变（§\ref{subsec:baseline} 第四步），只是 $v$ 换成 $v(x)$：
+\[
+n^*(x)=\frac{\phi\bigl[(1-\theta)w+\Omega(x)/R\bigr]}{v(x)\,w\,(1+\phi+\beta)}
+=\frac{\text{收入效应（分子，随 }x\text{ 升）}}{\text{照料成本效应（分母，随 }x\text{ 升）}}.
+\]
+
+\notehead{数值算例（含照料渠道）}
+取 $\mu=1.5$：$v(0.5)=0.12\times(1+1.5\times0.3)=0.12\times1.45=0.174$。
+\[
+n^*(0.5)=\frac{0.35\times0.6249}{0.174}=\frac{0.2187}{0.174}=1.2571.
+\]
+\textbf{对照}：$n^*$ 从 $1.6727$ 降至 $1.2571$，降幅 $24.9\%$——
+与近年多期 OLG 定量研究“延迟退休 5 年或使生育率降逾 25\%”的量级一致
+（§4.7.9 表中 SSRN 2024）。
+
+\begin{center}
+\small
+\begin{tabular}{lccc}
+\toprule
+延迟退休的生育效应 & 收入效应 & 照料成本效应 & 净效应 \\
+\midrule
+基准模型（无照料渠道） & $+9.0\%$ & --- & $+9.0\%$ \\
+扩展模型（$\mu=1.5$） & $+9.0\%$ & $-31.0\%$ & $\mathbf{-24.9\%}$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+（复算：$1.2571/1.6727-1=-0.2485$；照料渠道单独作用：
+$1.8227\times0.12/0.174=1.2571$，即 $1/1.45-1=-31.0\%$。）
+
+\notehead{方法论要点}
+同一个效用函数 $U=\ln c_1+\beta\ln c_2+\phi\ln n$，
+只是让\textbf{成本参数内生地依赖政策}，结论就翻转。
+这说明：政策模型中“效用函数的选择”不仅是选曲率，
+更是选\textbf{哪些价格/成本被政策移动}。
+
+\subsection{生育数量约束：计划生育的效用分析}\label{subsec:quota}
+
+\notehead{建模}
+加入数量约束 $n\le\bar n$（$\bar n=1$ 对应独生子女政策、
+$\bar n=2$ 对应两孩政策）。库恩—塔克条件：
+\[
+\frac{\phi}{n}-\frac{vw}{c_1}+\lambda=0,\qquad
+\lambda\ge0,\quad \lambda(\bar n-n)=0.
+\]
+基准参数下自由解 $n^*=1.6727>1=\bar n$：约束\textbf{紧}，$n=\bar n=1$，
+储蓄问题变为 $\max\ \ln c_1+\beta\ln c_2$（$n$ 固定）：
+\[
+s^{**}=\frac{\beta\bigl[(1-\theta)w-vw\bigr]-\Omega/R}{1+\beta}
+=\frac{0.62\times0.72-0.2898}{1.62}=\frac{0.1566}{1.62}=0.0967,
+\]
+$c_1^{**}=0.72-0.0967=0.6233$，$c_2^{**}=\beta Rc_1^{**}=0.6956$。
+\textbf{影子价格}（放松一个生育配额的边际效用价值）：
+\[
+\lambda=\frac{\phi}{\bar n}-\frac{vw}{c_1^{**}}
+=0.35-\frac{0.12}{0.6233}=0.35-0.1925=0.1575>0\quad(\text{约束确紧}).
+\]
+
+\notehead{福利损失的计算}
+\[
+\begin{aligned}
+U_{\text{自由}}&=\ln 0.5735+0.62\ln 0.6400+0.35\ln 1.6727\\
+&=-0.5561+0.62\times(-0.4463)+0.35\times0.5141
+=-0.5561-0.2767+0.1799=-0.6529,\\
+U_{\text{配额}}&=\ln 0.6233+0.62\ln 0.6956+0.35\ln 1
+=-0.4727+0.62\times(-0.3631)+0=-0.6979.
+\end{aligned}
+\]
+$\Delta U=-0.6979+0.6529=-0.0450$。
+换算为消费等价变化：$e^{\Delta U}-1=e^{-0.0450}-1=-4.4\%$——
+独生子女配额等价于\textbf{终身消费下降约 4.4\%} 的福利损失（基准参数下）。
+
+\notehead{政策放开的预测}
+$\bar n$ 提高到 $2$：自由解 $1.6727<2$，约束不再紧，
+生育率升至 $1.67$ 而非 $2$。
+\textbf{这正解释了中国全面两孩后的现实}：配额放开后生育率远低于 $2$——
+约束早已从“数量约束”变为“经济约束”（$v$ 高、$w$ 增长放缓、$\Omega$ 预期）。
+效用框架给出可检验的判别式：约束紧不紧，看影子价格
+$\lambda=\phi/\bar n-vw/c_1$ 的符号。
+
+\subsection{扩展：数量—质量权衡与内生退休}
+
+\notehead{数量—质量}
+$U=\ln c_1+\beta\ln c_2+\phi\ln n+\psi\ln q$，
+养育成本 $n(vw+q)$（$q$ 为每个子女的人力资本投入）。
+一阶条件给出
+\[
+\frac{\phi/n}{vw+q}=\frac{\psi/q}{n}
+\ \Longrightarrow\
+\phi q=\psi n(vw+q)
+\ \Longrightarrow\
+q^*=\frac{\psi nvw}{\phi-\psi n}\quad(\text{要求 }\phi>\psi n),
+\]
+$q^*$ 是 $n$ 的增函数方向反过来成立：外生压低的 $n$（配额）
+\textbf{推高}每孩投入 $q$——独生子女政策与“精细化育儿/教育军备竞赛”
+的关联在此结构中是一个内生结果。
+
+\notehead{内生退休}
+让 $x$ 成为选择变量，老年期效用加入闲暇：
+$\ln c_2+\chi\ln(1-x)$。一阶条件
+\[
+\frac{\chi}{1-x}=\frac{\Omega'(x)}{c_2}
+\ \Longrightarrow\
+1-x^*=\frac{\chi c_2}{(1-\theta)w_2-P}.
+\]
+取 $\chi=0.5$：$1-x^*=0.5\times0.64/0.608=0.526$，$x^*\approx0.47$——
+个体自愿的退休强度与政策 $x=0.5$ 接近，说明当前政策接近
+\textbf{紧约束边界}：小幅提高养老金 $P$ 就会使自愿退休早于法定，
+政策实效将依赖劳动市场（老年就业可得性）而非文件规定。
+
+\subsection{敏感性：把对数换成 CRRA（曲率取 2）}\label{subsec:crra-check}
+
+效用 $\dfrac{c_1^{1-\gamma}}{1-\gamma}+\beta\dfrac{c_2^{1-\gamma}}{1-\gamma}+\phi\ln n$，
+$\gamma=2$。一阶条件变为
+\[
+c_2=(\beta R)^{1/\gamma}c_1=1.0564\,c_1,\qquad
+n^*=\frac{\phi\,c_1^{\gamma}}{vw}.
+\]
+代入预算（$x=0.2$，同参数），得方程
+$0.35c_1^2+1.5869c_1-1.1298=0$，正根 $c_1^*=0.6256$；
+\[
+n^*=\frac{0.35\times0.6256^2}{0.12}=1.1416,\qquad
+s^*=0.0774,\qquad c_2^*=0.6609.
+\]
+\textbf{对照}：$\gamma=1$（对数）时 $n^*=1.6727$；$\gamma=2$ 时 $n^*=1.1416$（$-32\%$）。
+曲率越大，消费平滑动机越强，以消费计价的养育成本显得越贵，
+生育率越低。\textbf{政策结论的方向不变（配额紧、照料渠道主导），
+但定量幅度对折现曲率高度敏感}——这正是 §4.8 第 9 步要求
+报告“函数层稳健性”的原因。
+
+\subsection{从算例到论文：研究路线}
+
+\begin{enumerate}
+  \item \textbf{基准}：本节两期模型（闭式解，机制透明）；
+  \item \textbf{定量化}：扩展为多期 OLG（80 代），效用仍取对数可加族，
+        校准目标：储蓄率、劳动参与、总和生育率、养老金替代率
+        （参照 §4.7.9 表中 IMF 2026 的城乡分割结构）；
+  \item \textbf{数据}：微观层面用 CHARLS/CFPS 估计 $\phi$、$\mu$（祖辈照料的成本弹性）、
+        $\beta$；宏观层面校准 $\theta$、$P$、$R$；
+  \item \textbf{反事实}：延迟退休 $\times$ 生育补贴的组合政策；
+        生育补贴在模型中即降低 $v$——与延迟退休提高 $v(x)$ 对冲，
+        存在使 $n^*$ 不变的\textbf{政策组合线}；
+  \item \textbf{稳健性}：CRRA 曲率、习惯形成（老年消费的习惯存量）、
+        递归偏好（寿命不确定性下 EIS 与 RRA 解绑）三个方向各做一遍。
+\end{enumerate}
+
+\notehead{本章收束}
+效用函数不是“越真越好”，而是\textbf{“恰好包含所研究机制的最简形式”最好}。
+本节的演示：同一个对数可加效用，(i) 在纯收入效应下给出错误符号的预测，
+(ii) 加入照料成本内生化后给出与定量文献一致的幅度，
+(iii) 加入数量约束后解释政策放开后的低生育，
+(iv) 换曲率后给出稳健性区间——
+选函数的每一步都是\textbf{可被数据检验、被文献对话}的决定。

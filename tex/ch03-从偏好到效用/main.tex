@@ -1,0 +1,54 @@
+% ============================================================
+%  第三章：从偏好到效用（精讲版）
+%  编译：LuaLaTeX（两遍）
+% ============================================================
+\input{preamble}
+
+\begin{document}
+
+\chapter{从偏好到效用：效用表示的存在性、构造与性质对应}
+
+\noindent\textbf{本章任务。}第二章建立了偏好公理（完备性、传递性）与显示偏好理论，
+遗留一个核心问题：\textbf{什么样的偏好可以被一个效用函数“数字化”？}
+本章给出完整回答，沿四个层次推进：
+\begin{enumerate}
+  \item \textbf{存在性}：可表示偏好的必要条件（理性 + 可数序稠密子集），
+        词典序偏好作为“理性但不可表示”的基准反例（§3.1）；
+  \item \textbf{构造}：有限集上的归纳构造与排名构造（§3.2），
+        无限集上的权数构造、连续编号法与缺口分析（§3.3--§3.4）；
+  \item \textbf{性质对应}：偏好的结构特性（单调、凸、位似、可分、拟线性、连续）
+        如何一一翻译为效用函数的解析性质（§3.5），
+        可分性与拟线性的完整表示定理及其证明（§3.6--§3.7）；
+  \item \textbf{边界}：实验证据对公理体系的系统性偏离，
+        每一类行为效应精确对应哪一条公理被破坏（§3.8）。
+\end{enumerate}
+
+\noindent 全章的枢纽是三组\textbf{充要条件}：
+\begin{gather*}
+\boxed{\ \text{可表示}\ \Longleftrightarrow\ \text{理性}+\text{可数序稠密子集}\ }\\[2pt]
+\boxed{\ \text{可加表示}\ \Longleftrightarrow\ \text{坐标独立}+\text{矩形条件}\ }\\[2pt]
+\boxed{\ \text{拟线性表示}\ \Longleftrightarrow\ \text{计价物三条件}\ }
+\end{gather*}
+
+\medskip
+\noindent\textbf{阅读提示}：§3.4 的连续编号构造是全章技术核心，
+§3.6、§3.7 的两个表示定理是后续消费者理论、福利分析的工具库入口；
+带 $\star$ 的小节为加深内容，第一遍可略读。
+
+\tableofcontents
+\clearpage
+
+\input{parts/01_representable}
+\input{parts/02_finite}
+\input{parts/03_infinite}
+\input{parts/04_numbering}
+\input{parts/05_properties}
+\input{parts/06_separability}
+\input{parts/07_quasilinear}
+\input{parts/08_behavioral}
+\input{parts/09_appendix}
+\input{parts/10_examples}
+\input{parts/11_examples}
+\input{parts/12_examples}
+
+\end{document}

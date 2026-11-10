@@ -1,0 +1,8 @@
+% 第五章统一前言包装
+\newcommand{\lectureno}{第五章}
+\newcommand{\lectureshort}{效用最大化}
+\input{../course_preamble}
+\setcounter{chapter}{4}
+% 缺字回退：主字体缺 ①②③④ 等字形时回退到 Songti SC
+\directlua{luaotfload.add_fallback("wbfallback", {"name:Songti SC:mode=node;"})}
+\setmainfont{TeX Gyre Termes}[Ligatures=TeX,RawFeature={fallback=wbfallback}]

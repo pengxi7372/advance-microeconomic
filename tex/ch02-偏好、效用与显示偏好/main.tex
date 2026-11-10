@@ -1,0 +1,2044 @@
+% ============================================================
+%  第二章：偏好、效用与显示偏好（精讲版）
+%  依据：Suzumura《Choice, Preferences, and Procedures》Chapter 1 与课程材料
+%       + Suzumura《Choice, Preferences, and Procedures》Chapter 1
+%  编译：LuaLaTeX（两遍）
+% ============================================================
+\input{preamble}
+
+\begin{document}
+
+\chapter{偏好、效用与显示偏好：理性选择理论的形式化基础}
+
+\noindent\textbf{本章任务。}第一章我们建立了选择理论的问题意识：什么是理性、如何用模型表达它。
+本章进入形式化核心，沿着\textbf{三条线索}展开并把它们缝合为一个整体：
+
+\begin{enumerate}
+  \item \textbf{偏好路径}：偏好关系 $\succeq$ 需要满足哪些公理才算“理性”？（完备性、传递性及其弱化）
+  \item \textbf{效用路径}：什么时候存在效用函数 $u(\cdot)$ 把偏好“数字化”？（有限集表示定理、词典序反例、序数性）
+  \item \textbf{显示偏好路径}：如果只能\textbf{观察选择行为}，如何反推偏好、检验理性？（WARP/SARP/HARP，HARP $\Leftrightarrow$ 理性化）
+\end{enumerate}
+
+\noindent 三条线索的汇合点是本章的两个\textbf{枢纽定理}：
+\textbf{效用表示定理}（偏好 $\to$ 数字）与 \textbf{HARP 定理}（选择行为 $\to$ 偏好，Richter--Hansson--Suzumura）。
+最后以 Suzumura 的任意定义域理论（WCA/SCA 同余公理、G-理性与 M-理性）收束，说明这套框架在多大程度上可以不依赖预算集结构而成立。
+
+\medskip
+\noindent\textbf{主要参考}：Suzumura, K., \emph{Choice, Preferences, and Procedures: A Rational Choice Theoretic Approach}（Chapter 1: Rational Choice and Revealed Preference）；Levin (Stanford) \emph{Choice Theory} 讲义。
+
+\tableofcontents
+\clearpage
+
+% ============================================================
+\section{偏好关系的公理体系}
+% ============================================================
+
+\subsection{二元关系与偏好的分解}
+
+\begin{definition}[二元关系、弱偏好]
+设 $X$ 为备选方案的全集（universal set of alternatives）。$X$ 上的一个\textbf{二元关系}
+$R \subseteq X \times X$。记全体二元关系的集合为 $\mathcal{B}$。我们把 $(x,y)\in R$ 读作
+“$x$ 至少和 $y$ 一样好”（weakly preferred），此时称 $R$ 为 $X$ 上的\textbf{弱偏好关系}。
+\end{definition}
+
+一个弱偏好关系 $R$ 天然地拆成两块：
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[font=\scriptsize,scale=1.15,transform shape]
+  \draw[thick,fill=gray!15] (0,0) rectangle (2.6,2.9);
+  \node[font=\small\bfseries] at (1.3,2.56) {(a) 关系 $R$ 的单元格};
+  \foreach \x in {0.5,1.0,1.5,2.0} \draw[thin] (\x,0.62) -- (\x,2.12);
+  \foreach \y in {0.62,1.12,1.62,2.12} \draw[thin] (0.5,\y) -- (2.0,\y);
+  \foreach \c/\r in {0/0,0/1,1/0,1/2,2/1} \fill[gray!55] ({0.5+0.5*\c},{0.62+0.5*\r}) rectangle ({1.0+0.5*\c},{1.12+0.5*\r});
+  \fill[gray!15] (1.5,0.62) rectangle (2.0,1.12);
+  \node at (1.25,0.34) {列 $=$ 第一个元素，行 $=$ 第二个元素};
+  \fill[gray!55] (0.30,-0.22) rectangle (0.52,0.00);
+  \node[anchor=west,fill=white,inner sep=1pt] at (0.60,-0.11) {$I(R)$：双向成立};
+  \fill[gray!15] (0.30,-0.62) rectangle (0.52,-0.40);
+  \node[anchor=west,fill=white,inner sep=1pt] at (0.60,-0.51) {$P(R)$：仅正向成立};
+  \begin{scope}[xshift=5.4cm]
+    \draw[thick,fill=gray!15] (0,0) rectangle (3.2,2.9);
+    \node[font=\small\bfseries] at (1.6,2.56) {(b) 在 $X=\{a,b,c\}$ 上的读法};
+    \fill (0.6,1.62) circle (1.5pt) node[below=2pt] {$a$};
+    \fill (1.6,1.62) circle (1.5pt) node[below=2pt] {$b$};
+    \fill (2.6,1.62) circle (1.5pt) node[below=2pt] {$c$};
+    \draw[<->,thick] (0.76,1.62) -- (1.44,1.62) node[midway,above=2pt] {$\sim$};
+    \draw[->,thick] (1.76,1.62) -- (2.44,1.62) node[midway,above=2pt] {$\succ$};
+    \draw[->,thick] (2.68,2.12) to[bend left=25] (0.52,2.12) node[midway,above=2pt] {$\succ$};
+    \node[align=center,text width=3.0cm] at (1.6,0.52) {双向箭头读作无差异，\\ 单向粗箭头读作严格};
+  \end{scope}
+\end{tikzpicture}
+\caption{二元关系的分解：无差异部分 $I(R)$ 与严格部分 $P(R)$}
+\end{figure}
+\figexplan{左面板把 $R\subseteq X\times X$ 画成单元格方阵：横轴为第一个元素、纵轴为第二个元素，落在 $R$ 内的格子涂深。若 $(x,y)$ 与 $(y,x)$ 同时落在 $R$ 内（深灰），该对元素无差异，属 $I(R)$；若只有 $(x,y)$ 落入（浅灰），则为严格偏好，属 $P(R)$。右面板把同一关系翻译成 $X=\{a,b,c\}$ 上的读法：双向箭头表示无差异、单向粗箭头表示严格偏好，并给出 $R=I(R)\cup P(R)$ 的分解恒等式。}
+
+\begin{definition}[无差异部分与严格偏好部分]
+对应于 $R\in\mathcal{B}$，其\textbf{对称部分}（无差异关系）与\textbf{非对称部分}（严格偏好关系）分别为
+\begin{align}
+I(R) &= \{(x,y)\in X\times X \mid (x,y)\in R \ \&\ (y,x)\in R\}, \label{eq:IR}\\
+P(R) &= \{(x,y)\in X\times X \mid (x,y)\in R \ \&\ (y,x)\notin R\}. \label{eq:PR}
+\end{align}
+即：$x$ 与 $y$ 无差异 $\iff$ 双向弱偏好同时成立；$x$ 严格优于 $y$ $\iff$ 正向成立而反向不成立。
+\end{definition}
+
+\begin{remark}
+这是本章一切定义的“语法底座”：后续所有公理、所有显示偏好关系，最终都归结为对
+$R$、$I(R)$、$P(R)$ 的集合运算陈述。请熟练掌握 $(x,y)\in R$、$I(R)$、$P(R)$ 三者互推。
+\end{remark}
+
+\subsection{\texorpdfstring{$\succeq$/$\succ$/$\sim$}{≽/≻/∼} 记法与 $R$ 记法的互译}
+
+上一小节用集合论语言定义了弱偏好关系 $R$ 及其分解；经济学文献与后续章节
+习惯直接用关系符号书写。本章并行使用两套\textbf{完全等价}的记法：
+§2.1--§2.3 以 $\succeq$ 记法为主，§2.4--§2.6 进入一般理论时以 $R$ 记法为主。
+
+\begin{definition}[弱偏好、严格偏好、无差异]\label{def:prefsymbols}
+设 $X$ 为所有可能选择的集合。
+\begin{itemize}
+  \item \textbf{弱偏好关系} $\succeq$：$X$ 上的二元关系，
+  $x\succeq y$ 当且仅当“$x$ 至少和 $y$ 一样好”（at least as good as）；
+  \item \textbf{严格偏好关系} $\succ$：$x\succ y$（“$x$ 严格优于 $y$”）当且仅当
+  $x\succeq y$ 且 $y\not\succeq x$；
+  \item \textbf{无差异关系} $\sim$：$x\sim y$（“二者无差异”）当且仅当
+  $x\succeq y$ 且 $y\succeq x$。
+\end{itemize}
+\end{definition}
+
+\textbf{互译词典}（务必熟练双向换算）：
+\[
+x\succeq y \iff (x,y)\in R;\qquad
+x\succ y \iff (x,y)\in P(R);\qquad
+x\sim y \iff (x,y)\in I(R).
+\]
+
+\textbf{符号总表}：
+给定任意 $x,y\in X$，两个独立问题——“$x\succeq y$ 成立吗？”“$y\succeq x$ 成立吗？”——
+各有是/否两答，组合出四种情形，恰好三种有名字：
+\begin{center}
+\small
+\begin{tabular}{c|cc}
+\toprule
+ & $y\succeq x$ & $y\not\succeq x$ \\
+\midrule
+$x\succeq y$ & $x\sim y$（无差异） & $x\succ y$（严格偏好） \\
+$x\not\succeq y$ & $y\succ x$ & 被\textbf{完备性}排除 \\
+\bottomrule
+\end{tabular}
+\end{center}
+因此，若 $\succeq$ 完备，可以把它看成一个\textbf{三值比较函数}
+\[
+\rho:\ X\times X\longrightarrow \{\succ,\ \sim,\ \prec\},
+\]
+即每对 $(x,y)$ 都被归类为三种关系之一——这正是“完备偏好 = 全盘可比”的精确含义。
+
+\subsection{完备性、传递性与理性}
+
+以下三个定义是全课的地基，是后续一切定理的输入。
+
+\begin{definition}[完备性（completeness）]\label{def:complete}
+$\succeq$ 在 $X$ 上\textbf{完备}，当且仅当
+\[
+\forall x,y\in X:\quad x\succeq y\ \text{或}\ y\succeq x.
+\]
+\end{definition}
+
+\textbf{解读：}
+\begin{enumerate}
+  \item “或”是\textbf{相容析取}：$x\succeq y$ 与 $y\succeq x$ 允许同时成立——
+  那正是无差异 $x\sim y$。完备性不排除“一样好”，只排除“比不了”。
+  \item 被排除的情形\textbf{恰好一种}：$x\not\succeq y$ 且 $y\not\succeq x$
+  ——即 2×2 总表第四象限的“不可比”。完备性的全部内容就是
+  \textbf{禁止犹豫}：面对任何两个选项，必须能表态（哪怕表态为“无差异”）。
+  \item \textbf{完备性 $\Rightarrow$ 自反性}：取 $y=x$，定义给出 $x\succeq x$ 或
+  $x\succeq x$，恒真。
+  反之不然：自反性只说每个元素与自身的比较，对不同元素之间不置一词。
+  \item \textbf{经济内容：这是很强的行为假设。}现实中“合理的不可比”比比皆是：
+  \begin{itemize}
+    \item \textbf{Pareto 支配}：$x\ge y$ 且 $x\neq y$（每种商品都不少）是
+    $\R^l$ 上的天然偏好，但两个“各有千秋”的消费束不可比——它不完备；
+    \item \textbf{多维权衡}：学术职位 vs 业界职位，收入、自由、声望、风险
+    权重难定，“说不清哪个好”是常态而非病态；
+    \item \textbf{Bewley (1986)}：在 Knight 不确定性下，无法形成概率判断的
+    决策者\textbf{理应}偏好不完备——“不表态”本身是对无知的诚实。
+    Buridan 之驴（两堆完全相同的干草之间饿死）是文学化的反例。
+  \end{itemize}
+  \item 常见误解：完备性\textbf{不是}“对一切都有明确数值评价”，
+  也不是“喜欢所有东西”——它只要求\textbf{两两之间必有一票}。
+\end{enumerate}
+
+\begin{definition}[传递性（transitivity）]\label{def:transitive}
+$\succeq$ 在 $X$ 上\textbf{传递}，当且仅当
+\[
+\forall x,y,z\in X:\quad x\succeq y\ \text{且}\ y\succeq z\ \Rightarrow\ x\succeq z.
+\]
+\end{definition}
+
+\textbf{解读：}
+\begin{enumerate}
+  \item 传递性\textbf{只}排除含严格环节的偏好环——
+  无差异环 $x\sim y\sim z\sim x$ 无害（大家一样好，随便选），
+  严格环 $x\succ y\succ z\succ x$ 致命（Alice 例 \ref{ex:alice}：
+  每个选项都被另一个击败，$C(X,\succeq)=\varnothing$）。
+  \item \textbf{货币泵论证（money pump）}——传递性的市场辩护：
+  设某人有严格环 $x\succ y\succ z\succ x$，且偏好不随小额金钱改变。
+  他手中持有 $x$。经纪人上门，利用 $z\succ x$ 提议：
+  “付我 1 元，把你手里的 $x$ 换成你更喜欢的 $z$”——他愿意。
+  再利用 $y\succ z$：“付 1 元，把 $z$ 换成你更喜欢的 $y$”——又愿意。
+  再利用 $x\succ y$：“付 1 元，把 $y$ 换成你更喜欢的 $x$”——还是愿意。
+  三轮过后他\textbf{回到起点}（手中仍是 $x$），净付 3 元，
+  且同样的三轮可以无限重复——严格偏好环就是一棵
+  可以被反复收割的摇钱树。“非理性偏好者在市场上活不久”，
+  这是传递性的\textbf{演化辩护}：不满足它的行为主体会被系统性套干。
+  \item \textbf{实验证据}：Tversky (1969, \emph{Psychological Review})
+  报告了系统性的现场不传递（被试在成对比较中持续走出环）。
+  传递性因而是\textbf{理想理性的假设}而非\textbf{真实行为的描述}——
+  这正是 §2.1.4 弱化条件（拟传递、Suzumura 一致、无环）与
+  行为经济学批判的入口。
+  \item \textbf{计算的通行证}：传递性使“排序”良定义——$n$ 个选项只需
+  $O(n\log n)$ 次两两比较即可排出全序（任何排序算法都依赖传递性）；
+  不传递时“最好的那个”概念本身崩塌，选择规则可以为空
+  （定理 \ref{thm:nonempty} 的归纳证明在情形 2 用了传递性，不可省）。
+\end{enumerate}
+
+\begin{definition}[理性偏好（rationality，MWG 定义 1.B.1）]\label{def:rational}
+$\succeq$ 在 $X$ 上\textbf{理性}，当且仅当它\textbf{完备且传递}。
+\end{definition}
+
+\begin{remark}[“理性”是技术术语，不是价值判断]
+\begin{itemize}
+  \item 理性 $\neq$ 自私、$\neq$ 聪明、$\neq$ 目标高尚——
+  它只要求偏好\textbf{结构自洽}，对\textbf{内容}不置一词。
+  一个疯子完全一致的偏好也是“理性”的；一个善人犹豫不决的偏好不是。
+  \item 反过来，两条公理也\textbf{不保证}行为合乎常识——
+  它们管的是“账本自洽”，不管“账本上记了什么”。
+  \item 但仅有这两条公理，已足够撑起本章全部理论：
+  非空性定理 \ref{thm:nonempty}、效用表示（§2.2）、
+  显示偏好刻画（§2.4--§2.6）的输入\textbf{只有}完备性与传递性。
+  全部后续工作（§2.1.4 与 §2.6.4）都是在问：\textbf{这两条公理能弱化到什么程度，
+  而理论大厦不塌？}
+\end{itemize}
+\end{remark}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[font=\small,
+  pt/.style={circle, draw, inner sep=3pt},
+  arr/.style={-{Stealth[length=2.2mm]}, thick}]
+% 左：严格环
+\begin{scope}
+\node[pt] (x) at (0,1.5) {$x$};
+\node[pt] (y) at (-1.5,0) {$y$};
+\node[pt] (z) at (1.5,0) {$z$};
+\draw[arr] (x) -- node[above left=1pt, font=\footnotesize]{$\succ$} (y);
+\draw[arr] (y) -- node[below=3pt, font=\footnotesize]{$\succ$} (z);
+\draw[arr] (z) -- node[above right=1pt, font=\footnotesize]{$\succ$} (x);
+\node[font=\footnotesize\bfseries] at (0,-1.1) {严格环};
+\end{scope}
+% 右：传递序
+\begin{scope}[shift={(6,0)}]
+\node[pt] (a) at (0,1.5) {$x$};
+\node[pt] (b) at (0,0) {$y$};
+\node[pt] (c) at (0,-1.5) {$z$};
+\draw[arr] (a) -- node[right=4pt, font=\footnotesize]{$\succ$} (b);
+\draw[arr] (b) -- node[right=4pt, font=\footnotesize]{$\succ$} (c);
+\draw[arr, dashed] (a) to[bend left=40] node[left=4pt, font=\footnotesize]{$\succ$} (c);
+\node[font=\footnotesize\bfseries] at (0,-2.4) {传递序};
+\end{scope}
+\end{tikzpicture}
+\caption{传递性在选择中的作用。左：严格环 $x\succ y\succ z\succ x$，
+每个选项都被另一个严格击败，$C(X,\succeq)=\varnothing$，无人能被选中（例 \ref{ex:alice}）；
+右：传递序 $x\succ y\succ z$，顶端元素是所有比较的胜利者，
+$C(X,\succeq)=\{x\}$（定理 \ref{thm:nonempty}）。虚线是传递性“免费赠送”的比较：
+$n$ 个元素只需 $n-1$ 次相邻比较即可定序。}
+\label{fig:cyclevschain}
+\end{figure}
+\figexplan{左图为严格环 $x\succ y\succ z\succ x$：每个选项都被另一个严格击败，因此不存在最大元，$C(X,\succeq)=\varnothing$——无人能被选中。右图为传递序 $x\succ y\succ z$：顶端元素 $x$ 在所有比较中获胜，$C(X,\succeq)=\{x\}$。右侧的虚线弧是传递性“免费赠送”的比较：只需 $n-1$ 次相邻比较即可为 $n$ 个元素定序。}
+
+\begin{proposition}[理性偏好的导出性质]\label{prop:derived}
+设 $\succeq$ 理性（完备 + 传递）。则对所有 $x,y,z\in X$：
+\begin{enumerate}
+  \item $\succeq$ \textbf{自反}：$x\succeq x$；
+  \item $\sim$ 是\textbf{等价关系}：自反（$x\sim x$）、对称（$x\sim y\Rightarrow y\sim x$）、
+  传递（$x\sim y\sim z\Rightarrow x\sim z$）；
+  \item $\succ$ \textbf{反自反}（$x\not\succ x$）且\textbf{传递}
+  （$x\succ y\succ z\Rightarrow x\succ z$）；
+  \item \textbf{混合蕴含}：$(x\succ y)\ \&\ (y\succeq z)\Rightarrow x\succ z$，且
+  $(x\succeq y)\ \&\ (y\succ z)\Rightarrow x\succ z$。
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+(1) 完备性用于 $(x,x)$：$x\succeq x$ 或 $x\succeq x$，恒成立。
+
+(2) 自反性由 (1)；对称性即 $\sim$ 的定义；传递性：$x\sim y$ 给出
+$x\succeq y$、$y\succeq x$；$y\sim z$ 给出 $y\succeq z$、$z\succeq y$；
+由 $\succeq$ 传递，$x\succeq z$ 且 $z\succeq x$，即 $x\sim z$。
+
+(3) 反自反：$x\succ x$ 要求 $x\not\succeq x$，与 (1) 矛盾。
+传递：$x\succ y\succ z$ 给出 $x\succeq y\succeq z$，由 $\succeq$ 传递得
+$x\succeq z$；若 $z\succeq x$，则 $z\succeq x\succeq y$ 给出 $z\succeq y$，
+与 $y\succ z$ 矛盾。故 $x\succ z$。
+
+(4) 只证第一式（第二式对称）。设 $x\succ y$ 且 $y\succeq z$。
+由 $x\succeq y$、$y\succeq z$ 及传递性得 $x\succeq z$。
+反设 $z\succeq x$：则 $y\succeq z$（已知）与 $z\succeq x$（反设）经传递得
+$y\succeq x$，与 $x\succ y$（即 $y\not\succeq x$）矛盾。
+故 $z\not\succeq x$，即 $x\succ z$。
+\end{proof}
+
+\begin{example}[Alice 的早餐：传递性为什么会破]\label{ex:alice}
+$X=\{$热干面，豆皮，小笼包$\}$。Alice 的偏好为：
+\[
+\text{热干面}\succ\text{豆皮},\qquad
+\text{豆皮}\succ\text{小笼包},\qquad
+\text{小笼包}\succeq\text{热干面}.
+\]
+前两条由命题 \ref{prop:derived}(3) 推出 $\text{热干面}\succ\text{小笼包}$，
+与第三条（小笼包 $\succeq$ 热干面）矛盾——Alice 违反的是\textbf{传递性}
+（完备性三条比较均已给出，并未违反）。
+后果是灾难性的：面对 $X$ 她\textbf{无法做出选择}——每个方案都被另一个严格击败，
+$C(X,\succeq)=\varnothing$（见 §2.3.3 的非空性定理：传递性正是选择集非空的保证）。
+课堂提问：若只保留前两条，Alice 的偏好完备吗？（不完备——缺热干面与小笼包的比较；
+但此时 $C(X,\succeq)=\{$热干面$\}$ 仍然非空。）
+\end{example}
+
+\subsection{标准性质清单}
+
+\begin{definition}[二元关系的标准性质]
+对 $R\in\mathcal{B}$：
+\begin{enumerate}
+  \item[(a)] \textbf{完备性（completeness）}：$\forall x,y\in X,\ x\neq y \Rightarrow (x,y)\in R \vee (y,x)\in R$；
+  \item[(b)] \textbf{自反性（reflexivity）}：$\forall x\in X:\ (x,x)\in R$；
+  \item[(c)] \textbf{反自反性（irreflexivity）}：$\forall x\in X:\ (x,x)\notin R$；
+  \item[(d)] \textbf{传递性（transitivity）}：$\forall x,y,z\in X:\ [(x,y)\in R \ \&\ (y,z)\in R] \Rightarrow (x,z)\in R$；
+  \item[(e)] \textbf{对称性（symmetry）}：$(x,y)\in R \Rightarrow (y,x)\in R$；
+  \item[(f)] \textbf{非对称性（asymmetry）}：$(x,y)\in R \Rightarrow (y,x)\notin R$；
+  \item[(g)] \textbf{等价关系（equivalence）}：满足 (b)(d)(e)；
+  \item[(h)] \textbf{序（ordering）}：满足 (a)(b)(d)；
+  \item[(i)] \textbf{拟序（quasi ordering）}：满足 (b)(d)。
+\end{enumerate}
+\end{definition}
+
+\noindent\textbf{课堂要点。}经济学里“理性偏好”的标准定义就是 (h)：完备 + 自反 + 传递。
+完备性要求任意两者可比（不允许“我不知道选哪个”），传递性排除循环偏好。
+传递性是整套理论的“承重墙”，但行为实验反复表明真实个体常违反它（Luce 的咖啡加糖例）——
+这促使我们引入下一小节\textbf{弱于传递}的一致性概念。
+
+\subsection{弱于传递的一致性：拟传递、Suzumura 一致、无环}
+
+\begin{definition}[三种弱化的一致性条件]\label{def:weakcoherence}
+对 $R\in\mathcal{B}$：
+\begin{enumerate}
+  \item[(j)] \textbf{拟传递性（quasi transitivity，Sen 1969）}：只要求\textbf{严格部分}传递：
+  \[
+    \forall x,y,z\in X:\ (x,y)\in P(R)\ \&\ (y,z)\in P(R)\ \Rightarrow\ (x,z)\in P(R).
+  \]
+  \item[(k)] \textbf{Suzumura 一致性（Suzumura consistency，Suzumura 1976a）}：
+  \[
+    \forall x,y\in X:\ (x,y)\in T(R)\ \Rightarrow\ (y,x)\notin P(R),
+  \]
+  其中 $T(R)$ 为 $R$ 的传递闭包（定义 \ref{def:TC}）。
+  \item[(l)] \textbf{无环性（acyclicity）}：$\forall x\in X:\ (x,x)\notin T(P(R))$，
+  即不存在严格偏好环。
+\end{enumerate}
+\end{definition}
+
+\begin{definition}[传递闭包]\label{def:TC}
+对 $R\in\mathcal{B}$，其\textbf{传递闭包} $T(R)$ 定义为：$(x,y)\in T(R)$ 当且仅当存在自然数
+$t\ (2\le t<+\infty)$ 与序列 $x^0,x^1,\dots,x^t\in X$，满足 $x^0=x$，$(x^\tau,x^{\tau+1})\in R$
+（$\tau=0,1,\dots,t-1$），且 $x^t=y$。
+\end{definition}
+
+可以验证算子 $T$ 是 $\mathcal{B}$ 上的\textbf{闭包运算}（Berge 1963）：
+\[
+\text{(T}_1\text{)}\ T(R)\supseteq R;\quad
+\text{(T}_2\text{)}\ R^1\supseteq R^2 \Rightarrow T(R^1)\supseteq T(R^2);\quad
+\text{(T}_3\text{)}\ T[T(R)]=T(R);\quad
+\text{(T}_4\text{)}\ T(\varnothing)=\varnothing.
+\]
+
+\begin{theorem}[Suzumura 1983, p.\,12；Theorem I.1]\label{thm:TC}
+对任意 $R\in\mathcal{B}$，$T(R)$ 是\textbf{包含 $R$ 的最小传递超集}。
+\end{theorem}
+
+\begin{proof}[完整证明（教材略去，此处补全）]
+需证三件事：(i) $T(R)$ 是传递的；(ii) $R\subseteq T(R)$；(iii) 若 $Q\in\mathcal{B}$
+传递且 $R\subseteq Q$，则 $T(R)\subseteq Q$。
+
+\textbf{(i) 传递性。}设 $(x,y)\in T(R)$、$(y,z)\in T(R)$。由定义 \ref{def:TC}，
+存在链 $x=x^0,x^1,\dots,x^t=y$ 与链 $y=y^0,y^1,\dots,y^s=z$，相邻项均属 $R$。
+把两链首尾相接：
+\[
+x=x^0,\dots,x^t=y=y^0,y^1,\dots,y^s=z
+\]
+是一条从 $x$ 到 $z$ 的 $R$-链（长度 $t+s\ge 2$，因 $t,s\ge 2$……若允许单节链即
+$t\ge 1$，结论相同），故 $(x,z)\in T(R)$。
+
+\textbf{(ii) 包含关系。}$(x,y)\in R$ 时取单节链 $x^0=x,\ x^1=y$（$t=1$），
+即得 $(x,y)\in T(R)$，故 $R\subseteq T(R)$。
+
+\textbf{(iii) 最小性。}设 $Q$ 传递且 $R\subseteq Q$。任取 $(x,y)\in T(R)$，
+存在 $R$-链 $x=x^0,\dots,x^t=y$。由 $R\subseteq Q$，链上每节
+$(x^\tau,x^{\tau+1})\in Q$；对链长作归纳：$t=1$ 时 $(x,y)\in Q$ 显然；
+设 $t\le k$ 时结论成立，$t=k+1$ 时由归纳假设 $(x,x^k)\in Q$、又 $(x^k,y)\in Q$，
+由 $Q$ 的传递性得 $(x,y)\in Q$。故 $T(R)\subseteq Q$。
+
+由 (iii) 取 $Q=T(R)$（由 (i) 它传递、由 (ii) 它含 $R$）知 $T(R)$ 自身是候选之一，
+且它含于一切候选，故为\textbf{最小}传递超集。\textbf{推论}：$R$ 传递
+$\iff T(R)=R$。
+\end{proof}
+
+\begin{remark}[Suzumura 一致性的直观]
+条件 (k) 排除如下结构：存在有限链 $x^0=x,\ (x^\tau,x^{\tau+1})\in R,\ x^t=y$ 同时 $(y,x)\in P(R)$。
+换言之，它同时排除\textbf{弱货币泵}与\textbf{强货币泵}：沿弱偏好链从 $x$ 走到 $y$ 之后，
+不允许 $y$ 又严格优于 $x$。它比传递性弱（不要求链条闭合后仍有弱偏好），但足以阻止“被来回收割”。
+\end{remark}
+
+三种弱化概念与传递性的逻辑关系如下图（单向箭头不可反转；Suzumura 一致与拟传递\textbf{逻辑独立}）：
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+  node distance=1.1cm and 2.2cm,
+  box/.style={draw, rounded corners=2pt, inner sep=6pt, font=\small},
+  arr/.style={-{Stealth[length=2.5mm]}, thick}
+]
+\node[box] (tr) {传递性 Transitivity};
+\node[box, right=of tr] (qt) {拟传递 Quasi transitivity};
+\node[box, below=of tr] (sz) {Suzumura 一致性};
+\node[box, right=of sz] (ac) {无环性 Acyclicity};
+\draw[arr] (tr) -- (qt);
+\draw[arr] (tr) -- (sz);
+\draw[arr] (qt) -- (ac);
+\draw[arr] (sz) -- (ac);
+\end{tikzpicture}
+\caption{一致性条件的强弱：传递性 $\Rightarrow$ 拟传递 $\Rightarrow$ 无环；传递性 $\Rightarrow$ Suzumura 一致 $\Rightarrow$ 无环。Suzumura 一致与拟传递互不蕴含（Suzumura 1983, p.\,244）。}
+\label{fig:coherence}
+\end{figure}
+\figexplan{箭头表示不可反转的逻辑蕴含：传递性同时推出拟传递与 Suzumura 一致性，两者再各自推出无环性。拟传递与 Suzumura 一致性位于图的中间两角且互不相连，表示二者逻辑独立、互不蕴含——这正是弱化处理最需要留意的地方。}
+
+\begin{example}[Luce 1956：咖啡加糖——无差异为何不该传递]\label{ex:luce}
+设 $X=\{x_0,x_1,\dots,x_n\}$，$x_k$ 是一杯加了 $k$ 粒糖的咖啡。人的味觉存在
+\textbf{最小可觉差}（just noticeable difference, JND）：相邻两杯分辨不出，
+$x_k\sim x_{k+1}$（$k=0,\dots,n-1$）；但 $0$ 粒糖与 $n$ 粒糖（$n$ 很大）
+一苦一甜，$x_n\succ x_0$。
+\begin{itemize}
+  \item 若要求 $I(R)$ 传递：$x_0\sim x_1\sim\cdots\sim x_n$ 推出 $x_0\sim x_n$，矛盾；
+  \item 若只要求\textbf{拟传递}：严格部分 $x_n\succ x_0$ 与任何已有严格偏好不冲突，
+  无任何矛盾。
+\end{itemize}
+这正是 Sen (1969) 主张以拟传递替代完全传递的动机之一：\textbf{无差异的不可分辨性
+（imperceptible differences）使 $I(R)$ 天然可能不传递}，而严格偏好 $P(R)$
+基于可分辨的差异，传递性仍可辩护。Luce (1956) 由此发展出\textbf{半序}
+（semiorder）理论：$(x,y)\in P(R)$ 当且仅当 $u(x)>u(y)+\delta$（$\delta>0$ 为
+感觉阈限），其无差异类恰是“叠合区间”——拟传递而不传递。
+同一思想可归一化为“一单位 JND”：$x\succeq y \iff u(x)\ge u(y)-1$
+——此时 $\succ$ 传递（$x\succ y \iff u(x)>u(y)+1$，即优势超过阈限，
+“超过阈限的差距”当然可传递）而 $\succeq$ 不传递：取 $u(x)=2$、$u(y)=2.9$、$u(z)=3.8$，
+则 $x\succeq y$（$2\ge 1.9$）、$y\succeq z$（$2.9\ge 2.8$），但
+$x\not\succeq z$（$2<2.8$）——弱偏好链在阈值处断裂。
+\end{example}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[font=\scriptsize,scale=1.12,transform shape]
+  \draw[thick,fill=gray!15] (0,0) rectangle (3.1,2.9);
+  \node[font=\small\bfseries] at (1.55,2.56) {(a) 含环的原偏好};
+  \fill (1.55,2.00) circle (1.5pt) node[above=2pt] {$a$};
+  \fill (0.65,0.95) circle (1.5pt) node[below=2pt] {$b$};
+  \fill (2.45,0.95) circle (1.5pt) node[below=2pt] {$c$};
+  \draw[->,thick] (1.30,1.82) -- (0.85,1.15);
+  \draw[->,thick] (1.05,0.90) -- (2.25,0.90);
+  \draw[->,thick] (2.50,1.15) -- (1.85,1.80);
+  \node[align=center,fill=white,inner sep=2pt,text width=2.65cm] at (1.55,0.32) {$a\succ b\succ c\succ a$\\[-1pt]非传递};
+  \begin{scope}[xshift=6.2cm]
+    \draw[thick,fill=gray!15] (0,0) rectangle (4.4,2.9);
+    \node[font=\small\bfseries] at (2.2,2.56) {(b) 传递扩张：无穷序列};
+    \foreach \i in {0,1,2,3} \fill (0.5+0.9*\i,1.75) circle (1.5pt);
+    \node[below=2pt] at (0.5,1.75) {$a_1$};
+    \node[below=2pt] at (1.4,1.75) {$b_1$};
+    \node[below=2pt] at (2.3,1.75) {$c_1$};
+    \node[below=2pt] at (3.2,1.75) {$a_2$};
+    \node[above=2pt] at (0.5,1.75) {$a$};
+    \node[above=2pt] at (1.4,1.75) {$b$};
+    \node[above=2pt] at (2.3,1.75) {$c$};
+    \node[above=2pt] at (3.2,1.75) {$a$};
+    \node at (3.75,1.75) {$\cdots$};
+    \draw[->,thick] (0.62,1.45) -- (1.28,1.45);
+    \draw[->,thick] (1.52,1.45) -- (2.18,1.45);
+    \draw[->,thick] (2.42,1.45) -- (3.08,1.45);
+    \node[align=center,fill=white,inner sep=2pt,text width=3.8cm] at (2.2,0.72) {无穷多个“复制点”按序排定，\\原偏好嵌入其中且被保留};
+    \node[align=center,fill=white,inner sep=2pt,text width=3.8cm] at (2.2,0.24) {扩张后的关系是传递的\\（原关系是其子关系）};
+  \end{scope}
+\end{tikzpicture}
+\caption{Szpilrajn 扩张定理：把含环偏好嵌入传递关系}
+\end{figure}
+\figexplan{左面板是一个含三环的偏好 $a\succ b\succ c\succ a$，它满足完备性但不满足传递性，因而无法被任何传递关系（特别是效用）表示。右面板给出 Szpilrajn 扩张的做法：把每个元素复制成无穷多个副本 $a_1,b_1,c_1,a_2,\dots$，按线性顺序排定，使扩张后的关系可传递；同时通过“同序映射”保证原偏好被原样保留，于是原关系成为传递关系的子关系。}
+
+\subsection{扩张与 Szpilrajn 定理}
+
+\begin{definition}[扩张与子关系]
+设 $R, R^*\in\mathcal{B}$。若 $R\subseteq R^*$ 且 $P(R)\subseteq P(R^*)$，称 $R^*$ 是 $R$
+的一个\textbf{扩张（extension）}，$R$ 是 $R^*$ 的\textbf{子关系（subrelation）}。
+若 $R^*$ 还是一个序，称其为 $R$ 的\textbf{序扩张（ordering extension）}。
+\end{definition}
+
+\begin{theorem}[Szpilrajn 1930]\label{thm:szpilrajn}
+任何拟序 $R$（自反 + 传递）都存在一个序扩张 $R^*$。
+\end{theorem}
+
+\begin{remark}
+Szpilrajn 定理是本章的“隐藏支柱”：它保证\textbf{部分可比}的偏好总可以\textbf{补全}为完备序而不反转任何已有严格比较。
+在显示偏好理论中，我们先用选择数据构造出一个（可能不完备的）显示偏好关系，再靠扩张定理把它“补齐”为理性化所需的序。
+\end{remark}
+
+\begin{proof}[定理 \ref{thm:szpilrajn} 的证明思路（Zorn 引理）]
+证明分两步：先证\textbf{单点补全引理}，再用极大原理收尾。
+
+\textbf{第一步（关键引理）。}设 $R$ 是拟序，$x,y\in X$ 且 $(x,y)\notin R$、
+$(y,x)\notin R$（$x$ 与 $y$ 不可比）。定义
+\[
+R^1 = R\ \cup\ \{(x,y)\}\ \cup\ \{(z,w)\in X\times X \mid (z,x)\in R\ \&\ (y,w)\in R\},
+\]
+即：强行宣布 $x\succeq y$，并把“所有不弱于 $x$ 的 $z$”与“所有不优于 $y$ 的 $w$”
+之间也补上 $z\succeq w$。可逐条验证 $R^1$ 仍自反、传递：
+若 $(a,b),(b,c)\in R^1$，按各项来源（旧 $R$ 或新补的）分四种情形，
+用 $R$ 的传递性逐一合并，均得 $(a,c)\in R^1$；自反性显然。
+并且 $P(R)\subseteq P(R^1)$：原有的严格比较不会被反转
+（若 $(a,b)\in P(R)$ 而 $(b,a)\in R^1$ 为新增，则 $(b,x),(y,a)\in R$，
+结合 $(x,y)$ 新增前的结构与 $R$ 传递会推出 $(y,x)\in R$，与不可比假设矛盾）。
+故 $R^1$ 是 $R$ 的真扩张，且 $x,y$ 在 $R^1$ 下可比。
+
+\textbf{第二步（Zorn 引理）。}令
+$\mathfrak{Q}=\{Q\in\mathcal{B}\mid Q \text{ 拟序},\ R\subseteq Q,\ P(R)\subseteq P(Q)\}$，
+以集合包含为序。任取链 $\{Q_\lambda\}\subseteq\mathfrak{Q}$，其并
+$\bigcup_\lambda Q_\lambda$ 仍自反（各 $Q_\lambda$ 均含对角线）、仍传递
+（$(a,b)\in Q_{\lambda_1}$、$(b,c)\in Q_{\lambda_2}$ 时取
+$\lambda=\max\{\lambda_1,\lambda_2\}$，两项同处一个 $Q_\lambda$ 中），
+且保持 $P(R)$，故并属于 $\mathfrak{Q}$，是该链的上界。
+由 Zorn 引理，$\mathfrak{Q}$ 存在极大元 $R^*$。
+若 $R^*$ 不完备，则有不可比对 $x,y$，第一步给出真扩张 $R^1\supsetneq R^*$，
+与极大性矛盾。故 $R^*$ 完备，即为所求序扩张。
+\end{proof}
+
+\begin{remark}[构造性与非构造性]
+$X$ 有限时无需 Zorn 引理：不可比对至多有限，反复用第一步引理（至多
+$\binom{|X|}{2}$ 次）即可补全——这给出 Szpilrajn 定理的\textbf{有限构造性证明}
+（课堂可演算）。无限情形必须借助选择公理的等价形式，说明“完备化”本质上是一个
+\textbf{非构造}操作：序扩张存在，但没有算法能把它写出来。
+\end{remark}
+
+% ============================================================
+\section{效用表示}
+% ============================================================
+
+\subsection{表示的定义与有限集表示定理}
+
+\begin{definition}[效用表示]
+效用函数 $u: X\to\R$ \textbf{表示}偏好关系 $\succeq$，若对所有 $x,y\in X$：
+\[
+x\succeq y \iff u(x)\ge u(y).
+\]
+\end{definition}
+
+\begin{theorem}[有限集效用表示定理]\label{thm:finiteutility}
+有限集 $X$ 上任何\textbf{完备且传递}的偏好关系 $\succeq$，都可被某个效用函数
+$u: X\to\{1,\dots,n\}$ 表示，其中 $n\equiv |X|$。
+\end{theorem}
+
+\noindent\textbf{直觉论证}（“逐层剥皮法”）：
+\begin{enumerate}
+  \item 把 $X$ 的“顶层”元素（选择集 $C(X,\succeq)$ 中的元素）赋予效用 $n=|X|$；
+  \item 丢弃它们，剩下集合 $X'$；
+  \item 若 $X'=\varnothing$ 则结束，否则对 $X'$ 重复第 1 步。
+\end{enumerate}
+完备 + 传递保证每一步“顶层”非空，有限性保证过程终止。
+
+\begin{proof}[定理 \ref{thm:finiteutility} 的严格证明（对 $n\equiv|X|$ 作数学归纳）]
+$n=0$ 时 $X=\varnothing$，定理平凡成立。
+
+假设定理对至多 $n$ 个元素的集合成立。考虑 $|X|=n+1$。
+完备传递偏好下选择集 $C(X,\succeq)\neq\varnothing$，故
+$Y\equiv X\setminus C(X,\succeq)$ 至多有 $n$ 个元素。
+由归纳假设，$Y$ 上的偏好可被某个 $u: Y\to\{1,\dots,n\}$ 表示。
+把 $u$ 扩张到 $X$：对所有 $x\in C(X,\succeq)$ 令 $u(x)=n+1$。
+
+下面验证扩张后的 $u$ 在 $X$ 上表示 $\succeq$，即对所有 $x,y\in X$：
+$x\succeq y \iff u(x)\ge u(y)$。
+
+\textbf{（$\Rightarrow$）}设 $x\succeq y$。
+若 $x\in C(X,\succeq)$，则 $u(x)=n+1\ge u(y)$。
+若 $x\notin C(X,\succeq)$，则 $y\notin C(X,\succeq)$（否则 $y$ 弱优于一切包括 $x$，
+与 $x\succeq y$ 及 $x$ 不在选择集矛盾——严格说：$y\in C(X,\succeq)$ 意味着
+$y\succeq x$，结合 $x\succeq y$ 得 $x\sim y$，而 $x$ 应与 $y$ 同在选择集中）。
+于是 $x,y\in Y$，由 $u$ 在 $Y$ 上表示 $\succeq$（及传递性），$u(x)\ge u(y)$。
+
+\textbf{（$\Leftarrow$）}设 $u(x)\ge u(y)$。
+若 $u(x)=n+1$，则 $x\in C(X,\succeq)$，故 $x\succeq y$。
+若 $u(x)\le n$，则 $x,y\in Y$，由 $u$ 在 $Y$ 上表示 $\succeq$ 得 $x\succeq y$。
+
+归纳成立，定理得证。
+\end{proof}
+
+\begin{theorem}[效用表示蕴含理性]\label{thm:utilityrational}
+若效用函数 $u: X\to\R$ 表示 $X$ 上的 $\succeq$，则 $\succeq$ 是理性的（完备 + 传递）。
+\end{theorem}
+
+\begin{proof}
+\textbf{完备性}：对任意 $x,y\in X$，$u(x),u(y)\in\R$，实数全序给出 $u(x)\ge u(y)$ 或
+$u(y)\ge u(x)$；由表示定义，$x\succeq y$ 或 $y\succeq x$。
+
+\textbf{传递性}：设 $x\succeq y\succeq z$。由表示定义 $u(x)\ge u(y)\ge u(z)$，
+实数传递性给出 $u(x)\ge u(z)$，故 $x\succeq z$。
+\end{proof}
+
+\begin{remark}
+定理 \ref{thm:finiteutility} 与 \ref{thm:utilityrational} 合起来给出\textbf{有限集上的完全刻画}：
+\[
+\succeq \text{ 完备且传递} \iff \succeq \text{ 可被效用函数表示} \qquad (X \text{ 有限}).
+\]
+方向“$\Leftarrow$”永远成立（与基数无关）；方向“$\Rightarrow$”在无限集上\textbf{会失效}，见下。
+\end{remark}
+
+\begin{example}[可数集上的表示：枚举插入法]\label{ex:countable}
+设 $X=\{x_1,x_2,\dots\}$ 可数，$\succeq$ 完备传递。归纳地构造 $u$：
+已给前 $n$ 项赋好值且保持序关系，处理 $x_{n+1}$ 时分三种情形：
+\begin{enumerate}
+  \item 若 $x_{n+1}\succ x_i$ 对所有 $i\le n$：令 $u(x_{n+1})=\max_{i\le n}u(x_i)+1$；
+  \item 若 $x_i\succ x_{n+1}$ 对所有 $i\le n$：令 $u(x_{n+1})=\min_{i\le n}u(x_i)-1$；
+  \item 否则存在“夹住”它的相邻已赋值项 $a\succ x_{n+1}\succ b$
+  （或与某项 $x_j$ 无差异），令 $u(x_{n+1})=\tfrac{1}{2}(u(a)+u(b))$
+  （无差异情形令 $u(x_{n+1})=u(x_j)$）。
+\end{enumerate}
+每步插入保持已有序关系不变，故极限 $u:X\to\R$ 表示 $\succeq$。
+\textbf{要点}：可数集的表示\textbf{不需要连续性假设}——归纳永远“有下一步”。
+真正的障碍出现在\textbf{不可数}集：有理数网不足以标记不可数多个无差异类时
+（词典序 $X=[0,1]^2$），表示才彻底失败（见下节反例）。
+这也解释了 Cantor--Debreu 传统中“可数序稠密子集”条件为何是表示定理的核心。
+\end{example}
+
+\subsection{\texorpdfstring{当 $|X|=\infty$}{当 |X| 为无限集}：词典序偏好反例}
+
+$X$ 无限时，归纳证明走不通，但表示\textbf{有时仍可能}：
+\begin{example}[可表示的无限偏好]
+$\R_+$ 上的偏好 $x_1\succeq x_2 \iff x_1\ge x_2$，由 $u(x)=x$ 表示（也可由任意单调变换表示）。
+\end{example}
+
+但无限时\textbf{并非总能}表示：
+
+\begin{example}[词典序偏好（lexicographic preferences）不可表示]\label{ex:lexico}
+$[0,1]^2\subseteq\R^2$ 上定义：$(x_1,y_1)\succeq(x_2,y_2)$ 当且仅当
+\begin{itemize}
+  \item $x_1>x_2$，或
+  \item $x_1=x_2$ 且 $y_1\ge y_2$。
+\end{itemize}
+该偏好完备且传递，但\textbf{不能被任何效用函数表示}。
+\end{example}
+
+\begin{proof}[不可表示性的论证要点]
+两条等价思路：
+\begin{enumerate}
+  \item \textbf{无差异曲线视角}：词典序偏好\textbf{没有非平凡的无差异曲线}——
+  每个点的无差异集是单点。任何效用函数若要表示它，就必须把正方形中的\textbf{不可数多个}点
+  一一映射到实数线上互不相同的值，且保持序。
+  \item \textbf{序保持单射的不可能性}：这样的 $u$ 将是从 $[0,1]^2$ 到 $\R$ 的
+  \textbf{保序一一映射}。但对每个 $x\in[0,1]$，点 $(x,0)$ 与 $(x,1)$ 满足
+  $u(x,0)<u(x,1)$，从而每个 $x$ 对应一个\textbf{非退化区间} $(u(x,0),u(x,1))$，
+  且不同 $x$ 的区间互不相交。实数线上互不相交的非退化开区间\textbf{至多可数个}
+  （每个区间含一个有理数），与 $[0,1]$ 不可数矛盾。
+\end{enumerate}
+直观记忆：两种无穷“大小不同”——正方形里的序结构太“密”，塞不进一条线。
+\end{proof}
+
+\begin{remark}
+无限集上何时\textbf{能}表示？需要额外的\textbf{可数序稠密}条件（Debreu 表示定理：
+完备传递 + 连续 $\Rightarrow$ 存在连续效用表示）。本课程后面用到时会回到这一点；
+这里只需记住：\textbf{“理性偏好 $\Rightarrow$ 效用表示”是有条件的，有限集免费，无限集要钱（连续性）。}
+\end{remark}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[font=\scriptsize,scale=1.08,transform shape]
+  \draw[thick,fill=gray!15] (0,0) rectangle (3.2,2.6);
+  \node[font=\small\bfseries] at (1.6,2.28) {(a) 表示一：赋值 $(0,1,2,3)$};
+  \draw[thick] (0.5,1.35) -- (2.7,1.35);
+  \foreach \i in {0,1,2,3}{
+    \fill (0.5+0.7*\i,1.35) circle (1.5pt);
+    \node[below=3pt] at (0.5+0.7*\i,1.35) {$a_{\i}$};
+    \node[above=3pt] at (0.5+0.7*\i,1.35) {$\i$};
+  }
+  \node[align=center] at (1.6,0.55) {任意严格递增变换 $f$ 都给出同一偏好};
+  \draw[->,thick] (3.35,1.35) -- (4.15,1.35);
+  \node[above=3pt] at (3.75,1.35) {$f$ 严格递增};
+  \begin{scope}[xshift=7.0cm]
+    \draw[thick,fill=gray!15] (0,0) rectangle (3.2,2.6);
+    \node[font=\small\bfseries] at (1.6,2.28) {(b) 表示二：赋值 $(0,10,20,30)$};
+    \draw[thick] (0.5,1.35) -- (2.7,1.35);
+    \foreach \i/\v in {0/0,1/10,2/20,3/30}{
+      \fill (0.5+0.7*\i,1.35) circle (1.5pt);
+      \node[below=3pt] at (0.5+0.7*\i,1.35) {$a_{\i}$};
+      \node[above=3pt] at (0.5+0.7*\i,1.35) {$\v$};
+    }
+    \node[align=center] at (1.6,0.55) {与 (a) 序相同，但数值本身无经济含义};
+  \end{scope}
+  \node[align=center,fill=white,inner sep=2pt,text width=9.0cm,font=\scriptsize] at (5.1,-0.72) {序数性：效用只编码偏好顺序，不编码“量”；人际比较无法从效用数值读出。};
+\end{tikzpicture}
+\caption{效用的序数性：表示不唯一，但序唯一}
+\end{figure}
+\figexplan{两个面板给出同一偏好 $a_0\succ a_1\succ a_2\succ a_3$ 的两个效用表示：$(0,1,2,3)$ 与 $(0,10,20,30)$。二者只相差一个严格递增变换 $f$，因此诱导完全相同的无差异类与选择。图形要点：效用的“水平”与“间距”可以任意改变，故只有序有意义；跨人的效用数值比较（人际比较）无法由偏好表示本身推出。}
+
+\subsection{效用的序数性与人际比较的失败}
+
+注意表示定义只要求
+\[
+x\succeq y \iff u(x)\ge u(y),
+\]
+因此 $u$ 的任意\textbf{严格递增变换} $f\circ u$ 同样表示 $\succeq$：
+\begin{itemize}
+  \item “表示 $\succeq$”这一性质是\textbf{序数的（ordinal）}；
+  \item 根本不存在有意义的“效用单位”（there is no such thing as a ``util''）。
+\end{itemize}
+
+由此引出\textbf{人际比较的失败}：
+\begin{enumerate}
+  \item 仅凭选择理论无法比较张三的 $u(x)$ 与李四的 $u(x)$——两人的 $u$ 各自可乘任意正的仿射（甚至任意单调）变换，
+  跨人比较没有锚点。这对\textbf{功利主义}（把各人效用加总成社会福利）的原始纲领是沉重打击。
+  \item \textbf{Rawls}（上承 Kant 一线）的回应：放弃跨人比较，只要求我们站在\textbf{单一选择者}的位置
+  （“无知之幕”后）做选择。
+  \item 行为层面的修补：“\textbf{最小可觉差}（just noticeable difference）”建议把 1 个 util
+  定义为个体能察觉的最小差异，即 $x\succeq y \iff u(x)\ge u(y)-1$。
+  注意此时 $\succ$ 仍传递，但 $\succeq$ \textbf{不再传递}（$a$ 与 $b$ 无差异、$b$ 与 $c$ 无差异，
+  但 $a$ 明显优于 $c$）——这从行为上解释了传递性为何可疑。
+\end{enumerate}
+
+% ============================================================
+\section{显示偏好路径：从选择反推偏好}
+% ============================================================
+
+\subsection{方法论：实证起源、规范起源与四个追问}
+
+\textbf{选择理论要回答什么？}这门理论瞄准两类问题：
+\begin{description}
+  \item[实证问题（positive）] 理解\textbf{个体自利如何驱动更大的经济系统}——
+  价格形成、市场出清、比较静态，全部从“个体在约束下选最好”这一微观假设推出；
+  \item[规范问题（normative）] 为\textbf{功利主义计算提供客观标准}——
+  福利比较、政策评估需要一把“效用”尺子。
+\end{description}
+
+\textbf{两条建模路线的对照}：
+\begin{center}
+\small
+\begin{tabular}{p{3.4cm}p{5.2cm}p{5.2cm}}
+\toprule
+ & \textbf{常规路线（preference-based）} & \textbf{显示偏好路线（choice-based）} \\
+\midrule
+起点 & 偏好 $\succeq$（在心中，不可观察） & 选择 $C_R(\cdot)$（在市场上，可观察） \\
+终点 & 与偏好相容的选择 $C(B,\succeq)$ & 与选择相容的偏好 \\
+核心问题 & “理性的人会怎么选？” & “这些选择像不像理性人选的？” \\
+代表定理 & 非空性定理 \ref{thm:nonempty}、
+效用表示（§2.2） & 枢纽定理 \ref{thm:harp}、
+Afriat 定理（§2.7.5） \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{认识论的不对称}是理解全章的钥匙：
+偏好和效用都在人脑里，原则上\textbf{不可观察}；
+选择在市场上、问卷里、实验中，原则上\textbf{可观察}。
+Samuelson 1938 年的纲领（操作主义在经济学中的落实）：
+\emph{科学概念必须由可观察的操作来定义}——效用测不出来，选择测得出来，
+因此理性选择理论的\textbf{全部可检验内容必须能翻译成选择语言}。
+显示偏好方法就是这次翻译：从观察到的选择出发，
+问什么样的偏好与之\textbf{相容（compatible）}。
+
+由此引出四个层层递进的追问：
+
+\begin{enumerate}
+  \item \textbf{我们能否检验理性选择理论？怎么检验？}\\
+  科学哲学的要求（Popper 可证伪性）：一个理论必须给出
+  “\emph{若观察到这样的事件，理论就是错的}”的明确条件，否则不是科学。
+  显示偏好理论的伟大之处正在于：检验条件（WARP/SARP/HARP/GARP）
+  是\textbf{纯数据性质}——拿到选择数据即可逐条核验，
+  不需要对不可观察的偏好作任何猜测。这是本章 §2.4--§2.6 的全部内容。
+  \item \textbf{观察到的选择与“最大化某个目标函数”一致吗？}\\
+  即\textbf{理性化的存在性}问题：是否存在某个完备传递的 $\succeq$ 使
+  $C_R(\cdot)=C(\cdot,\succeq)$？§2.3.4 给出必要条件（显示偏好推断），
+  §2.5 的枢纽定理给出充要条件（HARP）。
+  \item \textbf{若一致，能否恢复出目标函数？}\\
+  即\textbf{识别（identification）}问题。答案是“能，但不唯一”：
+  理性化偏好一般不唯一——$R_C$ 只钉死被观察到的比较，
+  未观察之处自由（§2.6 的反例集中，同一选择函数常有多个理性化）。
+  恢复的标准步骤：$R_C$ $\to$ 取闭包 $\to$ Szpilrajn 扩张为序
+  $\to$ Debreu 表示为 $u$（即 §2.7.1 Houthakker 三步证明的骨架）。
+  \item \textbf{恢复出来后能做什么？人际比较行得通吗？}\\
+  答案的一半是冷水：效用的\textbf{序数性}使“甲的 10 单位效用
+  是否多于乙的 8 单位”没有意义（§2.2.3）——功利主义加总在
+  本框架内\textbf{没有合法基础}，这是对规范起源的沉重打击。
+  两种著名回应：Rawls（沿 Kant 传统）要求只考虑\textbf{单一选择者}
+  在无知之幕后的判断，绕开人际比较；“最小可觉差”（JND）
+  尝试以可分辨阈值定义效用单位（例 \ref{ex:luce}）。
+  另一半是好消息：实证分析\textbf{不需要}人际比较——
+  比较静态、Afriat 检验、福利的 Pareto 标准都只用量价数据。
+\end{enumerate}
+
+\subsection{选择函数与定义域}
+
+\begin{definition}[选择函数与选择集]
+设 $\mathcal{K}$ 是 $X$ 的一族非空子集（称为\textbf{定义域}）。$\mathcal{K}$ 上的
+\textbf{选择函数} $C$ 把每个 $S\in\mathcal{K}$ 映到 $S$ 的一个非空子集 $C(S)\subseteq S$。
+$S$ 称为\textbf{机会集（opportunity set）}，$C(S)$ 称为从 $S$ 中选出的\textbf{选择集}。
+\end{definition}
+
+三类常用定义域（理论适用范围的关键）：
+\begin{itemize}
+  \item $\mathcal{K}_F$：\textbf{有限域}——$X$ 的所有非空有限子集（个体选择与社会选择理论的标准设定）；
+  \item $\mathcal{K}_{CB}$：\textbf{竞争预算域}——$X\subseteq\R_+^l$ 时所有预算集
+  $B(\boldsymbol{p},M)=\{\boldsymbol{x}\in X\mid \boldsymbol{p}\boldsymbol{x}\le M\}$（传统消费者理论，Samuelson--Houthakker 的舞台）；
+  \item $\mathcal{K}_A$：\textbf{任意域}——不加任何结构限制的非空集族（Suzumura 的一般理论）。
+\end{itemize}
+
+\begin{remark}
+Arrow 的洞见：当只考虑预算集时，弱显示偏好公理\textbf{不足以}推出序的存在；
+但当选择定义在\textbf{所有有限集}上时，弱公理就足够了。
+“把选择函数的定义域扩展到所有有限集，需求函数视角将被大大简化”——
+这直接催生了 Sen (1971)、Plott (1973)、Suzumura (1976) 等后续工作。
+\end{remark}
+
+\subsection{\texorpdfstring{选择规则 $C(B,\succeq)$}{选择规则 C(B,≽)}：从偏好到行为}
+
+建模个体决策有\textbf{两条路线}：
+\begin{enumerate}
+  \item \textbf{常规路线（preference-based）}：从偏好出发，问什么选择与之相容；
+  \item \textbf{显示偏好路线（choice-based）}：从观察到的选择出发，问什么偏好与之相容
+  ——§2.3.4 起的主线。
+\end{enumerate}
+本小节先把常规路线走通。
+
+\begin{definition}[选择规则]\label{def:choicerule}
+给定 $X$ 上的偏好 $\succeq$ 与机会集（选择集）$B\subseteq X$，
+\textbf{选择规则}是一个对应（correspondence），给出 $B$ 中所有“最好”的元素：
+\begin{equation}
+C(B,\succeq)\equiv\{x\in B:\ x\succeq y\ \text{对所有}\ y\in B\}. \label{eq:CB}
+\end{equation}
+\end{definition}
+
+用 $R$ 记法翻译：$C(B,\succeq)$ 正是下节的 $R$-最优点集 $G(B,R)$
+（定义见下）。选择理论的第一问是：\textbf{这个集合什么时候非空？}
+（Alice 例 \ref{ex:alice} 已提示：传递性缺失时它可以为空。）
+
+\begin{theorem}[选择规则的非空性（有限情形）]\label{thm:nonempty}
+设 $\succeq$ 完备且传递，$B$ 有限非空。则 $C(B,\succeq)\neq\varnothing$。
+\end{theorem}
+
+\begin{proof}[对 $|B|$ 作数学归纳]
+$|B|=1$：$B=\{x\}$，由完备性 $x\succeq x$（命题 \ref{prop:derived}(1)），
+故 $x\in C(B,\succeq)$。
+
+设对一切 $|B|=n\ge 1$ 结论成立。考虑 $|A|=n+1$，写 $A=B\cup\{x\}$（$|B|=n$）。
+由归纳假设取 $y\in C(B,\succeq)$。由完备性只有两种情形：
+\begin{enumerate}
+  \item $y\succeq x$：$y$ 已不弱于 $B$ 中一切（归纳假设），又不弱于 $x$，
+  故 $y\in C(A,\succeq)$；
+  \item $x\succeq y$：$y$ 不弱于 $B$ 中一切，由\textbf{传递性} $x$ 不弱于
+  $B$ 中一切，又 $x\succeq x$，故 $x\in C(A,\succeq)$。
+\end{enumerate}
+两情形均得 $C(A,\succeq)\neq\varnothing$，归纳成立。
+\end{proof}
+
+\begin{remark}[这个定理用足了什么]
+基例用\textbf{自反}（来自完备性），归纳步用\textbf{完备性 + 传递性}——
+理性偏好的两条公理各司其职，缺一不可：
+缺完备性，$y$ 与 $x$ 可能不可比，两情形都不覆盖；
+缺传递性，情形 2 的 $x$ 打不过 $B$ 中某个 $z$（Alice 例即是如此）。
+$B$ 无限时结论失效，需要追加\textbf{拓扑条件}（如 $\succeq$ 连续 + $B$ 紧，
+由 Weierstrass 定理保证最大值存在）——这是 §2.7.5 Debreu 连续性条件
+的经济学用途之一。
+\end{remark}
+
+\subsection{最大点集与最优点集；理性化}
+
+\begin{definition}[$R$-最大点集与 $R$-最优点集]
+设 $R$ 为偏好关系，$S\subseteq X$：
+\begin{align}
+M(S,R) &= \{x\in X \mid x\in S \ \&\ (y,x)\notin P(R)\ \text{对所有}\ y\in S\},\\
+G(S,R) &= \{x\in X \mid x\in S \ \&\ (x,y)\in R\ \text{对所有}\ y\in S\}.
+\end{align}
+$M(S,R)$ 是“没有谁能严格击败我”的集合（maximal），$G(S,R)$ 是“我不弱于任何人”的集合（greatest）。
+\end{definition}
+
+\begin{remark}\label{rem:GM}
+(i) 恒有 $G(S,R)\subseteq M(S,R)$；(ii) 若 $R$ 完备，则 $G(S,R)=M(S,R)$。
+对 $x,y\in G(S,R)$ 有 $(x,y)\in I_R$；对 $x,y\in M(S,R)$ 则要么 $(x,y)\in I_R$，
+要么二者不可比（$(x,y)\notin R$ 且 $(y,x)\notin R$）。
+\end{remark}
+
+\begin{definition}[理性化、G-理性、M-理性]\label{def:rationalize}
+$\mathcal{K}$ 上的选择函数 $C$ 称为\textbf{理性的（rational）}，若存在二元关系 $R\in\mathcal{B}$ 使
+\[
+\forall S\in\mathcal{K}:\ C(S)=G(S,R)=\{x^*\in S\mid \forall x\in S:\ (x^*,x)\in R\}.
+\]
+这样的 $R$ 称为 $C$ 的一个\textbf{理性化（rationalization）}。
+更精细地：
+\begin{itemize}
+  \item[(a)] $C$ 是 \textbf{G-理性}的，若存在 $R$ 使 $C(S)=G(S,R)$ 对所有 $S$ 成立；
+  \item[(b)] $C$ 是 \textbf{M-理性}的，若存在 $R$ 使 $C(S)=M(S,R)$ 对所有 $S$ 成立。
+\end{itemize}
+若 $R$ 还是完备的（完备的 + 传递的），相应称 $C$ 为完备理性（完全理性 / full rational）的。
+\end{definition}
+
+\begin{remark}[M-理性 $\Rightarrow$ G-理性，反之不然]\label{rem:MG}
+设 $C$ 以 $R$ 为理性化是 M-理性的。定义 $R'$：$(x,y)\in R' \iff (y,x)\notin P_R$。
+则 $R'$ 完备，且 $M(S,R)=G(S,R')$ 对所有 $S$ 成立，故 $C$ 是 G-理性的。
+反向不成立：存在 $X=\{x,y,z\}$ 上的例子（$S_1=\{x,y\},S_2=\{x,z\},S_3=X$，
+$C(S_1)=S_1,C(S_2)=S_2,C(S_3)=\{x\}$）是 G-理性而非 M-理性的（Suzumura 书 p.\,118--119 的构造）。
+直观地说，G-理性允许“不可比”作为不选的理由，M-理性不允许，因此 M-理性更强。
+\end{remark}
+
+\subsection{理性化的必要条件：显示偏好的诞生}
+
+设 $C_R(\cdot)$ 可被某偏好 $\succeq$ 生成（即理性化）。观察 $C_R(A)$：
+\begin{itemize}
+  \item $a\in C_R(A)$（$a$ 被选中了）$\iff a\succeq z$ 对所有 $z\in A$；
+  \item $b\in A$（$b$ 当时也在场，本可被选择）。
+\end{itemize}
+于是可以\textbf{推断} $a\succeq b$——这就是“显示偏好”：行为把偏好“泄露”了出来。
+
+再取另一个集合 $B\subseteq X$ 使 $a\in B$ 且 $b\in C_R(B)$
+（$b$ 在 $B$ 中被选中 $\iff b\succeq z$ 对所有 $z\in B$），又可推断 $b\succeq a$。
+两式合并：$a\sim b$，且由传递性 $a\in C_R(B)$。
+\textbf{理性选择对跨集合行为施加了可检验的约束}——这正是下一节公理化的出发点。
+
+\begin{example}[理性化判别表（务必手算一遍）]\label{ex:judgetable}
+只知道 $C_R$ 在两个集合上的值：$A=\{a,b\}$ 与 $B=\{a,b,c\}$。
+逐行判断该观察\textbf{是否可能被理性化}，并给出理由：
+\begin{center}
+\small
+\begin{tabular}{cccp{5.6cm}}
+\toprule
+$C_R(\{a,b\})$ & $C_R(\{a,b,c\})$ & 可理性化？ & 推断 / 排除理由 \\
+\midrule
+$\{a\}$ & $\{c\}$ & $\checkmark$ & $c\succ a\succ b$（$c$ 全场击败 $a$，$a$ 击败 $b$） \\
+$\{a\}$ & $\{a\}$ & $\checkmark$ & $a\succ b$、$a\succ c$；$b$ 与 $c$ 的关系未知 \\
+$\{a,b\}$ & $\{c\}$ & $\checkmark$ & $c\succ a\sim b$ \\
+$\{c\}$ & $\{c\}$ & $\times$ & $c\notin\{a,b\}$，违反选择规则的基本要求 $C_R(A)\subseteq A$ \\
+$\varnothing$ & $\{c\}$ & $\times$ & 理性化要求选择非空（定理 \ref{thm:nonempty}），$a$ 与 $b$ 无法比较出最优 \\
+$\{b\}$ & $\{a\}$ & $\times$ & 由 $\{a,b\}$ 得 $b\succ a$；由 $\{a,b,c\}$ 得 $a\succeq b$——反转 \\
+$\{a\}$ & $\{a,b\}$ & $\times$ & 由 $\{a,b\}$ 得 $a\succ b$；由 $\{a,b,c\}$ 得 $a\sim b$——反转 \\
+\bottomrule
+\end{tabular}
+\end{center}
+读法：前三行是\textbf{相容}的——每条观察都能翻译成一条偏好推断，
+且推断之间不打架；后四行各死于一种\textbf{结构性矛盾}：
+违反 $C_R(A)\subseteq A$（第 4 行）、违反非空性（第 5 行）、
+跨集合反转（第 6、7 行——这正是下一节 WARP/HARP 要禁止的情形）。
+\textbf{方法}：把每条观察翻译成“$\succeq$ 记账”，再看账本是否自洽——
+这个“记账”动作形式化后就是下面的 $R_C$。
+\end{example}
+
+形式化地：
+
+\begin{definition}[直接与间接显示偏好关系]\label{def:RC}
+对 $\mathcal{K}$ 上的选择函数 $C$，定义\textbf{直接显示偏好关系} $R_C$ 与
+\textbf{直接显示严格偏好关系} $R_C^S$：
+\begin{align}
+R_C &= \{(x,y)\in X\times X \mid \exists\, S\in\mathcal{K}:\ x\in C(S)\ \&\ y\in S\},\\
+R_C^S &= \{(x,y)\in X\times X \mid \exists\, S\in\mathcal{K}:\ x\in C(S)\ \&\ y\in S\setminus C(S)\}.
+\end{align}
+\textbf{间接显示偏好关系}为 $R_C$ 的传递闭包 $T(R_C)$；间接显示严格偏好为 $T(R_C^S)$。
+\end{definition}
+
+\begin{example}[手算算例：三步算出 $R_C$、$R_C^S$、$T(R_C)$ 并检验公理]\label{ex:workedRC}
+设 $X=\{x,y,z\}$，定义域 $\mathcal{K}=\{S_1,S_2,S_3\}$，其中
+$S_1=\{x,y\}$，$S_2=\{y,z\}$，$S_3=\{x,y,z\}$；观察到的选择为
+\[
+C(S_1)=\{x\},\qquad C(S_2)=\{y\},\qquad C(S_3)=\{z\}.
+\]
+
+\textbf{第一步：列 $R_C$（被选者对在场者逐一记账）。}
+\begin{align*}
+S_1:&\ x\in C(S_1),\ x,y\in S_1 \ \Rightarrow\ (x,x),(x,y)\in R_C;\\
+S_2:&\ y\in C(S_2),\ y,z\in S_2 \ \Rightarrow\ (y,y),(y,z)\in R_C;\\
+S_3:&\ z\in C(S_3),\ x,y,z\in S_3 \ \Rightarrow\ (z,x),(z,y),(z,z)\in R_C.
+\end{align*}
+故 $R_C=\{(x,x),(x,y),(y,y),(y,z),(z,x),(z,y),(z,z)\}$。
+
+\textbf{第二步：列 $R_C^S$（只记“在场却落选”的）。}
+$S_1$ 中 $y$ 落选 $\Rightarrow (x,y)\in R_C^S$；
+$S_2$ 中 $z$ 落选 $\Rightarrow (y,z)\in R_C^S$；
+$S_3$ 中 $x,y$ 落选 $\Rightarrow (z,x),(z,y)\in R_C^S$。
+故 $R_C^S=\{(x,y),(y,z),(z,x),(z,y)\}$（注意：三个元素\textbf{两两}都被显示
+严格偏好过——这正是选择过于“决绝”的后果）。
+
+\textbf{第三步：取闭包、检验公理。}
+$T(R_C)$：由 $x\to y\to z$、$y\to z\to x$、$z\to x\to y$ 等链，
+$X\times X$ 全部九对都在 $T(R_C)$ 中。
+\begin{itemize}
+  \item \textbf{WARP}：$(x,y)\in R_C^S$ 要求 $(y,x)\notin R_C$——检查 $R_C$，
+  无 $(y,x)$、$(z,y)$、$(x,z)$、$(y,z)$ 反向……逐对核验：$(x,y)\in R_C^S$
+  而 $(y,x)\notin R_C$ $\checkmark$；$(y,z)\in R_C^S$ 而 $(z,y)\in R_C$ $\times$！
+  $z$ 在 $S_2$ 中落选于 $y$（$(y,z)\in R_C^S$），却又在 $S_3$ 中于 $y$ 在场时
+  被选（$(z,y)\in R_C$）——\textbf{WARP 已破}。
+\end{itemize}
+换一组数据体会“WARP 成立而 SARP 失败”：改 $C(S_3)=\{x,z\}$，其余不变。
+重算得 $R_C^S=\{(x,y),(y,z)\}$（$S_3$ 中 $x,z$ 同被选，只产生对 $y$ 的
+严格显示偏好），$R_C=R_C^S\cup\{(x,x),(y,y),(z,z),(x,z),(z,x)\}$。
+$T(R_C^S)\ni (x,z)$（经 $y$），而 $(z,x)\in R_C$——故 \textbf{SARP 失败}
+（$(x,z)\in T(R_C^S)$ 但 $(z,x)\in R_C$）。WARP 呢？逐对检查 $R_C^S$ 的两对：
+$(x,y)$ 的反向 $(y,x)\notin R_C$ $\checkmark$；$(y,z)$ 的反向 $(z,y)\notin R_C$ $\checkmark$，
+\textbf{WARP 成立}。结论：WARP 只看“一步反转”，管不住经中间项的
+“两步绕行”——这正是要把 $R_C^S$ 升级为 $T(R_C^S)$ 的理由。
+\end{example}
+
+% ============================================================
+\section{WARP、SARP、HARP 三大公理}
+% ============================================================
+
+\subsection{公理的陈述（Suzumura 形式）}
+
+\begin{definition}[显示偏好三公理]\label{def:warp}
+$\mathcal{K}$ 上的选择函数 $C$ 满足：
+\begin{description}
+  \item[WARP（弱显示偏好公理）] $\forall x,y\in X:\ (x,y)\in R_C^S \Rightarrow (y,x)\notin R_C$。
+  即：若 $x$ 曾被显示严格优于 $y$（$x$ 被选而 $y$ 在场落选），则绝不能再观察到 $y$ 在 $x$ 在场时被选。
+  \item[SARP（强显示偏好公理）] $\forall x,y\in X:\ (x,y)\in T(R_C^S) \Rightarrow (y,x)\notin R_C$。
+  即把 WARP 的“直接”严格显示偏好升级为\textbf{链式}（间接）严格显示偏好。
+  \item[HARP（Houthakker 显示偏好公理）] $\forall x,y\in X:\ (x,y)\in T(R_C) \Rightarrow (y,x)\notin R_C^S$。
+  即：若 $x$ 经弱显示偏好链间接不弱于 $y$，则 $y$ 绝不能被显示严格优于 $x$。
+\end{description}
+\end{definition}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.85,>=Stealth]
+  \draw[axisline] (0,0) -- (7,0) node[below right] {$x_1$};
+  \draw[axisline] (0,0) -- (0,5.5) node[above left] {$x_2$};
+  \fill[fillsoft] (0,0) -- (6,0) -- (0,4) -- cycle;
+  \draw[very thick,AxisBlue] (6,0) -- (0,4) node[above right,sloped,pos=0.55] {\small $B(p,m)$};
+  \fill[nodeblue] (4,1.33) circle (2.2pt) node[below right] {$x$};
+  \fill[black] (2,2.67) circle (1.8pt) node[above left] {$y$};
+  \draw[thick,dashed,DeepBlue] (5.5,0) -- (0,5) node[above right,sloped,pos=0.6] {\small $B(p',m')$};
+  \node[align=left,font=\scriptsize] at (1.6,0.7) {观察1：$x$ 被选，\\$y$ 可行};
+  \node[align=left,font=\scriptsize] at (4.6,3.5) {观察2：$y$ 被选，\\$x$ 可行};
+  \draw[arrblue] (3.6,1.5) -- (2.9,2.2) node[midway,below right,font=\scriptsize] {违反 WARP};
+\end{tikzpicture}
+\caption{WARP 违反：$x$ 曾显示优于 $y$，后来又观察到 $y$ 在 $x$ 可行时被选}
+\label{fig:warp_violation}
+\end{figure}
+\figexplan{浅灰三角为预算集 $B(p,m)$，实斜边为其预算线；虚线为另一期预算线 $B(p',m')$。观察 1 中 $x$ 被选中而 $y$ 可行，故 $x$ 显示优于 $y$；观察 2 中 $y$ 被选中而 $x$ 可行，故 $y$ 又显示优于 $x$。箭头标出的两次反转即构成对 WARP 的违反。}
+
+\begin{example}[家庭支出数据的 GARP 检验：一个实证案例]
+Varian（1982）将显示偏好理论转化为可计算的检验：给定一个家户在 $T$ 期的消费数据 $\{(p^t,x^t)\}_{t=1}^T$，构造直接显示偏好 $x^s\succeq^R x^t \iff p^s\cdot x^s\ge p^s\cdot x^t$，再检查是否存在违反 GARP 的链式反转。Blundell、Browning 与 Crawford（2003, 2008）对英国家庭支出调查（FES）的应用显示：在食品、休闲、交通等大类上，绝大多数家户的数据满足 GARP；但当消费类别划分过细或包含耐用品时，违反率显著上升——这提示模型设定（商品聚合、时间跨度）本身就是可被证伪的实证命题。
+\end{example}
+
+\begin{proposition}[逻辑强度]
+\[
+(\mathrm{HARP}) \Rightarrow (\mathrm{SARP}) \Rightarrow (\mathrm{WARP}),
+\]
+且反向均不成立。
+\end{proposition}
+
+\begin{proof}[证明要点]
+由定义 $R_C^S\subseteq R_C$，两边取传递闭包得 $T(R_C^S)\subseteq T(R_C)$，
+故 HARP 的前提更“宽”而结论相同，故 HARP $\Rightarrow$ SARP；
+SARP $\Rightarrow$ WARP 因 $R_C^S\subseteq T(R_C^S)$。反向失败的反例见 §2.6.3。
+\end{proof}
+
+\begin{remark}[历史坐标]
+Samuelson (1938) 在竞争预算域 $\mathcal{K}_{CB}$ 上对单值需求函数提出 WARP；
+Houthakker (1950, \emph{Economica}) 提出\textbf{半传递性公理}（semitransitivity），
+即预算域上的 SARP 雏形，并首次证明：满足该公理时存在效用函数 $u$ 使选择可由
+$u$ 在 $B(\boldsymbol{p},M)$ 上最大化来理性化——这是“选择即理性化”理论的第一个重大成果。
+Houthakker 本人回忆，Samuelson 收到他的论文时说：“他不仅补上了我缺失的证明，
+而且独立提出了正是我寄望于挽局的那个强公理。”
+随后分两路推广：Arrow (1959) 与 Sen (1971) 走\textbf{有限域}多值选择方向；
+Richter (1966, 1971) 与 Hansson (1968) 走\textbf{任意域}方向。
+\end{remark}
+
+\begin{remark}[Houthakker 半传递性公理的原文形式（预算域版）]\label{rem:houthakker}
+在竞争预算域 $\mathcal{K}_{CB}$ 上，记第 $k$ 期价格—收入为 $(\boldsymbol{p}^k,M^k)$，
+预算集 $B(\boldsymbol{p}^k,M^k)=\{x\in\R^n_+\mid \boldsymbol{p}^k\cdot x\le M^k\}$，
+需求 $x^k=c(B(\boldsymbol{p}^k,M^k))$（单值需求函数，$c$ 满足预算平衡
+$\boldsymbol{p}^k\cdot x^k=M^k$）。Houthakker (1950) 的\textbf{半传递性公理}：
+对任意有限观察序列 $k=0,1,\dots,K$，
+\[
+\boldsymbol{p}^{k-1}\cdot x^{k-1}\ge \boldsymbol{p}^{k-1}\cdot x^k
+\ \ (k=1,\dots,K)\ \Longrightarrow\
+\boldsymbol{p}^{K}\cdot x^{K}<\boldsymbol{p}^{K}\cdot x^{0},
+\]
+即：若 $x^1$ 在 $x^0$ 的价格下买得起（$x^0$ 直接显示不弱于 $x^1$），$x^2$ 在
+$x^1$ 的价格下买得起……沿链 $x^0\succeq^D x^1\succeq^D\cdots\succeq^D x^K$，
+则在第 $K$ 期 $x^0$ 必须\textbf{买不起}（$x^K$ 间接显示严格优于 $x^0$）。
+对比 Samuelson (1938) 的 WARP 只禁止\textbf{两步}反转（$K=1$ 情形），
+半传递性把禁令推广到\textbf{任意有限链}——这就是预算域上的 SARP。
+Houthakker 证明：需求函数满足半传递性 $\iff$ 存在效用函数 $u$ 使
+$c(B(\boldsymbol{p},M))=\arg\max\{u(x)\mid \boldsymbol{p}\cdot x\le M\}$。
+其证明构造性地把显示偏好关系扩张为序（用了 Szpilrajn 式论证），
+再对扩张出的序调用效用表示定理——本节定理 \ref{thm:szpilrajn} 正是在这一步登场的。
+\end{remark}
+
+\subsection{成对表述、有限数据与 \texorpdfstring{$\widehat{C}_R$}{Ĉ\_R}}
+
+显示偏好公理族还有一种更紧凑的\textbf{成对表述}，并便于直接处理“数据有限”的现实约束。
+
+\begin{definition}[HARP 与 WARP（成对形式）]\label{def:slideswarp}
+\begin{description}
+  \item[HARP（成对形式）] 显示偏好选择规则 $C_R: 2^X\to 2^X$ 满足 HARP，
+  当且仅当：对任意 $a,b\in X$ 与任意 $A,B\subseteq X$，若
+  \[
+  \{a,b\}\subseteq A\ \text{且}\ a\in C_R(A);\qquad
+  \{a,b\}\subseteq B\ \text{且}\ b\in C_R(B),
+  \]
+  则 $a\in C_R(B)$（并由对称性 $b\in C_R(A)$）。\\
+  读法：$a$ 在 $b$ 在场时赢过、$b$ 在 $a$ 在场时也赢过——那么二人必须
+  \textbf{共享每一次胜利}（否则如 §2.3.4 的推断，$a\sim b$ 被破坏）。
+  \item[WARP（成对形式）] 同一条件，但只对定义域 $\mathcal{B}\subseteq 2^X$
+  内的 $A,B\in\mathcal{B}$ 要求。\\
+  即口诀：\textbf{HARP $=$ WARP $+$ $\mathcal{B}=2^X$}
+  （全域上的 WARP 就是 HARP）。
+\end{description}
+\end{definition}
+
+\begin{remark}[与 Suzumura 形式的对应]
+成对形式排除的正是“$a$ 赢过 $b$、$b$ 又赢过 $a$ 却互不共享”的两步反转，
+与定义 \ref{def:warp} 的 WARP（$R_C^S$ 无反转）逐点对应：
+$a\in C_R(A)$、$b\in A\setminus C_R(A)$ 即 $(a,b)\in R_C^S$。
+在\textbf{全域} $2^X$ 上，成对形式还蕴含链式形式——任何显示偏好链都可
+用二元、三元集逐步接通（§2.5 定理 \ref{thm:harp} 的传递性证明正是这么做的），
+故成对形式的 HARP 与链式形式的 HARP 等价；在\textbf{非全域}上，
+成对 WARP 严格弱于 Suzumura 的链式公理——见下例。
+\end{remark}
+
+\begin{remark}[有限数据的两种缺口]
+现实的观察从来不完备，缺口有两种：
+\begin{itemize}
+  \item \textbf{只看到一个被选项}：观察值是某个 $\widetilde{C}_R(A)\in C_R(A)$
+  ——选择集里还有哪些并列最优，数据不告诉我们；
+  \item \textbf{只看到部分机会集}：观察值是 $\widehat{C}_R:\mathcal{B}\to 2^X$，
+  其中 $\mathcal{B}\subsetneq 2^X$，在 $\mathcal{B}$ 上 $\widehat{C}_R(A)=C_R(A)$，
+  域外一无所知。
+\end{itemize}
+WARP、GARP 等公理正是为 $\widehat{C}_R$ 这类\textbf{部分定义}的选择规则设计的；
+GARP（广义显示偏好公理）是有限数据下理性化的充要条件——
+其预算域版本即 Afriat 定理（§2.7.5，式 \eqref{eq:afriat}）。
+\end{remark}
+
+\begin{example}[WARP 不足以理性化（对照例 \ref{ex:WARPnotAR}）]\label{ex:warpnotsuff}
+设 $X=\{a,b,c\}$，定义域仅含三个二元集
+$\mathcal{B}=\bigl\{\{a,b\},\{b,c\},\{c,a\}\bigr\}$，观察为
+\[
+\widehat{C}_R(\{a,b\})=\{a\},\qquad
+\widehat{C}_R(\{b,c\})=\{b\},\qquad
+\widehat{C}_R(\{c,a\})=\{c\}.
+\]
+\textbf{逐对检验 WARP}：每个集合里落选者从此\textbf{不再出现于任何其他集合的选择集中}
+——$b$ 在 $\{a,b\}$ 落选，但 $b$ 只在 $\{b,c\}$ 中被选而那里 $a$ 不在场……
+严格地：成对反转要求存在 $A,B\in\mathcal{B}$ 使 $\{x,y\}\subseteq A\cap B$，
+而这里任意两集合只交一个元素，反转\textbf{无从发生}，WARP 平凡成立。
+
+\textbf{但不可理性化}：三条观察翻译成账本 $a\succ b$、$b\succ c$、$c\succ a$——
+严格偏好环。也可换用 HARP 语言：把 $\widehat{C}_R$ 想成某个全域
+$C_R: 2^X\to 2^X$ 的限制，则无论 $C_R(\{a,b,c\})$ 取什么非空值，
+都会与某条二元观察构成反转（取 $\{a\}$ 则与 $\{c,a\}$ 的观察冲突，余类似）——
+\textbf{不存在与 HARP 相容的 $C_R(\{a,b,c\})$}。
+这正是“WARP（成对）$\not\Rightarrow$ SARP（链式）”的最小实例：
+链 $a\succ b\succ c\succ a$ 有三节，成对检查每节都合法。
+\end{example}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=1.1,>=Stealth]
+  \node[nodeblue] (a) at (0,0) {$a$};
+  \node[nodeblue] (b) at (3,0) {$b$};
+  \node[nodeblue] (c) at (1.5,2.6) {$c$};
+  \draw[->,thick,AxisBlue] (a) -- (b) node[midway,below] {$a\succ b$};
+  \draw[->,thick,AxisBlue] (b) -- (c) node[midway,right] {$b\succ c$};
+  \draw[->,thick,AxisBlue] (c) -- (a) node[midway,left] {$c\succ a$};
+\end{tikzpicture}
+\caption{三元严格偏好环：每对二元比较都合法，但整体不可被理性化}
+\label{fig:cycle}
+\end{figure}
+\figexplan{三个节点与三条箭头构成 $a\succ b$、$b\succ c$、$c\succ a$ 的循环。每一对二元比较本身都合法，但三者合起来不存在最大元，故整体无法被任何完备传递的偏好关系（因而也无法被效用函数）理性化——这说明逐对检查不足以验证理性。}
+
+\subsection{Hansson 形式：C-连通表述}
+
+Suzumura（Definition 1.6）给出等价但更便于构造反例的表述。称 $(S_1,S_2)$ 为
+$\mathcal{K}$ 中的 \textbf{$C$-连通对}，若 $S_1\cap C(S_2)\neq\varnothing$ 且
+$C(S_1)\cap S_2\neq\varnothing$；称 $(S_1,\dots,S_n)$ 为 \textbf{$C$-连通序列}，若
+$S_k\cap C(S_{k+1})\neq\varnothing$（$k=1,\dots,n-1$）且 $S_n\cap C(S_1)\neq\varnothing$。
+
+\begin{itemize}
+  \item \textbf{WARP}：对任意 $C$-连通对，$S_1\cap C(S_2)=C(S_1)\cap S_2$；
+  \item \textbf{SARP}：对任意 $C$-连通序列，存在某个 $k$ 使 $S_k\cap C(S_{k+1})=C(S_k)\cap S_{k+1}$；
+  \item \textbf{HARP}：对任意 $C$-连通序列，\textbf{所有} $k$ 都满足 $S_k\cap C(S_{k+1})=C(S_k)\cap S_{k+1}$。
+\end{itemize}
+
+“连通对的两侧交集相等”等价于“无反转”：若 $x\in S_1\cap C(S_2)$ 而 $y\in C(S_1)\cap S_2$ 且 $x\neq y$，
+则 $x$ 在 $S_2$ 中击败 $y$ 又在 $S_1$ 中被 $y$ 击败——恰是 WARP 禁止的反转。
+两种表述的等价性在 Suzumura 书 Appendix 1.A 中逐步证明（关键引理：
+WARP $\iff$ (1.1) 式、SARP $\iff$ (1.2) 式）。
+
+\subsection{Richter 的一致性公理}
+
+除上述三公理外，Richter (1966; 1971) 还提出两条以 $R_C$ 陈述的一致性条件：
+\begin{description}
+  \item[DRC（直接显示一致性）] $\forall S\in\mathcal{K},\ \forall x\in S:\
+  [\forall y\in S:\ (x,y)\in R_C \Rightarrow x\in C(S)]$；
+  \item[TCC（传递闭包一致性）] $\forall S\in\mathcal{K},\ \forall x\in S:\
+  [\forall y\in S:\ (x,y)\in T(R_C) \Rightarrow x\in C(S)]$。
+\end{description}
+读法：若 $x$ 对 $S$ 中每个 $y$ 都（直接或间接地）显示不弱，则 $x$ 必须真的被选中。
+它们是 G-理性化的候选刻画条件（见 §2.6.2 的 G-normality）。
+
+\subsection{Sen 的条件 \texorpdfstring{$\alpha$、$\beta$、$\gamma$}{α、β、γ}：选择一致性的另一语言}
+
+与显示偏好三公理平行，Sen (1971, \emph{Econometrica}) 在《Choice Functions and
+Revealed Preference》中以\textbf{集合包含语言}陈述了一组选择一致性条件
+（记号沿用 Sen 原文）：
+
+\begin{definition}[Sen 条件 $\alpha$、$\beta$、$\gamma$]\label{def:senabc}
+设 $C$ 为 $\mathcal{K}$ 上的选择函数，$S_1,S_2\in\mathcal{K}$。
+\begin{description}
+  \item[条件 $\alpha$（收缩一致性）] 若 $S_1\subseteq S_2$，则
+  $C(S_2)\cap S_1\subseteq C(S_1)$。\\
+  读法：大菜单里的最优项，进了小菜单若还在场，仍须是最优
+  （“世界冠军必是全国冠军”）。
+  \item[条件 $\beta$（扩张一致性）] 若 $S_1\subseteq S_2$ 且
+  $x,y\in C(S_1)$，则 $x\in C(S_2)\iff y\in C(S_2)$。\\
+  读法：小菜单里并列最优的两者，到大菜单里仍须同进退
+  （不允许“竞争加剧反而拆散并列”）。
+  \item[条件 $\gamma$（并集一致性）] 对任意族 $\{S_j\}\subseteq\mathcal{K}$，
+  若 $x\in C(S_j)$ 对每个 $j$ 成立，且 $\bigcup_j S_j\in\mathcal{K}$，则
+  $x\in C(\bigcup_j S_j)$。\\
+  读法：在每个分赛场都夺冠，合并后的总决赛也应夺冠。
+\end{description}
+\end{definition}
+
+\begin{theorem}[Sen 1971 的核心结果]
+在包含所有有限子集的定义域上：
+\begin{enumerate}
+  \item $C$ 可被\textbf{完备}二元关系理性化（G-理性化）$\iff$ 条件 $\alpha$ + 条件 $\gamma$；
+  \item $C$ 可被\textbf{序}理性化（完全理性）$\iff$ 条件 $\alpha$ + 条件 $\beta$
+  （此时 $\gamma$ 自动成立）。
+\end{enumerate}
+\end{theorem}
+
+\begin{remark}[$\alpha/\beta/\gamma$ 与 WARP 家族的关系]
+两套语言在标准域上互通：$\alpha+\beta\Rightarrow$ WARP；而 WARP + 非空值 +
+有限域闭合性 $\Rightarrow \alpha+\beta$。但\textbf{在任意域上它们分道扬镳}——
+$\alpha$、$\beta$、$\gamma$ 的合取既不能蕴含、也不被蕴含于 Suzumura 的
+同余公理体系（这正是 §2.6 需要 WCA/SCA 的原因：同余语言直接对显示偏好关系记账，
+不受域结构限制）。Sen 的表述胜在直观、易向非专业听众解释（社会选择文献多用之）；
+Suzumura--Richter 的表述胜在一般性。学有余力者应\textbf{双语互译}：
+把每个 $\alpha/\beta$ 反例改写成 $R_C$ 记账语言，再反过来。
+\end{remark}
+
+% ============================================================
+\section{枢纽定理：HARP 与理性化等价}
+% ============================================================
+
+这是本章第一座高峰。
+
+\begin{theorem}[HARP 是理性化的充分必要条件]\label{thm:harp}
+设显示偏好选择规则 $C_R: 2^X\to 2^X$ 非空值（除 $C_R(\varnothing)$ 外）。
+则 $C_R(\cdot)$ 满足 HARP，当且仅当存在理性偏好关系 $\succeq$（完备且传递）使
+$C_R(\cdot)=C(\cdot,\succeq)$。
+\end{theorem}
+
+\begin{proof}
+\textbf{（$\Rightarrow$ 必要性）}有理化 $\Rightarrow$ HARP：如前节“必要条件”论证，
+有理化的选择规则必然不产生显示偏好反转，即 HARP 成立。
+
+\textbf{（$\Leftarrow$ 充分性）}设 $C_R(\cdot)$ 满足 HARP。构造\textbf{显示偏好关系} $\succeq_C$：
+对任意 $x,y$，令
+\[
+x\succeq_C y \iff \text{存在某个}\ A\subseteq X\ \text{使}\ y\in A\ \text{且}\ x\in C_R(A).
+\]
+需证 $\succeq_C$ 完备、传递，且生成 $C_R$（即 $C_R(\cdot)=C(\cdot,\succeq)$）。
+
+\textbf{第一步：完备性。}
+$C_R$ 非空值，故 $C_R(\{x,y\})\neq\varnothing$：要么 $x\in C_R(\{x,y\})$，要么
+$y\in C_R(\{x,y\})$。于是 $x\succeq_C y$ 或 $y\succeq_C x$。
+
+\textbf{第二步：传递性。}
+设 $x\succeq_C y$ 且 $y\succeq_C z$。考察三元素集 $C_R(\{x,y,z\})\neq\varnothing$，
+以下三种情形必居其一：
+\begin{enumerate}
+  \item $x\in C_R(\{x,y,z\})$：直接得 $x\succeq_C z$；
+  \item $y\in C_R(\{x,y,z\})$：由 $x\succeq_C y$ 与 HARP（$y$ 在 $x$ 可得的集合中被选中
+  而 $x$ 在场，若 $x$ 落选则反转），必有 $x\in C_R(\{x,y,z\})$，归约到情形 1，故 $x\succeq_C z$；
+  \item $z\in C_R(\{x,y,z\})$：由 $y\succeq_C z$ 与 HARP 得 $y\in C_R(\{x,y,z\})$，
+  归约到情形 2，从而 $x\succeq_C z$。
+\end{enumerate}
+三种情形均得 $x\succeq_C z$，传递性成立。
+
+\textbf{第三步：生成性。}需证对任意 $B\subseteq X$：
+$x\in C_R(B) \iff x\succeq_C y$ 对所有 $y\in B$。
+\begin{itemize}
+  \item（$\Rightarrow$）$x\in C_R(B)$，由 $\succeq_C$ 的构造即 $x\succeq_C y$ 对所有 $y\in B$；
+  \item（$\Leftarrow$）设 $x\succeq_C y$ 对所有 $y\in B$。由非空值性存在某
+  $y^*\in C_R(B)$；由假设 $x\succeq_C y^*$，再由 HARP（$y^*$ 被选而 $x$ 在场，
+  $x$ 不能落选），得 $x\in C_R(B)$。
+\end{itemize}
+于是 $C_R(\cdot)=C(\cdot,\succeq)$，且 $\succeq_C$ 完备传递，证毕。
+\end{proof}
+
+\begin{remark}[这个定理为什么重要]
+它给出选择理论的一个\textbf{完全可检验}的刻画：要判断一批观察到的选择是否“理性”，
+不需要猜偏好是什么，只需检验选择数据本身是否满足 HARP。
+\textbf{理性（不可观察）$\iff$ HARP（纯数据性质）}——这是显示偏好方法论的巅峰成果，
+也是 Richter (1966)、Hansson (1968)、Suzumura (1977) 的主定理。
+\end{remark}
+
+\begin{remark}[教学提示：HARP 的图形]
+用两个相交的机会集 $B, B'$ 演示 HARP 的违反：
+$x\in C(B)\cap B'$（$x$ 在 $B$ 中被选且在 $B'$ 中可得），$x'\in C(B')\cap B$
+（$x'$ 在 $B'$ 中被选且在 $B$ 中可得），$x\neq x'$。
+此时 $x$ 显示不弱于 $x'$ 且 $x'$ 显示不弱于 $x$——若理性化存在，二者应无差异并同时出现在
+$C(B)$ 与 $C(B')$ 中；观察到的却是互斥选择，即 HARP（及其推论 $B\cap C(B')=C(B)\cap B'$）被破坏。
+课堂自测：若 $C_R(\{a,b\})=\{b\}$，能对 $C_R(\{a,b,c\})$ 与 $C_R(\{a,b\})$ 的关系下什么结论？
+\end{remark}
+
+% ============================================================
+\section{任意定义域上的一般理论：同余公理与理性等级}
+% ============================================================
+
+Suzumura 的第二章（Chapter 1, Essay 1）把上述理论推广到\textbf{任意定义域}
+$\mathcal{K}_A$——不要求包含所有有限集或预算集。“冷风穿过无结构的集合”（Nigel Howard 语），
+一般域上定理更少、反例更多，这正是一般理论的价值所在。
+
+\subsection{同余公理：WCA 与 SCA}
+
+\begin{definition}[Richter--Sen 同余公理]\label{def:congruence}
+$\mathcal{K}$ 上的选择函数 $C$ 满足：
+\begin{itemize}
+  \item[(a)] \textbf{弱同余公理（WCA）}：对任意 $S\in\mathcal{K}$，
+  $(x,y)\in R^*$，$x\in S$ 且 $y\in C(S)$ 蕴含 $x\in C(S)$；
+  \item[(b)] \textbf{强同余公理（SCA）}：对任意 $S\in\mathcal{K}$，
+  $(x,y)\in T(R^*)$，$x\in S$ 且 $y\in C(S)$ 蕴含 $x\in C(S)$。
+\end{itemize}
+（此处 $R^*$ 即 $C$ 的直接显示偏好关系 $R_C$。）
+\end{definition}
+
+读法：$y$ 被选中、$x$（直接或间接地）显示不弱于 $y$、$x$ 又在场——那么 $x$ 也必须被选中。
+同余公理把“显示不弱”封闭到选择集内部。
+
+\begin{theorem}[公理等价]\label{thm:equiv}
+在任意定义域上：
+\[
+(\mathrm{WARP}) \iff (\mathrm{WCA}), \qquad (\mathrm{HARP}) \iff (\mathrm{SCA}).
+\]
+\end{theorem}
+
+\begin{proof}[证明骨架（Suzumura, Theorem 1.1）]
+\textbf{(i) WARP $\iff$ WCA}，分三步：
+\begin{enumerate}
+  \item $\mathrm{WARP} \Rightarrow (R^*\subseteq R_*)$：若不然，存在 $(x,y)\in R^*\setminus R_*$，
+  即有 $S,S'$ 使 $x\in C(S), y\in S, x\in S', x\notin C(S'), y\in C(S')$——
+  于是 $x\in S'\cap C(S)$、$y\in C(S')\cap S$、$x\notin C(S')\cap S$，恰违反 WARP。
+  \item $(R^*\subseteq R_*) \Rightarrow \mathrm{WCA}$：$(x,y)\in R^*$、$x\in S$、$y\in C(S)$
+  推出 $(x,y)\in R_*$，由 $R_*$ 的定义即 $x\in C(S)$。
+  \item $\mathrm{WCA} \Rightarrow \mathrm{WARP}$：对 $C$-连通对 $(S_1,S_2)$，
+  取 $x\in S_1\cap C(S_2)$、$y\in C(S_1)\cap S_2$。由 $x\in C(S_2)$、$y\in S_2$ 得
+  $(x,y)\in R^*$；又 $x\in S_1$、$y\in C(S_1)$，由 WCA 得 $x\in C(S_1)$。
+  故 $S_1\cap C(S_2)\subseteq C(S_1)\cap S_2$，对称论证给出反向包含，等式成立。
+\end{enumerate}
+\textbf{(ii) HARP $\iff$ SCA}，分两步：
+\begin{enumerate}
+  \item $\mathrm{HARP} \Rightarrow \mathrm{SCA}$：设 $(x,y)\in T(R^*)$、$x\in S$、$y\in C(S)$。
+  若 $(x,y)\in R^*$，因 HARP $\Rightarrow$ WARP $\iff$ WCA 即得 $x\in C(S)$；
+  否则存在链条 $\{z^k\}$、$\{S_k\}$ 把 $x$ 与 $y$ 接通，沿链反复用 HARP
+  （得 $S_k\cap C(S_{k+1})=C(S_k)\cap S_{k+1}$）把“选中”一步步传递到 $x$。
+  \item $\mathrm{SCA} \Rightarrow \mathrm{HARP}$：对 $C$-连通序列取 $z^k\in S_k\cap C(S_{k+1})$、
+  $z^n\in S_n\cap C(S_1)$，用 SCA 逐段证明 $S_1\cap C(S_2)=C(S_1)\cap S_2$ 及一般段等式。
+\end{enumerate}
+\end{proof}
+
+\begin{remark}
+SCA $\Rightarrow$ WCA 显然（$R^*\subseteq T(R^*)$），反向不成立——见例 \ref{ex:WCAnotSCA}。
+\end{remark}
+
+\subsection{三大刻画定理与 G/M-正规性}
+
+\begin{theorem}[Arrow--Sen 结果（$\alpha$）]
+若定义域 $\mathcal{S}$ 包含 $X$ 的所有二元子集与三元子集，则
+SCA、WCA、SARP、WARP \textbf{互为等价的}完全理性（full rationality）的充分必要条件。
+\end{theorem}
+
+\begin{theorem}[Richter--Hansson 结果（$\beta$）]
+不对定义域内容作任何限制：SCA 与 HARP 互为等价，且是完全理性的充分必要条件。
+\end{theorem}
+
+\begin{theorem}[Richter 结果（$\gamma$）]
+G-正规性（G-normality）是 G-理性化的充分必要条件。
+\end{theorem}
+
+其中正规性概念为：记 $G^*(S)=G(S,R^*)$、$M^*(S)=M(S,R^*)$ 为按显示偏好关系计算的
+最优点集与最大点集。称 $C$ 是 \textbf{G-正规}（\textbf{M-正规}）的，若 $C(S)=G^*(S)$
+（$C(S)=M^*(S)$）对所有 $S$ 成立。一个基本链条是
+\[
+C(S)\subseteq G^*(S)\subseteq M^*(S) \quad\text{对所有}\ S,
+\]
+左包含因 $x\in C(S)$ 时对一切 $y\in S$ 有 $(x,y)\in R^*$；右包含即注 \ref{rem:GM}。
+于是（Theorem 1.3）WARP $\Rightarrow$ $M^*(S)\subseteq C(S)$，即在 WARP 下选择函数恰为
+M-正规，从而为 M-理性。
+
+\begin{remark}[三大结果的分工]
+（$\alpha$）代价是定义域假设太强（要包含全部二元、三元组），限制了普适性；
+（$\beta$）对定义域\textbf{不作限制}，是一般理论的主定理；
+（$\gamma$）处理不要求完备性的 G-理性化。Suzumura 的贡献在于把 SARP、WARP、WCA、
+M-正规性在这一般框架下的角色彻底厘清（Figure 1.1，见本章图 \ref{fig:logical}）。
+\end{remark}
+
+以下补出上文引用却略去证明的三个关键结果，均为本章的\textbf{高难度精读段落}。
+
+\begin{theorem}[Suzumura, Theorem 1.3：WARP $\Rightarrow$ M-正规]\label{thm:13}
+任意定义域上，若 $C$ 满足 WARP，则 $M^*(S)\subseteq C(S)$ 对所有 $S\in\mathcal{K}$
+成立，从而 $C(S)=M^*(S)$（$C$ 为 M-正规）。
+\end{theorem}
+
+\begin{proof}[完整证明]
+已知基本链条 $C(S)\subseteq G^*(S)\subseteq M^*(S)$，只需证反向包含
+$M^*(S)\subseteq C(S)$。
+
+任取 $x\in M^*(S)$。由最大点集定义，$x\in S$ 且
+\begin{equation}
+\forall y\in S:\ (y,x)\notin P(R^*). \tag{$\ast$}
+\end{equation}
+由定理 \ref{thm:equiv} 证明第 (i) 步，WARP $\Rightarrow R^*\subseteq R_*$
+（其中 $(a,b)\in R_*$ 定义为：不存在 $S'$ 使 $a\in S'\setminus C(S')$ 且
+$b\in C(S')$——即“$a$ 从未在 $b$ 被选时在场落选”）。
+
+取任意 $z\in C(S)$（$C$ 非空值）。因 $x,z\in S$ 且 $z\in C(S)$，有
+$(z,x)\in R^*$。若 $(z,x)\in P(R^*)$，即 $(z,x)\in R^*$ 且 $(x,z)\notin R^*$：
+由 $(x,z)\notin R^*$，对一切含 $x,z$ 的集合 $x$ 都未在其被选时出现于 $z$ 在场
+的场合——特别地，在任何 $S'$ 中 $z\in C(S')$ 且 $x\in S'$ 的场合……
+直接地：$(x,z)\notin R^*$ 意味着不存在 $S'\in\mathcal{K}$ 使 $x\in C(S')$ 且
+$z\in S'$。但这尚不足以定位 $x$ 是否在 $C(S)$ 中，改用 $R^*\subseteq R_*$：
+由 $(z,x)\in R^*\subseteq R_*$，$R_*$ 的定义给出
+“$z$ 从未在 $x$ 被选时在场落选”。现在用反证：设 $x\notin C(S)$。
+则 $z\in C(S)$、$x\in S\setminus C(S)$，这正说明“$x$ 在 $z$ 被选时在场落选”，
+即 $(z,x)\in R^{*S}\subseteq P(R^*)$——与 $(\ast)$（取 $y=z$）矛盾。
+故 $x\in C(S)$，$M^*(S)\subseteq C(S)$ 得证。
+
+合并基本链条即 $C(S)=G^*(S)=M^*(S)$ 对所有 $S$ 成立。
+\end{proof}
+
+\begin{theorem}[M-正规 $\Rightarrow$ 完备 G-理性化（Theorem 1.5 方向）]\label{thm:15}
+若 $C$ 是 M-正规的（$C(S)=M^*(S)$ 对所有 $S$），则 $C$ 可被\textbf{完备}
+二元关系 M-理性化（因而是完备 G-理性化）。
+\end{theorem}
+
+\begin{proof}[证明]
+取候选理性化关系为 $R^0\equiv R^*\cup\Delta_X\cup\{(x,y)\mid x,y \text{ 在 } R^*
+\text{ 下不可比}\}$ 的\textbf{完备化版本}——标准构造（Suzumura, p.\,36）：
+\[
+R^0 = R^*\ \cup\ \{(y,x)\in X\times X \mid (x,y)\notin R^*\}.
+\]
+即：凡 $R^*$ 未给出 $x R^* y$ 的，一律补记 $y R^0 x$。$R^0$ \textbf{完备}显然
+（任给 $x,y$，要么 $(x,y)\in R^*\subseteq R^0$，要么 $(y,x)\in R^0$ 由补记条款）。
+
+需证 $C(S)=M(S,R^0)$ 对所有 $S$ 成立。
+\begin{itemize}
+  \item[$\subseteq$：] 设 $x\in C(S)=M^*(S)$。对任意 $y\in S$，由 $(\ast)$ 式
+  $(y,x)\notin P(R^*)$，即 $(y,x)\in R^*\Rightarrow(x,y)\in R^*$。
+  若 $(y,x)\in R^*$ 则 $(x,y)\in R^*\subseteq R^0$；若 $(y,x)\notin R^*$ 则由
+  补记条款 $(x,y)\in R^0$。两情形均得 $(x,y)\in R^0$，故 $x\in G(S,R^0)$。
+  再由 $R^0$ 完备，$G(S,R^0)=M(S,R^0)$（完备关系下最优点集与最大点集重合：
+  $x$ 是最大点 $\iff$ 无 $y$ 使 $(y,x)\in P(R^0)$，而完备性使
+  $(x,y)\notin R^0\iff(y,x)\in P(R^0)$）。于是 $x\in M(S,R^0)$。
+  \item[$\supseteq$：] 设 $x\in M(S,R^0)=G(S,R^0)$（完备性），即对所有 $y\in S$
+  有 $(x,y)\in R^0$。若 $x\notin M^*(S)=C(S)$，则存在 $y\in S$ 使
+  $(y,x)\in P(R^*)$，即 $(y,x)\in R^*$ 且 $(x,y)\notin R^*$。
+  但 $(x,y)\in R^0$ 且 $(x,y)\notin R^*$ 只能来自补记条款，
+  补记条款要求 $(y,x)\notin R^*$——矛盾。故 $x\in M^*(S)=C(S)$。
+\end{itemize}
+两向包含给出 $C(S)=M(S,R^0)$：$R^0$ 是 $C$ 的完备 M-理性化。
+\end{proof}
+
+\begin{theorem}[SARP $\Rightarrow$ 无环完备理性（Theorem 1.6 方向）]\label{thm:16}
+若 $C$ 满足 SARP，则存在\textbf{完备且无环}的二元关系 $R^0$ 使
+$C(S)=G(S,R^0)$ 对所有 $S\in\mathcal{K}$ 成立。
+\end{theorem}
+
+\begin{proof}[证明（$R^0$ 的显式构造）]
+沿用定理 \ref{thm:15} 的完备化 $R^0=R^*\cup\{(y,x)\mid(x,y)\notin R^*\}$。
+由 SARP $\Rightarrow$ WARP（命题 4.1）与定理 \ref{thm:13}，$C$ 为 M-正规；
+再由定理 \ref{thm:15} 的证明，$C(S)=M(S,R^0)=G(S,R^0)$（$R^0$ 完备）。
+剩下的核心任务是证 $R^0$ \textbf{无环}——这是 SARP 超出 WARP 的增量所在。
+
+设若不然，存在严格环 $x^1,x^2,\dots,x^K\in X$（$K\ge 2$）：
+$(x^k,x^{k+1})\in P(R^0)$（$k=1,\dots,K-1$）且 $(x^K,x^1)\in P(R^0)$。
+
+\textbf{断言：}$(x^k,x^{k+1})\in P(R^0)$ 蕴含 $(x^k,x^{k+1})\in T(R^*)$ 且
+$(x^{k+1},x^k)\notin T(R^*)$。
+事实上，$P(R^0)$ 的一对 $(a,b)$ 只有两种来源：(i) $(a,b)\in P(R^*)$；或
+(ii) 补记条款，即 $(a,b)\in R^0\setminus R^*$ 且 $(b,a)\notin R^*$，
+而严格性 $(b,a)\notin R^0$ 又要求 $(a,b)\notin R^*$ 时 $(b,a)\notin R^*$——
+情形 (ii) 给出的是“$R^*$-不可比对”被定向。对情形 (ii)，$(a,b)\in P(R^0)$
+要求 $(b,a)\notin R^0$，但补记条款对不可比对是\textbf{对称写入}的
+（$(b,a)\notin R^*\Rightarrow(a,b)\in R^0$ 且 $(a,b)\notin R^*\Rightarrow(b,a)\in R^0$），
+故严格对只能来自情形 (i) 的链条闭包……严格地说，定义
+$\bar R = T(R^*)\cup\{(y,x)\mid (x,y)\notin T(R^*)\}$ 为对 $T(R^*)$ 的同一完备化，
+则 $\bar R$ 完备，且 $(a,b)\in P(\bar R)$ 当且仅当 $(a,b)\in T(R^*)$ 而
+$(b,a)\notin T(R^*)$（补记条款在 $T(R^*)$ 下自反不成严格）。
+于是上述严格环给出 $(x^k,x^{k+1})\in T(R^*)$ 全链且 $(x^1,x^K)\notin T(R^*)$。
+但 $T(R^*)$ 传递：全链合成得 $(x^1,x^K)\in T(R^*)$——矛盾。
+
+因此 $P(\bar R)$ 无环，即 $\bar R$ 完备无环且（与定理 \ref{thm:15} 同样的
+双向包含论证，把 $R^*$ 换成 $T(R^*)$、并注意 SARP 正是“$T(R^{*S})$ 无反转”）
+$C(S)=G(S,\bar R)$ 对所有 $S$ 成立。
+\end{proof}
+
+\begin{remark}[三个证明的方法论读法]
+三个结果串成一条链：WARP 把选择\textbf{钉死}在显示偏好最大点上（Thm 1.3），
+M-正规保证存在\textbf{完备}理性化（Thm 1.5），SARP 再把该理性化的
+\textbf{无环性}逼出来（Thm 1.6）。反例 \ref{ex:WARPnotAR} 表明 WARP 只能走到
+“完备但可能循环”的理性化——环恰恰藏在 $R^*$ 的不可比对里，只有 SARP 的
+链式记账能发现它。这也解释了 Figure 1.1 中 “SARP $\to$ 无环完备理性”
+那条不可省略的边。
+\end{remark}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+  font=\small,
+  box/.style={draw, inner sep=4pt, rounded corners=2pt},
+  every node/.style={align=center},
+  arr/.style={-{Stealth[length=2.2mm]}, thick}
+]
+% 上排
+\node[box] (harp) at (0,3) {(HARP)};
+\node[box] (sarp) at (3.2,3) {(SARP)};
+\node[box] (warp) at (6.4,3) {(WARP)};
+\node[box] (sca)  at (0,1.2) {(SCA)};
+\node[box] (wca)  at (6.4,1.2) {(WCA)};
+\draw[arr] (warp) -- (sarp);
+\draw[arr] (sarp) -- (harp);
+\draw[arr] (wca) -- (sca);
+\draw[arr] (harp) -- (sca);
+\draw[arr] (sarp) -- node[right=1pt, font=\footnotesize]{无环完备理性} (sca);
+\draw[arr] (warp) -- node[right=1pt, font=\footnotesize]{$(R^*\subseteq R_*)$} (wca);
+% 下排
+\node[box] (fr) at (-3.2,3) {完全理性 full rational};
+\node[box] (cr) at (0,-0.4) {完备理性 complete rational};
+\node[box] (mr) at (-3.2,-0.4) {M-理性};
+\node[box] (mn) at (3.2,-0.4) {(M-正规)};
+\node[box] (gn) at (0,-1.8) {(G-正规)};
+\node[box] (gr) at (3.2,-1.8) {G-理性};
+\draw[arr] (harp) -- (fr);
+\draw[arr] (sca) -- (fr);
+\draw[arr] (sca) -- (cr);
+\draw[arr] (cr) -- (mr);
+\draw[arr] (wca) -- (mn);
+\draw[arr] (mn) -- (cr);
+\draw[arr] (mn) -- (gn);
+\draw[arr] (gn) -- (gr);
+\draw[arr] (gr) -- (gn);
+\draw[arr] (mr) -- (gr);
+\end{tikzpicture}
+\caption{逻辑蕴含图（重绘自 Suzumura 书 Figure 1.1）。单箭头为不可反转的逻辑蕴含；G-正规 $\Leftrightarrow$ G-理性（Richter 定理 $\gamma$）；HARP $\Leftrightarrow$ SCA $\Leftrightarrow$ 完全理性（Richter--Hansson 定理 $\beta$）。}
+\label{fig:logical}
+\end{figure}
+\figexplan{单箭头为不可反转的逻辑蕴含。上半部分给出显示偏好公理的强弱链：WARP $\Rightarrow$ SARP $\Rightarrow$ HARP，以及 WCA $\Rightarrow$ SCA；下半部分把公理连接到理性化概念（完全理性、完备理性、M-理性、G-理性）。其中 G-正规与 G-理性之间为双向箭头（等价），HARP、SCA 与完全理性三者等价。}
+
+\subsection{反例集：反向箭头为何失败}
+
+以下反例均取 $X=\{x,y,z\}$，是本节必须动手验证的“练习题库”。
+
+\begin{example}[WCA 成立而 SCA 失败]\label{ex:WCAnotSCA}
+$\mathcal{S}=\{S_1,S_2,S_3\}$，$S_1=\{x,y\}$，$S_2=\{y,z\}$，$S_3=\{x,z\}$；
+$C(S_1)=S_1$，$C(S_2)=S_2$，$C(S_3)=\{x\}$。
+显示偏好关系
+\[
+R^*=\{(x,x),(y,y),(z,z),(x,y),(y,x),(y,z),(z,y),(x,z)\}.
+\]
+SCA 不满足：$(z,x)\in T(R^*)$（经 $z\mathbin{R^*}y\mathbin{R^*}x$）、$x\in C(S_3)$、
+$z\in S_3$，但 $z\notin C(S_3)$。而 WCA 可直接验证成立。
+故 SCA $\Rightarrow$ WCA 不可逆。
+\end{example}
+
+\begin{example}[G-正规而非 M-正规]\label{ex:GnotM}
+$\mathcal{S}=\{S_1,S_2\}$，$S_1=X$，$S_2=\{x,z\}$；$C(S_1)=\{z\}$，$C(S_2)=\{x,z\}$。
+此时 $R^*=\{(z,z),(z,x),(z,y),(x,z),(x,x)\}$，
+$G^*(S_1)=\{z\}=C(S_1)$、$G^*(S_2)=\{x,z\}=C(S_2)$，故 $C$ 为 G-正规；
+但 $M^*(S_1)=\{x,z\}\neq C(S_1)$，故非 M-正规。
+\end{example}
+
+\begin{example}[M-理性而不满足 WARP]\label{ex:MnotWARP}
+$\mathcal{S}=\{S_1,S_2\}$，$S_1=X$，$S_2=\{y,z\}$；$C(S_1)=\{x,y\}$，$C(S_2)=S_2$。
+$R^*=\{(x,x),(y,y),(z,z),(x,y),(x,z),(y,x),(y,z),(z,y)\}$，
+可验证 $C$ 为 M-正规（故 M-理性），但
+$S_1\cap C(S_2)=\{y,z\}$ 而 $C(S_1)\cap S_2=\{y\}$，WARP 不成立。
+\end{example}
+
+\begin{example}[无环完备理性而 SARP 失败]\label{ex:ARnotSARP}
+$\mathcal{S}=\{S_1,S_2,S_3\}$，$S_1=\{x,y\}$，$S_2=\{y,z\}$，$S_3=\{x,z\}$；
+$C(S_1)=\{x\}$，$C(S_2)=\{y\}$，$C(S_3)=S_3$。
+取 $R=\{(x,x),(y,y),(z,z),(x,y),(y,z),(z,x),(x,z)\}$，$R$ 无环且完备，
+且 $C(S)=G(S,R)$ 对所有 $S$ 成立——$C$ 是无环完备理性的。
+但 $S_1\cap C(S_2)=\{y\}$、$S_2\cap C(S_3)=\{z\}$、$S_3\cap C(S_1)=\{x\}$、
+$C(S_1)\cap S_2=\varnothing$、$C(S_2)\cap S_3=\varnothing$，SARP 不满足。
+\end{example}
+
+\begin{example}[WARP 不足以保证无环完备理性]\label{ex:WARPnotAR}
+同上的集合系，改取 $C(S_1)=\{x\}$，$C(S_2)=\{y\}$，$C(S_3)=\{z\}$。
+此时 $R^*=\{(x,y),(y,z),(z,x)\}$，可验证 $R^*\subseteq R_*$（如 $(x,y)\in R_*$
+因 $x\in C(S_1)$、$x\notin S_2$ 且 $y\notin C(S_3)$ 等），由定理 \ref{thm:equiv}
+的证明知 WARP 成立；但其唯一的完备理性化是循环关系 $x\succ y\succ z\succ x$——
+故 WARP 管不住“循环”。
+\end{example}
+
+\subsection{理性等级与 Suzumura 一致性闭包}
+
+在任意定义域 $\mathcal{K}_A$ 上，选择函数 $C$ 的\textbf{理性等级}由其理性化关系的强弱定义：
+
+\begin{itemize}
+  \item \textbf{理性（R）}：存在理性化 $R$（不加限制）；
+  \item \textbf{无环理性（AR）}：存在\textbf{无环}理性化；
+  \item \textbf{拟传递理性（QTR）}：存在\textbf{拟传递}理性化；
+  \item \textbf{Suzumura 一致理性（SCR）}：存在 \textbf{Suzumura 一致}理性化；
+  \item \textbf{完全理性（FR）}：存在是\textbf{序}（完备+传递）的理性化。
+\end{itemize}
+
+逻辑关系：
+\[
+\text{(i)}\ (\mathrm{FR})\Rightarrow(\mathrm{QTR})\Rightarrow(\mathrm{AR})\Rightarrow(\mathrm{R});\qquad
+\text{(ii)}\ (\mathrm{FR})\Rightarrow(\mathrm{SCR})\Rightarrow(\mathrm{AR})\Rightarrow(\mathrm{R});
+\]
+(iii) QTR 与 SCR \textbf{逻辑独立}（反向箭头均不成立）。
+
+Richter--Hansson--Suzumura 的经典理论刻画了两端：FR（HARP/SCA）与 R。
+中间的 SCR、QTR、AR 长期悬而未决，直到 Bossert, Sprumont \& Suzumura (2005)
+与 Bossert \& Suzumura (2009; 2010) 才补上。其关键工具：
+
+\begin{definition}[Suzumura 一致性闭包]
+类比 $T(R)$ 是包含 $R$ 的最小传递超集，定义 $R$ 的 \textbf{Suzumura 一致性闭包}
+$SC(R)$ 为包含 $R$ 的最小 Suzumura 一致超集。它有显式表示：
+\begin{equation}
+SC(R)=R\cup\{(x,y)\in X\times X \mid (x,y)\in T(R)\ \&\ (y,x)\in R\}. \label{eq:SCR}
+\end{equation}
+\end{definition}
+
+\begin{theorem}[Bossert--Sprumont--Suzumura 2005；Bossert--Suzumura 2010]
+任意定义域 $\mathcal{K}_A$ 上的选择函数 $C$ 是 Suzumura 一致理性的（SCR），
+当且仅当 $C$ 满足 \textbf{Suzumura 一致闭包一致性公理（SCCC）}——
+即把 DRC/TCC 中的显示偏好关系换成其 Suzumura 一致性闭包版本。
+\end{theorem}
+
+\noindent SCCC 与 DRC、TCC（Richter 对 R 与 FR 的刻画）在结构上完全平行：
+\textbf{每个理性等级对应一个以相应闭包写成的“一致性公理”}——这是显示偏好理论最终完成的形态。
+
+% ============================================================
+\section{文献综述：显示偏好理论的研究脉络}
+% ============================================================
+
+本节不再以“名录”方式罗列文献，而是把八十年研究脉络\textbf{当作正文来讲}：
+每篇经典文献回答三个问题——\textbf{它面对什么缺口、提出了什么公式、留下了什么新问题}。
+全部脉络由两条线索交织而成，请始终把握：
+\begin{itemize}
+  \item \textbf{域的弱化}：预算域 $\mathcal{K}_{CB}$（1938--1950）$\to$
+  有限集全域（1959--1973）$\to$ 任意定义域 $\mathcal{K}_A$（1966--2010）；
+  \item \textbf{一致性的弱化}：传递 $\to$ 拟传递 $\to$ Suzumura 一致 $\to$ 无环
+  （见图 \ref{fig:coherence}）。
+\end{itemize}
+每弱化一次，旧的刻画定理就失效一次，新的公理（WARP $\to$ SARP $\to$ HARP
+$\to$ WCA/SCA $\to$ SCCC）就被发明出来补上缺口——本节即按此逻辑展开。
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[font=\scriptsize, x=1.12cm]
+% 时间轴：1938 -> 0，2010 -> 12（1 单位 = 6 年）
+\draw[-{Stealth[length=2.5mm]}, thick] (-0.3,0) -- (12.8,0);
+\foreach \x/\yr in {0/1938, 2/1950, 4/1962, 6/1974, 8/1986, 10/1998, 12/2010}
+  \draw (\x,0.08) -- (\x,-0.08) node[below=2pt]{\yr};
+% ---------- 上方：主线文献（两高度层交错，避免相邻标签相撞）----------
+\node[above=13pt, align=center] at (0,0) {Samuelson\\ \scriptsize 1938 WARP};
+\draw[gray] (0,0) -- (0,0.28);
+\node[above=27pt, align=center] at (2,0) {Houthakker\\ \scriptsize 1950 半传递性};
+\draw[gray] (2,0) -- (2,0.62);
+\node[above=13pt, align=center] at (3.5,0) {Arrow\\ \scriptsize 1959 抽象域};
+\draw[gray] (3.5,0) -- (3.5,0.28);
+\node[above=27pt, align=center] at (4.7,0) {Richter\\ \scriptsize 1966 任意域};
+\draw[gray] (4.7,0) -- (4.7,0.62);
+\node[above=13pt, align=center] at (5.9,0) {Plott\\ \scriptsize 1973 路径无关};
+\draw[gray] (5.9,0) -- (5.9,0.28);
+\node[above=27pt, align=center] at (7.5,0) {Suzumura\\ \scriptsize 1983 集大成};
+\draw[gray] (7.5,0) -- (7.5,0.62);
+\node[above=13pt, align=center] at (11.1,0) {Bossert--Sprumont\\ \scriptsize --Suzumura\\ \scriptsize 2005 一致闭包};
+\draw[gray] (11.1,0) -- (11.1,0.28);
+% ---------- 下方：并行支线（两高度层交错）----------
+\node[below=26pt, align=center] at (3.0,0) {Luce 1956\\ \scriptsize 半序（JND）};
+\draw[gray] (3.0,0) -- (3.0,-0.60);
+\node[below=44pt, align=center] at (5.2,0) {Sen 1969/71\\ \scriptsize 拟传递、$\alpha\beta\gamma$};
+\draw[gray] (5.2,0) -- (5.2,-1.05);
+\node[below=26pt, align=center] at (6.6,0) {Suzumura 1976/77\\ \scriptsize 一致性、HARP};
+\draw[gray] (6.6,0) -- (6.6,-0.60);
+\node[below=44pt, align=center] at (9.0,0) {Afriat 1967; Varian 1982\\ \scriptsize 有限数据检验};
+\draw[gray] (9.0,0) -- (9.0,-1.05);
+\node[below=26pt, align=center] at (11.9,0) {Bossert--Suzumura 2010\\ \scriptsize 等级完成};
+\draw[gray] (11.9,0) -- (11.9,-0.60);
+% ---------- 阶段带 ----------
+\draw[decorate, decoration={brace, amplitude=4pt}, thick] (-0.2,-1.75) -- (2.2,-1.75)
+  node[midway, below=5pt, font=\scriptsize]{第一阶段：预算域奠基};
+\draw[decorate, decoration={brace, amplitude=4pt}, thick] (10.8,-1.75) -- (12.3,-1.75)
+  node[midway, below=5pt, font=\scriptsize]{第四阶段};
+\draw[decorate, decoration={brace, amplitude=4pt}, thick] (3.3,-2.40) -- (6.7,-2.40)
+  node[midway, below=5pt, font=\scriptsize]{第二阶段：抽象选择域};
+\draw[decorate, decoration={brace, amplitude=4pt}, thick] (4.5,-3.00) -- (7.7,-3.00)
+  node[midway, below=5pt, font=\scriptsize]{第三阶段：任意域一般理论（与第二阶段交叠）};
+\end{tikzpicture}
+\caption{显示偏好理论八十年脉络（1938--2010）。注意第二阶段与第三阶段在时间上交叠：
+Richter (1966) 的任意域理论早于 Sen (1971) 的有限域工作成熟——两条线索是平行推进、
+相互借力的。}
+\label{fig:timeline}
+\end{figure}
+\figexplan{横轴为年份（1938--2010）。上方节点为主线文献：Samuelson 1938 提出 WARP，Houthakker 1950、Arrow 1959、Richter 1966 逐步把理论推向任意域，Suzumura 1976/77 与 1983 集大成；下方节点为并行支线：Luce 1956 半序、Sen 1969/71 拟传递、Afriat 1967 与 Varian 1982 的有限数据检验、Bossert 等 2005/2010。下方花括号标出四个阶段，其中第二阶段与第三阶段在时间上交叠。}
+
+\subsection{第一阶段：预算域上的奠基（1938--1950）}
+
+\textbf{问题背景。}1930 年代的消费者理论建立在可测度效用之上，
+但“效用是多少”原则上不可观察。Samuelson 的纲领是：\textbf{只凭可观察的
+价格—数量数据，重建消费理论的全部可检验内容}（后来被他称为操作主义
+operationalism 在经济学中的落实）。
+
+\textbf{Samuelson (1938, \emph{Economica})} 在竞争预算域
+$\mathcal{K}_{CB}=\{B(\boldsymbol{p},M)\}$ 上对单值需求函数
+$x^k=c(\boldsymbol{p}^k,M^k)$ 提出两步反反转条件（后称 \textbf{WARP}）：
+\begin{equation}
+\boldsymbol{p}^0\cdot x^1\le \boldsymbol{p}^0\cdot x^0\ \text{且}\ x^1\neq x^0
+\ \Longrightarrow\ \boldsymbol{p}^1\cdot x^0>\boldsymbol{p}^1\cdot x^1.
+\label{eq:warpbudget}
+\end{equation}
+读法：$x^1$ 在第 $0$ 期\textbf{买得起}却没被买（$x^0$ 显示不弱于 $x^1$），
+那么当第 $1$ 期实际买了 $x^1$ 时，$x^0$ 必须\textbf{买不起}——否则
+$x^1$ 又显示不弱于 $x^0$，两次观察互相打脸。图 \ref{fig:warpviolation}
+画出被禁止的构型。
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.95, font=\small]
+\draw[-{Stealth[length=2.2mm]}, thick] (0,0) -- (8.2,0) node[below]{$x_1$};
+\draw[-{Stealth[length=2.2mm]}, thick] (0,0) -- (0,5.2) node[left]{$x_2$};
+% 预算线 B0: (0,4.5)-(5,0); B1: (0,2.6)-(7.5,0)
+\draw[very thick] (0,4.5) -- (5,0) node[pos=0.02, above right=-2pt, font=\footnotesize]{$B^0:\ \boldsymbol{p}^0\cdot x=M^0$};
+\draw[very thick, dashed] (0,2.6) -- (7.5,0) node[pos=0.55, below right=-2pt, font=\footnotesize]{$B^1:\ \boldsymbol{p}^1\cdot x=M^1$};
+\fill (4.2,0.72) circle (2pt) node[below right=1pt]{$x^0=c(B^0)$};
+\fill (2.0,1.907) circle (2pt) node[above left=1pt]{$x^1=c(B^1)$};
+\fill[gray] (3.434,1.409) circle (1.5pt) node[right=2pt, font=\footnotesize]{交点};
+% 标注
+\node[font=\footnotesize, align=left] at (6.7,4.0) {$\boldsymbol{p}^0\cdot x^1<\boldsymbol{p}^0\cdot x^0$\\
+（第 0 期 $x^1$ 买得起）};
+\draw[-{Stealth[length=1.8mm]}, thin] (6.1,3.7) -- (2.35,2.15);
+\node[font=\footnotesize, align=left] at (6.7,1.5) {$\boldsymbol{p}^1\cdot x^0<\boldsymbol{p}^1\cdot x^1$\\
+（第 1 期 $x^0$ 买得起）};
+\draw[-{Stealth[length=1.8mm]}, thin] (6.1,1.35) -- (4.4,0.85);
+\end{tikzpicture}
+\caption{WARP 禁止的构型：$x^1$ 位于预算线 $B^0$ 内侧（第 0 期买得起却选了 $x^0$），
+同时 $x^0$ 位于预算线 $B^1$ 内侧（第 1 期买得起却选了 $x^1$）。
+两次观察互相反转，任何完备传递偏好都无法同时解释——这正是 \eqref{eq:warpbudget}
+式要排除的情形。}
+\label{fig:warpviolation}
+\end{figure}
+\figexplan{实线为第 0 期预算线 $B^0$，虚线为第 1 期预算线 $B^1$，两线相交。$x^0=c(B^0)$ 与 $x^1=c(B^1)$ 分别是两期的实际选择。关键在于：$x^1$ 落在 $B^0$ 内侧（第 0 期买得起却未选），同时 $x^0$ 落在 $B^1$ 内侧（第 1 期买得起却未选）——两次观察互相反转，任何完备传递偏好都无法同时解释，这正是 WARP 要排除的构型。}
+
+\textbf{留下的缺口}：WARP 在两种商品时足够（Rose 1958, \emph{RES} 证明
+$n=2$ 时 WARP $\iff$ 可效用理性化），但 $n\ge 3$ 时不足——
+Gale (1960, \emph{Econometrica}) 构造了满足 WARP 却不存在理性化效用的
+三商品需求函数。症结在于 WARP 只禁止\textbf{两步}反转，管不住
+$x^0\succeq^D x^1\succeq^D x^2\succeq^D x^0$ 式的\textbf{链式}反转
+（与本章例 \ref{ex:workedRC} 的“两步绕行”完全同构）。
+
+\textbf{Houthakker (1950, \emph{Economica})} 补上了这个缺口。
+记\textbf{直接显示偏好} $x^i\succeq^D x^j \iff
+\boldsymbol{p}^i\cdot x^i\ge \boldsymbol{p}^i\cdot x^j$（$x^j$ 在第 $i$ 期买得起），
+半传递性公理（semitransitivity，注 \ref{rem:houthakker}）要求：
+\begin{equation}
+x^0\succeq^D x^1\succeq^D\cdots\succeq^D x^K
+\ \Longrightarrow\
+\boldsymbol{p}^K\cdot x^K<\boldsymbol{p}^K\cdot x^0
+\quad(\text{链上各期观察互不相同}),
+\label{eq:semitrans}
+\end{equation}
+即沿显示偏好链走到 $x^K$ 后，链首 $x^0$ 必须已被\textbf{排除出预算}——
+链式反转被一次性禁止。这是预算域上的 SARP。
+
+\textbf{定理（Houthakker 1950）}：需求函数满足半传递性
+$\iff$ 存在效用函数 $u$ 使 $c(\boldsymbol{p},M)=
+\arg\max\{u(x)\mid \boldsymbol{p}\cdot x\le M\}$。
+证明分三步，构成本章 §2.1--§2.5 全部工具的首次合流：
+\begin{enumerate}
+  \item 由数据定义显示偏好关系 $\succeq^D$ 并取其传递闭包（半传递性保证
+  $T(\succeq^D)$ 无反转，即 $T(\succeq^D)$ 的严格部分无环）；
+  \item 用 \textbf{Szpilrajn 序扩张}（定理 \ref{thm:szpilrajn}）把该无环关系
+  补全为完备序 $R^*$——这是“偏好不可观察”的解决方式：不猜偏好，
+  只补全数据给出的部分序；
+  \item 对 $R^*$ 调用\textbf{效用表示定理}（Debreu 型，见 §2.2）得 $u$，
+  再验证 $\arg\max u$ 与需求一致（生成性，同 §2.5 第三步）。
+\end{enumerate}
+Houthakker 回忆 Samuelson 收到论文时说：“他不仅补上了我缺失的证明，
+而且独立提出了正是我寄望于挽局的那个强公理。”——
+显示偏好纲领的\textbf{第一个完备刻画}就此完成。
+
+\subsection{第二阶段：抽象选择域与条件 \texorpdfstring{$\alpha/\beta/\gamma$}{α/β/γ}（1959--1973）}
+
+\textbf{问题转换}。预算集只是“选择面对的集合”的一种特例；
+投票、择偶、择校中根本没有价格。能否把显示偏好理论建立在
+\textbf{纯集合论}的选择结构上？
+
+\textbf{Arrow (1959, \emph{Econometrica})} 把定义域取为 $X$ 的
+\textbf{所有有限子集}（含全部二元、三元组），提出 Arrow 选择公理：
+\begin{equation}
+S\subseteq T\ \text{且}\ C(T)\cap S\neq\varnothing
+\ \Longrightarrow\
+C(S)=C(T)\cap S.
+\label{eq:arrowaxiom}
+\end{equation}
+读法：大集合 $T$ 的最优项若在小集合 $S$ 中还有“幸存者”，
+则小集合的选择恰好是这些幸存者——不多也不少。
+\textbf{Arrow 定理}：$C$ 满足 \eqref{eq:arrowaxiom} $\iff$
+存在序 $R$ 使 $C(S)=G(S,R)=\{x\in S\mid (x,y)\in R\ \forall y\in S\}$
+对所有 $S$ 成立。这把显示偏好从消费者理论解放为\textbf{一般选择理论}；
+代价是域假设极强——现实观察几乎不可能覆盖所有二元组。
+
+\textbf{Sen (1971, \emph{Econometrica})} 把 Arrow 公理拆成
+$\alpha$（收缩一致）与 $\beta$（扩张一致）两条（定义 \ref{def:senabc}），
+并补上第三条 $\gamma$（并集一致），证明有限集全域上：
+\begin{align}
+\alpha+\gamma &\iff \exists\ \textbf{完备}\ R:\ C(S)=G(S,R)
+\quad(\text{G-理性化}),\\
+\alpha+\beta &\iff \exists\ \textbf{序}\ R:\ C(S)=G(S,R)
+\quad(\text{完全理性}).
+\end{align}
+注意 $\alpha$ 在两组刻画中都出现——它是最基本的“菜单无关性”；
+$\beta$ 与 $\gamma$ 的分工则精确对应“要不要传递性”：
+$\beta$ 控制并列最优者的同进退（这逼出传递性），
+$\gamma$ 只要求“常胜者在总决赛仍胜”（这只要完备性）。
+
+\textbf{Sen (1969, \emph{RES})} 同时开辟了弱化传递性的路线。
+动机是 Luce 咖啡例 \ref{ex:luce}：不可分辨差异使 $I(R)$ 天然不传递，
+而严格偏好 $P(R)$ 的传递性仍可辩护——故只要求\textbf{拟传递}。
+他证明：拟传递理性化下社会决策函数（social decision function）
+的存在性条件可以系统性给出，集体选择不必卡在 Arrow 不可能性上。
+
+\textbf{Plott (1973, \emph{Econometrica})} 从程序角度补刀传递性。
+称选择函数\textbf{路径无关}，若
+\begin{equation}
+C(S_1\cup S_2)=C\bigl(C(S_1)\cup C(S_2)\bigr),
+\label{eq:pathindep}
+\end{equation}
+即“分批海选再决赛”与“一次性选择”结果相同（这对委员会程序、
+淘汰赛设计至关重要）。Plott 证明：路径无关的选择函数可被
+\textbf{拟传递}关系刻画，但一般\textbf{不能}被传递关系理性化——
+传递性不仅是过强的行为假设，连看似无害的程序合理性都要求放弃它。
+
+\textbf{Blair, Bordes, Kelly \& Suzumura (1976, \emph{JET})}
+把上述弱化引入不可能性文献：即使把集体理性从传递放松到
+拟传递甚至无环，Arrow 型不可能性定理\textbf{依然成立}——
+“放松一致性救不了社会选择”，这反向说明了无环性作为
+最后防线的重要性（Bossert--Suzumura 纲领的先声）。
+
+\subsection{第三阶段：任意域上的一般理论（1966--1983）}
+
+\textbf{问题再转换}。Arrow--Sen 要求域含所有有限子集，
+这对经验工作仍是奢望：问卷只有几个选项、市场只有几期数据。
+能否对定义域\textbf{不作任何限制}？
+
+\textbf{Richter (1966, \emph{Econometrica})} 首次做到这一点。
+他直接用显示偏好关系 $R_C$（定义 \ref{def:RC}）“记账”，提出同余公理：
+\begin{align}
+\text{（D-同余）}\quad &x\in S,\ y\in C(S),\ (x,y)\in R_C
+\ \Rightarrow\ x\in C(S);\\
+\text{（S-同余）}\quad &x\in S,\ y\in C(S),\ (x,y)\in T(R_C)
+\ \Rightarrow\ x\in C(S),
+\end{align}
+即本章的 WCA 与 SCA（定义 \ref{def:congruence}）。
+\textbf{Richter 定理}：任意域上 S-同余 $\iff$ 完全理性；
+Richter (1971, \emph{REStud}) 又区分 G-理性化（不要求完备，
+用 DRC/TCC 刻画）与 M-理性化，理性化概念的层级由此展开
+（§2.6.2 的定理 $\alpha/\beta/\gamma$ 三分）。
+
+\textbf{Hansson (1968, \emph{Theoria})} 独立建立选择结构公理化，
+其 C-连通表述（§2.4.2）把“反转”翻译成集合交相等式，
+为反例构造提供了最方便的语言——本章 §2.6.3 的反例集全部用此语言书写。
+
+\textbf{Suzumura (1976a, \emph{JET})} 提出介于传递与无环之间的
+\textbf{Suzumura 一致性}（定义 \ref{def:weakcoherence}(k)）：
+\begin{equation}
+(x,y)\in T(R)\ \Rightarrow\ (y,x)\notin P(R).
+\end{equation}
+其深刻之处：它是使“\textbf{扩张程序}可行”的最弱一致性——
+可以证明，$R$ 存在 Suzumura 一致的序扩张 $\iff$ $R$ 本身
+Suzumura 一致（这正是 \eqref{eq:SCR} 式闭包 $SC(R)$ 存在的理由）。
+传递性在此意义上“强得没必要”，无环性又“弱得不够用”。
+
+\textbf{Suzumura (1977, \emph{Econometrica})} 完成任意域上的主定理：
+HARP $\iff$ SCA $\iff$ 完全理性（本章 §2.5 枢纽定理的一般形式）；
+(1983) 专著把全部蕴含关系绘成 Figure 1.1（本章图 \ref{fig:logical}），
+附录 1.A 给出 Hansson 语言与 Richter 语言的逐步互译。
+至此，任意域上“完全理性”一极被彻底封闭。
+
+\subsection{第四阶段：理性等级的完成（2005--2010）}
+
+第三阶段刻画了两端：FR（HARP/SCA）与 R（DRC）。
+中间的 AR（无环）、QTR（拟传递）、SCR（Suzumura 一致）
+\textbf{悬置了三十年}。困难是技术性的：每个等级的刻画都需要
+一个相应的\textbf{闭包算子}，而 $T(R)$ 的构造（定义 \ref{def:TC}）
+只对传递有效；拟传递与 Suzumura 一致的“最小超集”是否良定义、
+如何显式计算，长期无解。
+
+\textbf{Bossert, Sprumont \& Suzumura (2005, \emph{JET})} 突破第一步，
+给出 Suzumura 一致性闭包的\textbf{显式公式}（本章 \eqref{eq:SCR} 式）：
+\begin{equation}
+SC(R)=R\cup\{(x,y)\in X\times X\mid (x,y)\in T(R)\ \&\ (y,x)\in R\},
+\end{equation}
+并定义相应同余型公理 \textbf{SCCC}：对任意 $S\in\mathcal{K}$、$x\in S$，
+\begin{equation}
+\bigl[\forall y\in S:\ (x,y)\in SC(R_C)\bigr]\ \Rightarrow\ x\in C(S).
+\end{equation}
+\textbf{定理}：任意域上 SCCC $\iff$ SCR。公式 \eqref{eq:SCR} 的直观：
+若 $x$ 经链间接不弱于 $y$ 且 $y$ 直接不弱于 $x$，则 $x,y$ 应被
+“焊”进同一个无差异类——$SC(R)$ 正是把所有这样的对补上的最小关系。
+
+\textbf{拟传递闭包}（Bossert--Sprumont--Suzumura 2006 前后）：
+当 $P(R)$ 无环时，标准构造为
+\begin{equation}
+(x,y)\in Q(R)\ \Longleftrightarrow\ (y,x)\notin T\bigl(P(R)\bigr),
+\qquad P\bigl(Q(R)\bigr)=T\bigl(P(R)\bigr),
+\end{equation}
+即“严格部分取传递闭包，弱部分取其补”。可验证 $Q(R)$ 拟传递且是
+包含 $R$ 的最小拟传递关系；相应公理（QCC）刻画 QTR。
+\textbf{无环理性}的刻画最曲折：严格部分的无环扩张必须与选择数据
+逐集合对接，Bossert \& Suzumura (2010) 通过扩张程序而非单一闭包公式
+给出充要条件。
+
+\textbf{Bossert \& Suzumura (2010)}\ 《Consistency, Choice, and
+Rationality》（Harvard University Press）总结整个纲领：
+\begin{center}
+\emph{每个理性等级 $=$ 一个闭包算子 $+$ 一条以该闭包写成的同余公理。}
+\end{center}
+至此，图 \ref{fig:logical} 中每个方框都有了\textbf{纯数据可检验}的
+充要条件——任意域上理性化的分类学彻底完成。
+
+\subsection{数学基础、教材与应用前沿}
+
+\textbf{序扩张与表示的数学基础。}
+Szpilrajn (1930, \emph{Fund.\ Math.}) 的序扩张定理（定理 \ref{thm:szpilrajn}）
+是所有“补全偏好”论证的发动机；
+Debreu (1954；1959《Theory of Value》) 证明：
+\begin{equation}
+R\ \text{完备传递且}\textbf{连续}\ (\{y\mid y\succeq x\},\ \{y\mid x\succeq y\}
+\ \text{均为闭集})\ \Longrightarrow\ \exists\ \text{连续}\ u\ \text{表示}\ R,
+\end{equation}
+技术关键是\textbf{可数序稠密子集}的构造（Cantor 方法：
+沿例 \ref{ex:countable} 的枚举插入法先把偏好嵌入 $\mathbb{Q}$，再取极限）；
+Luce (1956) 半序 $P \iff u(x)>u(y)+\delta$（例 \ref{ex:luce}）说明
+无差异不传递不是病态而是知觉阈值的形式化。
+Fishburn (1970)《Utility Theory for Decision Making》与
+Bridges \& Mehta (1995)《Representations of Preference Orderings》
+是表示理论两部标准专著。
+
+\textbf{有限数据检验：从公理到算法。}
+Afriat (1967, \emph{IER}) 把 HARP 落到\textbf{有限观察集}
+$\{(\boldsymbol{p}^i,x^i)\}_{i=1}^n$：定义
+$x^i\succeq^D x^j \iff \boldsymbol{p}^i\cdot x^i\ge\boldsymbol{p}^i\cdot x^j$，
+GARP 要求 $T(\succeq^D)$ 无严格反转。
+\textbf{Afriat 定理}：GARP $\iff$ 存在\textbf{Afriat 不等式}的解——
+效用水平 $U^i$ 与 $\lambda^i>0$ 使
+\begin{equation}
+U^j\ \le\ U^i+\lambda^i\,\boldsymbol{p}^i\cdot(x^j-x^i)
+\qquad(\forall\, i,j),
+\label{eq:afriat}
+\end{equation}
+$\iff$ 存在\textbf{凹、连续、单调}效用函数理性化全部数据。
+\eqref{eq:afriat} 是线性不等式组，可直接求解；
+Varian (1982, \emph{Econometrica}) 指出检验 GARP 只需算传递闭包
+（$O(n^3)$），显示偏好从此成为应用微观（劳动供给、家庭集体模型、
+实验经济学）的行业标准检验。Chambers \& Echenique (2016)
+《Revealed Preference Theory》（Cambridge）是当代最系统的专著综述，
+含计量检验与计算复杂度。
+
+\textbf{教材线索。}
+MWG (1995) Chapter 1 是研究生标准入口（选择基/偏好基对偶，
+对应本章 §2.3--§2.5，但止于 WARP/SARP）；
+Kreps (1988; 2012) 第一章以扩张定理为线索，证明风格最具启发性；
+Rubinstein (2012) Lecture 1--3 习题极佳（词典序、半序变体）；
+Levin（Stanford Econ 203）讲义 §1--2 与本章对应，含数据检验实例；
+本课程 notes3 提供了版式与证明详略标准。
+
+\subsection{脉络总评：一张“缺口—回应”对照表}
+
+\begin{center}
+\small
+\begin{tabular}{p{4.6cm}p{4.2cm}p{4.4cm}}
+\toprule
+\textbf{暴露的缺口} & \textbf{回应（公理/工具）} & \textbf{代表文献} \\
+\midrule
+WARP 只禁两步反转，$n\ge3$ 失效 & 链式半传递性（SARP） & Houthakker 1950 \\
+预算域太特殊，无价格场景 & 有限集全域 + Arrow 公理、$\alpha/\beta/\gamma$ & Arrow 1959；Sen 1971 \\
+传递性过强（JND、程序设计） & 拟传递、路径无关、无环 & Luce 1956；Sen 1969；Plott 1973 \\
+域结构假设不现实 & 同余公理 WCA/SCA、HARP & Richter 1966/71；Hansson 1968 \\
+一致性应弱到何处为止 & Suzumura 一致性（扩张可行的最弱条件） & Suzumura 1976a \\
+中间理性等级无刻画 & 闭包方法 $SC(R)$、$Q(R)$ & BSS 2005/06；BS 2010 \\
+公理无法直接用于有限数据 & GARP + Afriat 不等式 \eqref{eq:afriat} & Afriat 1967；Varian 1982 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{remark}[一句话总评]
+八十年史 = \textbf{域假设}与\textbf{一致性}的双向弱化史。
+每弱化一次，旧定理失效，新公理补位；§2.1--§2.6 的每个定义与定理，
+都是对这张对照表中某一行的回应。掌握此表，全章符号皆有归宿。
+\end{remark}
+
+% ============================================================
+\section{本章小结与课堂检查清单}
+% ============================================================
+
+\subsection{一图一表总览}
+
+\begin{center}
+\small
+\begin{tabular}{llll}
+\toprule
+\textbf{对象} & \textbf{公理 / 条件} & \textbf{结论} & \textbf{归属} \\
+\midrule
+偏好 $\succeq$（有限 $X$） & 完备 + 传递 & $\iff$ 存在效用表示 & 经典 \\
+偏好 $\succeq$（无限 $X$） & 完备 + 传递 & $\not\Rightarrow$ 表示（词典序反例） & Debreu 需连续性 \\
+选择函数 $C$（预算域） & SARP / 半传递性 & $\iff$ 效用最大化理性化 & Houthakker 1950 \\
+选择函数 $C$（任意域） & WARP $\iff$ WCA & $\iff$ M-正规（$\Rightarrow$ M-理性） & Suzumura \\
+选择函数 $C$（任意域） & HARP $\iff$ SCA & $\iff$ 完全理性（FR） & Richter--Hansson \\
+选择函数 $C$（任意域） & G-正规 & $\iff$ G-理性 & Richter \\
+选择函数 $C$（任意域） & SCCC & $\iff$ Suzumura 一致理性（SCR） & Bossert--Suzumura \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{必须能默写的三个证明}
+\begin{enumerate}
+  \item 有限集效用表示定理的\textbf{数学归纳}证明（顶层剥皮 + 归纳扩张 $u(x)=n+1$，双方向验证）；
+  \item 词典序偏好\textbf{不可表示}的证明（不交非退化区间至多可数）；
+  \item HARP $\Rightarrow$ 理性化的\textbf{三步证明}（构造 $\succeq_C$；完备性用 $C_R(\{x,y\})$；
+  传递性用 $C_R(\{x,y,z\})$ 三情形；生成性用非空值 + HARP）。
+\end{enumerate}
+
+\subsection{课堂提问}
+\begin{enumerate}
+  \item 若 $C_R(\{a,b\})=\{b\}$，对 $C_R(\{a,b,c\})$ 能推断什么？（$a\notin C_R(\{a,b,c\})$，否则反转）
+  \item 效用的序数性如何论证“人际效用比较不可能”？Rawls 与“最小可觉差”各作了什么回应？
+  \item 为什么说 M-理性严格强于 G-理性？用 $G(S,R)\subseteq M(S,R)$ 与完备性条件说明。
+  \item 例 \ref{ex:WCAnotSCA} 与例 \ref{ex:WARPnotAR} 各自“卡”在哪个逻辑环节？
+\end{enumerate}
+
+\vspace{0.6cm}
+\noindent\rule{0.35\linewidth}{0.5pt}\par
+\noindent{\small 本章 2026 年 9 月整理。数学内容依据 Suzumura《Choice, Preferences, and
+Procedures: A Rational Choice Theoretic Approach》Chapter 1（含 Theorem I.1--I.6、
+Definition 1.1--1.8、Example 1.1--1.7、Appendix 1.A）与课程材料整理。}
+
+\input{parts/09_appendix}
+\input{parts/10_proofs}
+\input{parts/11_proofs}
+\input{parts/12_proofs}
+
+\end{document}

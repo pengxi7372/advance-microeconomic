@@ -1,0 +1,32 @@
+\documentclass[border=6pt]{standalone}
+\usepackage[fontset=none]{ctex}
+\usepackage{fontspec}
+\setCJKmainfont{Songti SC}[BoldFont={Songti SC}]
+\usepackage{amsmath,amssymb}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric,calc,patterns}
+\begin{document}
+\begin{tikzpicture}[scale=1.0]
+  % 凸集
+  \draw[thick,fill=gray!15] (0,0) ellipse (1.5 and 1.0);
+  \fill (0.5,0.4) circle (1.5pt) node[above] {\small $x$};
+  \fill (-0.6,-0.5) circle (1.5pt) node[below] {\small $y$};
+  \draw[thick] (0.5,0.4) -- (-0.6,-0.5);
+  \node at (0,-1.6) {\small 凸集：线段仍在集内};
+  % 非凸集
+  \begin{scope}[xshift=6.2cm]
+    \draw[thick,fill=gray!15]
+      (-1.5,-1.0) .. controls (-1.8,0.6) and (-0.9,1.2) .. (0,0.9)
+      .. controls (0.9,1.2) and (1.8,0.6) .. (1.5,-1.0)
+      .. controls (0.6,-0.5) and (-0.6,-0.5) .. (-1.5,-1.0) -- cycle;
+    \fill (-0.9,0.75) circle (1.5pt) node[above] {\small $x$};
+    \fill (0.9,0.75) circle (1.5pt) node[above] {\small $y$};
+    \draw[thick,dashed] (-0.9,0.75) -- (0.9,0.75);
+    \node at (0,-1.6) {\small 非凸集：连线跑出集外};
+  \end{scope}
+\end{tikzpicture}
+\end{document}

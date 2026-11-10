@@ -1,0 +1,488 @@
+\section{效用最大化问题：假设与 Debreu 表示条件}
+% ============================================================
+% 第五讲 · Part 01：效用最大化问题的假设与 Debreu 表示定理
+% ============================================================
+
+\subsection{效用最大化问题：设定与假设}
+\label{sec:ump-assumptions}
+
+消费者理论的核心问题可以概括为：给定市场价格与财富，消费者在其
+\textbf{负担得起}的消费方案中选出\textbf{最令其满意}者。
+本章将这一直观命题形式化为\textbf{效用最大化问题}
+（utility maximization problem, UMP），并系统讨论其背后的假设条件。
+在正式陈述问题之前，我们先逐一审视模型的构件：
+商品空间、价格与财富、偏好与效用。
+
+\subsubsection{商品空间与消费束}
+\label{subsec:commodity-space}
+
+\begin{definition}[商品空间与消费束]\label{def:consumption-bundle}
+设经济中存在 $L$ 种商品，商品空间为非负实数向量空间
+\[
+  X=\R^L_+=\bigl\{x=(x_1,\dots,x_L): x_i\geq 0,\ i=1,\dots,L\bigr\}.
+\]
+向量 $x\in X$ 称为一个\textbf{消费束}（consumption bundle），
+$x_i$ 为第 $i$ 种商品的消费量。
+\end{definition}
+
+这一定义看似简单，实则隐含了若干重要的结构性假设。
+我们逐条讨论其含义与作用。
+
+\paragraph{假设一（商品种数有限）。}
+$L<\infty$。商品空间是有限维欧氏空间，因而
+$\R^L_+$ 中\emph{闭且有界}的集合即为\emph{紧集}（Heine--Borel 定理）。
+紧性是后续证明最优解存在的关键：
+连续效用函数在紧的预算集上必然达到最大值。
+若商品空间为无穷维（如连续时间上的消费路径空间），
+紧性论证失效，最优解可能不存在。有限维假设因此并非无关紧要的技术便利，
+而是整个消费者理论存在性结论的基石。
+
+\paragraph{假设二（商品无限可分）。}
+$x_i$ 可取任意非负实数值：大米可以买 0.37 千克，汽油可以加 12.6 升。
+可分性使商品空间成为连续统而非离散网格，
+从而使无差异曲线成为真正的\emph{曲线}（而非离散点集），
+微积分工具得以进入消费者理论。
+对于天然离散的商品（汽车、住房），连续化处理是一种近似：
+当商品的基本单位相对于总消费量足够微小时，
+把消费量视为连续变量所引入的误差可以忽略。
+
+\paragraph{假设三（商品的时间与状态维度）。}
+同一件物品，若其交付\emph{时间}或所处的\emph{自然状态}不同，
+应视为\emph{不同的}商品（Debreu, 1959）。
+"今天的面包"与"明天的面包"是两种商品；
+"晴天时的冰淇淋"与"雨天时的冰淇淋"也是两种商品。
+只要将 $L$ 扩展为（品种数 $\times$ 时期数）或（品种数 $\times$ 状态数），
+跨期选择与不确定性选择便可纳入同一静态框架，
+无需另起炉灶。这一视角是后续章节讨论跨期消费与不确定性的概念基础。
+
+\subsubsection{价格、财富与预算集}
+\label{subsec:budget-set}
+
+\paragraph{假设四（价格的线性性）。}
+每种商品有唯一的价格 $p_i>0$，且价格是线性的：
+购买 $x_i$ 单位商品 $i$ 的支出恰为 $p_i x_i$，不存在数量折扣、
+捆绑定价或其他非线性定价结构。
+线性价格保证了预算集的凸性——两个可负担的消费束，
+其凸组合仍然可负担——这是后续所有切点分析与凸优化方法的几何基础。
+
+\paragraph{假设五（消费者是价格接受者）。}
+消费者将价格向量 $p$ 视为外生给定的参数，其购买量不足以影响市场价格。
+这是完全竞争市场结构在个体层面的表述。
+若消费者具有市场力量（双边垄断、大宗买家），
+则其选择会反过来影响价格，$p$ 不再是参数，
+本节的静态优化框架需要根本性的修改。
+
+\paragraph{假设六（完全信息）。}
+消费者知晓全部价格、了解自身偏好，交易中不存在信息不对称、
+搜寻成本或认知偏差。在这一假设下，
+预算集被完整地感知，不存在"以为买得起实际买不起"的情形。
+
+在假设四至假设六下，消费者的货币约束由价格向量 $p$ 与财富 $w$ 刻画。
+
+\begin{definition}[预算集]\label{def:budget-set}
+给定价格向量 $p\in\R^L$ 与财富 $w\geq 0$，\textbf{预算集}为
+\[
+  B(p,w)=\bigl\{x\in\R^L_+: p\cdot x\leq w\bigr\},
+  \qquad
+  p\cdot x=\sum_{i=1}^{L}p_i x_i .
+\]
+当 $p\gg 0$ 时，预算集是紧的：它显然是闭集；
+又由于每个分量满足 $x_i\leq w/p_i$，它还是有界的。
+\end{definition}
+
+\subsubsection{效用最大化问题}
+\label{subsec:ump}
+
+消费者在其预算集内选择最令其满意的消费束。
+满意程度由\textbf{偏好}刻画，偏好是消费者理论中先于效用的原始概念。
+然而，偏好作为二元关系不便于计算，
+我们希望将其转化为数值目标——这正是 \S\ref{sec:debreu}
+中 Debreu 表示定理的主题。
+当偏好可由连续效用函数 $u:\R^L_+\to\R$ 表示时，
+消费者的选择行为归结为如下最优化问题：
+
+\begin{definition}[效用最大化问题，UMP]\label{def:ump}
+设 $u:\R^L_+\to\R$ 为表示偏好的连续效用函数。
+给定 $p\gg 0$ 与 $w\geq 0$，\textbf{效用最大化问题}为
+\begin{equation}\label{eq:ump}
+  \max_{x\in B(p,w)} u(x).
+\end{equation}
+其解集称为 \textbf{Marshallian 需求}：
+\[
+  X(p,w)=\arg\max_{x\in B(p,w)} u(x).
+\]
+由于预算集 $B(p,w)$ 是紧集且 $u$ 连续，由 Weierstrass 定理，
+解集 $X(p,w)$ 非空；若偏好还是凸的，则 $X(p,w)$ 是凸集
+（从而可能包含多个点）；若偏好严格凸，则 $X(p,w)$ 退化为单点。
+这些结论的完整证明将在 \S\ref{sec:demand-concepts} 系统给出，
+届时还区分\emph{需求对应}与\emph{需求函数}两个概念。
+\end{definition}
+
+图~\ref{fig:ump-tangency} 展示了两种商品情形下 UMP 的几何结构：
+预算线（预算集的上边界）与无差异曲线相切处即为最优消费束。
+在切点上，无差异曲线的斜率（边际替代率）恰好等于预算线的斜率（价格比），
+这一条件将在下一讲推导 Kuhn--Tucker 条件时严格化。
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.85, line cap=round, line join=round]
+  % 坐标轴
+  \draw[axisline] (0,0) -- (8.4,0) node[below, axislabel] {$x_1$};
+  \draw[axisline] (0,0) -- (0,6.8) node[left, axislabel] {$x_2$};
+  % 预算线
+  \draw[thick] (0,4.8) -- (6.4,0);
+  \node[figlabel] at (3.6,3.25) {预算线};
+  % 预算集填充
+  \fill[gray!10] (0,0) -- (6.4,0) -- (0,4.8) -- cycle;
+  % 无差异曲线族（自低到高）
+  \draw[curveA, thick] plot [smooth, tension=0.8]
+    coordinates {(1.2,5.8) (2.0,4.2) (3.2,3.1) (4.6,2.5) (6.4,2.0)};
+  \draw[curveA, thick] plot [smooth, tension=0.8]
+    coordinates {(0.6,4.0) (1.4,2.6) (2.8,1.7) (4.4,1.2) (6.4,0.8)};
+  \draw[curveA, thick] plot [smooth, tension=0.8]
+    coordinates {(0.3,2.2) (1.0,1.4) (2.2,0.8) (3.6,0.5) (5.4,0.3)};
+  % 最优点
+  \fill (2.85,2.66) circle (2.5pt);
+  \draw (2.85,2.66) node[above right] {$x^*$};
+  % 切点虚线引导
+  \draw[dashed, thin] (2.85,2.66) -- (2.85,0) node[below, figlabel] {$x_1^*$};
+  \draw[dashed, thin] (2.85,2.66) -- (0,2.66) node[left, figlabel] {$x_2^*$};
+\end{tikzpicture}
+\caption{效用最大化：预算线与最高可达无差异曲线相切于 $x^*$}
+\label{fig:ump-tangency}
+\end{figure}
+\figexplan{预算线由 $p\cdot x=w$ 给出，其斜率为 $-p_1/p_2$。
+无差异曲线族由低到高排列，消费者希望达到尽可能高的无差异曲线，
+但受预算约束限制。最优消费束 $x^*$ 位于预算线与某条无差异曲线的切点处：
+在切点上，无差异曲线的斜率（边际替代率）恰好等于价格比 $p_1/p_2$。
+低于 $x^*$ 的无差异曲线上的消费束虽然可负担，但未充分利用预算；
+高于 $x^*$ 的无差异曲线上的消费束则超出预算集。
+切点的存在性与唯一性依赖于偏好连续性与凸性假设，
+将在后续各节严格讨论。}
+\label{page:ump-figure}
+
+\subsection{Debreu 表示定理：从偏好到连续效用}
+\label{sec:debreu}
+
+上一节提到，为了将偏好转化为可计算的数值目标，
+我们需要一个\textbf{效用函数}来表示偏好。
+但一个自然的问题是：什么样的偏好才能被效用函数表示？
+本节讨论的 Debreu 表示定理给出了答案：
+偏好必须\textbf{完备}、\textbf{传递}且\textbf{连续}。
+更重要的是，这三个条件缺一不可——
+每个条件单独去掉后，都存在无法被任何效用函数表示的反例。
+
+\subsubsection{效用表示的定义}
+\label{subsec:representation-def}
+
+\begin{definition}[效用表示]\label{def:representation}
+设 $\succeq$ 为商品空间 $X$ 上的偏好关系。
+函数 $u:X\to\R$ \textbf{表示}偏好 $\succeq$，若
+\[
+  x\succeq y \iff u(x)\geq u(y), \qquad \forall\, x,y\in X.
+\]
+\end{definition}
+
+这一定义的要点是"$\iff$"：$u$ 不仅需将更受偏好的消费束映到更大的数值，
+还必须将无差异的消费束映到相等的数值。
+定义中"$\Rightarrow$"保证保序性，"$\Leftarrow$"保证忠实性——
+效用函数不多不少地刻画了偏好。
+
+\subsubsection{Debreu 定理的陈述}
+\label{subsec:debreu-statement}
+
+\begin{theorem}[Debreu 表示定理，1954]\label{thm:debreu-representation}
+设 $\succeq$ 为 $X=\R^L_+$ 上的偏好关系。若 $\succeq$ 满足：
+\begin{enumerate}
+  \item \textbf{完备性}：$\forall x,y\in X$，$x\succeq y$ 或 $y\succeq x$；
+  \item \textbf{传递性}：$x\succeq y$ 且 $y\succeq z$ $\Rightarrow$ $x\succeq z$；
+  \item \textbf{连续性}：$\forall y\in X$，
+    上等值集 $\{x\in X: x\succeq y\}$ 与
+    下等值集 $\{x\in X: y\succeq x\}$ 均为闭集，
+\end{enumerate}
+则存在连续函数 $u:\R^L_+\to\R$ 表示 $\succeq$。
+\end{theorem}
+
+\begin{proof}[证明思路（构造骨架）]
+完整的严格证明技术性较强（Debreu, 1954, 1964），此处给出构造的核心思路。
+
+\textbf{第一步（可数稠密子集）。}
+取 $D=\{d_1,d_2,\dots\}$ 为 $\R^L_+$ 中坐标全为有理数的消费束全体。
+$D$ 是可数集且在 $\R^L_+$ 中稠密——任何消费束 $x$ 附近都存在 $D$ 中的点。
+
+\textbf{第二步（二进制编码）。}
+对每个消费束 $x\in\R^L_+$，定义
+\[
+  u(x)=\sum_{n=1}^{\infty}\frac{1}{2^n}\,\mathbf{1}[x\succeq d_n],
+\]
+其中 $\mathbf{1}[\cdot]$ 为示性函数。直觉是：将 $D$ 中的消费束
+按照偏好顺序"编码"为二进制小数，
+若 $x$ 弱偏好于 $d_n$，则在第 $n$ 位计入 $2^{-n}$。
+
+\textbf{第三步（保序性验证）。}
+若 $x\succeq y$，则对每个 $n$，$y\succeq d_n$ 蕴含 $x\succeq d_n$
+（由传递性），故 $u(x)\geq u(y)$。
+反之，若 $x\succ y$（严格偏好），则由连续性，
+集合 $\{z: z\succ y\}$ 是包含 $x$ 的开集；
+由稠密性，存在 $d_n$ 落在该开集中且 $x\succeq d_n$
+（对单调偏好可取 $d_n$ 为 $x$ 的有理近似"下方"点；
+一般情形需更细致的论证，见 Debreu, 1954）。
+于是 $u(x)\geq u(y)+2^{-n}>u(y)$，保序性成立。
+
+\textbf{第四步（连续性验证）。}
+由偏好的连续性，$x^k\to x$ 时，
+集合 $\{n: x^k\succeq d_n\}$ 的"边界变化"是受控的——
+若 $x\succ d_n$，则在 $x$ 的某个邻域内恒有 $z\succ d_n$；
+若 $d_n\succ x$，同理。仅当 $x\sim d_n$（恰好无差异）时，
+$x^k$ 与 $d_n$ 的比较结果才可能跳变，
+而由于 $D$ 可数、每个跳变对 $u$ 的影响至多为 $2^{-n}$，
+总影响可通过控制序列的逼近速度加以消除。
+故 $u$ 连续。
+\end{proof}
+
+\subsubsection{三个条件为何缺一不可}
+\label{subsec:debreu-necessity}
+
+Debreu 定理的三个条件各自承担不可替代的角色。
+我们逐条讨论去掉某个条件后会发生什么。
+
+\paragraph{去掉完备性。}
+若偏好不完备，存在消费束 $x,y$ 无法比较：
+既非 $x\succeq y$，也非 $y\succeq x$。
+但任何实值函数 $u$ 都必然给出 $u(x)\geq u(y)$ 或 $u(y)\geq u(x)$ 之一
+（实数系的完全有序性），
+因此 $u$ 必然为 $x,y$ 强行指定一个"虚假的"排序。
+不完备的偏好无法被任何实值函数忠实地表示。
+例如，消费者可能面对两种截然不同的生活方式
+（在城市工作与在农村务农）时确实无法排序，
+强行赋予数值便是武断。
+
+\paragraph{去掉传递性。}
+若偏好不传递，可能出现\textbf{偏好循环}：
+$x\succ y$、$y\succ z$ 但 $z\succ x$。
+此时若存在表示函数 $u$，则 $u(x)>u(y)>u(z)>u(x)$，
+矛盾。更直观地说，持有 $x$ 的消费者会
+以正价格卖出 $x$ 买入 $y$（因为他偏好 $y$），
+再卖出 $y$ 买入 $z$，再卖出 $z$ 买入 $x$，
+循环一轮后回到初始持有，却每一步都支付了正的价格——
+这就是著名的\textbf{抽水泵悖论}（money pump argument）。
+具有循环偏好的消费者在市场中会被无限剥削。
+
+\paragraph{去掉连续性。}
+若偏好不连续，即使在偏好完备且传递的"理性"情况下，
+也可能不存在任何（哪怕不连续的）实值效用表示。
+这类反例中最经典的是\textbf{字典序偏好}，
+它具有完备性与传递性、满足局部非饱和，
+却因不连续而无法被任何函数表示。
+下一节将完整地展示这一反例的构造、性质及其不可表示性的证明。
+
+\subsection{字典序偏好：完备、传递但不可表示}
+\label{sec:lexicographic}
+
+\subsubsection{定义与基本性质}
+\label{subsec:lex-def}
+
+\begin{definition}[字典序偏好]\label{def:lexicographic}
+在 $\R^2_+$ 上定义偏好 $\succeq_L$ 如下：
+$(x_1,x_2)\succeq_L (y_1,y_2)$ 当且仅当
+\[
+  x_2>y_2,\qquad\text{或者}\qquad x_2=y_2 \ \text{且}\ x_1\geq y_1.
+\]
+换言之，消费者\textbf{绝对优先}考虑第二坐标 $x_2$：
+只要 $x_2$ 更大，无论 $x_1$ 是多少都严格偏好；
+仅当 $x_2$ 相同时，才退而比较 $x_1$。
+如同字典排序先看首字母、再看次字母，故名\textbf{字典序}
+（lexicographic order）。
+\end{definition}
+
+\begin{proposition}[字典序偏好的完备性与传递性]\label{prop:lex-rational}
+$\succeq_L$ 是完备且传递的（因而是一个理性偏好关系）。
+\end{proposition}
+
+\begin{proof}
+\textbf{完备性。}任取 $x,y\in\R^2_+$。
+若 $x_2\neq y_2$，则 $x_2>y_2$ 或 $y_2>x_2$，二者必居其一，
+故 $x\succeq_L y$ 或 $y\succeq_L x$。
+若 $x_2=y_2$，则比较 $x_1$ 与 $y_1$：由实数的完全有序性，
+$x_1\geq y_1$ 或 $y_1\geq x_1$ 必居其一，结论同样成立。
+
+\textbf{传递性。}设 $x\succeq_L y$ 且 $y\succeq_L z$。
+由定义有 $x_2\geq y_2$ 且 $y_2\geq z_2$，故 $x_2\geq z_2$。
+分两种情形：
+若 $x_2>z_2$，则 $x\succ_L z$，结论成立。
+若 $x_2=z_2$，则必须有 $x_2=y_2=z_2$
+（中间不等式全部取等号）。
+此时 $x\succeq_L y$ 蕴含 $x_1\geq y_1$，
+$y\succeq_L z$ 蕴含 $y_1\geq z_1$，
+故 $x_1\geq z_1$，从而 $x\succeq_L z$。
+\end{proof}
+
+\begin{proposition}[字典序偏好的局部非饱和性]\label{prop:lex-nonsatiation}
+$\succeq_L$ 满足局部非饱和：对任意 $x\in\R^2_+$ 与任意 $\varepsilon>0$，
+存在 $y\in B(x,\varepsilon)\cap\R^2_+$ 使 $y\succ_L x$。
+\end{proposition}
+
+\begin{proof}
+取 $y=(x_1, x_2+\varepsilon/2)$。则 $\|y-x\|=\varepsilon/2<\varepsilon$
+且 $y_2=x_2+\varepsilon/2>x_2$，故 $y\succ_L x$。
+\end{proof}
+
+由此可见，字典序偏好满足 Debreu 定理条件中的完备性与传递性，
+甚至满足局部非饱和这一附加性质。
+下面证明，它恰恰在\textbf{连续性}上失败，
+并因此无法被任何实值效用函数表示。
+
+\subsubsection{不连续性}
+\label{subsec:lex-discontinuity}
+
+\begin{proposition}[字典序偏好不连续]\label{prop:lex-discontinuous}
+$\succeq_L$ 的上等值集不是闭集，因而 $\succeq_L$ 不连续。
+具体地：取 $x^*=(0,1)$，则集合
+$\{(x_1,x_2): (x_1,x_2)\succeq_L (0,1)\}$
+包含点列 $(1/n, 0)$（$n=1,2,\dots$），却不包含其极限 $(0,0)$。
+\end{proposition}
+
+\begin{proof}
+对每个 $n\geq 1$，点 $(1/n,0)$ 满足 $1/n>0=x_1^*$，
+故 $(1/n,0)\succ_L (0,1)$，即 $(1/n,0)$ 属于 $(0,1)$ 的上等值集。
+然而当 $n\to\infty$ 时 $(1/n,0)\to(0,0)$，
+而 $(0,0)$ 的第二坐标 $0<1$，故 $(0,0)\prec_L(0,1)$，
+即 $(0,0)$ 不在上等值集中。
+上等值集包含了点列却不含其极限，故不是闭集。
+由连续性定义（上等值集必须为闭集），$\succeq_L$ 不连续。
+\end{proof}
+
+直观地说，字典序偏好的"层级"沿 $x_2$ 方向排列，
+而层内的排序由 $x_1$ 决定。当 $x_2$ 连续变化时，
+偏好在 $x_2$ 轴的每个"截面"上都发生剧烈的跳变：
+相邻截面之间的偏好关系突然翻转。
+这种无穷多层级之间的跳变，正是连续性失效的根源。
+图~\ref{fig:lex-structure} 展示了这一结构。
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.85, line cap=round, line join=round]
+  % 坐标轴
+  \draw[axisline] (0,0) -- (8.6,0) node[below, axislabel] {$x_1$};
+  \draw[axisline] (0,0) -- (0,6.8) node[left, axislabel] {$x_2$};
+  % 两条水平层级线
+  \draw[dashed, thick, gray] (0.4,1.8) -- (8.2,1.8);
+  \node[figlabel] at (7.5,1.52) {$x_2=b$};
+  \draw[dashed, thick, gray] (0.4,4.0) -- (8.2,4.0);
+  \node[figlabel] at (7.5,4.3) {$x_2=b'$};
+  % 上方层级更优的标注
+  \draw[arrblue, thick] (1.8,2.1) -- (1.8,3.7);
+  \node[figlabel] at (1.8,2.9) {$\succ$};
+  % 下方层内排序
+  \draw[arrblue, thick] (4.8,1.72) -- (6.4,1.72);
+  \node[figlabel] at (5.6,1.38) {$x_1\uparrow$ 层内更优};
+  % 层内取值示例
+  \fill (3.6,1.8) circle (2pt);
+  \draw (3.6,1.8) node[above left, inner sep=2pt] {\small $y$};
+  \fill (6.0,1.8) circle (2pt);
+  \draw (6.0,1.8) node[above left, inner sep=2pt] {\small $z$};
+  \node[figlabel] at (4.6,2.15) {$y\prec z$};
+  % 整体说明
+  \node[align=center, font=\small] at (4.3,5.8)
+    {每个水平层级 $x_2=b$ 内部，按 $x_1$ 严格排序；\\
+     层级之间按 $x_2$ 严格排序};
+  \node[align=center, font=\small, text=gray] at (4.3,6.5)
+    {不存在无差异曲线：每个无差异类退化为单点};
+\end{tikzpicture}
+\caption{字典序偏好的层级结构：竖直方向（$x_2$）优先，水平方向（$x_1$）次级}
+\label{fig:lex-structure}
+\end{figure}
+\figexplan{字典序偏好按第二坐标 $x_2$ 分为无穷多个"层级"（图中虚线所示），
+层级之间按 $x_2$ 严格排序（箭头 $\succ$ 指向更高层级）。
+在每个层级内部（即固定 $x_2=b$），消费束再按第一坐标 $x_1$ 严格排序
+（如图中 $y\prec z$）。
+由于每个无差异类退化为单个点——不存在两个不同的消费束是无差异的——
+传统的无差异曲线完全消失。
+层内与层间均为\emph{严格}排序，没有"平台"，也没有等高线。
+这种结构导致偏好在 $x_2$ 方向上无法连续变化：
+当 $x_2$ 越过一个层级的边界时，
+偏好关系瞬间发生不连续的跳变（命题~\ref{prop:lex-discontinuous}），
+最终导致任何实值函数都无法忠实编码这一偏好结构
+（定理~\ref{thm:lex-norepresentation}）。}
+
+\subsubsection{不可表示性}
+\label{subsec:lex-nonrep}
+
+我们已经看到字典序偏好不完备于 Debreu 定理的连续性条件
+（命题~\ref{prop:lex-discontinuous}），
+因此定理不适用。
+一个更深刻的事实是：不存在\emph{任何}实值函数——
+无论连续与否——能够表示字典序偏好。
+
+\begin{theorem}[字典序偏好不可表示]\label{thm:lex-norepresentation}
+不存在任何函数 $u:\R^2_+\to\R$ 表示字典序偏好 $\succeq_L$。
+\end{theorem}
+
+\begin{proof}
+反设存在表示函数 $u:\R^2_+\to\R$。
+对每个 $t\in\R_+$，考虑两个消费束 $(0,t)$ 与 $(1,t)$。
+由定义（$x_2$ 坐标相同、$x_1$ 更大），$(1,t)\succ_L(0,t)$，
+故
+\[
+  u(1,t)>u(0,t).
+\]
+令 $I_t$ 为开区间
+\[
+  I_t=\bigl(u(0,t),\, u(1,t)\bigr),\qquad t\in\R_+ .
+\]
+每个 $I_t$ 非空。关键观察是：
+\textbf{不同 $t$ 对应的区间两两不相交}。
+设 $s<t$。由字典序定义，$(1,s)\prec_L(0,t)$
+（因为 $t>s$，第二坐标更大者胜出），
+故 $u(1,s)<u(0,t)$。
+于是 $I_s$ 的右端点 $u(1,s)$ 小于 $I_t$ 的左端点 $u(0,t)$，
+即 $I_s$ 完全位于 $I_t$ 的左侧，二者不相交。
+
+现在，每个非空开区间 $I_t$ 都至少包含一个有理数
+（有理数在 $\R$ 中稠密）。
+为每个 $t\in\R_+$ 选定一个 $q(t)\in I_t\cap\mathbb{Q}$。
+由两两不相交性，$s\neq t$ 蕴含 $q(s)\neq q(t)$，
+故 $t\mapsto q(t)$ 是从 $\R_+$ 到 $\mathbb{Q}$ 的单射。
+但 $\R_+$ 不可数而 $\mathbb{Q}$ 可数，矛盾。
+因此表示函数不存在。
+\end{proof}
+
+\begin{proof}[另一种证明视角：层级太多，实数装不下]
+定理~\ref{thm:lex-norepresentation} 的证明还可以从
+"基数冲突"的角度直观理解。$\R_+$ 中有不可数无穷多个层级 $t$，
+每个层级内部的 $x_1$ 维度又各自构成一个不可数无穷的严格排序链条。
+若要将所有这些信息压缩到一条实数轴上，
+就必须为每个层级 $t$ 在 $\R$ 中预留一段非退化的"空间"（区间 $I_t$），
+而这些空间两两不重叠。
+但实数轴上两两不相交的非空开区间至多只有可数多个
+（每个区间可分配一个互不相同的有理数）。
+不可数多个层级无法容纳于可数多个区间中，
+故表示不可能存在。
+\end{proof}
+
+\subsubsection{对 Debreu 定理条件的回顾}
+\label{subsec:lex-lesson}
+
+字典序反例的价值在于，它揭示了 Debreu 定理中
+\textbf{连续性}条件的实质经济内涵。
+完备性要求消费者对任何两个消费束都能排序——
+这是关于消费者"判断能力"的假设；
+传递性要求偏好不出现循环——
+这是关于偏好"内在一致性"的假设，
+并与市场中的套利论证（抽水泵悖论）相联系；
+而连续性要求偏好在消费束的微小变动下不发生"跳变"——
+它排除了一种极端的心理结构：
+消费者将某个商品维度视为具有压倒一切的绝对优先级
+（无论代价多小，多一点 $x_2$ 总比任何数量的 $x_1$ 更好）。
+这种"词典式"的优先结构虽然在形式上是理性的
+（完备、传递、甚至局部非饱和），
+但它过于极端，以至于实数系统——
+一维的、连续的、可分的——装不下这种二维的严格层级结构。
+
+最后值得指出的是，连续性条件在经济学中通常被视为无害的技术性假设：
+"消费束的微小变化不应导致偏好剧烈反转"与直觉高度一致。
+字典序反例恰恰说明，这一看似温和的条件
+排除了什么样的病态结构，
+从而为后续章节中以效用函数为出发点的所有分析扫清了障碍。
+一旦 $u$ 存在且连续，我们便可放心地运用微积分、凸分析等工具
+来研究消费者的最优化行为。

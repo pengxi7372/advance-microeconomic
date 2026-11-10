@@ -1,0 +1,54 @@
+% ============================================================
+% 第五讲章末小结：完整逻辑链、一页检查清单与常见陷阱
+% ============================================================
+\section{本章小结}
+
+本章从偏好出发，经由表示、最优化、对偶与分解，走完了消费者需求理论的全部主干。
+把九个小节串成一条逻辑链：
+
+\begin{enumerate}
+\item \textbf{表示}（\S 5.1）：Debreu 定理保证完备、传递、连续的偏好可用连续效用函数表示；
+      字典序偏好证明连续性不可省略——它完备、传递、局部非饱和，却不存在任何实值表示。
+\item \textbf{概念与存在性}（\S 5.2）：Marshallian 需求 $x(p,w)$ 固定财富问“选什么”，
+      Hicksian 需求 $h(p,\bar u)$ 固定效用问“最少花多少”；紧预算集加连续效用
+      （Weierstrass 定理）保证最大值存在——$\sup$ 不必达到，$\max$ 必须达到。
+\item \textbf{值函数}（\S 5.3）：间接效用 $v(p,w)$ 把最优值封装为价格与财富的函数，
+      零次齐次与拟凸性是预算线性结构的赠品，对 $w$ 严格递增由局部非饱和买到，
+      连续性由 Berge 最大值定理买到。
+\item \textbf{求解}（\S 5.4）：Kuhn--Tucker 四组条件——可行性、驻点、乘子非负、互补松弛——
+      逐条排除错误候选；凸问题下升级为充分必要；等式拉格朗日法只是其“先验内点、先验绑定”的特例。
+\item \textbf{边际条件}（\S 5.5）：MRS 是序数概念，内点最优处 MRS 等于价格比；
+      可分性把 MRS 的依赖限制在组内，换来实证上的两阶段预算。
+\item \textbf{包络}（\S 5.6）：值函数对参数的导数只需对目标直接求偏导（间接项被一阶条件消去），
+      由此得 $v_w=\lambda$、$v_{p_i}=-\lambda x_i$，两式相除即 Roy identity。
+\item \textbf{对偶}（\S 5.7）：支出最小化与成本最小化同构，支出函数对价格一次齐次、凹、对效用非减，
+      Shephard 引理 $h_i=\partial e/\partial p_i$ 与四条对偶恒等式把两个问题互为镜像。
+\item \textbf{分解}（\S 5.8）：Slutsky 方程把价格总效应拆为替代效应与财富效应；
+      Slutsky 矩阵对称、负半定、行和为零，是需求数据对理论的核心可检验限制。
+\end{enumerate}
+
+\noindent 从偏好到 Slutsky 分解的完整逻辑链，按顺序自检：
+
+\begin{enumerate}
+\item \textbf{偏好与表示}：完备、传递、连续 $\Rightarrow$ 连续效用表示存在（Debreu）；局部非饱和 $\Rightarrow$ 预算绑定 $p\cdot x=w$；严格凸 $\Rightarrow$ 需求单值。
+\item \textbf{存在性与求解}：$p\gg0$、$u$ 连续 $\Rightarrow$ $B(p,w)$ 紧、解存在；内点解满足 $u_i/u_j=p_i/p_j$（MRS $=$ 相对价格）；角点解必须用 Kuhn--Tucker（四条件 $+$ 互补松弛）。
+\item \textbf{规模性质}：$x(tp,tw)=x(p,w)$、$v(tp,tw)=v(p,w)$（零次齐次、无货币幻觉）。
+\item \textbf{两个问题}：UMP 固定 $w$ 最大化 $u$，得 $x(p,w)$、$v(p,w)$；EMP 固定 $\bar u$ 最小化 $p\cdot x$，得 $h(p,\bar u)$、$e(p,\bar u)$。EMP 与成本最小化同构。
+\item \textbf{包络定理}：值函数对参数的导数 $=$ 拉格朗日函数直接对参数求偏导（间接项被一阶条件消去）。由此：$v_w=\lambda$（财富的边际效用）、$v_{p_i}=-\lambda x_i$（涨价一元 $\equiv$ 损失 $x_i$ 元财富）。
+\item \textbf{两个引理}：Roy identity $x_i=-v_{p_i}/v_w$（由 $v$ 得 $x$）；Shephard 引理 $h_i=\partial e/\partial p_i$（由 $e$ 得 $h$）。
+\item \textbf{对偶恒等式}：$e(p,v)=w$、$h(p,v)=x$、$v(p,e)=\bar u$、$x(p,e)=h$——两个问题互为镜像，知一得四。
+\item \textbf{支出函数性质}：对 $p$ 一次齐次、凹、对 $\bar u$ 非减；$h$ 对 $p$ 零次齐次。
+\item \textbf{Slutsky 矩阵} $S=D_ph=\nabla^2_pe$：对称（Young 定理）、负半定（$e$ 凹）、行和为零（Euler 定理）；对角元 $\le0$ 即补偿需求定律。
+\item \textbf{Slutsky 方程}：$\partial x_i/\partial p_j=\partial h_i/\partial p_j-x_j\,\partial x_i/\partial w$；总效应 $=$ 替代效应 $+$ 财富效应。推论：正常品必为普通品；Giffen 品必为劣等品（且须占预算大份额）。
+\item \textbf{分类口径}：总替代/互补（Marshallian，不对称）对 Hicksian 替代/互补（补偿，对称）；两商品世界必为 Hicksian 替代品。
+\item \textbf{可检验性}：由可观察的 $\nabla_px$、$\nabla_wx$、$x$ 组装出的 $S$ 必须对称、负半定、行和为零——这是需求数据对理论的核心检验（可积性问题是其逆）。
+\end{enumerate}
+
+\medskip
+\noindent\textbf{三个常见陷阱。}
+其一，$v(p,w)$ 对 $(p,w)$ 是\emph{拟凸}而非拟凹——上水平集一般不凸，
+初学阶段最常见的混淆即在此（参见 \S 5.3 的反例）。
+其二，Kuhn--Tucker 条件只是必要的——满足四条件的候选点可能是局部极小或鞍点，
+只有凸问题（约束集凸、目标适当凹/拟凹）下才升级为充分必要。
+其三，等式拉格朗日法在角点情形系统性失效——使用它必须先验内点与先验约束绑定，
+否则必须回到 Kuhn--Tucker 并由 $\mu_i>0$ 解释零消费。

@@ -1,0 +1,234 @@
+% ============================================================
+\section{偏好的特性如何翻译为效用函数的性质}\label{sec:properties}
+% ============================================================
+
+设 $X=\R^n_+$（或 $\R^n_{++}$），$\succeq$ 为连续弱序，$u$ 为其连续表示。
+本节逐条建立“偏好语言 $\leftrightarrow$ 效用语言”的翻译词典。
+每一条都回答两个问题：\textbf{充要条件是什么？}、\textbf{该性质是序数的还是基数的？}
+
+\subsection{单调性 $\leftrightarrow$ 递增性}
+
+\begin{definition}[偏好的单调性]\label{def:monotone}
+$\succeq$ \textbf{单调}：$x\gg y\Rightarrow x\succ y$，且 $x\ge y\Rightarrow x\succeq y$；
+\textbf{强单调}：$x\ge y$ 且 $x\ne y\Rightarrow x\succ y$；
+\textbf{局部非饱和}：$\forall x,\forall\varepsilon>0,\exists y\in B(x,\varepsilon):y\succ x$
+（任何点的任意小邻域内都有更好点——排除“幸福点”与粗无差异带）。
+三者关系：强单调 $\Rightarrow$ 单调 $\Rightarrow$ 局部非饱和。
+\end{definition}
+
+\begin{proposition}\label{prop:mono-u}
+设 $u$ 连续表示 $\succeq$。则
+\[
+\succeq\ \text{单调}\ \Longleftrightarrow\ u\ \text{递增}:\ x\gg y\Rightarrow u(x)>u(y),\ x\ge y\Rightarrow u(x)\ge u(y);
+\]
+\[
+\succeq\ \text{强单调}\ \Longleftrightarrow\ u\ \text{严格递增}:\ x\ge y,\ x\ne y\Rightarrow u(x)>u(y).
+\]
+\end{proposition}
+
+\begin{proof}
+由表示定义，$x\gg y$ 时 $x\succ y\iff u(x)>u(y)$；其余情形逐条同义替换即得。
+\end{proof}
+
+\begin{example}
+$u(x_1,x_2)=x_1^{1/2}x_2^{1/2}$ 在 $\R^2_{++}$ 上严格递增
+（$\partial u/\partial x_i>0$），对应强单调偏好；
+$u(x_1,x_2)=\min\{x_1,x_2\}$ 递增但不严格递增（$x_1>x_2$ 时增大 $x_1$ 不改变效用），
+对应单调但非强单调的偏好——$(2,1)$ 与 $(3,1)$ 无差异。
+\end{example}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.05]
+  \draw[axisline] (0,0) -- (5.0,0) node[below left, axislabel] {$x_1$};
+  \draw[axisline] (0,0) -- (0,4.6) node[below left, axislabel] {$x_2$};
+  \node[nodeblue, label=below left:{$x$}] at (2.2,1.8) {};
+  % better set (NE quadrant)
+  \draw[fillsoft] (2.2,1.8) rectangle (4.8,4.4);
+  \draw[dashed, MidBlue] (2.2,1.8) -- (2.2,4.4); \draw[dashed, MidBlue] (2.2,1.8) -- (4.8,1.8);
+  \node[align=center] at (3.5,3.3) {$y\gg x$\\ $\Rightarrow u(y)>u(x)$};
+  \draw[arrblue] (2.2,1.8) -- (3.1,2.7);
+  \node[align=center] at (1.05,3.6) {单调性：上轮廓集\\ 包含东北象限};
+\end{tikzpicture}
+\end{center}
+\figexplan{以 $x$ 为参照，浅灰矩形是东北方向的严格更优区域：任何 $y\gg x$ 都落在其中，单调性要求 $u(y)>u(x)$。两条虚线是过 $x$ 的横纵参考线，界定该区域边界；箭头指示由 $x$ 指向更优束的改进方向。注意 $\min$ 型效用递增但不严格递增，对应单调而非强单调。}
+
+\subsection{凸性 $\leftrightarrow$ 拟凹性}
+
+\begin{definition}[凸偏好]\label{def:convex-pref}
+$\succeq$ \textbf{凸}：对任意 $x$ 与 $\lambda\in[0,1]$，
+$y\succeq x,\ z\succeq x\ \Rightarrow\ \lambda y+(1-\lambda)z\succeq x$；
+\textbf{严格凸}：$y\succeq x,\ z\succeq x,\ y\ne z,\ \lambda\in(0,1)\ \Rightarrow\ \lambda y+(1-\lambda)z\succ x$。
+\end{definition}
+
+\begin{definition}[拟凹]\label{def:quasiconcave}
+$f:\R^n_+\to\R$ \textbf{拟凹}：$f(\lambda y+(1-\lambda)z)\ge\min\{f(y),f(z)\}$；
+\textbf{严格拟凹}：$y\ne z,\lambda\in(0,1)$ 时不等式严格（当 $f(y)\ne f(z)$ 时按 $\min$ 端定义严格）。
+\end{definition}
+
+\begin{proposition}\label{prop:convex-qc}
+$u$ 表示 $\succeq$。则
+\[
+\succeq\ \text{凸}\ \Longleftrightarrow\ u\ \text{拟凹};\qquad
+\succeq\ \text{严格凸}\ \Longleftrightarrow\ u\ \text{严格拟凹}.
+\]
+\end{proposition}
+
+\begin{proof}
+\textbf{($\Rightarrow$)} 设 $y,z$ 任意，记 $m=\min\{f(y),f(z)\}$，不妨 $f(z)=m$，即 $u(y)\ge u(z)$ 也就是
+$y\succeq z$。凸性给出 $\lambda y+(1-\lambda)z\succeq z$，
+即 $u(\lambda y+(1-\lambda)z)\ge u(z)=m$。
+\textbf{($\Leftarrow$)} 设 $y,z\succeq x$，则 $u(y),u(z)\ge u(x)$，
+拟凹给出 $u(\lambda y+(1-\lambda)z)\ge\min\{u(y),u(z)\}\ge u(x)$，即凸偏好。
+严格情形把 $\ge$ 全部换为 $>$（$\lambda\in(0,1)$、$y\ne z$）。
+\end{proof}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.05]
+  \draw[axisline] (0,0) -- (5.4,0) node[below left, axislabel] {$x_1$};
+  \draw[axisline] (0,0) -- (0,4.8) node[below left, axislabel] {$x_2$};
+  % convex IC
+  \draw[thick, MidBlue, domain=0.7:5.0, smooth, variable=\x] plot ({\x},{2.9/\x});
+  \node at (4.55,1.15) {$u(x)=c$};
+  \node[nodeblue, label=above left:{$y$}] at (1.45,2.0) {};
+  \node[nodeblue, label=below right:{$z$}] at (4.0,0.725) {};
+  \draw[dashed, MidBlue] (1.45,2.0) -- (4.0,0.725);
+  \node[nodeblue, label=above right:{$\frac{y+z}{2}$}] at (2.725,1.3625) {};
+  \node[align=left] at (3.9,3.6) {凸偏好：均值点落在\\ 无差异曲线\textbf{上方}\\ $\Rightarrow u\Bigl(\frac{y+z}{2}\Bigr)\ge\min\{u(y),u(z)\}$};
+\end{tikzpicture}
+\end{center}
+\figexplan{双曲线为无差异曲线 $u(x)=c$，$y$ 与 $z$ 是其上两点，虚线是连接二者的混合线段。凸偏好要求线段中点 $\frac{y+z}{2}$ 落在无差异曲线上方，即 $u\bigl(\frac{y+z}{2}\bigr)\ge\min\{u(y),u(z)\}$——这正是效用函数拟凹性的几何表达。}
+
+\subsection{位似性 $\leftrightarrow$ 齐次函数的单调变换}
+
+\begin{definition}[位似偏好]\label{def:homothetic}
+$\succeq$ \textbf{位似}（homothetic）：$x\sim y\ \Rightarrow\ \lambda x\sim\lambda y$ 对一切 $\lambda>0$。
+等价地（结合单调性）：$x\succeq y\iff\lambda x\succeq\lambda y$。
+\end{definition}
+
+\begin{proposition}[位似偏好的表示特征]\label{prop:homothetic-u}
+设 $\succeq$ 为 $\R^n_+$ 上连续、单调的弱序。则
+\[
+\succeq\ \text{位似}\ \Longleftrightarrow\ \succeq\ \text{可由一个一次齐次函数表示}
+\ \Longleftrightarrow\ u=f\circ h,\ h\ \text{一次齐次},\ f\ \text{严格递增}.
+\]
+\end{proposition}
+
+\begin{proof}
+\textbf{($\Leftarrow$)} 若 $h$ 一次齐次表示 $\succeq$：
+$x\sim y\Rightarrow h(x)=h(y)\Rightarrow h(\lambda x)=\lambda h(x)=\lambda h(y)=h(\lambda y)\Rightarrow\lambda x\sim\lambda y$。
+单调变换 $f$ 不改变无差异关系（命题~\ref{prop:ordinal}）。
+
+\textbf{($\Rightarrow$)} 用对角线构造（命题~\ref{prop:diagonal}）：
+$u(x)$ 定义为使 $x\sim u(x)\mathbf{1}$ 的数。验证一次齐次性：
+\[
+\lambda x\sim\lambda\bigl(u(x)\mathbf{1}\bigr)=\bigl(\lambda u(x)\bigr)\mathbf{1}
+\quad(\text{位似性})
+\ \Longrightarrow\ u(\lambda x)=\lambda u(x),
+\]
+末步因对角线交点唯一。故对角线效用本身就是一次齐次表示。
+\end{proof}
+
+\begin{remark}[位似性的经济含义：射线上的边际替代率不变]
+位似偏好的无差异曲线互为\textbf{径向放大}：沿从原点出发的任何射线，
+无差异曲线的斜率（边际替代率）恒定。这等价于：收入扩张路径是过原点的直线，
+需求收入弹性处处为 $1$。检验：$u(x_1,x_2)=x_1^{1/2}x_2^{1/2}$ 一次齐次（位似）；
+$u(x_1,x_2)=x_1+\sqrt{x_2}$ 不是（§3.7 拟线性，收入扩张路径弯曲）。
+\end{remark}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+  \draw[axisline] (0,0) -- (5.4,0) node[below left, axislabel] {$x_1$};
+  \draw[axisline] (0,0) -- (0,4.8) node[below left, axislabel] {$x_2$};
+  \draw[dashed, MidBlue] (0,0) -- (4.6,3.3) node[right, axislabel] {射线};
+  \draw[thick, MidBlue, domain=0.8:5.0, smooth, variable=\x] plot ({\x},{2.4/\x});
+  \draw[thick, MidBlue, domain=1.6:5.0, smooth, variable=\x] plot ({\x},{4.8/\x});
+  % tangency slope marks along the ray
+  \node[nodeblue] at (1.697,1.2129) {};
+  \node[nodeblue] at (3.394,2.4258) {};
+  \draw[AxisBlue] (1.197,1.7) -- (2.197,0.72);
+  \draw[AxisBlue] (2.894,2.9) -- (3.894,1.94);
+  \node[align=left] at (4.3,4.1) {同一射线上两处\\ 切线斜率相同\\（MRS 沿射线不变）};
+\end{tikzpicture}
+\end{center}
+\figexplan{自原点出发的虚线射线依次穿过两条无差异曲线；两个交点处的切线（短实线）斜率相同。这表明沿任一射线边际替代率 MRS 保持不变，无差异曲线族互为沿射线的等比放大，即偏好位似；等价地，效用函数可写成齐次函数的单调变换。}
+
+\subsection{可加可分性 $\leftrightarrow$ 加和形式（详证见 \S 3.6）}
+
+\begin{definition}[可加可分表示]\label{def:additive-sep}
+$\succeq$ \textbf{可加可分}：存在 $u_i:\R_+\to\R$（$i=1,\dots,n$）使
+$u(x)=\sum_{i=1}^n u_i(x_i)$ 表示 $\succeq$。
+\end{definition}
+
+偏好侧的特征是\textbf{坐标独立性}：任意坐标子集上的偏好比较不受其余坐标取值影响。
+$u(x_1,x_2)=\sqrt{x_1}+\sqrt{x_2}$ 可分；$u(x_1,x_2)=x_1x_2$ 不可分
+（$x_1$ 的边际效用 $x_2$ 依赖于 $x_2$ 的水平——交叉偏导非零是破坏可分的可微判据）。
+完整陈述与证明见 §3.6。
+
+\subsection{拟线性 $\leftrightarrow$ 线性计价物结构（详证见 \S 3.7）}
+
+\begin{definition}[拟线性表示]\label{def:ql-rep}
+$\succeq$ \textbf{拟线性}：存在 $v:\R_+^{n-1}\to\R$ 使
+$u(x_1,x_{-1})=x_1+v(x_{-1})$ 表示 $\succeq$，其中 $x_1$ 为计价物。
+\end{definition}
+
+偏好侧的特征是\textbf{无财富效应}：沿计价物方向平移不改变比较结果。
+$u(x_1,x_2)=x_1+\sqrt{x_2}$ 拟线性；其无差异曲线互为\textbf{纵向平移}。
+完整陈述与证明见 §3.7。
+
+\subsection{连续性 $\leftrightarrow$ 连续表示（回顾）}
+
+定义~\ref{def:cont-pref} 的连续偏好 $\iff$ 存在连续表示
+（定理~\ref{thm:continuous-rep} 与定理~\ref{thm:u-cont}）。
+可微性是进一步的\textbf{基数}便利：取到可微表示后，
+边际替代率有公式
+\[
+\mathrm{MRS}_{ij}(x)=\frac{\partial u/\partial x_i}{\partial u/\partial x_j},
+\]
+该比值在严格递增变换下不变（链式法则中 $f'$ 约去），故 MRS 本身是\textbf{序数量}。
+
+\subsection{序数性质与基数性质的严格区分 \texorpdfstring{$\star$}{*}}\label{subsec:ordinal-cardinal}
+
+\begin{proposition}[拟凹是序数性质，凹是基数性质]\label{prop:qc-ordinal}
+\textbf{(i)} 若 $u$ 拟凹，$f$ 严格递增，则 $f\circ u$ 拟凹；
+\textbf{(ii)} 存在凹函数 $u$ 与严格递增 $f$ 使 $f\circ u$ 不凹。
+\end{proposition}
+
+\begin{proof}
+\textbf{(i)} $f(u(\lambda y+(1-\lambda)z))\ge f(\min\{u(y),u(z)\})=\min\{f(u(y)),f(u(z))\}$，
+第一步用 $u$ 拟凹加 $f$ 递增，第二步因 $\min$ 与严格递增映射可交换。
+
+\textbf{(ii)} 取 $u(t)=\sqrt{t}$（$t\ge0$，凹）与 $f(s)=s^4$（$s\ge0$ 上严格递增）：
+$f(u(t))=t^2$，二阶导数 $2>0$，凸而不凹。
+\end{proof}
+
+\begin{remark}[判别清单]\label{rem:ordinal-checklist}
+判断一个效用性质是否“偏好可表达”，标准是：
+该性质是否\textbf{在一切严格递增变换下保持}（命题~\ref{prop:ordinal} 的变换群）。
+\begin{center}
+\small
+\begin{tabular}{lll}
+\toprule
+性质 & 序数/基数 & 偏好侧对应 \\
+\midrule
+递增 / 严格递增 & 序数 & 单调 / 强单调 \\
+拟凹 / 严格拟凹 & 序数 & 凸 / 严格凸偏好 \\
+一次齐次 + 递增变换 & 序数 & 位似性 \\
+加和形式（存在某表示） & 序数 & 坐标独立性（§3.6） \\
+线性计价物形式（存在某表示） & 序数 & 无财富效应（§3.7） \\
+连续 & 序数 & 连续偏好 \\
+凹 / 边际效用递减 & 基数 & 无偏好对应（表示依赖） \\
+边际替代率 & 序数 & 无差异曲线斜率 \\
+弹性类指标（如替代弹性） & 序数 & 无差异曲线曲率 \\
+\bottomrule
+\end{tabular}
+\end{center}
+“边际效用递减”是最常见的误用：$u=\sqrt{x}$ 与 $\tilde u=u^3=x^{3/2}$ 表示\textbf{同一偏好}，
+前者边际效用递减、后者递增——序数理论中“边际效用”没有行为含义，
+有意义的只是边际效用\textbf{之比}（MRS）。
+\end{remark}
+
+\subsection{回到词典序：翻译词典的存在性前提}
+
+把 §3.1 的反例放回本节框架：词典序偏好对第一坐标强单调，
+但不存在任何效用函数承载它的结构——\textbf{翻译词典生效的前提是表示存在}
+（§3.1 的可数序稠密条件）。这正是本章把存在性（§3.1--§3.4）置于性质对应（§3.5--§3.7）之前的逻辑顺序。

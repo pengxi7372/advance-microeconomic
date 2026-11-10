@@ -1,0 +1,185 @@
+% ============================================================
+\section{需求系统与更多静态形式（补全）}
+% ============================================================
+
+\subsection{PIGLOG 与几乎理想需求系统（AIDS）}
+
+\notehead{为什么需要它}
+CES 族（§4.1.5）恩格尔曲线迫使份额对收入不敏感；
+基本需求型（§4.1.7）只允许份额随收入线性衰减。
+经验家计数据反复显示：\textbf{份额—收入关系既非平线也非直线}。
+AIDS 的做法是：不先写效用，先写\textbf{支出函数}，
+让它对价格与效用都足够灵活，再反推需求。
+
+\notehead{形式（PIGLOG 支出函数）}
+\[
+\ln e(p,u)=\underbrace{\alpha_0+\sum_k\alpha_k\ln p_k+\frac12\sum_k\sum_j\gamma_{kj}^{*}\ln p_k\ln p_j}_{a(p)}
++\ u\,\underbrace{\beta_0\prod_k p_k^{\beta_k}}_{b(p)}.
+\]
+效用通过谢泼德引理进入需求：对 $\ln e$ 关于 $\ln p_i$ 求导，
+左边 $=\frac{p_i}{e}\frac{\partial e}{\partial p_i}=\frac{p_ix_i}{e}=w_i$（支出份额），故
+\[
+\boxed{\ w_i=\alpha_i+\sum_j\gamma_{ij}\ln p_j+\beta_i\ln\bigl(m/P\bigr)\ }
+\]
+其中 $\gamma_{ij}=(\gamma_{ij}^{*}+\gamma_{ji}^{*})/2$，
+$\ln P$ 为 $a(p)$ 给出的价格指数（实证中常用其线性近似）。
+
+\notehead{理论约束（效用最大化可积性）}
+\begin{center}
+\small
+\begin{tabular}{lll}
+\toprule
+约束 & 参数表达 & 含义 \\
+\midrule
+加总（adding-up） & $\sum_i\alpha_i=1,\ \sum_i\beta_i=0,\ \sum_i\gamma_{ij}=0$ & 份额和为 1 \\
+齐次（homogeneity） & $\sum_j\gamma_{ij}=0\ (\forall i)$ & 无货币幻觉 \\
+斯勒茨基对称 & $\gamma_{ij}=\gamma_{ji}$ & 可积回效用 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\notehead{性质：为什么选它}
+(i) 它是任意需求系统的\textbf{一阶柔性近似}；
+(ii) 份额方程对参数\textbf{线性}——可加个体固定效应、可用面板工具变量，
+这是它在应用微观中统治地位的技术基础；
+(iii) 三条理论约束都是\textbf{参数的线性等式}，
+检验“需求是否服从效用最大化”就是三个 Wald 检验；
+(iv) 恩格尔曲线：$w_i$ 对 $\ln m$ 线性 $\Rightarrow$ 必需品（$\beta_i<0$）
+与奢侈品（$\beta_i>0$）份额随收入单调渐变——比 CES 灵活，但仍是直线。
+
+\notehead{适用与案例}
+食品、能源等多品类家计需求；福利核算（$e(p,u)$ 已知 $\Rightarrow$
+真实价格指数、补偿变化都有公式）。案例：估计中国城镇家庭八大类消费，
+食品份额对 $\ln m$ 的斜率显著为负、文化娱乐显著为正，
+且齐次性在改革期样本上被拒绝（价格体系剧变期的货币幻觉/调整滞后）。
+
+\subsection{QUAIDS：二次恩格尔曲线}
+
+\notehead{形式}
+在 AIDS 份额方程上加二次项（$b(p)=\prod p_j^{\beta_j}$ 为协价格指数的修正）：
+\[
+w_i=\alpha_i+\sum_j\gamma_{ij}\ln p_j+\beta_i\ln\Bigl(\frac{m}{a(p)}\Bigr)
++\frac{\lambda_i}{b(p)}\Bigl[\ln\Bigl(\frac{m}{a(p)}\Bigr)\Bigr]^{2},
+\qquad \sum_i\lambda_i=0.
+\]
+约束加总/齐次/对称同 AIDS，仅多 $\sum_i\lambda_i=0$。
+
+\notehead{性质：为什么选它}
+AIDS 的恩格尔曲线是直线，意味着“必需品永远是必需品”；
+QUAIDS 的二次项允许\textbf{曲线弯折}：同一种商品可以对穷人是奢侈品、
+对富人是必需品（肉制品、在外就餐的标准形态）。
+理论意义：可积性仍成立（存在对应的间接效用），
+是“最弯的仍理论自洽”的需求系统。
+近年应用（联网核实）：冈比亚家庭食品价格福利分析、
+美国食品需求弹性的理论一致元分析——QUAIDS 都是首选，
+理由正是其非线性恩格尔结构与约束可检验性。
+
+\begin{center}
+\begin{tikzpicture}[scale=0.95]
+  \draw[axisline] (0,0) -- (6.6,0) node[below left, axislabel] {$\ln m$};
+  \draw[axisline] (0,0) -- (0,4.2) node[below left, axislabel] {份额 $w_i$};
+  \draw[thick, MidBlue] (0.3,3.4) -- (5.6,1.3) node[above right, align=left] {必需品（AIDS：直线）};
+  \draw[thick, MidBlue] (0.3,0.9) .. controls (2.2,1.2) and (3.6,2.6) .. (5.4,3.5)
+    node[above right, align=left] {QUAIDS：先平后陡};
+  \draw[thick, MidBlue] (0.3,2.9) .. controls (2.4,2.5) and (3.9,1.5) .. (5.2,0.5)
+    node[below right, align=left] {QUAIDS：奢侈品转必需品};
+  \node[align=center] at (3.2,-0.9) {二次项使份额—收入关系可弯折：同一商品在不同收入档角色可变};
+\end{tikzpicture}
+\end{center}
+\figexplan{横轴为收入对数 $\ln m$，纵轴为支出份额 $w_i$。AIDS 给出直线（份额与 $\ln m$ 线性）；QUAIDS 引入二次项后份额—收入关系可以弯折：同一商品可在低收入档表现为必需品、在高收入档表现为奢侈品（或相反）。这正是 QUAIDS 能拟合非线性恩格尔结构的原因。}
+
+\subsection{非位似 CES（隐式加法可分）}
+
+\notehead{形式与核心性质}
+效用 $U$ 由隐式方程定义：
+\[
+\sum_i \Omega_i\,\bigl(c_i\,U^{\varepsilon_i}\bigr)^{\frac{\sigma-1}{\sigma}}=1,
+\qquad \Omega_i>0,\ \sigma>0,
+\]
+$\varepsilon_i$ 为部门 $i$ 的收入弹性参数。
+直接对隐函数求导可得相对恩格尔曲线的斜率：
+\[
+\boxed{\ \frac{\partial\ln(c_i/c_j)}{\partial\ln C}=\varepsilon_i-\varepsilon_j\ }
+\]
+即\textbf{相对支出对对数收入是直线，且斜率恒定}。
+对比：位似 CES（斜率 0）、基本需求型（斜率随收入快速衰减至 0）。
+跨国与跨期数据显示相对份额—相对收入的关系恰是稳定直线
+（农业下降、服务业上升的全谱系）——这是该形式被设计出来要拟合的靶心。
+
+\notehead{为什么选它}
+研究结构转型、消费升级、创新方向（需求拉动）时，
+需要长期、大幅收入变动下\textbf{不衰减}的收入效应；
+该形式是目前唯一同时做到“任意部门数、收入与价格效应并存、
+可估计”的偏好族。代价：无显式需求函数，数值求解。
+
+\subsection{家庭生产与时间配置}
+
+\notehead{形式}
+\[
+U=U(Z_1,\dots,Z_K),\qquad Z_k=f_k(x_k,t_k),
+\]
+效用不直接来自市场商品 $x_k$，而来自\textbf{家庭内生产的商品} $Z_k$
+（营养、清洁、亲子陪伴），其投入是市场品 $x_k$ 与时间 $t_k$。
+预算：$\sum_k p_kx_k=wT_w+V$（$T_w$ 工时、$V$ 非劳动收入）；
+时间：$\sum_k t_k+T_w=T$。
+合并得\textbf{完全收入}约束
+\[
+\sum_k\bigl(p_kx_k+wt_k\bigr)=wT+V\equiv S,
+\]
+商品 $Z_k$ 的\textbf{影子价格} $\pi_k$ 含时间成本：
+$\pi_k=\min_{x,t}\{px+wt:\ f_k(x,t)\ge1\}$。
+
+\notehead{为什么选它：能反映什么}
+工资上升同时抬高市场品与时间的价格（后者以 $w$ 计），
+故\textbf{时间密集商品}（照料、休闲活动）相对变贵——
+解释高收入社会的时间荒、家务外包、生育率下降
+（子女是时间最密集的 $Z$）。
+这也是 §4.9 生育模型把养育成本写为 $v\,w$（工资的比例）的理论依据：
+养育成本中时间投入随工资升值。
+
+\subsection{利他、暖光与公共品私人供给}
+
+\notehead{三种写法}
+\begin{enumerate}
+  \item \textbf{纯利他}：$u_i=u_i(x_i,G)$，$G=\sum_j g_j$ 为公共品总量
+        ——只在意结果；
+  \item \textbf{不纯利他（暖光）}：$u_i=u_i(x_i,G,g_i)$，自己的捐献 $g_i$ 单独进入效用
+        ——在意“我捐了”本身；
+  \item \textbf{消费—捐赠线性型}：$u_i=x_i+\gamma_i\ln G$（常用可解形式）。
+\end{enumerate}
+
+\notehead{关键结论（推导）}
+纯利他 + 内点解下，把他人捐赠 $\sum_{j\ne i}g_j$ 视为收入调整，
+个体最优 $G$ 只依赖总收入分布\textbf{之外}的总量：
+政府以税收融资的公共供给增量 $\Delta G_{gov}$
+被私人捐赠等额挤出（dollar-for-dollar crowding-out）。
+暖光项打破完全挤出：自己的 $g_i$ 有独立边际效用，
+挤出率小于 1——实验与捐赠数据支持不纯利他。
+
+\notehead{适用}
+慈善、众筹、家庭内部转移（§4.7.9 中国赡养转移的模型化）、ESG 消费。
+
+\subsection{议价：合作剩余的分割}
+
+\notehead{形式}
+可行效用对的凸集 $S$，破裂点 $d=(d_1,d_2)$。乘积型目标
+\[
+\max_{(u_1,u_2)\in S,\ u\ge d}\ (u_1-d_1)(u_2-d_2)\ \ \text{（几何平均，等价于取对数后加法可分）}.
+\]
+\textbf{推导（可转移效用的特例）}：设前沿 $u_1+u_2=\bar S$，代入：
+\[
+\max_{u_1}\ (u_1-d_1)(\bar S-u_1-d_2)
+\ \Longrightarrow\
+u_1^{*}-d_1=u_2^{*}-d_2=\frac{\bar S-d_1-d_2}{2}:
+\]
+\textbf{剩余均分}。一般前沿 $u_2=g(u_1)$ 下，一阶条件
+$-g'(u_1^{*})=\dfrac{u_2^{*}-d_2}{u_1^{*}-d_1}$：
+前沿斜率 = 无差异双曲线的斜率（切点条件）。
+
+\notehead{为什么选它}
+把“谈判力”参数化为破裂点 $d$ 与权重
+（加权乘积 $(u_1-d_1)^{\eta}(u_2-d_2)^{1-\eta}$），
+闭式、可嵌入家庭（离婚威胁点）、劳资（罢工威胁点）、
+国际贸易（协定外选项）模型。
+家庭经济学中，集体模型 + 议价解是分析夫妻间分配
+（生育决策、退休协调）的标准工具——与 §4.9 的家庭决策直接衔接。
